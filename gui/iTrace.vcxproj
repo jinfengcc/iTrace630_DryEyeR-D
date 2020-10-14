@@ -1,0 +1,1158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BC005822-93A9-43D5-B3B9-B728CE8FE20E}</ProjectGuid>
+    <RootNamespace>iTrace</RootNamespace>
+    <Keyword>MFCProj</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>Static</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>Static</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+    <WindowsAppContainer>false</WindowsAppContainer>
+    <CLRSupport>false</CLRSupport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>Static</UseOfMfc>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>Static</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>$(ProjectName)621</TargetName>
+    <LibraryPath>C:\DCMTK360\DCMTK\lib;$(VCInstallDir)PlatformSDK\lib;$(VC_LibraryPath_x86);C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\atlmfc\lib;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\PlatformSDK\lib;$(WindowsSDK_LibraryPath_x86);$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\DCMTK360\DCMTK\lib;C:\DCMTK360\DCMTK\include;$(VCInstallDir)PlatformSDK\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(IncludePath)</IncludePath>
+    <GenerateManifest>true</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <PreBuildEventUseInBuild>true</PreBuildEventUseInBuild>
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>$(ProjectName)621</TargetName>
+    <LibraryPath>C:\DCMTK360\DCMTK\lib;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\atlmfc\lib;C:\Program Files (x86)\Windows Kits\10\lib\10.0.10240.0\ucrt\x86;C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86;C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6\Lib\um\x86</LibraryPath>
+    <IncludePath>C:\DCMTK360\DCMTK\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\DCMTK\dcmtk-3.5.4-win32-i386\include</IncludePath>
+    <GenerateManifest>true</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <VcpkgEnabled>false</VcpkgEnabled>
+    <VcpkgManifestInstall>false</VcpkgManifestInstall>
+    <VcpkgAutoLink>false</VcpkgAutoLink>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <VcpkgManifestInstall>false</VcpkgManifestInstall>
+    <VcpkgAutoLink>false</VcpkgAutoLink>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Debug\iTrace/iTrace.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>Debug/iTrace.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation />
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc80.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <StringPooling>true</StringPooling>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>Gdiplus.lib;OpenGl32.lib;SetupApi.lib;Iphlpapi.lib;Wbemuuid.lib;HtmlHelp.lib</AdditionalDependencies>
+      <OutputFile>$(OutDir)iTrace621.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalManifestDependencies>type=%27Win32%27 name=%27Microsoft.Windows.Common-Controls%27 version=%276.0.0.0%27 processorArchitecture=%27X86%27 publicKeyToken=%276595b64144ccf1df%27 language=%27*%27;%(AdditionalManifestDependencies)</AdditionalManifestDependencies>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib </IgnoreSpecificDefaultLibraries>
+      <UACExecutionLevel>AsInvoker</UACExecutionLevel>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command />
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>X64</TargetEnvironment>
+      <TypeLibraryName>.\Debug\iTrace/iTrace.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <StructMemberAlignment>8Bytes</StructMemberAlignment>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>Debug/iTrace.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation />
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc80.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>Gdiplus.lib;OpenGl32.lib;SetupApi.lib;Iphlpapi.lib;Wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)iTrace610Debug.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalManifestDependencies>type=%27Win32%27 name=%27Microsoft.Windows.Common-Controls%27 version=%276.0.0.0%27 processorArchitecture=%27X86%27 publicKeyToken=%276595b64144ccf1df%27 language=%27*%27;%(AdditionalManifestDependencies)</AdditionalManifestDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX64</TargetMachine>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+    </Link>
+    <PostBuildEvent>
+      <Command />
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Release\iTrace/iTrace.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>Release/iTrace.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation />
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc80.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>Gdiplus.lib;OpenGl32.lib;SetupApi.lib;Iphlpapi.lib;Wbemuuid.lib;HtmlHelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)iTrace621.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalManifestDependencies>type=%27Win32%27 name=%27Microsoft.Windows.Common-Controls%27 version=%276.0.0.0%27 processorArchitecture=%27X86%27 publicKeyToken=%276595b64144ccf1df%27 language=%27*%27;%(AdditionalManifestDependencies)</AdditionalManifestDependencies>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <TargetMachine>MachineX86</TargetMachine>
+      <UACExecutionLevel>AsInvoker</UACExecutionLevel>
+    </Link>
+    <PostBuildEvent>
+      <Command />
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>X64</TargetEnvironment>
+      <TypeLibraryName>.\Release\iTrace/iTrace.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>Release/iTrace.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation />
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc80.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>Gdiplus.lib;OpenGl32.lib;SetupApi.lib;Iphlpapi.lib;Wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)iTrace500.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalManifestDependencies>type=%27Win32%27 name=%27Microsoft.Windows.Common-Controls%27 version=%276.0.0.0%27 processorArchitecture=%27X86%27 publicKeyToken=%276595b64144ccf1df%27 language=%27*%27;%(AdditionalManifestDependencies)</AdditionalManifestDependencies>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <TargetMachine>MachineX64</TargetMachine>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy .\Release\*.exe D:\Tracey</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AcquisitionDlg.cpp" />
+    <ClCompile Include="ActivationDlg.cpp" />
+    <ClCompile Include="AlignmentDlg.cpp" />
+    <ClCompile Include="AODToolDlg.cpp" />
+    <ClCompile Include="Btn.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="CalDlg.cpp" />
+    <ClCompile Include="ChartDlg.cpp" />
+    <ClCompile Include="ChartWnd.cpp" />
+    <ClCompile Include="ClinicDlg.cpp" />
+    <ClCompile Include="Compression.cpp" />
+    <ClCompile Include="CTAcquisition.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="CTAcquisitionDlg.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="CTColorImgWnd.cpp" />
+    <ClCompile Include="CTDoubleSumWnd.cpp" />
+    <ClCompile Include="CTExam.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="CTOsherAliWnd.cpp" />
+    <ClCompile Include="CTSingleCmpWnd.cpp" />
+    <ClCompile Include="CTSingleSumWnd.cpp" />
+    <ClCompile Include="CTSingleVrfWnd.cpp" />
+    <ClCompile Include="CubicSpline.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="CustomColorsDlg.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="Data.cpp" />
+    <ClCompile Include="DatabaseDestDlg.cpp" />
+    <ClCompile Include="DatabaseDlg.cpp" />
+    <ClCompile Include="DatabaseMerge.cpp" />
+    <ClCompile Include="DcmtkDicom.cpp" />
+    <ClCompile Include="DeleteDlg.cpp" />
+    <ClCompile Include="DicomMWLRecDlg.cpp" />
+    <ClCompile Include="DicomMWLResDlg.cpp" />
+    <ClCompile Include="DicomSelTypeDlg.cpp" />
+    <ClCompile Include="FarLtrWnd.cpp" />
+    <ClCompile Include="HorSliderCtrl.cpp" />
+    <ClCompile Include="INIParser.cpp" />
+    <ClCompile Include="SameDicomPatientDlg.cpp" />
+    <ClCompile Include="TraceyDicom.cpp" />
+    <ClCompile Include="DispWnd.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="DofChartDlg.cpp" />
+    <ClCompile Include="DOFCWnd.cpp" />
+    <ClCompile Include="DOFWnd.cpp" />
+    <ClCompile Include="EEFWnd.cpp" />
+    <ClCompile Include="Exam.cpp" />
+    <ClCompile Include="ExamAveDlg.cpp" />
+    <ClCompile Include="ExamCaptureWnd.cpp" />
+    <ClCompile Include="ExamDlg.cpp" />
+    <ClCompile Include="excel9.cpp" />
+    <ClCompile Include="ExcelSettingsCTpage.cpp" />
+    <ClCompile Include="ExcelSettingsDlg2.cpp" />
+    <ClCompile Include="ExcelSettingsWFCTpage.cpp" />
+    <ClCompile Include="ExcelSettingsWFpage.cpp" />
+    <ClCompile Include="Export.cpp" />
+    <ClCompile Include="ExportCustomvis.cpp" />
+    <ClCompile Include="ExportTopcon.cpp" />
+    <ClCompile Include="ExportWavetouch.cpp" />
+    <ClCompile Include="EyeDlg.cpp" />
+    <ClCompile Include="EyeWnd.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="FirmwareToolDlg.cpp" />
+    <ClCompile Include="FolderDlg.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="FT.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="GlobalFunctions.cpp" />
+    <ClCompile Include="GridWnd.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="GroupDlg.cpp" />
+    <ClCompile Include="Hardware.cpp" />
+    <ClCompile Include="ICLDataDlg.cpp" />
+    <ClCompile Include="Image.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="ImageDlg.cpp" />
+    <ClCompile Include="ImageDlg1.cpp" />
+    <ClCompile Include="ImageDlg2.cpp" />
+    <ClCompile Include="ImageDlg3.cpp" />
+    <ClCompile Include="ImgCptCtrlWnd.cpp" />
+    <ClCompile Include="ImgInfoWnd.cpp" />
+    <ClCompile Include="iTraceApp.cpp" />
+    <ClCompile Include="LAD.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="LADWnd.cpp" />
+    <ClCompile Include="LensDlg.cpp" />
+    <ClCompile Include="Licensing.cpp" />
+    <ClCompile Include="LiveVideo.cpp" />
+    <ClCompile Include="LtrWnd.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="MainWnd.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="MaskDlg.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="MemWnd.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="Messages.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="MGdi.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="MTF.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="MTFWnd.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="NearLtrWnd.cpp" />
+    <ClCompile Include="NewEyeWnd.cpp" />
+    <ClCompile Include="NumDlg.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="Onoff.cpp" />
+    <ClCompile Include="OperatorDlg.cpp" />
+    <ClCompile Include="PasswordDlg.cpp" />
+    <ClCompile Include="PatientChartDlg.cpp" />
+    <ClCompile Include="PatientDlg.cpp" />
+    <ClCompile Include="PatientsMergeDlg.cpp" />
+    <ClCompile Include="PhysicianDlg.cpp" />
+    <ClCompile Include="PlanBigWnd.cpp" />
+    <ClCompile Include="PlannerWnd.cpp" />
+    <ClCompile Include="PlanWnd.cpp" />
+    <ClCompile Include="PreopComboDataDlg.cpp" />
+    <ClCompile Include="PreopDataDlg.cpp" />
+    <ClCompile Include="PSFWnd.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="QuickWFDlg.cpp" />
+    <ClCompile Include="Rad.cpp" />
+    <ClCompile Include="RefSurfaceDlg.cpp" />
+    <ClCompile Include="Registry.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="RegtimeDlg.cpp" />
+    <ClCompile Include="RingsToolDlg.cpp" />
+    <ClCompile Include="RMSWnd.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="RSDWnd.cpp" />
+    <ClCompile Include="Sel3Btn.cpp" />
+    <ClCompile Include="SelBtn.cpp" />
+    <ClCompile Include="SelectExamDlg.cpp" />
+    <ClCompile Include="SelectImgDlg.cpp" />
+    <ClCompile Include="SelectTwoExamDlg.cpp" />
+    <ClCompile Include="Settings.cpp" />
+    <ClCompile Include="SettingsComboDlg.cpp" />
+    <ClCompile Include="SettingsDefaultDlg.cpp" />
+    <ClCompile Include="SettingsDlg.cpp" />
+    <ClCompile Include="SettingsIOLSelDlg.cpp" />
+    <ClCompile Include="SettingsSoloDlg.cpp" />
+    <ClCompile Include="SignalWnd.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="SimulationDlg.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="Sort.cpp" />
+    <ClCompile Include="StatusDlg.cpp" />
+    <ClCompile Include="StdAfx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Structures.cpp" />
+    <ClCompile Include="SumWnd.cpp" />
+    <ClCompile Include="SumWndInfo.cpp" />
+    <ClCompile Include="Surface.cpp" />
+    <ClCompile Include="TaskSettingDlg.cpp" />
+    <ClCompile Include="TaskSettinigComboDlg.cpp" />
+    <ClCompile Include="TestResultDlg.cpp" />
+    <ClCompile Include="ThroughFocusVSOTFa.cpp" />
+    <ClCompile Include="TipWnd.cpp" />
+    <ClCompile Include="ToricSelDlg.cpp" />
+    <ClCompile Include="ToricSelDlg2.cpp" />
+    <ClCompile Include="TranExamDlg.cpp" />
+    <ClCompile Include="unzip.cpp" />
+    <ClCompile Include="Utils.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="VerSliderCtrl.cpp" />
+    <ClCompile Include="VerSliderCtrl2.cpp" />
+    <ClCompile Include="Video2ToolDlg.cpp" />
+    <ClCompile Include="Video3ToolDlg.cpp" />
+    <ClCompile Include="VideoMoveDlg.cpp" />
+    <ClCompile Include="VideoToolDlg.cpp" />
+    <ClCompile Include="WFAcquisition.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="WFAcquisitionDlg.cpp" />
+    <ClCompile Include="WFCTAngleSumWnd.cpp" />
+    <ClCompile Include="WFCTDysPtWnd.cpp" />
+    <ClCompile Include="WFCTDysWnd.cpp" />
+    <ClCompile Include="WFCTIolWnd.cpp" />
+    <ClCompile Include="WFCTOUSumWnd.cpp" />
+    <ClCompile Include="WFCTSumWnd.cpp" />
+    <ClCompile Include="WFCTTorAliWnd.cpp" />
+    <ClCompile Include="WFDOFCWnd.cpp" />
+    <ClCompile Include="WFDoubleSoloWnd.cpp" />
+    <ClCompile Include="WFDoubleSumWnd.cpp" />
+    <ClCompile Include="WFExam.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="WFGUICtrl0Wnd.cpp" />
+    <ClCompile Include="WFGUICtrlWnd.cpp" />
+    <ClCompile Include="WFMultiSumWnd.cpp" />
+    <ClCompile Include="WFNearVisionSumWnd.cpp" />
+    <ClCompile Include="WFSingleCmpWnd.cpp" />
+    <ClCompile Include="WFSingleSoloWnd.cpp" />
+    <ClCompile Include="WFSingleSumWnd.cpp" />
+    <ClCompile Include="WFSingleVrfWnd.cpp" />
+    <ClCompile Include="WFSoloCmpWnd.cpp" />
+    <ClCompile Include="WFSoloVfaWnd.cpp" />
+    <ClCompile Include="WFTest.cpp" />
+    <ClCompile Include="WFVrfTestDlg.cpp" />
+    <ClCompile Include="WFVrfTestWnd.cpp" />
+    <ClCompile Include="WTSumWnd.cpp" />
+    <ClCompile Include="XPControl.cpp" />
+    <ClCompile Include="XPHeaderCtrl.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="XPListCtrl.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="XPListCtrla.cpp" />
+    <ClCompile Include="XPMenu.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+    </ClCompile>
+    <ClCompile Include="XPSliderCtrl.cpp" />
+    <ClCompile Include="zip.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="611Notes.h" />
+    <ClInclude Include="611.h" />
+    <ClInclude Include="Acquisition.h" />
+    <ClInclude Include="AcquisitionDlg.h" />
+    <ClInclude Include="ActivationDlg.h" />
+    <ClInclude Include="AlignmentDlg.h" />
+    <ClInclude Include="AODToolDlg.h" />
+    <ClInclude Include="Btn.h" />
+    <ClInclude Include="BusyCursor.h" />
+    <ClInclude Include="CalDlg.h" />
+    <ClInclude Include="ChartDlg.h" />
+    <ClInclude Include="ChartWnd.h" />
+    <ClInclude Include="ClinicDlg.h" />
+    <ClInclude Include="Compression.h" />
+    <ClInclude Include="CTAcquisition.h" />
+    <ClInclude Include="CTAcquisitionDlg.h" />
+    <ClInclude Include="CTColorImgWnd.h" />
+    <ClInclude Include="CTDoubleSumWnd.h" />
+    <ClInclude Include="CTOsherAliWnd.h" />
+    <ClInclude Include="CTSingleCmpWnd.h" />
+    <ClInclude Include="CTSingleSumWnd.h" />
+    <ClInclude Include="CTSingleVrfWnd.h" />
+    <ClInclude Include="CubicSpline.h" />
+    <ClInclude Include="CustomColorsDlg.h" />
+    <ClInclude Include="Data.h" />
+    <ClInclude Include="DatabaseDestDlg.h" />
+    <ClInclude Include="DatabaseDlg.h" />
+    <ClInclude Include="DatabaseMerge.h" />
+    <ClInclude Include="DcmtkDicom.h" />
+    <ClInclude Include="DeleteDlg.h" />
+    <ClInclude Include="DicomMWLRecDlg.h" />
+    <ClInclude Include="DicomMWLResDlg.h" />
+    <ClInclude Include="DicomSelTypeDlg.h" />
+    <ClInclude Include="FarLtrWnd.h" />
+    <ClInclude Include="HorSliderCtrl.h" />
+    <ClInclude Include="INIParser.h" />
+    <ClInclude Include="SameDicomPatientDlg.h" />
+    <ClInclude Include="TraceyDicom.h" />
+    <ClInclude Include="DispWnd.h" />
+    <ClInclude Include="DofChartDlg.h" />
+    <ClInclude Include="DOFCWnd.h" />
+    <ClInclude Include="DofWnd.h" />
+    <ClInclude Include="EEFWnd.h" />
+    <ClInclude Include="ExamAveDlg.h" />
+    <ClInclude Include="ExamCaptureWnd.h" />
+    <ClInclude Include="ExamDlg.h" />
+    <ClInclude Include="excel9.h" />
+    <ClInclude Include="ExcelSettingsCTpage.h" />
+    <ClInclude Include="ExcelSettingsDlg2.h" />
+    <ClInclude Include="ExcelSettingsWFCTpage.h" />
+    <ClInclude Include="ExcelSettingsWFpage.h" />
+    <ClInclude Include="Export.h" />
+    <ClInclude Include="EyeDlg.h" />
+    <ClInclude Include="EyeWnd.h" />
+    <ClInclude Include="FirmwareToolDlg.h" />
+    <ClInclude Include="FolderDlg.h" />
+    <ClInclude Include="FT.h" />
+    <ClInclude Include="GlobalFunctions.h" />
+    <ClInclude Include="GridWnd.h" />
+    <ClInclude Include="GroupDlg.h" />
+    <ClInclude Include="Hardware.h" />
+    <ClInclude Include="htmlhelp.h" />
+    <ClInclude Include="ICLDataDlg.h" />
+    <ClInclude Include="Image.h" />
+    <ClInclude Include="ImageDlg.h" />
+    <ClInclude Include="ImageDlg1.h" />
+    <ClInclude Include="ImageDlg2.h" />
+    <ClInclude Include="ImageDlg3.h" />
+    <ClInclude Include="ImgCptCtrlWnd.h" />
+    <ClInclude Include="ImgInfoWnd.h" />
+    <ClInclude Include="LADWnd.h" />
+    <ClInclude Include="LensDlg.h" />
+    <ClInclude Include="Licensing.h" />
+    <ClInclude Include="LiveVideo.h" />
+    <ClInclude Include="LtrWnd.h" />
+    <ClInclude Include="MainWnd.h" />
+    <ClInclude Include="MaskDlg.h" />
+    <ClInclude Include="MemWnd.h" />
+    <ClInclude Include="Messages.h" />
+    <ClInclude Include="MGdi.h" />
+    <ClInclude Include="MTFWnd.h" />
+    <ClInclude Include="NearLtrWnd.h" />
+    <ClInclude Include="NewEyeWnd.h" />
+    <ClInclude Include="NumDlg.h" />
+    <ClInclude Include="Onoff.h" />
+    <ClInclude Include="OperatorDlg.h" />
+    <ClInclude Include="PasswordDlg.h" />
+    <ClInclude Include="PatientChartDlg.h" />
+    <ClInclude Include="PatientDlg.h" />
+    <ClInclude Include="PatientsMergeDlg.h" />
+    <ClInclude Include="PhysicianDlg.h" />
+    <ClInclude Include="PlanBigWnd.h" />
+    <ClInclude Include="PlannerWnd.h" />
+    <ClInclude Include="PlanWnd.h" />
+    <ClInclude Include="PreopComboDataDlg.h" />
+    <ClInclude Include="PreopDataDlg.h" />
+    <ClInclude Include="PSFWnd.h" />
+    <ClInclude Include="QuickWFDlg.h" />
+    <ClInclude Include="Rad.h" />
+    <ClInclude Include="RefSurfaceDlg.h" />
+    <ClInclude Include="Registry.h" />
+    <ClInclude Include="RegtimeDlg.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="RingsToolDlg.h" />
+    <ClInclude Include="RMSWnd.h" />
+    <ClInclude Include="RSDWnd.h" />
+    <ClInclude Include="Sel3Btn.h" />
+    <ClInclude Include="SelBtn.h" />
+    <ClInclude Include="SelectExamDlg.h" />
+    <ClInclude Include="SelectImgDlg.h" />
+    <ClInclude Include="SelectTwoExamDlg.h" />
+    <ClInclude Include="Settings.h" />
+    <ClInclude Include="SettingsComboDlg.h" />
+    <ClInclude Include="SettingsDefaultDlg.h" />
+    <ClInclude Include="SettingsDlg.h" />
+    <ClInclude Include="SettingsIOLSelDlg.h" />
+    <ClInclude Include="SettingsSoloDlg.h" />
+    <ClInclude Include="SignalWnd.h" />
+    <ClInclude Include="SimulationDlg.h" />
+    <ClInclude Include="Sort.h" />
+    <ClInclude Include="StatusDlg.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Structures.h" />
+    <ClInclude Include="SumWnd.h" />
+    <ClInclude Include="Surface.h" />
+    <ClInclude Include="TaskSettingDlg.h" />
+    <ClInclude Include="TaskSettinigComboDlg.h" />
+    <ClInclude Include="TestResultDlg.h" />
+    <ClInclude Include="ThroughFocusVSOTFa.h" />
+    <ClInclude Include="TipWnd.h" />
+    <ClInclude Include="ToricSelDlg.h" />
+    <ClInclude Include="ToricSelDlg2.h" />
+    <ClInclude Include="TranExamDlg.h" />
+    <ClInclude Include="unzip.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="VerSliderCtrl.h" />
+    <ClInclude Include="VerSliderCtrl2.h" />
+    <ClInclude Include="Video2ToolDlg.h" />
+    <ClInclude Include="Video3ToolDlg.h" />
+    <ClInclude Include="VideoMoveDlg.h" />
+    <ClInclude Include="VideoToolDlg.h" />
+    <ClInclude Include="WFAcquisition.h" />
+    <ClInclude Include="WFAcquisitionDlg.h" />
+    <ClInclude Include="WFCTAngleSumWnd.h" />
+    <ClInclude Include="WFCTDysPtWnd.h" />
+    <ClInclude Include="WFCTDysWnd.h" />
+    <ClInclude Include="WFCTIolWnd.h" />
+    <ClInclude Include="WFCTOUSumWnd.h" />
+    <ClInclude Include="WFCTSumWnd.h" />
+    <ClInclude Include="WFCTTorAliWnd.h" />
+    <ClInclude Include="WFDOFCWnd.h" />
+    <ClInclude Include="WFDoubleSoloWnd.h" />
+    <ClInclude Include="WFDoubleSumWnd.h" />
+    <ClInclude Include="WFGUICtrl0Wnd.h" />
+    <ClInclude Include="WFGUICtrlWnd.h" />
+    <ClInclude Include="WFMultiSumWnd.h" />
+    <ClInclude Include="WFNearVisionSumWnd.h" />
+    <ClInclude Include="WFSingleCmpWnd.h" />
+    <ClInclude Include="WFSingleSoloWnd.h" />
+    <ClInclude Include="WFSingleSumWnd.h" />
+    <ClInclude Include="WFSingleVrfWnd.h" />
+    <ClInclude Include="WFSoloCmpWnd.h" />
+    <ClInclude Include="WFSoloVfaWnd.h" />
+    <ClInclude Include="WFTest.h" />
+    <ClInclude Include="WFVrfTestDlg.h" />
+    <ClInclude Include="WFVrfTestWnd.h" />
+    <ClInclude Include="WTSumWnd.h" />
+    <ClInclude Include="XPControl.h" />
+    <ClInclude Include="XPHeaderCtrl.h" />
+    <ClInclude Include="XPListCtrl.h" />
+    <ClInclude Include="XPListCtrla.h" />
+    <ClInclude Include="XPMenu.h" />
+    <ClInclude Include="XPSliderCtrl.h" />
+    <ClInclude Include="zip.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Res\Absolute17.png" />
+    <Image Include="Res\Absolute20.png" />
+    <Image Include="Res\Absolute24.png" />
+    <Image Include="Res\Absolute34.png" />
+    <Image Include="Res\Absolute40.png" />
+    <Image Include="Res\Absolute48.png" />
+    <Image Include="Res\Accept0.png" />
+    <Image Include="Res\Accept1.png" />
+    <Image Include="Res\Accept2.png" />
+    <Image Include="Res\Accept3.png" />
+    <Image Include="Res\AcquireButton37.png" />
+    <Image Include="Res\AcquireButton44.png" />
+    <Image Include="Res\AcquireButton53.png" />
+    <Image Include="Res\Cancel1.png" />
+    <Image Include="Res\Cancel2.png" />
+    <Image Include="Res\Cancel3.png" />
+    <Image Include="Res\correction.png" />
+    <Image Include="Res\Correction1.png" />
+    <Image Include="Res\Correction2.png" />
+    <Image Include="Res\Correction3.png" />
+    <Image Include="Res\Correction4.png" />
+    <Image Include="Res\Correction5.png" />
+    <Image Include="Res\Correction6.png" />
+    <Image Include="Res\CorrectionNo1.png" />
+    <Image Include="Res\CorrectionNo2.png" />
+    <Image Include="Res\CorrectionNo3.png" />
+    <Image Include="Res\CorrectionNo4.png" />
+    <Image Include="Res\CorrectionNo5.png" />
+    <Image Include="Res\CorrectionNo6.png" />
+    <Image Include="Res\correction_sphere1.png" />
+    <Image Include="Res\correction_sphere2.png" />
+    <Image Include="Res\correction_sphere3.png" />
+    <Image Include="Res\correction_sphere4.png" />
+    <Image Include="Res\correction_sphere5.png" />
+    <Image Include="Res\correction_sphere6.png" />
+    <Image Include="Res\DecZone1.png" />
+    <Image Include="Res\DecZone2.png" />
+    <Image Include="Res\DecZone3.png" />
+    <Image Include="Res\DecZone4.png" />
+    <Image Include="Res\DecZone5.png" />
+    <Image Include="Res\DecZone6.png" />
+    <Image Include="Res\DeleteExam1.png" />
+    <Image Include="Res\DeleteExam2.png" />
+    <Image Include="Res\DeleteExam3.png" />
+    <Image Include="Res\DeletePatient1.png" />
+    <Image Include="Res\DeletePatient2.png" />
+    <Image Include="Res\DeletePatient3.png" />
+    <Image Include="Res\DisplayToggleCT_34.png" />
+    <Image Include="Res\DisplayToggleCT_40.png" />
+    <Image Include="Res\DisplayToggleCT_48.png" />
+    <Image Include="Res\DisplayToggleWFCT_34.png" />
+    <Image Include="Res\DisplayToggleWFCT_40.png" />
+    <Image Include="Res\DisplayToggleWFCT_48.png" />
+    <Image Include="Res\DisplayToggleWF_34.png" />
+    <Image Include="Res\DisplayToggleWF_40.png" />
+    <Image Include="Res\DisplayToggleWF_48.png" />
+    <Image Include="Res\DownArrow1.png" />
+    <Image Include="Res\DownArrow2.png" />
+    <Image Include="Res\DownArrow3.png" />
+    <Image Include="Res\DownArrow4.png" />
+    <Image Include="Res\DownArrow5.png" />
+    <Image Include="Res\DownArrow6.png" />
+    <Image Include="Res\EditExam1.png" />
+    <Image Include="Res\EditExam2.png" />
+    <Image Include="Res\EditExam3.png" />
+    <Image Include="Res\EditPatient1.png" />
+    <Image Include="Res\EditPatient2.png" />
+    <Image Include="Res\EditPatient3.png" />
+    <Image Include="Res\ExcelExport1.png" />
+    <Image Include="Res\ExcelExport2.png" />
+    <Image Include="Res\ExcelExport3.png" />
+    <Image Include="Res\Exit1.png" />
+    <Image Include="Res\Exit2.png" />
+    <Image Include="Res\Exit3.png" />
+    <Image Include="Res\ExportData1.png" />
+    <Image Include="Res\ExportData2.png" />
+    <Image Include="Res\ExportData3.png" />
+    <Image Include="Res\ExportOrder1.png" />
+    <Image Include="Res\ExportOrder2.png" />
+    <Image Include="Res\ExportOrder3.png" />
+    <Image Include="Res\ExportPatients1.png" />
+    <Image Include="Res\ExportPatients2.png" />
+    <Image Include="Res\ExportPatients3.png" />
+    <Image Include="Res\E_black_map_20x50.png" />
+    <Image Include="Res\E_white_20x20.png" />
+    <Image Include="Res\E_white_map_20x50.png" />
+    <Image Include="Res\FwdArrow68x34.png" />
+    <Image Include="Res\FwdArrow80x40.png" />
+    <Image Include="Res\FwdArrow96x48.png" />
+    <Image Include="Res\hide_detail_17.png" />
+    <Image Include="Res\hide_detail_20.png" />
+    <Image Include="Res\hide_detail_24.png" />
+    <Image Include="Res\hide_detail_34.png" />
+    <Image Include="Res\hide_detail_40.png" />
+    <Image Include="Res\hide_detail_48.png" />
+    <Image Include="Res\HoyaLogo.png" />
+    <Image Include="Res\HoyaLogo1.png" />
+    <Image Include="Res\HoyaLogo2.png" />
+    <Image Include="Res\HoyaLogo3.png" />
+    <Image Include="Res\ImportPatients1.png" />
+    <Image Include="Res\ImportPatients2.png" />
+    <Image Include="Res\ImportPatients3.png" />
+    <Image Include="Res\IncZone1.png" />
+    <Image Include="Res\IncZone2.png" />
+    <Image Include="Res\IncZone3.png" />
+    <Image Include="Res\IncZone4.png" />
+    <Image Include="Res\IncZone5.png" />
+    <Image Include="Res\IncZone6.png" />
+    <Image Include="Res\iTrace.ico" />
+    <Image Include="Res\iTraceLogoB1.png" />
+    <Image Include="Res\iTraceLogoB2.png" />
+    <Image Include="Res\iTraceLogoB3.png" />
+    <Image Include="Res\iTraceLogoW1.png" />
+    <Image Include="Res\iTraceLogoW2.png" />
+    <Image Include="Res\iTraceLogoW3.png" />
+    <Image Include="Res\iTraceSoloB1.png" />
+    <Image Include="Res\iTraceSoloB2.png" />
+    <Image Include="Res\iTraceSoloB3.png" />
+    <Image Include="Res\iTraceSoloW1.png" />
+    <Image Include="Res\iTraceSoloW2.png" />
+    <Image Include="Res\iTraceSoloW3.png" />
+    <Image Include="Res\LeftArrow1.png" />
+    <Image Include="Res\LeftArrow2.png" />
+    <Image Include="Res\LeftArrow3.png" />
+    <Image Include="Res\License1.png" />
+    <Image Include="Res\License2.png" />
+    <Image Include="Res\License3.png" />
+    <Image Include="Res\map20x20.png" />
+    <Image Include="Res\moon.png" />
+    <Image Include="Res\NewCTExam1.png" />
+    <Image Include="Res\NewCTExam2.png" />
+    <Image Include="Res\NewCTExam3.png" />
+    <Image Include="Res\NewINExam1.png" />
+    <Image Include="Res\NewINExam2.png" />
+    <Image Include="Res\NewINExam3.png" />
+    <Image Include="Res\NewPatient1.png" />
+    <Image Include="Res\NewPatient2.png" />
+    <Image Include="Res\NewPatient3.png" />
+    <Image Include="Res\NewWFExam1.png" />
+    <Image Include="Res\NewWFExam2.png" />
+    <Image Include="Res\NewWFExam3.png" />
+    <Image Include="Res\no_correction.png" />
+    <Image Include="Res\OK17.png" />
+    <Image Include="Res\OK20.png" />
+    <Image Include="Res\OK24.png" />
+    <Image Include="Res\OK34.png" />
+    <Image Include="Res\OK40.png" />
+    <Image Include="Res\OK48.png" />
+    <Image Include="Res\PlusDual34.png" />
+    <Image Include="Res\PlusDual40.png" />
+    <Image Include="Res\PlusDual48.png" />
+    <Image Include="Res\pointsplus34x34.png" />
+    <Image Include="Res\pointsplus40x40.png" />
+    <Image Include="Res\pointsplus48x48.png" />
+    <Image Include="Res\PrintScreen1.png" />
+    <Image Include="Res\PrintScreen2.png" />
+    <Image Include="Res\PrintScreen3.png" />
+    <Image Include="Res\ProductLogoB1.png" />
+    <Image Include="Res\ProductLogoB2.png" />
+    <Image Include="Res\ProductLogoB3.png" />
+    <Image Include="Res\ProductLogoW1.png" />
+    <Image Include="Res\ProductLogoW2.png" />
+    <Image Include="Res\ProductLogoW3.png" />
+    <Image Include="Res\RefreshPatients20.png" />
+    <Image Include="Res\RefreshPatients24.png" />
+    <Image Include="Res\RefreshPatients34.png" />
+    <Image Include="Res\RefreshPatients40.png" />
+    <Image Include="Res\RefreshPatients48.png" />
+    <Image Include="Res\Reject1.png" />
+    <Image Include="Res\Reject2.png" />
+    <Image Include="Res\Reject3.png" />
+    <Image Include="Res\Relative17.png" />
+    <Image Include="Res\Relative20.png" />
+    <Image Include="Res\Relative24.png" />
+    <Image Include="Res\Relative34.png" />
+    <Image Include="Res\Relative40.png" />
+    <Image Include="Res\Relative48.png" />
+    <Image Include="Res\RightArrow1.png" />
+    <Image Include="Res\RightArrow2.png" />
+    <Image Include="Res\RightArrow3.png" />
+    <Image Include="Res\SaveScreen1.png" />
+    <Image Include="Res\SaveScreen2.png" />
+    <Image Include="Res\SaveScreen3.png" />
+    <Image Include="Res\SelectDatabase20.png" />
+    <Image Include="Res\SelectDatabase24.png" />
+    <Image Include="Res\Settings1.png" />
+    <Image Include="Res\Settings2.png" />
+    <Image Include="Res\Settings3.png" />
+    <Image Include="Res\Shot11.png" />
+    <Image Include="Res\Shot12.png" />
+    <Image Include="Res\Shot13.png" />
+    <Image Include="Res\Shot21.png" />
+    <Image Include="Res\Shot22.png" />
+    <Image Include="Res\Shot23.png" />
+    <Image Include="Res\show_detail_17.png" />
+    <Image Include="Res\show_detail_20.png" />
+    <Image Include="Res\show_detail_24.png" />
+    <Image Include="Res\show_detail_34.png" />
+    <Image Include="Res\show_detail_40.png" />
+    <Image Include="Res\show_detail_48.png" />
+    <Image Include="Res\sun20x20.png" />
+    <Image Include="Res\Test1.png" />
+    <Image Include="Res\Test2.png" />
+    <Image Include="Res\Test3.png" />
+    <Image Include="Res\ToggleDisplays1.png" />
+    <Image Include="Res\ToggleDisplays2.png" />
+    <Image Include="Res\ToggleDisplays3.png" />
+    <Image Include="Res\TraceyLogoB1.png" />
+    <Image Include="Res\TraceyLogoB2.png" />
+    <Image Include="Res\TraceyLogoB3.png" />
+    <Image Include="Res\TraceyLogoW1.png" />
+    <Image Include="Res\TraceyLogoW2.png" />
+    <Image Include="Res\TraceyLogoW3.png" />
+    <Image Include="Res\UpArrow1.png" />
+    <Image Include="Res\UpArrow2.png" />
+    <Image Include="Res\UpArrow3.png" />
+    <Image Include="Res\UpArrow4.png" />
+    <Image Include="Res\UpArrow5.png" />
+    <Image Include="Res\UpArrow6.png" />
+    <Image Include="Res\Wavetouch1.png" />
+    <Image Include="Res\Wavetouch2.png" />
+    <Image Include="Res\Wavetouch3.png" />
+    <Image Include="Res\WavetouchLogoBlack.png" />
+    <Image Include="Res\WavetouchLogoWhite.png" />
+    <Image Include="Res\ZoomIn1.png" />
+    <Image Include="Res\ZoomIn2.png" />
+    <Image Include="Res\ZoomIn3.png" />
+    <Image Include="Res\ZoomIn4.png" />
+    <Image Include="Res\ZoomIn5.png" />
+    <Image Include="Res\ZoomIn6.png" />
+    <Image Include="Res\ZoomOut1.png" />
+    <Image Include="Res\ZoomOut2.png" />
+    <Image Include="Res\ZoomOut3.png" />
+    <Image Include="Res\ZoomOut4.png" />
+    <Image Include="Res\ZoomOut5.png" />
+    <Image Include="Res\ZoomOut6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="iTrace.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\iTrace.rc2" />
+    <None Include="Res\png1.bin" />
+    <None Include="Res\png2.bin" />
+    <None Include="Res\png3.bin" />
+    <None Include="Res\png4.bin" />
+    <None Include="Res\png5.bin" />
+    <None Include="Res\settings" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

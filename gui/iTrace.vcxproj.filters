@@ -1,0 +1,2078 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Windows">
+      <UniqueIdentifier>{ac754b7b-21a0-4b0d-af5a-1e513e9b7a67}</UniqueIdentifier>
+      <Extensions>h;cpp</Extensions>
+    </Filter>
+    <Filter Include="Dialog Boxes">
+      <UniqueIdentifier>{6da21563-8489-47b0-8553-51fde2f15984}</UniqueIdentifier>
+      <Extensions>h,cpp</Extensions>
+    </Filter>
+    <Filter Include="Dialog Boxes\PatientDlg">
+      <UniqueIdentifier>{a3db2064-4066-4b10-9fd5-21247054683d}</UniqueIdentifier>
+      <Extensions>h;cpp</Extensions>
+    </Filter>
+    <Filter Include="Dialog Boxes\ExamDlg">
+      <UniqueIdentifier>{6ebf93de-29c2-44bd-a2c7-b93e62cdc7ed}</UniqueIdentifier>
+      <Extensions>h;cpp</Extensions>
+    </Filter>
+    <Filter Include="Dialog Boxes\SelectExamDlg">
+      <UniqueIdentifier>{b8fea911-2eb6-4d40-9bc5-6dbc52b0f96d}</UniqueIdentifier>
+      <Extensions>h;cpp</Extensions>
+    </Filter>
+    <Filter Include="Dialog Boxes\AcquisitionDlg">
+      <UniqueIdentifier>{afaf80a1-fba1-4be8-8ec8-19e9cd775d20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\SimulationDlg">
+      <UniqueIdentifier>{ccf2c51f-3d6f-47f2-84b4-c1699a6b65db}</UniqueIdentifier>
+      <Extensions>h;cpp</Extensions>
+    </Filter>
+    <Filter Include="Dialog Boxes\AODToolDlg">
+      <UniqueIdentifier>{491418a5-ecc6-4b50-81a4-525b997b9a24}</UniqueIdentifier>
+      <Extensions>h;cpp</Extensions>
+    </Filter>
+    <Filter Include="Dialog Boxes\CalDlg">
+      <UniqueIdentifier>{528524b3-774f-42e2-8533-676d45cdccb1}</UniqueIdentifier>
+      <Extensions>h;cpp</Extensions>
+    </Filter>
+    <Filter Include="Dialog Boxes\CustomColorsDlg">
+      <UniqueIdentifier>{fd2168ce-37af-451e-a938-cf1407b59fdb}</UniqueIdentifier>
+      <Extensions>h;cpp</Extensions>
+    </Filter>
+    <Filter Include="Dialog Boxes\StatusDlg">
+      <UniqueIdentifier>{6f75e793-c5c4-4938-9875-a3f67cea6a34}</UniqueIdentifier>
+      <Extensions>h;cpp</Extensions>
+    </Filter>
+    <Filter Include="Dialog Boxes\NumDlg">
+      <UniqueIdentifier>{414e7581-c27b-46c7-b106-0e0b734a337b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\NumDlg\MaskDlg">
+      <UniqueIdentifier>{2025e34e-9dde-4f4a-b05b-dc50a1ea715c}</UniqueIdentifier>
+      <Extensions>h;cpp</Extensions>
+    </Filter>
+    <Filter Include="Dialog Boxes\FolderDlg">
+      <UniqueIdentifier>{9816cbce-1adc-45e8-94c0-7e2e15364820}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\GroupDlg">
+      <UniqueIdentifier>{f4bfebb0-4c83-4ea3-bf86-8ba72818a94f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\ClinicDlg">
+      <UniqueIdentifier>{89643305-c021-4308-b51c-0f77e0f60c69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\PhysicianDlg">
+      <UniqueIdentifier>{d49a1819-69fb-40f9-9a06-3b3214b2df9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\SettingsDlg">
+      <UniqueIdentifier>{6059ba3d-e442-4a29-87f2-73460b75cad4}</UniqueIdentifier>
+      <Extensions>h;cpp</Extensions>
+    </Filter>
+    <Filter Include="Dialog Boxes\ChartDlg">
+      <UniqueIdentifier>{d8b0356e-2369-4633-b735-841449e8688e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\RefSurfaceDlg">
+      <UniqueIdentifier>{8676596a-ecf5-4643-81d0-99ba03dc027a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\OperatorDlg">
+      <UniqueIdentifier>{4149255b-8f76-41f2-af70-8f96f663c545}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\FirmwareToolDlg">
+      <UniqueIdentifier>{2eb0be0f-16ae-4cbf-924b-00fe0318da0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\VideoToolDlg">
+      <UniqueIdentifier>{1f364772-23b3-49b5-8aee-98d8cfe8ee5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\EyeDlg">
+      <UniqueIdentifier>{eae738a0-763f-4ba3-a0e2-7639cb3dae4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\DatabaseDlg">
+      <UniqueIdentifier>{d6f771d2-cd6a-4783-a222-d2e8869b37f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\LensDlg">
+      <UniqueIdentifier>{dfbca343-03d8-4b6d-b57c-4a29ac87e7c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\PasswordDlg">
+      <UniqueIdentifier>{0fd167d9-ca6d-4933-82bd-15113761d275}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\ImageDlg">
+      <UniqueIdentifier>{cc6dc79e-5cbc-4bba-a29f-eeb14ab69cf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\TestResultDlg">
+      <UniqueIdentifier>{9b23fc61-0e6c-43b6-b23c-b117e03cc83e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\ActivationDlg">
+      <UniqueIdentifier>{e3ffb93b-4e7d-4120-ab86-f595cc806e0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\RingsToolDlg">
+      <UniqueIdentifier>{ba4884db-e47a-48ef-8dda-3171d761d866}</UniqueIdentifier>
+      <Extensions>h;cpp</Extensions>
+    </Filter>
+    <Filter Include="Dialog Boxes\PreopDataDlg">
+      <UniqueIdentifier>{ef4a2760-1c09-42e1-a1c3-bdf8b2bf5566}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\ICLDataDlg">
+      <UniqueIdentifier>{0c9a687c-4415-4e1f-8062-1fd6f7b894d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\RegistrationTimeDlg">
+      <UniqueIdentifier>{de51a87c-472a-4ce6-ab04-7d5ce3136ba3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\DeleteDlg">
+      <UniqueIdentifier>{58bb6f66-6406-48b7-a466-f7ab3c0af060}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\VideoMoveDlg">
+      <UniqueIdentifier>{724e1dda-b57f-4b9c-9382-3d1611a5f7f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\ToricSelDlg">
+      <UniqueIdentifier>{86bcd18f-805e-4f3c-801f-474948f56fc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\SelectTwoExamsDlg">
+      <UniqueIdentifier>{2b0f724b-3f96-4c32-aba4-ee223aa02f8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\PatientChartDlg">
+      <UniqueIdentifier>{52ed0044-f2a2-4bb7-83cb-a07f2382fee4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\ExcelSettingsDlg2">
+      <UniqueIdentifier>{753a1525-21ae-4c3a-975e-6da12a5536d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\ImageDlg2">
+      <UniqueIdentifier>{d44f227f-f521-46bb-96be-469d6c1da9ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\ImageDlg3">
+      <UniqueIdentifier>{f00be20b-1145-4e55-8852-646a5f94a235}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\ExamAveDlg">
+      <UniqueIdentifier>{bb8cd3ca-22cd-439e-847f-da242438e687}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\SettingsSoloDlg">
+      <UniqueIdentifier>{a38d0a7f-7876-4c95-9011-57b587921eae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\SettingsDefaultDlg">
+      <UniqueIdentifier>{d5b8c9aa-3938-498a-9f2e-7358cc968754}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\SelectImgDlg">
+      <UniqueIdentifier>{94facedf-70cd-4d2a-9031-b789eb34b3cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\QuickWFDlg">
+      <UniqueIdentifier>{172df85e-2b13-46a7-822d-5e31401965ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\SettingsIOLSelDlg">
+      <UniqueIdentifier>{3ca18f34-8809-49a2-a5b5-426063f2d728}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\ImageDlg1">
+      <UniqueIdentifier>{c4c616e0-2bc5-4c1e-a515-dd12edcaf3a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\SettingsTaskDlg">
+      <UniqueIdentifier>{4eb141a1-360d-422c-836d-76fa9a6564fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\ToricSelDlg2">
+      <UniqueIdentifier>{618a1ded-6c9d-4b29-afd9-1977a124d2d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\DofChartDlg">
+      <UniqueIdentifier>{9a80b6e9-c6a9-41da-9cdc-6a85a4f0566b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\SettinigComboTaskDlg">
+      <UniqueIdentifier>{f4d3027e-f54a-4693-ae7d-85b606e901ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\SettingsComboDlg">
+      <UniqueIdentifier>{8963b4f4-2477-4f96-89c5-7bcf58516ebd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\PreopComboDataDlg">
+      <UniqueIdentifier>{36482334-4ca0-48e3-9a81-4c3a3a3bc15e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{27cf1b50-6ac0-4a0d-a817-a1cb0b3ef6d6}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;h;txt</Extensions>
+    </Filter>
+    <Filter Include="Controls">
+      <UniqueIdentifier>{f3dcd559-e940-44b3-a7d8-2aee278181e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Acquisition">
+      <UniqueIdentifier>{807a1b20-5edc-4292-bfdb-25844ed3e9a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{8c85ad1f-bcdf-4f95-b329-a0f819b26ace}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Others">
+      <UniqueIdentifier>{ffaf821e-6b27-4607-8c12-f789c41bc1d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\PatientsMergeDlg">
+      <UniqueIdentifier>{53de338b-884f-4dbd-a4a1-7ca14d02bfe0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\TranExamDlg">
+      <UniqueIdentifier>{9eb3b5da-0005-4475-8abc-1ed4a00b3a39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\DatabaseMergeDlg">
+      <UniqueIdentifier>{da7bcf9d-8040-4844-ae53-a3a24482f540}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\DatabaseDestDlg">
+      <UniqueIdentifier>{bd2734f5-04bb-41a5-b45b-53053fa7125d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\AligmentDlg">
+      <UniqueIdentifier>{ec58cf28-107c-47ef-82e2-c80777084756}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\WFVrfTestDlg">
+      <UniqueIdentifier>{0b89dde2-ddc9-455b-bc10-19cbeb24936c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\CTWindows">
+      <UniqueIdentifier>{5bf704cf-1b3b-45bc-abd4-72075690a150}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\WFWindows">
+      <UniqueIdentifier>{010c640d-00ce-4e39-ab38-c5ad9080def1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\MainWindow">
+      <UniqueIdentifier>{e1b3eb2d-75ef-4084-9402-769312303079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\WFCTWindows">
+      <UniqueIdentifier>{77ec7e32-75b6-44d9-beeb-326ec203db25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\TypeWindows">
+      <UniqueIdentifier>{af9071cc-17ec-4285-a24b-c3b1aca49e56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\Acquisiton Control">
+      <UniqueIdentifier>{b7f6869d-ad86-4fd6-b2b3-feb76dd49d9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\ToricPlanner">
+      <UniqueIdentifier>{4b2bd330-b865-4409-8a09-a6ccdca32925}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\WaveTouchWindow">
+      <UniqueIdentifier>{a8ed73d1-f43d-4e22-a5a9-62fc4fbc39c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\OtherWindows">
+      <UniqueIdentifier>{2c62e46c-8c5e-4ff5-9c08-93cd36b7d388}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RZDCXDicomToolKit">
+      <UniqueIdentifier>{ece713e0-4933-4bb9-a49b-1b1854500d8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RZDCXDicomToolKit\TraceyMergeDicomClass">
+      <UniqueIdentifier>{e3afd67e-a962-4fe5-85e0-d1a78a7d5e96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\SameDicomPatientDlg">
+      <UniqueIdentifier>{89416ba0-3dc4-4e4f-a81d-517aae49d7e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\DicomSelTypeDlg">
+      <UniqueIdentifier>{c43ecc72-00e5-4918-a076-74e7297bde6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\DicomMWLRecDlg">
+      <UniqueIdentifier>{95214431-aab1-4a7e-aacd-80f139d77652}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Registration">
+      <UniqueIdentifier>{6319f01c-12db-4c03-8c3e-e4e2904bb372}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{904efbb8-ae93-4f14-b88a-0a1b811c8712}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GlobalFunctions">
+      <UniqueIdentifier>{df383391-aa84-490e-89b2-e1b533ff6350}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DCMTKDicom">
+      <UniqueIdentifier>{42de4157-84a5-4f22-99e3-3d16f0b85317}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog Boxes\DicomMWLResDlg">
+      <UniqueIdentifier>{90dcedd5-10e3-4472-ad40-c3c080cbf8e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\TypeWindows\BasicWindows">
+      <UniqueIdentifier>{f80a87ea-40f2-4e12-9f44-4a97624fd9cb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PatientDlg.cpp">
+      <Filter>Dialog Boxes\PatientDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="ExamDlg.cpp">
+      <Filter>Dialog Boxes\ExamDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectExamDlg.cpp">
+      <Filter>Dialog Boxes\SelectExamDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="AcquisitionDlg.cpp">
+      <Filter>Dialog Boxes\AcquisitionDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="CTAcquisitionDlg.cpp">
+      <Filter>Dialog Boxes\AcquisitionDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="SimulationDlg.cpp">
+      <Filter>Dialog Boxes\SimulationDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="AODToolDlg.cpp">
+      <Filter>Dialog Boxes\AODToolDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="GridWnd.cpp">
+      <Filter>Dialog Boxes\AODToolDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="LADWnd.cpp">
+      <Filter>Dialog Boxes\AODToolDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="CalDlg.cpp">
+      <Filter>Dialog Boxes\CalDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomColorsDlg.cpp">
+      <Filter>Dialog Boxes\CustomColorsDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="StatusDlg.cpp">
+      <Filter>Dialog Boxes\StatusDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="NumDlg.cpp">
+      <Filter>Dialog Boxes\NumDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="MaskDlg.cpp">
+      <Filter>Dialog Boxes\NumDlg\MaskDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="FolderDlg.cpp">
+      <Filter>Dialog Boxes\FolderDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="GroupDlg.cpp">
+      <Filter>Dialog Boxes\GroupDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="ClinicDlg.cpp">
+      <Filter>Dialog Boxes\ClinicDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicianDlg.cpp">
+      <Filter>Dialog Boxes\PhysicianDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsDlg.cpp">
+      <Filter>Dialog Boxes\SettingsDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="ChartDlg.cpp">
+      <Filter>Dialog Boxes\ChartDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="RefSurfaceDlg.cpp">
+      <Filter>Dialog Boxes\RefSurfaceDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="OperatorDlg.cpp">
+      <Filter>Dialog Boxes\OperatorDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="FirmwareToolDlg.cpp">
+      <Filter>Dialog Boxes\FirmwareToolDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="Video2ToolDlg.cpp">
+      <Filter>Dialog Boxes\VideoToolDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="Video3ToolDlg.cpp">
+      <Filter>Dialog Boxes\VideoToolDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="VideoToolDlg.cpp">
+      <Filter>Dialog Boxes\VideoToolDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="EyeDlg.cpp">
+      <Filter>Dialog Boxes\EyeDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="DatabaseDlg.cpp">
+      <Filter>Dialog Boxes\DatabaseDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="LensDlg.cpp">
+      <Filter>Dialog Boxes\LensDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="PasswordDlg.cpp">
+      <Filter>Dialog Boxes\PasswordDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageDlg.cpp">
+      <Filter>Dialog Boxes\ImageDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="TestResultDlg.cpp">
+      <Filter>Dialog Boxes\TestResultDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="ActivationDlg.cpp">
+      <Filter>Dialog Boxes\ActivationDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="RingsToolDlg.cpp">
+      <Filter>Dialog Boxes\RingsToolDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="PreopDataDlg.cpp">
+      <Filter>Dialog Boxes\PreopDataDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="ICLDataDlg.cpp">
+      <Filter>Dialog Boxes\ICLDataDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="RegtimeDlg.cpp">
+      <Filter>Dialog Boxes\RegistrationTimeDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="DeleteDlg.cpp">
+      <Filter>Dialog Boxes\DeleteDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="VideoMoveDlg.cpp">
+      <Filter>Dialog Boxes\VideoMoveDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="ToricSelDlg.cpp">
+      <Filter>Dialog Boxes\ToricSelDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectTwoExamDlg.cpp">
+      <Filter>Dialog Boxes\SelectTwoExamsDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="PatientChartDlg.cpp">
+      <Filter>Dialog Boxes\PatientChartDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="ExcelSettingsCTpage.cpp">
+      <Filter>Dialog Boxes\ExcelSettingsDlg2</Filter>
+    </ClCompile>
+    <ClCompile Include="ExcelSettingsDlg2.cpp">
+      <Filter>Dialog Boxes\ExcelSettingsDlg2</Filter>
+    </ClCompile>
+    <ClCompile Include="ExcelSettingsWFCTpage.cpp">
+      <Filter>Dialog Boxes\ExcelSettingsDlg2</Filter>
+    </ClCompile>
+    <ClCompile Include="ExcelSettingsWFpage.cpp">
+      <Filter>Dialog Boxes\ExcelSettingsDlg2</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageDlg2.cpp">
+      <Filter>Dialog Boxes\ImageDlg2</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageDlg3.cpp">
+      <Filter>Dialog Boxes\ImageDlg3</Filter>
+    </ClCompile>
+    <ClCompile Include="ExamAveDlg.cpp">
+      <Filter>Dialog Boxes\ExamAveDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsSoloDlg.cpp">
+      <Filter>Dialog Boxes\SettingsSoloDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsDefaultDlg.cpp">
+      <Filter>Dialog Boxes\SettingsDefaultDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectImgDlg.cpp">
+      <Filter>Dialog Boxes\SelectImgDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="QuickWFDlg.cpp">
+      <Filter>Dialog Boxes\QuickWFDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsIOLSelDlg.cpp">
+      <Filter>Dialog Boxes\SettingsIOLSelDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageDlg1.cpp">
+      <Filter>Dialog Boxes\ImageDlg1</Filter>
+    </ClCompile>
+    <ClCompile Include="TaskSettingDlg.cpp">
+      <Filter>Dialog Boxes\SettingsTaskDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="ToricSelDlg2.cpp">
+      <Filter>Dialog Boxes\ToricSelDlg2</Filter>
+    </ClCompile>
+    <ClCompile Include="DofChartDlg.cpp">
+      <Filter>Dialog Boxes\DofChartDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="TaskSettinigComboDlg.cpp">
+      <Filter>Dialog Boxes\SettinigComboTaskDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsComboDlg.cpp">
+      <Filter>Dialog Boxes\SettingsComboDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="PreopComboDataDlg.cpp">
+      <Filter>Dialog Boxes\PreopComboDataDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="Btn.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="Onoff.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="Rad.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="Sel3Btn.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="SelBtn.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="VerSliderCtrl.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="VerSliderCtrl2.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="XPControl.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="XPHeaderCtrl.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="XPListCtrl.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="XPListCtrla.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="XPMenu.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="XPSliderCtrl.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="CTAcquisition.cpp">
+      <Filter>Acquisition</Filter>
+    </ClCompile>
+    <ClCompile Include="LiveVideo.cpp">
+      <Filter>Acquisition</Filter>
+    </ClCompile>
+    <ClCompile Include="WFAcquisition.cpp">
+      <Filter>Acquisition</Filter>
+    </ClCompile>
+    <ClCompile Include="WFTest.cpp">
+      <Filter>Acquisition</Filter>
+    </ClCompile>
+    <ClCompile Include="Compression.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="CTExam.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="CubicSpline.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Exam.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="FT.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="LAD.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="MTF.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Sort.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Structures.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Surface.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="ThroughFocusVSOTFa.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="unzip.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="WFExam.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="zip.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="excel9.cpp">
+      <Filter>Others</Filter>
+    </ClCompile>
+    <ClCompile Include="Export.cpp">
+      <Filter>Others</Filter>
+    </ClCompile>
+    <ClCompile Include="ExportCustomvis.cpp">
+      <Filter>Others</Filter>
+    </ClCompile>
+    <ClCompile Include="ExportTopcon.cpp">
+      <Filter>Others</Filter>
+    </ClCompile>
+    <ClCompile Include="ExportWavetouch.cpp">
+      <Filter>Others</Filter>
+    </ClCompile>
+    <ClCompile Include="Hardware.cpp">
+      <Filter>Others</Filter>
+    </ClCompile>
+    <ClCompile Include="iTraceApp.cpp">
+      <Filter>Others</Filter>
+    </ClCompile>
+    <ClCompile Include="PatientsMergeDlg.cpp">
+      <Filter>Dialog Boxes\PatientsMergeDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="TranExamDlg.cpp">
+      <Filter>Dialog Boxes\TranExamDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="WFGUICtrl0Wnd.cpp">
+      <Filter>Acquisition</Filter>
+    </ClCompile>
+    <ClCompile Include="WFGUICtrlWnd.cpp">
+      <Filter>Acquisition</Filter>
+    </ClCompile>
+    <ClCompile Include="TipWnd.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="DatabaseMerge.cpp">
+      <Filter>Dialog Boxes\DatabaseMergeDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="DatabaseDestDlg.cpp">
+      <Filter>Dialog Boxes\DatabaseDestDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="AlignmentDlg.cpp">
+      <Filter>Dialog Boxes\AligmentDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="WFVrfTestDlg.cpp">
+      <Filter>Dialog Boxes\WFVrfTestDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="CTDoubleSumWnd.cpp">
+      <Filter>Windows\CTWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="CTColorImgWnd.cpp">
+      <Filter>Windows\CTWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="CTOsherAliWnd.cpp">
+      <Filter>Windows\CTWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="CTSingleCmpWnd.cpp">
+      <Filter>Windows\CTWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="CTSingleSumWnd.cpp">
+      <Filter>Windows\CTWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="CTSingleVrfWnd.cpp">
+      <Filter>Windows\CTWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="WFDoubleSoloWnd.cpp">
+      <Filter>Windows\WFWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="WFDoubleSumWnd.cpp">
+      <Filter>Windows\WFWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="WFMultiSumWnd.cpp">
+      <Filter>Windows\WFWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="WFSingleCmpWnd.cpp">
+      <Filter>Windows\WFWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="WFSingleSoloWnd.cpp">
+      <Filter>Windows\WFWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="WFSingleSumWnd.cpp">
+      <Filter>Windows\WFWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="WFSingleVrfWnd.cpp">
+      <Filter>Windows\WFWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="WFSoloCmpWnd.cpp">
+      <Filter>Windows\WFWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="WFSoloVfaWnd.cpp">
+      <Filter>Windows\WFWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="WFVrfTestWnd.cpp">
+      <Filter>Windows\WFWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="MemWnd.cpp">
+      <Filter>Windows\TypeWindows\BasicWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="SumWnd.cpp">
+      <Filter>Windows\TypeWindows\BasicWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="SumWndInfo.cpp">
+      <Filter>Windows\TypeWindows\BasicWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="MainWnd.cpp">
+      <Filter>Windows\MainWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="WFCTAngleSumWnd.cpp">
+      <Filter>Windows\WFCTWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="WFCTDysPtWnd.cpp">
+      <Filter>Windows\WFCTWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="WFCTDysWnd.cpp">
+      <Filter>Windows\WFCTWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="WFCTIolWnd.cpp">
+      <Filter>Windows\WFCTWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="WFCTOUSumWnd.cpp">
+      <Filter>Windows\WFCTWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="WFCTSumWnd.cpp">
+      <Filter>Windows\WFCTWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="WFCTTorAliWnd.cpp">
+      <Filter>Windows\WFCTWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="DispWnd.cpp">
+      <Filter>Windows\TypeWindows\BasicWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="LtrWnd.cpp">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="EyeWnd.cpp">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="MTFWnd.cpp">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="NearLtrWnd.cpp">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEyeWnd.cpp">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="PSFWnd.cpp">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="RMSWnd.cpp">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="RSDWnd.cpp">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="EEFWnd.cpp">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="MGdi.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Messages.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="WFDOFCWnd.cpp">
+      <Filter>Windows\WFWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="DOFWnd.cpp">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="DOFCWnd.cpp">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgCptCtrlWnd.cpp">
+      <Filter>Windows\Acquisiton Control</Filter>
+    </ClCompile>
+    <ClCompile Include="ExamCaptureWnd.cpp">
+      <Filter>Windows\Acquisiton Control</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgInfoWnd.cpp">
+      <Filter>Windows\MainWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="PlannerWnd.cpp">
+      <Filter>Windows\ToricPlanner</Filter>
+    </ClCompile>
+    <ClCompile Include="PlanWnd.cpp">
+      <Filter>Windows\ToricPlanner</Filter>
+    </ClCompile>
+    <ClCompile Include="Settings.cpp">
+      <Filter>Others</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>Others</Filter>
+    </ClCompile>
+    <ClCompile Include="WTSumWnd.cpp">
+      <Filter>Windows\WaveTouchWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="ChartWnd.cpp">
+      <Filter>Windows\OtherWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="SignalWnd.cpp">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="PlanBigWnd.cpp">
+      <Filter>Windows\ToricPlanner</Filter>
+    </ClCompile>
+    <ClCompile Include="TraceyDicom.cpp">
+      <Filter>RZDCXDicomToolKit\TraceyMergeDicomClass</Filter>
+    </ClCompile>
+    <ClCompile Include="WFAcquisitionDlg.cpp">
+      <Filter>Dialog Boxes\AcquisitionDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="SameDicomPatientDlg.cpp">
+      <Filter>Dialog Boxes\SameDicomPatientDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="DicomSelTypeDlg.cpp">
+      <Filter>Dialog Boxes\DicomSelTypeDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="DicomMWLRecDlg.cpp">
+      <Filter>Dialog Boxes\DicomMWLRecDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="INIParser.cpp">
+      <Filter>Registration</Filter>
+    </ClCompile>
+    <ClCompile Include="Licensing.cpp">
+      <Filter>Registration</Filter>
+    </ClCompile>
+    <ClCompile Include="Registry.cpp">
+      <Filter>Registration</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalFunctions.cpp">
+      <Filter>GlobalFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="Data.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="WFNearVisionSumWnd.cpp">
+      <Filter>Windows\WFWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="HorSliderCtrl.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="FarLtrWnd.cpp">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="DcmtkDicom.cpp">
+      <Filter>DCMTKDicom</Filter>
+    </ClCompile>
+    <ClCompile Include="DicomMWLResDlg.cpp">
+      <Filter>Dialog Boxes\DicomMWLResDlg</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PatientDlg.h">
+      <Filter>Dialog Boxes\PatientDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="ExamDlg.h">
+      <Filter>Dialog Boxes\ExamDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectExamDlg.h">
+      <Filter>Dialog Boxes\SelectExamDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="AcquisitionDlg.h">
+      <Filter>Dialog Boxes\AcquisitionDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="CTAcquisitionDlg.h">
+      <Filter>Dialog Boxes\AcquisitionDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="WFAcquisitionDlg.h">
+      <Filter>Dialog Boxes\AcquisitionDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="SimulationDlg.h">
+      <Filter>Dialog Boxes\SimulationDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="AODToolDlg.h">
+      <Filter>Dialog Boxes\AODToolDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="GridWnd.h">
+      <Filter>Dialog Boxes\AODToolDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="LADWnd.h">
+      <Filter>Dialog Boxes\AODToolDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="CalDlg.h">
+      <Filter>Dialog Boxes\CalDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomColorsDlg.h">
+      <Filter>Dialog Boxes\CustomColorsDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="StatusDlg.h">
+      <Filter>Dialog Boxes\StatusDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="NumDlg.h">
+      <Filter>Dialog Boxes\NumDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="MaskDlg.h">
+      <Filter>Dialog Boxes\NumDlg\MaskDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="FolderDlg.h">
+      <Filter>Dialog Boxes\FolderDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="GroupDlg.h">
+      <Filter>Dialog Boxes\GroupDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="ClinicDlg.h">
+      <Filter>Dialog Boxes\ClinicDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicianDlg.h">
+      <Filter>Dialog Boxes\PhysicianDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsDlg.h">
+      <Filter>Dialog Boxes\SettingsDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="ChartDlg.h">
+      <Filter>Dialog Boxes\ChartDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="RefSurfaceDlg.h">
+      <Filter>Dialog Boxes\RefSurfaceDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="OperatorDlg.h">
+      <Filter>Dialog Boxes\OperatorDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="FirmwareToolDlg.h">
+      <Filter>Dialog Boxes\FirmwareToolDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="Video2ToolDlg.h">
+      <Filter>Dialog Boxes\VideoToolDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="Video3ToolDlg.h">
+      <Filter>Dialog Boxes\VideoToolDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="VideoToolDlg.h">
+      <Filter>Dialog Boxes\VideoToolDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="EyeDlg.h">
+      <Filter>Dialog Boxes\EyeDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseDlg.h">
+      <Filter>Dialog Boxes\DatabaseDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="LensDlg.h">
+      <Filter>Dialog Boxes\LensDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="PasswordDlg.h">
+      <Filter>Dialog Boxes\PasswordDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageDlg.h">
+      <Filter>Dialog Boxes\ImageDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="TestResultDlg.h">
+      <Filter>Dialog Boxes\TestResultDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="ActivationDlg.h">
+      <Filter>Dialog Boxes\ActivationDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="RingsToolDlg.h">
+      <Filter>Dialog Boxes\RingsToolDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="PreopDataDlg.h">
+      <Filter>Dialog Boxes\PreopDataDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="ICLDataDlg.h">
+      <Filter>Dialog Boxes\ICLDataDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="RegtimeDlg.h">
+      <Filter>Dialog Boxes\RegistrationTimeDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="DeleteDlg.h">
+      <Filter>Dialog Boxes\DeleteDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="VideoMoveDlg.h">
+      <Filter>Dialog Boxes\VideoMoveDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="ToricSelDlg.h">
+      <Filter>Dialog Boxes\ToricSelDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectTwoExamDlg.h">
+      <Filter>Dialog Boxes\SelectTwoExamsDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="PatientChartDlg.h">
+      <Filter>Dialog Boxes\PatientChartDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="ExcelSettingsCTpage.h">
+      <Filter>Dialog Boxes\ExcelSettingsDlg2</Filter>
+    </ClInclude>
+    <ClInclude Include="ExcelSettingsDlg2.h">
+      <Filter>Dialog Boxes\ExcelSettingsDlg2</Filter>
+    </ClInclude>
+    <ClInclude Include="ExcelSettingsWFCTpage.h">
+      <Filter>Dialog Boxes\ExcelSettingsDlg2</Filter>
+    </ClInclude>
+    <ClInclude Include="ExcelSettingsWFpage.h">
+      <Filter>Dialog Boxes\ExcelSettingsDlg2</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageDlg2.h">
+      <Filter>Dialog Boxes\ImageDlg2</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageDlg3.h">
+      <Filter>Dialog Boxes\ImageDlg3</Filter>
+    </ClInclude>
+    <ClInclude Include="ExamAveDlg.h">
+      <Filter>Dialog Boxes\ExamAveDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsSoloDlg.h">
+      <Filter>Dialog Boxes\SettingsSoloDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsDefaultDlg.h">
+      <Filter>Dialog Boxes\SettingsDefaultDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectImgDlg.h">
+      <Filter>Dialog Boxes\SelectImgDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="QuickWFDlg.h">
+      <Filter>Dialog Boxes\QuickWFDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsIOLSelDlg.h">
+      <Filter>Dialog Boxes\SettingsIOLSelDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageDlg1.h">
+      <Filter>Dialog Boxes\ImageDlg1</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskSettingDlg.h">
+      <Filter>Dialog Boxes\SettingsTaskDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="ToricSelDlg2.h">
+      <Filter>Dialog Boxes\ToricSelDlg2</Filter>
+    </ClInclude>
+    <ClInclude Include="DofChartDlg.h">
+      <Filter>Dialog Boxes\DofChartDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskSettinigComboDlg.h">
+      <Filter>Dialog Boxes\SettinigComboTaskDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsComboDlg.h">
+      <Filter>Dialog Boxes\SettingsComboDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="PreopComboDataDlg.h">
+      <Filter>Dialog Boxes\PreopComboDataDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="Btn.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="BusyCursor.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Onoff.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Rad.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Sel3Btn.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="SelBtn.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="VerSliderCtrl.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="VerSliderCtrl2.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="XPControl.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="XPHeaderCtrl.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="XPListCtrl.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="XPListCtrla.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="XPMenu.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="XPSliderCtrl.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Acquisition.h">
+      <Filter>Acquisition</Filter>
+    </ClInclude>
+    <ClInclude Include="CTAcquisition.h">
+      <Filter>Acquisition</Filter>
+    </ClInclude>
+    <ClInclude Include="LiveVideo.h">
+      <Filter>Acquisition</Filter>
+    </ClInclude>
+    <ClInclude Include="WFAcquisition.h">
+      <Filter>Acquisition</Filter>
+    </ClInclude>
+    <ClInclude Include="WFTest.h">
+      <Filter>Acquisition</Filter>
+    </ClInclude>
+    <ClInclude Include="Compression.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="CubicSpline.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="FT.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Sort.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Structures.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Surface.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="ThroughFocusVSOTFa.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="unzip.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="zip.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="excel9.h">
+      <Filter>Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Export.h">
+      <Filter>Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Hardware.h">
+      <Filter>Others</Filter>
+    </ClInclude>
+    <ClInclude Include="htmlhelp.h">
+      <Filter>Others</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Others</Filter>
+    </ClInclude>
+    <ClInclude Include="PatientsMergeDlg.h">
+      <Filter>Dialog Boxes\PatientsMergeDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="TranExamDlg.h">
+      <Filter>Dialog Boxes\TranExamDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="WFGUICtrl0Wnd.h">
+      <Filter>Acquisition</Filter>
+    </ClInclude>
+    <ClInclude Include="WFGUICtrlWnd.h">
+      <Filter>Acquisition</Filter>
+    </ClInclude>
+    <ClInclude Include="TipWnd.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseMerge.h">
+      <Filter>Dialog Boxes\DatabaseMergeDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseDestDlg.h">
+      <Filter>Dialog Boxes\DatabaseDestDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="AlignmentDlg.h">
+      <Filter>Dialog Boxes\AligmentDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="WFVrfTestDlg.h">
+      <Filter>Dialog Boxes\WFVrfTestDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="CTColorImgWnd.h">
+      <Filter>Windows\CTWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="CTDoubleSumWnd.h">
+      <Filter>Windows\CTWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="CTOsherAliWnd.h">
+      <Filter>Windows\CTWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="CTSingleCmpWnd.h">
+      <Filter>Windows\CTWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="CTSingleSumWnd.h">
+      <Filter>Windows\CTWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="CTSingleVrfWnd.h">
+      <Filter>Windows\CTWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="WFDoubleSoloWnd.h">
+      <Filter>Windows\WFWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="WFDoubleSumWnd.h">
+      <Filter>Windows\WFWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="WFMultiSumWnd.h">
+      <Filter>Windows\WFWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="WFSingleCmpWnd.h">
+      <Filter>Windows\WFWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="WFSingleSoloWnd.h">
+      <Filter>Windows\WFWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="WFSingleSumWnd.h">
+      <Filter>Windows\WFWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="WFSingleVrfWnd.h">
+      <Filter>Windows\WFWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="WFSoloCmpWnd.h">
+      <Filter>Windows\WFWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="WFSoloVfaWnd.h">
+      <Filter>Windows\WFWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="WFVrfTestWnd.h">
+      <Filter>Windows\WFWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="MemWnd.h">
+      <Filter>Windows\TypeWindows\BasicWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="SumWnd.h">
+      <Filter>Windows\TypeWindows\BasicWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="MainWnd.h">
+      <Filter>Windows\MainWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="WFCTAngleSumWnd.h">
+      <Filter>Windows\WFCTWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="WFCTDysPtWnd.h">
+      <Filter>Windows\WFCTWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="WFCTDysWnd.h">
+      <Filter>Windows\WFCTWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="WFCTIolWnd.h">
+      <Filter>Windows\WFCTWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="WFCTOUSumWnd.h">
+      <Filter>Windows\WFCTWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="WFCTSumWnd.h">
+      <Filter>Windows\WFCTWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="WFCTTorAliWnd.h">
+      <Filter>Windows\WFCTWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="DispWnd.h">
+      <Filter>Windows\TypeWindows\BasicWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="LtrWnd.h">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="EyeWnd.h">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="MTFWnd.h">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="NearLtrWnd.h">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEyeWnd.h">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="RMSWnd.h">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="RSDWnd.h">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="EEFWnd.h">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="PSFWnd.h">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="MGdi.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Messages.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="WFDOFCWnd.h">
+      <Filter>Windows\WFWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="DofWnd.h">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="DOFCWnd.h">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="ImgCptCtrlWnd.h">
+      <Filter>Windows\Acquisiton Control</Filter>
+    </ClInclude>
+    <ClInclude Include="ExamCaptureWnd.h">
+      <Filter>Windows\Acquisiton Control</Filter>
+    </ClInclude>
+    <ClInclude Include="ImgInfoWnd.h">
+      <Filter>Windows\MainWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="PlannerWnd.h">
+      <Filter>Windows\ToricPlanner</Filter>
+    </ClInclude>
+    <ClInclude Include="PlanWnd.h">
+      <Filter>Windows\ToricPlanner</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.h">
+      <Filter>Others</Filter>
+    </ClInclude>
+    <ClInclude Include="WTSumWnd.h">
+      <Filter>Windows\WaveTouchWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="ChartWnd.h">
+      <Filter>Windows\OtherWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="SignalWnd.h">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="PlanBigWnd.h">
+      <Filter>Windows\ToricPlanner</Filter>
+    </ClInclude>
+    <ClInclude Include="TraceyDicom.h">
+      <Filter>RZDCXDicomToolKit\TraceyMergeDicomClass</Filter>
+    </ClInclude>
+    <ClInclude Include="SameDicomPatientDlg.h">
+      <Filter>Dialog Boxes\SameDicomPatientDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="611Notes.h">
+      <Filter>Others</Filter>
+    </ClInclude>
+    <ClInclude Include="611.h">
+      <Filter>Others</Filter>
+    </ClInclude>
+    <ClInclude Include="DicomSelTypeDlg.h">
+      <Filter>Dialog Boxes\DicomSelTypeDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="DicomMWLRecDlg.h">
+      <Filter>Dialog Boxes\DicomMWLRecDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="INIParser.h">
+      <Filter>Registration</Filter>
+    </ClInclude>
+    <ClInclude Include="Licensing.h">
+      <Filter>Registration</Filter>
+    </ClInclude>
+    <ClInclude Include="Registry.h">
+      <Filter>Registration</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalFunctions.h">
+      <Filter>GlobalFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="Data.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="WFNearVisionSumWnd.h">
+      <Filter>Windows\WFWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="HorSliderCtrl.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="FarLtrWnd.h">
+      <Filter>Windows\TypeWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="DcmtkDicom.h">
+      <Filter>DCMTKDicom</Filter>
+    </ClInclude>
+    <ClInclude Include="DicomMWLResDlg.h">
+      <Filter>Dialog Boxes\DicomMWLResDlg</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Res\Absolute17.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Absolute20.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Absolute24.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Absolute34.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Absolute40.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Absolute48.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Accept0.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Accept1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Accept2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Accept3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\AcquireButton37.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\AcquireButton44.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\AcquireButton53.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Cancel1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Cancel2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Cancel3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\correction.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Correction1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Correction2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Correction3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Correction4.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Correction5.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Correction6.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\correction_sphere1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\correction_sphere2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\correction_sphere3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\correction_sphere4.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\correction_sphere5.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\correction_sphere6.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\CorrectionNo1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\CorrectionNo2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\CorrectionNo3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\CorrectionNo4.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\CorrectionNo5.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\CorrectionNo6.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DecZone1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DecZone2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DecZone3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DecZone4.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DecZone5.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DecZone6.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DeleteExam1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DeleteExam2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DeleteExam3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DeletePatient1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DeletePatient2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DeletePatient3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DisplayToggleCT_34.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DisplayToggleCT_40.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DisplayToggleCT_48.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DisplayToggleWF_34.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DisplayToggleWF_40.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DisplayToggleWF_48.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DisplayToggleWFCT_34.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DisplayToggleWFCT_40.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DisplayToggleWFCT_48.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DownArrow1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DownArrow2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DownArrow3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DownArrow4.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DownArrow5.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\DownArrow6.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\E_black_map_20x50.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\E_white_20x20.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\E_white_map_20x50.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\EditExam1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\EditExam2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\EditExam3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\EditPatient1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\EditPatient2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\EditPatient3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ExcelExport1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ExcelExport2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ExcelExport3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Exit1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Exit2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Exit3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ExportData1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ExportData2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ExportData3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ExportOrder1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ExportOrder2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ExportOrder3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ExportPatients1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ExportPatients2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ExportPatients3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\FwdArrow68x34.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\FwdArrow80x40.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\FwdArrow96x48.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\hide_detail_17.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\hide_detail_20.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\hide_detail_24.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\hide_detail_34.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\hide_detail_40.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\hide_detail_48.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\HoyaLogo.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\HoyaLogo1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\HoyaLogo2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\HoyaLogo3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ImportPatients1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ImportPatients2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ImportPatients3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\IncZone1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\IncZone2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\IncZone3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\IncZone4.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\IncZone5.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\IncZone6.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\iTrace.ico">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\iTraceLogoB1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\iTraceLogoB2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\iTraceLogoB3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\iTraceLogoW1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\iTraceLogoW2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\iTraceLogoW3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\iTraceSoloB1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\iTraceSoloB2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\iTraceSoloB3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\iTraceSoloW1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\iTraceSoloW2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\iTraceSoloW3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\LeftArrow1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\LeftArrow2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\LeftArrow3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\License1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\License2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\License3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\map20x20.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\moon.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\NewCTExam1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\NewCTExam2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\NewCTExam3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\NewINExam1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\NewINExam2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\NewINExam3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\NewPatient1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\NewPatient2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\NewPatient3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\NewWFExam1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\NewWFExam2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\NewWFExam3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\no_correction.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\OK17.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\OK20.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\OK24.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\OK34.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\OK40.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\OK48.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\PlusDual34.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\PlusDual40.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\PlusDual48.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\pointsplus34x34.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\pointsplus40x40.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\pointsplus48x48.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\PrintScreen1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\PrintScreen2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\PrintScreen3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ProductLogoB1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ProductLogoB2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ProductLogoB3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ProductLogoW1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ProductLogoW2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ProductLogoW3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Reject1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Reject2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Reject3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Relative17.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Relative20.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Relative24.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Relative34.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Relative40.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Relative48.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\RightArrow1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\RightArrow2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\RightArrow3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\SaveScreen1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\SaveScreen2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\SaveScreen3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Settings1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Settings2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Settings3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Shot11.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Shot12.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Shot13.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Shot21.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Shot22.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Shot23.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\show_detail_17.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\show_detail_20.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\show_detail_24.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\show_detail_34.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\show_detail_40.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\show_detail_48.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\sun20x20.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Test1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Test2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Test3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ToggleDisplays1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ToggleDisplays2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ToggleDisplays3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\TraceyLogoB1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\TraceyLogoB2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\TraceyLogoB3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\TraceyLogoW1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\TraceyLogoW2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\TraceyLogoW3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\UpArrow1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\UpArrow2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\UpArrow3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\UpArrow4.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\UpArrow5.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\UpArrow6.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Wavetouch1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Wavetouch2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\Wavetouch3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\WavetouchLogoBlack.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\WavetouchLogoWhite.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ZoomIn1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ZoomIn2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ZoomIn3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ZoomIn4.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ZoomIn5.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ZoomIn6.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ZoomOut1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ZoomOut2.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ZoomOut3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ZoomOut4.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ZoomOut5.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\ZoomOut6.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\SelectDatabase24.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\SelectDatabase20.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\RefreshPatients48.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\RefreshPatients40.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\RefreshPatients34.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\RefreshPatients24.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\RefreshPatients20.png">
+      <Filter>Resources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="iTrace.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\iTrace.rc2">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Res\png1.bin">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Res\png2.bin">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Res\png3.bin">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Res\png4.bin">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Res\png5.bin">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Res\settings">
+      <Filter>Resources</Filter>
+    </None>
+  </ItemGroup>
+</Project>
