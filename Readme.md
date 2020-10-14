@@ -9,7 +9,7 @@
 
 The following libaries are used and managed with vcpkg
 
-* * fmt:x86-windows
+* fmt:x86-windows
 * ms-gsl:x86-windows
 * nlohmann-json:x86-windows
 * opencv4:x86-windows
