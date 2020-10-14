@@ -9,12 +9,7 @@
 
 The following libaries are used and managed with vcpkg
 
-* benchmark:x86-windows
-* boost:x86-windows
-* bzip2:x86-windows
-* dcmtk:x86-windows
-* fmt:x86-windows
-* gtest:x86-windows
+* * fmt:x86-windows
 * ms-gsl:x86-windows
 * nlohmann-json:x86-windows
 * opencv4:x86-windows
