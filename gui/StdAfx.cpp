@@ -70,19 +70,6 @@ CString WndClassName;
 
 //***************************************************************************************
 
-CString FullSoftwareVersion(const uint SoftwareVersion)
-{
-	uint v1 = (SoftwareVersion & 0x0f000000) >> 24;
-	uint v2 = (SoftwareVersion & 0x00f00000) >> 20;
-	uint v3 = (SoftwareVersion & 0x000f0000) >> 16;
-	uint y = 2015 + ((SoftwareVersion & 0x0000f000) >> 12);//
-	uint m = (SoftwareVersion & 0x00000f00) >> 8;
-	uint d = SoftwareVersion & 0x000000ff;
-	CString s;
-	s.Format(_T("%u.%u.%u %04u-%02u-%02u"), v1, v2, v3, y, m, d);
-	return s;
-}
-
 //***************************************************************************************
 
 // check the last input letter is number(0~9 and .) or not

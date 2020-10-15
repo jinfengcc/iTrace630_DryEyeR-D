@@ -11,6 +11,21 @@ const unsigned SOFTWARE_VERSION_3 = 0x03000000;
 const unsigned SOFTWARE_VERSION_4 = 0x04000000;
 const unsigned SOFTWARE_VERSION   = GetVVVVYMDD(); // V V V V Y M D D
 
+CString FullSoftwareVersion()
+{
+  uint v1 = VERSION_MAJOR;
+  uint v2 = HIBYTE(VERSION_MINOR);
+  uint v3 = HIBYTE(VERSION_MINOR);
+  uint y  = VERSION_YEAR;
+  uint m  = VERSION_DAY / 100;
+  uint d  = VERSION_DAY % 100;
+
+  CString s;
+  s.Format(_T("%u.%u.%u %04u-%02u-%02u"), v1, v2, v3, y, m, d);
+
+  return s;
+}
+
 namespace {
   constexpr unsigned GetVVVVYMDD(unsigned MAJOR, unsigned MINOR, unsigned YEAR, unsigned DAY)
   {
@@ -27,6 +42,7 @@ namespace {
   void VerifyStrings()
   {
     // clang-format off
+    static_assert(0x061e5a02 == GetVVVVYMDD(6, 30, 2020, 1002));
     static_assert(0x07005a02 == GetVVVVYMDD(7,  0, 2020, 1002));
     static_assert(0x070a5911 == GetVVVVYMDD(7, 10, 2020,  917));
 

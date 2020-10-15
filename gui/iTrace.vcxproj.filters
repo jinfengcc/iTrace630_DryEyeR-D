@@ -276,6 +276,9 @@
     <Filter Include="Bin">
       <UniqueIdentifier>{4f49eccd-59b1-47aa-b654-431d0ad48e5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Hardware">
+      <UniqueIdentifier>{75e3fa63-9aba-4016-8745-7619701364f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PatientDlg.cpp">
@@ -578,9 +581,6 @@
     <ClCompile Include="ExportWavetouch.cpp">
       <Filter>Others</Filter>
     </ClCompile>
-    <ClCompile Include="Hardware.cpp">
-      <Filter>Others</Filter>
-    </ClCompile>
     <ClCompile Include="iTraceApp.cpp">
       <Filter>Others</Filter>
     </ClCompile>
@@ -823,6 +823,12 @@
     </ClCompile>
     <ClCompile Include="AppVersion.cpp">
       <Filter>Others</Filter>
+    </ClCompile>
+    <ClCompile Include="Hardware.cpp">
+      <Filter>Hardware</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareHiresCamera.cpp">
+      <Filter>Hardware</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1108,9 +1114,6 @@
     <ClInclude Include="Export.h">
       <Filter>Others</Filter>
     </ClInclude>
-    <ClInclude Include="Hardware.h">
-      <Filter>Others</Filter>
-    </ClInclude>
     <ClInclude Include="htmlhelp.h">
       <Filter>Others</Filter>
     </ClInclude>
@@ -1350,6 +1353,12 @@
     </ClInclude>
     <ClInclude Include="AppVersion.h">
       <Filter>Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Hardware.h">
+      <Filter>Hardware</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareHiresCamera.h">
+      <Filter>Hardware</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

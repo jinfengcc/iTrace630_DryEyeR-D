@@ -311,6 +311,7 @@
     <ClCompile Include="DicomMWLResDlg.cpp" />
     <ClCompile Include="DicomSelTypeDlg.cpp" />
     <ClCompile Include="FarLtrWnd.cpp" />
+    <ClCompile Include="HardwareHiresCamera.cpp" />
     <ClCompile Include="HorSliderCtrl.cpp" />
     <ClCompile Include="INIParser.cpp" />
     <ClCompile Include="LinkLibs.cpp" />
@@ -500,6 +501,7 @@
     <ClInclude Include="DicomMWLResDlg.h" />
     <ClInclude Include="DicomSelTypeDlg.h" />
     <ClInclude Include="FarLtrWnd.h" />
+    <ClInclude Include="HardwareHiresCamera.h" />
     <ClInclude Include="HorSliderCtrl.h" />
     <ClInclude Include="INIParser.h" />
     <ClInclude Include="SameDicomPatientDlg.h" />
