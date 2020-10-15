@@ -147,7 +147,12 @@ BOOL CLicensing::DetermineLicenseType(const CString& SoftwareAK)
 	int LicenseType[9] =
 	{ LT_PRESBIA, LT_DEMO, LT_SOLO, LT_COMBO, LT_WORKSTATION, LT_HOYA, LT_HOYAVIEWER, LT_COMBOVIEWER, LT_COMBODICOM };
 
-	for (int i = 0; i < 9; i++)
+#if defined(_DEBUG) && 1
+  m_LicenseType = LT_SOLO;
+  return TRUE;
+#endif
+
+  for (int i = 0; i < 9; i++)
 	{
 		CString gSoftwareAK;
 
@@ -219,19 +224,19 @@ BOOL CLicensing::GenerateSoftwareAK(const int LicenseType, CString& SoftwareAK)
 	const int q[9][120] =
 	{
 		//  SOLO
-		{			
+		{
 			39, 49, 83, 46, 88, 3, 22, 91, 17, 64,
 			45, 10, 98, 60, 110, 10, 32, 33, 2, 20,
 			0, 99, 15, 11, 103, 42, 73, 37, 99, 57,
-			58, 69, 52, 5, 75, 89, 48, 20, 10, 63,			
-			17, 51, 106, 63, 73, 18, 92, 66, 95, 43,			
+			58, 69, 52, 5, 75, 89, 48, 20, 10, 63,
+			17, 51, 106, 63, 73, 18, 92, 66, 95, 43,
 			22, 20, 80, 73, 104, 96, 33, 21, 103, 24,
 			17, 82, 7, 35, 96, 117, 84, 102, 67, 15,
 			74, 8, 109, 49, 39, 104, 22, 87, 99, 8,
 			54, 53, 58, 57, 79, 39, 85, 34, 49, 81,
-			71, 83, 59, 14, 30, 25, 31, 78, 95, 28,			
+			71, 83, 59, 14, 30, 25, 31, 78, 95, 28,
 			13, 64, 58, 23, 99, 14, 7, 44, 66, 54,
-			45, 51, 13, 36, 73, 108, 92, 116, 95, 43			
+			45, 51, 13, 36, 73, 108, 92, 116, 95, 43
 		},
 		//  COMBO
 		{

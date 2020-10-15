@@ -890,6 +890,17 @@
     <None Include="Res\png5.bin" />
     <None Include="Res\settings" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\dlls\TraceyHardware\TraceyHardware.vcxproj">
+      <Project>{c7034b3f-11a5-4f1b-bf5d-a7da69431855}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\CommonLib\CommonLib.vcxproj">
+      <Project>{fb2bbf5a-c4a0-4fd8-9966-53f2a3ee90cc}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\LoggingLib\LoggingLib.vcxproj">
+      <Project>{136cc8c9-d852-494e-8036-46b22062b2c4}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
