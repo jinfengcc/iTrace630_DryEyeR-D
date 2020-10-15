@@ -26,7 +26,7 @@ public:
 
 	void CreateZoomButtons();
 
-	real m_DysVal;//531
+	real_t m_DysVal;//531
 
 private:
 

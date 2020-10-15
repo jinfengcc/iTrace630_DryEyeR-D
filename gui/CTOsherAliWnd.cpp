@@ -88,25 +88,25 @@ HSI CCTOsherAliWnd::ChangeRGBtoHSI(int R, int G, int B)
 {
 
 	HSI res;
-	res.I = (real)(R + G + B) / 3;
+	res.I = (real_t)(R + G + B) / 3;
 
 	//find the minixum of RGB for the S value
-	real min = (real)R;
+	real_t min = (real_t)R;
 	if (min>G) min = G;
 	if (min>B) min = B;
 	//
 	res.S = 1 - (min / res.I);
 
 	//find the S
-	real sita;
-	real mid1 = 0.5*(2 * R - G - B);
-	real mid2 = pow((R - G)*(R - G) + (R - B)*(G - B), 0.5) + 0.0000000001;
+	real_t sita;
+	real_t mid1 = 0.5*(2 * R - G - B);
+	real_t mid2 = pow((R - G)*(R - G) + (R - B)*(G - B), 0.5) + 0.0000000001;
 	mid1 = mid1 / mid2;
 	sita = acos(mid1);
 
 	if (B>G) sita = 2 * _Pi - sita;
 
-	real angle = sita * 180 / _Pi;
+	real_t angle = sita * 180 / _Pi;
 
 	res.H = angle;
 	//
@@ -202,7 +202,7 @@ CCTOsherAliWnd::CCTOsherAliWnd(CWnd* pParentWnd, RECT& Rect, CCTExam* pCTExam, i
 			//Judge wether the finding pupil is correct or not
 			if (m_pImage->m_ve_ok)
 			{
-				real puveDisum = Distance(m_pImage->m_pu_x0_um, m_pImage->m_pu_y0_um, m_pImage->m_ve_x_um, m_pImage->m_ve_y_um);
+				real_t puveDisum = Distance(m_pImage->m_pu_x0_um, m_pImage->m_pu_y0_um, m_pImage->m_ve_x_um, m_pImage->m_ve_y_um);
 
 				if (puveDisum > 1000)
 				{
@@ -216,7 +216,7 @@ CCTOsherAliWnd::CCTOsherAliWnd(CWnd* pParentWnd, RECT& Rect, CCTExam* pCTExam, i
 		{
 			if (m_pImage->m_ve_ok)
 			{
-				real puveDisum = Distance(m_pImage->m_pu_x0_um, m_pImage->m_pu_y0_um, m_pImage->m_ve_x_um, m_pImage->m_ve_y_um);
+				real_t puveDisum = Distance(m_pImage->m_pu_x0_um, m_pImage->m_pu_y0_um, m_pImage->m_ve_x_um, m_pImage->m_ve_y_um);
 
 				if (puveDisum > 1000)
 				{
@@ -233,8 +233,8 @@ CCTOsherAliWnd::CCTOsherAliWnd(CWnd* pParentWnd, RECT& Rect, CCTExam* pCTExam, i
 
 		m_GrayImage = &m_pCTExam->m_Image;
 
-		real xGrayDis = m_GrayImage->m_li_x0_um - m_GrayImage->m_ve_x_um;
-		real yGrayDis = m_GrayImage->m_li_y0_um - m_GrayImage->m_ve_y_um;
+		real_t xGrayDis = m_GrayImage->m_li_x0_um - m_GrayImage->m_ve_x_um;
+		real_t yGrayDis = m_GrayImage->m_li_y0_um - m_GrayImage->m_ve_y_um;
 
 		m_pImage->m_ve_x_um = m_pImage->m_li_x0_um - xGrayDis;
 		m_pImage->m_ve_y_um = m_pImage->m_li_y0_um - yGrayDis;
@@ -249,7 +249,7 @@ CCTOsherAliWnd::CCTOsherAliWnd(CWnd* pParentWnd, RECT& Rect, CCTExam* pCTExam, i
 	CreateZoomImg();
 	//
 
-	real t = 0.02 * m_w;
+	real_t t = 0.02 * m_w;
 	int h = intRound(t);
 	int w = intRound(5 * t);
 	int fs = intRound(0.02 * ::GetSystemMetrics(SM_CYSCREEN));
@@ -332,8 +332,8 @@ void CCTOsherAliWnd::CreateZoomImg()
 	m_pZoomImage2.m_h = m_h;
 	m_pZoomImage2.m_RGBData.Create(m_h, m_w * 3, NULL);
 
-	real x0_um = m_pImage->m_ve_x_um;
-	real y0_um = m_pImage->m_ve_y_um;
+	real_t x0_um = m_pImage->m_ve_x_um;
+	real_t y0_um = m_pImage->m_ve_y_um;
 
 	m_EyeWndTop = 1000;
 	m_EyeWndLeft = 1000;
@@ -344,12 +344,12 @@ void CCTOsherAliWnd::CreateZoomImg()
 	for (int y = 0; y < m_h; y++)
 	{
 		//real y_um = y0_um - (m_cy - y) / m_y_px_um;
-		real y_um = -(m_cy - y) / m_y_px_um;
+		real_t y_um = -(m_cy - y) / m_y_px_um;
 		for (int x = 0; x < m_w; x++)
 		{
 			//real x_um = x0_um + (x - m_cx) / m_x_px_um;
-			real x_um = +(x - m_cx) / m_x_px_um;
-			real r, g, b;
+			real_t x_um = +(x - m_cx) / m_x_px_um;
+			real_t r, g, b;
 			if (m_pImage->GetRGBAtUm(x_um, y_um, &r, &g, &b))
 			{
 				m_MemDC.SetPixel(x, m_h - y - 1, (int)r, (int)g, (int)b);
@@ -370,8 +370,8 @@ void CCTOsherAliWnd::CreateZoomImg()
 	/*m_cx = m_EyeWndTop + (round)((real)(m_EyeWndHeight)/2.0);
 	m_cy = m_EyeWndLeft + (round)((real)(m_EyeWndWidth)/2.0);*/
 
-	m_Adx = m_EyeWndLeft + (real)m_EyeWndWidth / 2.0 - m_cx;
-	m_Ady = m_EyeWndTop + (real)m_EyeWndHeight / 2.0 - m_cy;
+	m_Adx = m_EyeWndLeft + (real_t)m_EyeWndWidth / 2.0 - m_cx;
+	m_Ady = m_EyeWndTop + (real_t)m_EyeWndHeight / 2.0 - m_cy;
 }
 
 //***************************************************************************************
@@ -399,27 +399,27 @@ void CCTOsherAliWnd::Eye()
 		}
 		else
 		{
-			real zoomRatio = 1;
+			real_t zoomRatio = 1;
 
 			for (int i = 0; i<t; i++)
 			{
 				zoomRatio *= 1.05;
 			}
 
-			real actuaLMoveX = intRound((real)m_MovePoint.x / zoomRatio);
-			real actualMoveY = intRound((real)m_MovePoint.y / zoomRatio);
+			real_t actuaLMoveX = intRound((real_t)m_MovePoint.x / zoomRatio);
+			real_t actualMoveY = intRound((real_t)m_MovePoint.y / zoomRatio);
 
-			int  zoomWidth = intRound((real)m_EyeWndWidth / zoomRatio);
-			int  zoomHeight = intRound((real)m_EyeWndHeight / zoomRatio);
+			int  zoomWidth = intRound((real_t)m_EyeWndWidth / zoomRatio);
+			int  zoomHeight = intRound((real_t)m_EyeWndHeight / zoomRatio);
 
 			//Find the center pos
-			int  zoomOutWidth = intRound((real)m_EyeWndWidth*zoomRatio);
-			int  zoomOutHeight = intRound((real)m_EyeWndHeight*zoomRatio);
+			int  zoomOutWidth = intRound((real_t)m_EyeWndWidth*zoomRatio);
+			int  zoomOutHeight = intRound((real_t)m_EyeWndHeight*zoomRatio);
 
 			int  zoomOutLeft, zoomOutTop;
 
-			zoomOutLeft = m_EyeWndLeft - intRound((real)(zoomOutWidth - m_EyeWndWidth) / 2.0);
-			zoomOutTop = m_EyeWndTop - intRound((real)(zoomOutHeight - m_EyeWndHeight) / 2.0);
+			zoomOutLeft = m_EyeWndLeft - intRound((real_t)(zoomOutWidth - m_EyeWndWidth) / 2.0);
+			zoomOutTop = m_EyeWndTop - intRound((real_t)(zoomOutHeight - m_EyeWndHeight) / 2.0);
 			zoomOutLeft += m_MovePoint.x;
 			zoomOutTop += m_MovePoint.y;
 			//Done
@@ -427,8 +427,8 @@ void CCTOsherAliWnd::Eye()
 
 			int  zoomLeft, zoomTop;
 
-			zoomLeft = m_EyeWndLeft + intRound((real)(m_EyeWndWidth - zoomWidth) / 2.0);
-			zoomTop = m_EyeWndTop + intRound((real)(m_EyeWndHeight - zoomHeight) / 2.0);
+			zoomLeft = m_EyeWndLeft + intRound((real_t)(m_EyeWndWidth - zoomWidth) / 2.0);
+			zoomTop = m_EyeWndTop + intRound((real_t)(m_EyeWndHeight - zoomHeight) / 2.0);
 
 			zoomLeft -= (int)actuaLMoveX;
 			zoomTop -= (int)actualMoveY;
@@ -465,8 +465,8 @@ void CCTOsherAliWnd::Eye()
 				memcpy(m_pZoomBackup[t], m_MemDC.m_RGBData, m_ImgSize);
 				m_BackupYes[t] = TRUE;
 
-				m_cxBackup[t] = zoomOutLeft + intRound((real)(zoomOutWidth) / 2.0) - m_Adx;
-				m_cyBackup[t] = zoomOutTop + intRound((real)(zoomOutHeight) / 2.0) - m_Ady;
+				m_cxBackup[t] = zoomOutLeft + intRound((real_t)(zoomOutWidth) / 2.0) - m_Adx;
+				m_cyBackup[t] = zoomOutTop + intRound((real_t)(zoomOutHeight) / 2.0) - m_Ady;
 
 				m_cx = m_cxBackup[t];
 				m_cy = m_cyBackup[t];
@@ -479,8 +479,8 @@ void CCTOsherAliWnd::Eye()
 
 void CCTOsherAliWnd::Grid()
 {
-	real x_px_um = m_x_px_um;
-	real y_px_um = m_y_px_um;
+	real_t x_px_um = m_x_px_um;
+	real_t y_px_um = m_y_px_um;
 
 	COLORREF Color = m_Printing ? BLACK : WHITE;
 
@@ -489,10 +489,10 @@ void CCTOsherAliWnd::Grid()
 	int FontSize = intRound(0.045 * m_h);
 	int FontSize2 = intRound(0.025 * m_h);
 
-	real r_um = 4000.0;
+	real_t r_um = 4000.0;
 
-	real d_efX = 0;
-	real d_efY = 0;
+	real_t d_efX = 0;
+	real_t d_efY = 0;
 
 	if (m_pImage->m_ve_ok)
 	{
@@ -501,7 +501,7 @@ void CCTOsherAliWnd::Grid()
 	}
 
 	int t = m_wheel_n;
-	real  zoomRatio = 1.0;
+	real_t  zoomRatio = 1.0;
 	for (int i = 0; i<t; i++) { zoomRatio *= 1.05; }
 
 	// circle
@@ -527,10 +527,10 @@ void CCTOsherAliWnd::Grid()
 
 	for (int a = 0; a < 360; a += IncreaseDeg)
 	{
-		real r1_um = r_um + 100.0;
+		real_t r1_um = r_um + 100.0;
 		int x1 = intRound(m_cx + d_efX*zoomRatio + x_px_um * r1_um * COS[a]);
 		int y1 = intRound(m_cy - d_efY*zoomRatio - y_px_um * r1_um * SIN[a]);
-		real r2_um = 0;
+		real_t r2_um = 0;
 
 		if (IncreaseDeg == 1) r2_um = r_um + ((a % 15) == 0 ? 400.0 : 150.0);//[cjf***04202012]
 		else r2_um = r_um + ((a % 15) == 0 ? 400.0 : 250.0);//[cjf***04202012]
@@ -553,7 +553,7 @@ void CCTOsherAliWnd::Grid()
 			}
 			if (DegTextStep == 30)
 			{
-				real r3_um = r_um + 900.0;
+				real_t r3_um = r_um + 900.0;
 				int x = intRound(m_cx + d_efX*zoomRatio + x_px_um * r3_um * COS[a]);
 				int y = intRound(m_cy - d_efY*zoomRatio - y_px_um * r3_um * SIN[a]);
 				s.Format(_T(" %i°"), sa);
@@ -563,7 +563,7 @@ void CCTOsherAliWnd::Grid()
 			{
 				if (a % 15 == 0)
 				{
-					real r3_um = r_um + 900.0;
+					real_t r3_um = r_um + 900.0;
 					int x = intRound(m_cx + d_efX*zoomRatio + x_px_um * r3_um * COS[a]);
 					int y = intRound(m_cy - d_efY*zoomRatio - y_px_um * r3_um * SIN[a]);
 					s.Format(_T(" %i°"), sa);
@@ -571,7 +571,7 @@ void CCTOsherAliWnd::Grid()
 				}
 				else
 				{
-					real r3_um = r_um + 500.0;
+					real_t r3_um = r_um + 500.0;
 					int x = intRound(m_cx + d_efX*zoomRatio + x_px_um * r3_um * COS[a]);
 					int y = intRound(m_cy - d_efY*zoomRatio - y_px_um * r3_um * SIN[a]);
 					s.Format(_T(" %i°"), sa);
@@ -586,15 +586,15 @@ void CCTOsherAliWnd::Grid()
 
 //***************************************************************************************
 
-void CCTOsherAliWnd::AlignLine(int a, real Ali_Rum, int Type)//0: First Line; 1:Second Line
+void CCTOsherAliWnd::AlignLine(int a, real_t Ali_Rum, int Type)//0: First Line; 1:Second Line
 {
 	if (!m_AlignLine) return;
 
-	real x_px_um = m_x_px_um;
-	real y_px_um = m_y_px_um;
+	real_t x_px_um = m_x_px_um;
+	real_t y_px_um = m_y_px_um;
 
-	real d_efX = 0;
-	real d_efY = 0;
+	real_t d_efX = 0;
+	real_t d_efY = 0;
 
 	if (m_pImage->m_ve_ok)
 	{
@@ -603,7 +603,7 @@ void CCTOsherAliWnd::AlignLine(int a, real Ali_Rum, int Type)//0: First Line; 1:
 	}
 
 	int t = m_wheel_n;
-	real  zoomRatio = 1.0;
+	real_t  zoomRatio = 1.0;
 	for (int i = 0; i<t; i++) { zoomRatio *= 1.05; }
 
 	int x1 = intRound(m_cx + d_efX*zoomRatio);
@@ -629,7 +629,7 @@ void CCTOsherAliWnd::AlignLine(int a, real Ali_Rum, int Type)//0: First Line; 1:
 
 //***************************************************************************************
 
-void CCTOsherAliWnd::AlignLineDeg(int a1, int a2, real Ali_Rum1, real Ali_Rum2)
+void CCTOsherAliWnd::AlignLineDeg(int a1, int a2, real_t Ali_Rum1, real_t Ali_Rum2)
 {
 	if (!m_AlignLine) return;
 
@@ -645,8 +645,8 @@ void CCTOsherAliWnd::AlignLineDeg(int a1, int a2, real Ali_Rum1, real Ali_Rum2)
 		a02 = a1;
 	}
 
-	real d_efX = 0;
-	real d_efY = 0;
+	real_t d_efX = 0;
+	real_t d_efY = 0;
 
 	if (m_pImage->m_ve_ok)
 	{
@@ -655,7 +655,7 @@ void CCTOsherAliWnd::AlignLineDeg(int a1, int a2, real Ali_Rum1, real Ali_Rum2)
 	}
 
 	int t = m_wheel_n;
-	real  zoomRatio = 1.0;
+	real_t  zoomRatio = 1.0;
 	for (int i = 0; i<t; i++) { zoomRatio *= 1.05; }
 
 	int  x = intRound(m_cx + d_efX*zoomRatio);
@@ -701,11 +701,11 @@ void CCTOsherAliWnd::Pupil()
 	int x0, y0;
 
 	int t = m_wheel_n;
-	real  zoomRatio = 1.0;
+	real_t  zoomRatio = 1.0;
 	for (int i = 0; i<t; i++) { zoomRatio *= 1.05; }
 
-	real x0R = +m_pImage->m_pu_x0_um * m_x_px_um;
-	real y0R = -m_pImage->m_pu_y0_um * m_y_px_um;
+	real_t x0R = +m_pImage->m_pu_x0_um * m_x_px_um;
+	real_t y0R = -m_pImage->m_pu_y0_um * m_y_px_um;
 
 	x0 = intRound(m_cx + x0R*zoomRatio);
 	y0 = intRound(m_cy + y0R*zoomRatio);
@@ -720,10 +720,10 @@ void CCTOsherAliWnd::Pupil()
 		if (m_pImage->m_pu_r_um[a] == INVALID_VALUE) continue;
 		if (m_pImage->m_pu_r_um[b] == INVALID_VALUE) continue;
 
-		real xa0 = +(m_pImage->m_pu_x0_um + m_pImage->m_pu_r_um[a] * COS[a])* m_x_px_um;
-		real ya0 = -(m_pImage->m_pu_y0_um + m_pImage->m_pu_r_um[a] * SIN[a])* m_y_px_um;
-		real xb0 = +(m_pImage->m_pu_x0_um + m_pImage->m_pu_r_um[b] * COS[b])* m_x_px_um;
-		real yb0 = -(m_pImage->m_pu_y0_um + m_pImage->m_pu_r_um[b] * SIN[b])* m_y_px_um;
+		real_t xa0 = +(m_pImage->m_pu_x0_um + m_pImage->m_pu_r_um[a] * COS[a])* m_x_px_um;
+		real_t ya0 = -(m_pImage->m_pu_y0_um + m_pImage->m_pu_r_um[a] * SIN[a])* m_y_px_um;
+		real_t xb0 = +(m_pImage->m_pu_x0_um + m_pImage->m_pu_r_um[b] * COS[b])* m_x_px_um;
+		real_t yb0 = -(m_pImage->m_pu_y0_um + m_pImage->m_pu_r_um[b] * SIN[b])* m_y_px_um;
 
 		int xa = intRound(m_cx + xa0*zoomRatio);
 		int ya = intRound(m_cy + ya0*zoomRatio);
@@ -745,11 +745,11 @@ void CCTOsherAliWnd::RadialRuler()
 	int x0, y0;
 
 	int t = m_wheel_n;
-	real  zoomRatio = 1.0;
+	real_t  zoomRatio = 1.0;
 	for (int i = 0; i<t; i++) { zoomRatio *= 1.05; }
 
-	real x0R = +m_pImage->m_Ra_x_um * m_x_px_um;
-	real y0R = -m_pImage->m_Ra_y_um * m_y_px_um;
+	real_t x0R = +m_pImage->m_Ra_x_um * m_x_px_um;
+	real_t y0R = -m_pImage->m_Ra_y_um * m_y_px_um;
 
 	x0 = intRound(m_cx + x0R*zoomRatio);
 	y0 = intRound(m_cy + y0R*zoomRatio);
@@ -778,7 +778,7 @@ void CCTOsherAliWnd::LinearRuler()
 	if (m_pImage->m_LRa_ok != TRUE) return;
 	//
 	int t = m_wheel_n;
-	real  zoomRatio = 1.0;
+	real_t  zoomRatio = 1.0;
 	for (int i = 0; i<t; i++) { zoomRatio *= 1.05; }
 
 	COLORREF LRulerColor = RGB(255, 128, 0);
@@ -802,7 +802,7 @@ void CCTOsherAliWnd::Inlay()
 	if (m_pImage->m_In_ok != TRUE) return;
 	//
 	int t = m_wheel_n;
-	real  zoomRatio = 1.0;
+	real_t  zoomRatio = 1.0;
 	for (int i = 0; i<t; i++) { zoomRatio *= 1.05; }
 
 	COLORREF LRulerColor = RGB(255, 128, 0);
@@ -828,10 +828,10 @@ void CCTOsherAliWnd::Inlay()
 		for (int j = OutSideTopY; j <= OutSideBotmY; j++)
 		{
 
-			real disX = (real)(i - x0);
-			real disY = (real)(j - y0);
+			real_t disX = (real_t)(i - x0);
+			real_t disY = (real_t)(j - y0);
 
-			real dis = sqrt(disX*disX + disY*disY);
+			real_t dis = sqrt(disX*disX + disY*disY);
 
 			if (dis <= OutSideWidth && dis >= InsideWidth)
 			{
@@ -1003,24 +1003,24 @@ void CCTOsherAliWnd::Inlay()
 		//Show the length of four lines
 		CString sDis1, sDis2, sDis3, sDis4;
 
-		real xD = (real)x1[0] - (real)x2[0];
-		real yD = (real)y1[0] - (real)y2[0];
-		real dis1 = (sqrt(xD*xD + yD*yD) / m_x_px_um)*0.001;
+		real_t xD = (real_t)x1[0] - (real_t)x2[0];
+		real_t yD = (real_t)y1[0] - (real_t)y2[0];
+		real_t dis1 = (sqrt(xD*xD + yD*yD) / m_x_px_um)*0.001;
 		sDis1.Format(_T("%.3fmm"), dis1);
 
-		xD = (real)x1[1] - (real)x2[1];
-		yD = (real)y1[1] - (real)y2[1];
-		real dis2 = (sqrt(xD*xD + yD*yD) / m_x_px_um)*0.001;
+		xD = (real_t)x1[1] - (real_t)x2[1];
+		yD = (real_t)y1[1] - (real_t)y2[1];
+		real_t dis2 = (sqrt(xD*xD + yD*yD) / m_x_px_um)*0.001;
 		sDis2.Format(_T("%.3fmm"), dis2);
 
-		xD = (real)x1[2] - (real)x2[2];
-		yD = (real)y1[2] - (real)y2[2];
-		real dis3 = (sqrt(xD*xD + yD*yD) / m_x_px_um)*0.001;
+		xD = (real_t)x1[2] - (real_t)x2[2];
+		yD = (real_t)y1[2] - (real_t)y2[2];
+		real_t dis3 = (sqrt(xD*xD + yD*yD) / m_x_px_um)*0.001;
 		sDis3.Format(_T("%.3fmm"), dis3);
 
-		xD = (real)x1[3] - (real)x2[3];
-		yD = (real)y1[3] - (real)y2[3];
-		real dis4 = (sqrt(xD*xD + yD*yD) / m_x_px_um)*0.001;
+		xD = (real_t)x1[3] - (real_t)x2[3];
+		yD = (real_t)y1[3] - (real_t)y2[3];
+		real_t dis4 = (sqrt(xD*xD + yD*yD) / m_x_px_um)*0.001;
 		sDis4.Format(_T("%.3fmm"), dis4);
 
 		int FontSize = intRound(0.02 * m_h);
@@ -1028,13 +1028,13 @@ void CCTOsherAliWnd::Inlay()
 		RECT rect1Txt = { x1[0], y1[0] + 30, x2[0], y1[0] + 10 };
 		m_MemDC.WriteText(sDis1, rect1Txt, Font, BLACK, 1, NOCOLOR);
 
-		int yStart = y1[1] + (int)((real)(y2[1] - y1[1]) / 2.0);
+		int yStart = y1[1] + (int)((real_t)(y2[1] - y1[1]) / 2.0);
 		m_MemDC.WriteRotatedText(sDis2, x1[1] + 15, yStart, 90, FontSize, 300, "Arial", BLACK, NOCOLOR);
 
 		RECT rect3Txt = { x1[2], y1[2] + 30, x2[2], y1[2] + 10 };
 		m_MemDC.WriteText(sDis3, rect3Txt, Font, BLACK, 1, NOCOLOR);
 
-		yStart = y1[3] + (int)((real)(y2[3] - y1[3]) / 2.0);
+		yStart = y1[3] + (int)((real_t)(y2[3] - y1[3]) / 2.0);
 		m_MemDC.WriteRotatedText(sDis4, x1[3] + 15, yStart, 90, FontSize, 300, "Arial", BLACK, NOCOLOR);
 	}
 	//Done
@@ -1050,11 +1050,11 @@ void CCTOsherAliWnd::Limbus()
 	int x0, y0;
 
 	int t = m_wheel_n;
-	real  zoomRatio = 1.0;
+	real_t  zoomRatio = 1.0;
 	for (int i = 0; i<t; i++) { zoomRatio *= 1.05; }
 
-	real x0R = +m_pImage->m_li_x0_um * m_x_px_um;
-	real y0R = -m_pImage->m_li_y0_um * m_y_px_um;
+	real_t x0R = +m_pImage->m_li_x0_um * m_x_px_um;
+	real_t y0R = -m_pImage->m_li_y0_um * m_y_px_um;
 
 	x0 = intRound(m_cx + x0R*zoomRatio);
 	y0 = intRound(m_cy + y0R*zoomRatio);
@@ -1066,10 +1066,10 @@ void CCTOsherAliWnd::Limbus()
 	{
 		int b = a == 359 ? 0 : a + 1;
 
-		real xa0 = +(m_pImage->m_li_x0_um + m_pImage->m_li_r_mean_um * COS[a])* m_x_px_um;
-		real ya0 = -(m_pImage->m_li_y0_um + m_pImage->m_li_r_mean_um * SIN[a])* m_y_px_um;
-		real xb0 = +(m_pImage->m_li_x0_um + m_pImage->m_li_r_mean_um * COS[b])* m_x_px_um;
-		real yb0 = -(m_pImage->m_li_y0_um + m_pImage->m_li_r_mean_um * SIN[b])* m_y_px_um;
+		real_t xa0 = +(m_pImage->m_li_x0_um + m_pImage->m_li_r_mean_um * COS[a])* m_x_px_um;
+		real_t ya0 = -(m_pImage->m_li_y0_um + m_pImage->m_li_r_mean_um * SIN[a])* m_y_px_um;
+		real_t xb0 = +(m_pImage->m_li_x0_um + m_pImage->m_li_r_mean_um * COS[b])* m_x_px_um;
+		real_t yb0 = -(m_pImage->m_li_y0_um + m_pImage->m_li_r_mean_um * SIN[b])* m_y_px_um;
 
 		int xa = intRound(m_cx + xa0*zoomRatio);
 		int ya = intRound(m_cy + ya0*zoomRatio);
@@ -1084,11 +1084,11 @@ void CCTOsherAliWnd::Limbus()
 void CCTOsherAliWnd::Points()
 {
 	int x0, y0;
-	real d_efX = m_pImage->m_ve_x_um* m_x_px_um;
-	real d_efY = m_pImage->m_ve_y_um* m_y_px_um;
+	real_t d_efX = m_pImage->m_ve_x_um* m_x_px_um;
+	real_t d_efY = m_pImage->m_ve_y_um* m_y_px_um;
 
 	int t = m_wheel_n;
-	real  zoomRatio = 1.0;
+	real_t  zoomRatio = 1.0;
 	for (int i = 0; i<t; i++) { zoomRatio *= 1.05; }
 
 	if (m_pImage->m_ve_ok)
@@ -1138,7 +1138,7 @@ void CCTOsherAliWnd::Labels()
 	if (m_ShowLRuler && m_pImage->m_LRa_ok == TRUE)
 	{
 		COLORREF LRulerColor = RGB(255, 128, 0);
-		real dis = hyp(m_pImage->m_LRa_x0_um - m_pImage->m_LRa_x1_um, m_pImage->m_LRa_y0_um - m_pImage->m_LRa_y1_um);
+		real_t dis = hyp(m_pImage->m_LRa_x0_um - m_pImage->m_LRa_x1_um, m_pImage->m_LRa_y0_um - m_pImage->m_LRa_y1_um);
 		if (dis > 0)
 		{
 			s1 = "Linear Ruler";
@@ -1373,19 +1373,19 @@ void CCTOsherAliWnd::OnMouseMove(uint nFlags, CPoint Point)
 		{
 			m_AlignLine = TRUE;
 
-			real x_px_um = m_x_px_um;
-			real y_px_um = m_y_px_um;
+			real_t x_px_um = m_x_px_um;
+			real_t y_px_um = m_y_px_um;
 
-			real x_um = (Point.x - m_cx) / x_px_um;
-			real y_um = (m_cy - Point.y) / y_px_um;
-			real a_rd = angle(y_um, x_um);
+			real_t x_um = (Point.x - m_cx) / x_px_um;
+			real_t y_um = (m_cy - Point.y) / y_px_um;
+			real_t a_rd = angle(y_um, x_um);
 			int a = intRound(_180_Pi * a_rd) % 360; if (a < 0) a += 360;
-			real Ali_Rum = sqrt(x_um*x_um + y_um*y_um);
-			real d2 = sqr(x_um) + sqr(y_um);
+			real_t Ali_Rum = sqrt(x_um*x_um + y_um*y_um);
+			real_t d2 = sqr(x_um) + sqr(y_um);
 
 
 			int t = m_wheel_n;
-			real  zoomRatio = 1.0;
+			real_t  zoomRatio = 1.0;
 			for (int i = 0; i<t; i++) { zoomRatio *= 1.05; } Ali_Rum = Ali_Rum / zoomRatio;
 
 			//if(a > 90 && a < 270) a = (a+180)%360;
@@ -1415,8 +1415,8 @@ void CCTOsherAliWnd::OnMouseMove(uint nFlags, CPoint Point)
 
 				if (abs(disA) < 10)
 				{
-					real disR1 = fabs(Ali_Rum - m_Ali_Rum1);
-					real disR2 = fabs(Ali_Rum - m_Ali_Rum2);
+					real_t disR1 = fabs(Ali_Rum - m_Ali_Rum1);
+					real_t disR2 = fabs(Ali_Rum - m_Ali_Rum2);
 
 					if (disR1 < disR2)
 					{
@@ -1601,7 +1601,7 @@ int  CCTOsherAliWnd::SmallAng(int a0, int a1)
 }
 
 //***************************************************************************************
-void CCTOsherAliWnd::FindClearLimbus(CEyeImage* OriImage, real LastLimbuX, real LastLimbuY, real LastLimbuR)
+void CCTOsherAliWnd::FindClearLimbus(CEyeImage* OriImage, real_t LastLimbuX, real_t LastLimbuY, real_t LastLimbuR)
 {
 	CEyeImage* TestImage = new CEyeImage();
 	int h = TestImage->m_h = OriImage->m_h;
@@ -1678,7 +1678,7 @@ BOOL CCTOsherAliWnd::FindColorPupil(CEyeImage* OriImage)
 	if (TestImage->m_RGBData.GetMem() == NULL) return FALSE;
 
 	int ** m_pixels = (int**)calloc(w_w, sizeof(int));
-	real** m_g = (real**)calloc(4, sizeof(real));
+	real_t** m_g = (real_t**)calloc(4, sizeof(real_t));
 	int ** m_BlurPixels = (int**)calloc(w_w, sizeof(int));
 	int ** m_gxy = (int**)calloc(w_w, sizeof(int));
 	int ** m_gx = (int**)calloc(w_w, sizeof(int));
@@ -1689,7 +1689,7 @@ BOOL CCTOsherAliWnd::FindColorPupil(CEyeImage* OriImage)
 
 	for (int i = 0; i<w_w; i++)
 	{
-		if (i<4)  m_g[i] = (real*)calloc(4, sizeof(real));
+		if (i<4)  m_g[i] = (real_t*)calloc(4, sizeof(real_t));
 		m_pixels[i] = (int*)calloc(h_h, sizeof(int));
 		m_BlurPixels[i] = (int*)calloc(h_h, sizeof(int));
 
@@ -1713,7 +1713,7 @@ BOOL CCTOsherAliWnd::FindColorPupil(CEyeImage* OriImage)
 	int EndR = intRound(0.15*w_w);
 
 
-	real de = 1.4;
+	real_t de = 1.4;
 
 
 	//*******************************************************************************
@@ -1855,7 +1855,7 @@ BOOL CCTOsherAliWnd::FindColorPupil(CEyeImage* OriImage)
 	//*******************************************************************************
 	//First step is the Gassusian blur
 	//*******************************************************************************	
-	real Mid = 0;
+	real_t Mid = 0;
 	for (int h = SRegion_StY + 3; h < SRegion_EndY - 3; h++)
 	{
 		for (int v = SRegion_StX + 3; v < SRegion_EndX - 3; v++)
@@ -1954,7 +1954,7 @@ BOOL CCTOsherAliWnd::FindColorPupil(CEyeImage* OriImage)
 	//*******************************************************************************
 	int Range = EndR - StartR;
 	int maxGradient = 0;
-	real fmean = 0;
+	real_t fmean = 0;
 	int t = 0;
 	double mid = 180 / 3.1415926;
 
@@ -1965,9 +1965,9 @@ BOOL CCTOsherAliWnd::FindColorPupil(CEyeImage* OriImage)
 			m_gx[v][h] = (m_BlurPixels[v - 1][h - 1] * (-1) + m_BlurPixels[v + 1][h + 1] * 1 + m_BlurPixels[v - 1][h] * (-2) + m_BlurPixels[v + 1][h] * 2 + m_BlurPixels[v - 1][h + 1] * (-1) + m_BlurPixels[v + 1][h + 1] * 1);
 			m_gy[v][h] = (m_BlurPixels[v - 1][h - 1] * (1) + m_BlurPixels[v][h - 1] * 2 + m_BlurPixels[v + 1][h + 1] * 1 + m_BlurPixels[v - 1][h + 1] * (-1) + m_BlurPixels[v][h + 1] * (-2) + m_BlurPixels[v + 1][h + 1] * (-1));
 
-			m_gxy[v][h] = intRound(sqrt((real)m_gx[v][h] * m_gx[v][h] + (real)m_gy[v][h] * m_gy[v][h]));
+			m_gxy[v][h] = intRound(sqrt((real_t)m_gx[v][h] * m_gx[v][h] + (real_t)m_gy[v][h] * m_gy[v][h]));
 
-			fmean += (real)m_gxy[v][h];
+			fmean += (real_t)m_gxy[v][h];
 			t++;
 			if (m_gxy[v][h]>maxGradient) maxGradient = m_gxy[v][h];
 
@@ -2034,7 +2034,7 @@ BOOL CCTOsherAliWnd::FindColorPupil(CEyeImage* OriImage)
 			}
 			else
 			{
-				m_dis[v][h] = intRound((real)m_gxy[v][h] / (real)maxGradient * 255.0);
+				m_dis[v][h] = intRound((real_t)m_gxy[v][h] / (real_t)maxGradient * 255.0);
 			}
 		}
 	}

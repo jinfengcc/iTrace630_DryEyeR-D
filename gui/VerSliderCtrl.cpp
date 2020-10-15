@@ -77,10 +77,10 @@ void CVerSliderCtrl::OnPaint()
 	{
 		if (!(m_scaleNum == 2 && m_FirstPos == 1))
 		{
-			real PosSpace = m_FirstPos / (m_scaleNum - 1);
+			real_t PosSpace = m_FirstPos / (m_scaleNum - 1);
 			for (int i = m_scaleNum; i >= 2; i--)
 			{
-				real pos = m_FirstPos - (m_scaleNum - i)*PosSpace;
+				real_t pos = m_FirstPos - (m_scaleNum - i)*PosSpace;
 				int yPos = y1 + intRound((1 - pos) * h);
 				DC.DrawLine(x0 - 8, yPos, x0, yPos, 2, LIGHT_GRAY);
 			}
@@ -121,12 +121,12 @@ int  CVerSliderCtrl::returnY()
 //***************************************************************************************
 void CVerSliderCtrl::OnLButtonUp(uint nFlags, CPoint Point)
 {
-	real xPower = (real)Point.x - (real)m_DownX;
+	real_t xPower = (real_t)Point.x - (real_t)m_DownX;
 	xPower *= xPower;
 
-	real yPower = (real)Point.y - (real)m_DownY;
+	real_t yPower = (real_t)Point.y - (real_t)m_DownY;
 	yPower *= yPower;
-	real dis = sqrt(xPower + yPower);
+	real_t dis = sqrt(xPower + yPower);
 
 	if (dis != 0) return;
 
@@ -146,7 +146,7 @@ void CVerSliderCtrl::OnLButtonUp(uint nFlags, CPoint Point)
 
 	if (Rect.top <= Point.y && Point.y <= Rect.bottom)
 	{
-		m_Pos = 1 - (real)(Point.y - Rect.top) / h;
+		m_Pos = 1 - (real_t)(Point.y - Rect.top) / h;
 
 		if (m_Pos < 0) m_Pos = 0;
 
@@ -179,7 +179,7 @@ void CVerSliderCtrl::OnMouseMove(uint nFlags, CPoint Point)
 		if (Rect.top <= Point.y && Point.y <= Rect.bottom)
 		{
 
-			m_Pos = 1 - (real)(Point.y - Rect.top) / h;
+			m_Pos = 1 - (real_t)(Point.y - Rect.top) / h;
 
 			if (m_Pos < 0) m_Pos = 0;
 

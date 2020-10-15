@@ -30,19 +30,19 @@ private:
 	CEyeImage*  m_pImage;
 	CEyeImage   m_Image;
 
-	real m_x_um[2];
-	real m_y_um[2];
+	real_t m_x_um[2];
+	real_t m_y_um[2];
 
 	int  m_w;
 	int  m_h;
 	int  m_l;
 	int  m_t;
-	real m_w_um;
-	real m_h_um;
-	real m_x_px_um;
-	real m_y_px_um;
-	real m_cx;
-	real m_cy;
+	real_t m_w_um;
+	real_t m_h_um;
+	real_t m_x_px_um;
+	real_t m_y_px_um;
+	real_t m_cx;
+	real_t m_cy;
 
 	CMDC m_MemDC;
 	CRgn m_Rgn;
@@ -169,7 +169,7 @@ private:
 	afx_msg void OnLinearRuler3Clicked();
 	//Done
 
-	real Distance(real x0, real y0, real x1, real y1) { return sqrt((x0 - x1)*(x0 - x1) + (y0 - y1)*(y0 - y1)); }
+	real_t Distance(real_t x0, real_t y0, real_t x1, real_t y1) { return sqrt((x0 - x1)*(x0 - x1) + (y0 - y1)*(y0 - y1)); }
 	BOOL FindColorPupil(CEyeImage* OriImage);
 	void SafeInteRelease(int **ppT, int Row);
 	double Gaussian(int x, int y, double de);

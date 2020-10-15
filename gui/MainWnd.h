@@ -177,8 +177,8 @@ private:
 
 	CString  GetOpacityGrade(CWFExam *WFExam);// Calculate the Opacity grade for excel export
 	CString  GetDliValue(CWFExam *WFExam, CCTExam *CTExam);// Calculate the Dli Value for excel export
-	void     CreateAdjustedUm(real um1, real um2, real um3, real um4, real um5, real um6, real& newum1, real& newum2);// Calculate the Dli Value for excel export
-	real     CalDysVal(real pupilSize, CZernikeSurface ReMTF_Surfaces);// Calculate the Dli Value for excel export
+	void     CreateAdjustedUm(real_t um1, real_t um2, real_t um3, real_t um4, real_t um5, real_t um6, real_t& newum1, real_t& newum2);// Calculate the Dli Value for excel export
+	real_t     CalDysVal(real_t pupilSize, CZernikeSurface ReMTF_Surfaces);// Calculate the Dli Value for excel export
 
 	CPatient ReadFromDicomInfo(CDicomInfo DicomInfo);//6.2.0 For Dicom
 	void     GetFiLaMiName(CString FullName, CString & FirstName, CString & LastName, CString & MiddleName);//6.2.0 For Dicom	

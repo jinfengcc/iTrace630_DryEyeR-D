@@ -73,8 +73,8 @@ BOOL CAcquisitionDlg::OnInitDialog()
 		int W = ::GetSystemMetrics(SM_CXSCREEN);
 		int H = ::GetSystemMetrics(SM_CYSCREEN);
 
-		int left = intRound(real(W) / 2 - real(m_w) / 2);
-		int top = intRound(real(H) / 2 - real(m_h) / 2);
+		int left = intRound(real_t(W) / 2 - real_t(m_w) / 2);
+		int top = intRound(real_t(H) / 2 - real_t(m_h) / 2);
 		int hight = H - top;
 
 		//Set the video wnd
@@ -87,10 +87,10 @@ BOOL CAcquisitionDlg::OnInitDialog()
 
 		::SetRect(&Rect, left + m_w, 0, W, m_h);
 
-		int ALeft = left - intRound(real(m_w) / 5);
+		int ALeft = left - intRound(real_t(m_w) / 5);
 		if (ALeft < 0)  ALeft = 0;
 
-		int ARight = left + intRound(real(m_w) / 5) + m_w;
+		int ARight = left + intRound(real_t(m_w) / 5) + m_w;
 		if (ARight > W) ARight = W;
 
 		if (m_CT)

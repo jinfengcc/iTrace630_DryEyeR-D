@@ -313,11 +313,11 @@ void CMDC::WriteRotatedText(const CString& Text, int x, int y, int a, int FontSi
 
 	MeasureRect(Text, Rect, Font1);
 
-	real dx = 0.5 * (Rect.right - Rect.left);
-	real dy = 0.5 * (Rect.bottom - Rect.top);
-	real c = angle(dy, dx);
-	real b = a * _Pi_180 - c;
-	real d = hyp(dx, dy);
+	real_t dx = 0.5 * (Rect.right - Rect.left);
+	real_t dy = 0.5 * (Rect.bottom - Rect.top);
+	real_t c = angle(dy, dx);
+	real_t b = a * _Pi_180 - c;
+	real_t d = hyp(dx, dy);
 	x -= intRound(d * cos(b));
 	y += intRound(d * sin(b));
 

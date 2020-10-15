@@ -296,9 +296,9 @@ void CEyeWnd::Legend()
 	default: return;
 	}
 
-	real max = m_Cent + m_Step * (m_NumColors >> 1);
+	real_t max = m_Cent + m_Step * (m_NumColors >> 1);
 
-	real dH = (real)(m_h - 4) / (m_NumColors + 1);
+	real_t dH = (real_t)(m_h - 4) / (m_NumColors + 1);
 
 	CString s;
 
@@ -311,7 +311,7 @@ void CEyeWnd::Legend()
 		if (m_Type == TYPE_TOPM) m_MemDC.FillSolidRect(&Rect, m_Colors[m_NumColors - 1 - i]);//6001
 		else m_MemDC.FillSolidRect(&Rect, m_Colors[m_NumColors - 1 - i]);
 
-		real v = max - i * m_Step;
+		real_t v = max - i * m_Step;
 		//
 		if (m_Type == TYPE_TOPM)
 		{
@@ -397,7 +397,7 @@ void CEyeWnd::Map()
 
 	Translucent = Translucent && m_MapShowEye && m_MapTranslucent;
 
-	real min = m_Cent - m_Step * (m_NumColors >> 1);
+	real_t min = m_Cent - m_Step * (m_NumColors >> 1);
 
 	int cx = intRound(m_cx);
 	int cy = intRound(m_cy);
@@ -406,7 +406,7 @@ void CEyeWnd::Map()
 
 	for (int y = -m_Map2D.m_nr; y <= m_Map2D.m_nr; y++) {
 		for (int x = -m_Map2D.m_nr; x <= m_Map2D.m_nr; x++) {
-			real v = m_Map2D.GetAt(y, x);
+			real_t v = m_Map2D.GetAt(y, x);
 			if (v != INVALID_VALUE) {
 				int i = intRound((v - min) / m_Step);
 				if (i < 0) i = 0;
@@ -450,11 +450,11 @@ void CEyeWnd::Grid()
 	int ry = intRound(5000.0 * m_y_px_um);
 	m_MemDC.DrawEllipse(intRound(m_cx), intRound(m_cy), rx, ry, 1, gray, NOCOLOR);
 
-	for (real um = -5000.0; um < 5001.0; um += 1000.0) {
-		real sq = sqrt(sqr(5000.0) - sqr(um));
+	for (real_t um = -5000.0; um < 5001.0; um += 1000.0) {
+		real_t sq = sqrt(sqr(5000.0) - sqr(um));
 		// horizontal lines
-		real y = m_cy - um * m_y_px_um;
-		real x = sq * m_x_px_um;
+		real_t y = m_cy - um * m_y_px_um;
+		real_t x = sq * m_x_px_um;
 		m_MemDC.DrawHorzDottedLine(intRound(m_cx - x), intRound(m_cx + x), intRound(y), gray, NOCOLOR);
 		// vertical lines
 		x = m_cx - um * m_x_px_um;
@@ -464,16 +464,16 @@ void CEyeWnd::Grid()
 
 	// numbers
 	for (int a = 0; a < 360; a += 5) {
-		real r1_um = 5100.0;
+		real_t r1_um = 5100.0;
 		int x1 = intRound(m_cx + m_x_px_um * r1_um * COS[a]);
 		int y1 = intRound(m_cy - m_y_px_um * r1_um * SIN[a]);
-		real r2_um = (a % 15) == 0 ? 5400.0 : 5250.0;
+		real_t r2_um = (a % 15) == 0 ? 5400.0 : 5250.0;
 		int x2 = intRound(m_cx + m_x_px_um * r2_um * COS[a]);
 		int y2 = intRound(m_cy - m_y_px_um * r2_um * SIN[a]);
 		int w = intRound(((a % 15) == 0 ? 0.006 : 0.003) * m_h);
 		m_MemDC.DrawLine(x1, y1, x2, y2, w, white);
 		if (a % 30 == 0) {
-			real r_um = 5900.0;
+			real_t r_um = 5900.0;
 			int x = intRound(m_cx + m_x_px_um * r_um * COS[a]);
 			int y = intRound(m_cy - m_y_px_um * r_um * SIN[a]);
 			s.Format(_T(" %i°"), a);
@@ -520,8 +520,8 @@ void CEyeWnd::Eye()
 	if (!m_MapShowEye) return;
 
 	CEyeImage* pImage = NULL;
-	real x0_um = 0.0;
-	real y0_um = 0.0;
+	real_t x0_um = 0.0;
+	real_t y0_um = 0.0;
 
 	if (m_Type == TYPE_TEYE ||
 		m_Type == TYPE_TEYC ||
@@ -566,10 +566,10 @@ void CEyeWnd::Eye()
 	if (pImage->m_RGBData.GetMem() == NULL) return;
 
 	for (int y = 0; y < m_h; y++) {
-		real y_um = y0_um + (m_cy - y) / m_y_px_um;
+		real_t y_um = y0_um + (m_cy - y) / m_y_px_um;
 		for (int x = m_l; x < m_w; x++) {
-			real x_um = x0_um + (x - m_cx) / m_x_px_um;
-			real r, g, b;
+			real_t x_um = x0_um + (x - m_cx) / m_x_px_um;
+			real_t r, g, b;
 			if (pImage->GetRGBAtUm(x_um, y_um, &r, &g, &b)) {
 				m_MemDC.SetPixel(x, y, (int)r, (int)g, (int)b);
 			}
@@ -593,7 +593,7 @@ void CEyeWnd::Points()
 	COLORREF Colors[7] = { MAGENTA, RED, ORANGE, YELLOW, GREEN, CYAN, BLUE };
 
 	int Circle = -1;
-	real prev_r_um = -1.0;
+	real_t prev_r_um = -1.0;
 	CScanPoint* pPoint = m_pWFExam->m_Points.MoveFirst();
 	while (pPoint) {
 		if (pPoint->m_shot == m_pWFExam->m_CurShot) {
@@ -639,8 +639,8 @@ void CEyeWnd::Pupil()
 	if (!m_MapShowPupil) return;
 
 	CEyeImage* pImage = NULL;
-	real x0_um = 0.0;
-	real y0_um = 0.0;
+	real_t x0_um = 0.0;
+	real_t y0_um = 0.0;
 
 	if (m_Type == TYPE_TEYE ||
 		m_Type == TYPE_TOPM ||
@@ -710,8 +710,8 @@ void CEyeWnd::RadialRuler()
 	if (!m_ShowRadialRuler) return;
 
 	CEyeImage* pImage = NULL;
-	real x0_um = 0.0;
-	real y0_um = 0.0;
+	real_t x0_um = 0.0;
+	real_t y0_um = 0.0;
 
 	if (m_Type == TYPE_TEYE ||
 		m_Type == TYPE_TOPM ||
@@ -778,8 +778,8 @@ void CEyeWnd::LinearRuler()
 	if (!m_ShowLinearRuler) return;
 
 	CEyeImage* pImage = NULL;
-	real x0_um = 0.0;
-	real y0_um = 0.0;
+	real_t x0_um = 0.0;
+	real_t y0_um = 0.0;
 
 	if (m_Type == TYPE_TEYE ||
 		m_Type == TYPE_TOPM ||
@@ -840,8 +840,8 @@ void CEyeWnd::Inlay()
 	if (!m_ShowInlay) return;
 
 	CEyeImage* pImage = NULL;
-	real x0_um = 0.0;
-	real y0_um = 0.0;
+	real_t x0_um = 0.0;
+	real_t y0_um = 0.0;
 
 	if (m_Type == TYPE_TEYE ||
 		m_Type == TYPE_TOPM ||
@@ -906,10 +906,10 @@ void CEyeWnd::Inlay()
 		for (int j = OutSideTopY; j <= OutSideBotmY; j++)
 		{
 
-			real disX = (real)(i - x0);
-			real disY = (real)(j - y0);
+			real_t disX = (real_t)(i - x0);
+			real_t disY = (real_t)(j - y0);
 
-			real dis = sqrt(disX*disX + disY*disY);
+			real_t dis = sqrt(disX*disX + disY*disY);
 
 			if (dis <= OutSideWidth && dis >= InsideWidth)
 			{
@@ -1082,24 +1082,24 @@ void CEyeWnd::Inlay()
 		//Show the length of four lines
 		CString sDis1, sDis2, sDis3, sDis4;
 
-		real xD = (real)x1[0] - (real)x2[0];
-		real yD = (real)y1[0] - (real)y2[0];
-		real dis1 = (sqrt(xD*xD + yD*yD) / m_x_px_um)*0.001;
+		real_t xD = (real_t)x1[0] - (real_t)x2[0];
+		real_t yD = (real_t)y1[0] - (real_t)y2[0];
+		real_t dis1 = (sqrt(xD*xD + yD*yD) / m_x_px_um)*0.001;
 		sDis1.Format(_T("%.3fmm"), dis1);
 
-		xD = (real)x1[1] - (real)x2[1];
-		yD = (real)y1[1] - (real)y2[1];
-		real dis2 = (sqrt(xD*xD + yD*yD) / m_x_px_um)*0.001;
+		xD = (real_t)x1[1] - (real_t)x2[1];
+		yD = (real_t)y1[1] - (real_t)y2[1];
+		real_t dis2 = (sqrt(xD*xD + yD*yD) / m_x_px_um)*0.001;
 		sDis2.Format(_T("%.3fmm"), dis2);
 
-		xD = (real)x1[2] - (real)x2[2];
-		yD = (real)y1[2] - (real)y2[2];
-		real dis3 = (sqrt(xD*xD + yD*yD) / m_x_px_um)*0.001;
+		xD = (real_t)x1[2] - (real_t)x2[2];
+		yD = (real_t)y1[2] - (real_t)y2[2];
+		real_t dis3 = (sqrt(xD*xD + yD*yD) / m_x_px_um)*0.001;
 		sDis3.Format(_T("%.3fmm"), dis3);
 
-		xD = (real)x1[3] - (real)x2[3];
-		yD = (real)y1[3] - (real)y2[3];
-		real dis4 = (sqrt(xD*xD + yD*yD) / m_x_px_um)*0.001;
+		xD = (real_t)x1[3] - (real_t)x2[3];
+		yD = (real_t)y1[3] - (real_t)y2[3];
+		real_t dis4 = (sqrt(xD*xD + yD*yD) / m_x_px_um)*0.001;
 		sDis4.Format(_T("%.3fmm"), dis4);
 
 		int FontSize = intRound(0.02 * m_h);
@@ -1107,13 +1107,13 @@ void CEyeWnd::Inlay()
 		RECT rect1Txt = { x1[0], y1[0] + 20, x2[0], y1[0] + 10 };
 		m_MemDC.WriteText(sDis1, rect1Txt, Font, BLACK, 1, NOCOLOR);
 
-		int yStart = y1[1] + (int)((real)(y2[1] - y1[1]) / 2.0);
+		int yStart = y1[1] + (int)((real_t)(y2[1] - y1[1]) / 2.0);
 		m_MemDC.WriteRotatedText(sDis2, x1[1] + 15, yStart, 90, FontSize, 300, "Arial", BLACK, NOCOLOR);
 
 		RECT rect3Txt = { x1[2], y1[2] + 20, x2[2], y1[2] + 10 };
 		m_MemDC.WriteText(sDis3, rect3Txt, Font, BLACK, 1, NOCOLOR);
 
-		yStart = y1[3] + (int)((real)(y2[3] - y1[3]) / 2.0);
+		yStart = y1[3] + (int)((real_t)(y2[3] - y1[3]) / 2.0);
 		m_MemDC.WriteRotatedText(sDis4, x1[3] + 15, yStart, 90, FontSize, 300, "Arial", BLACK, NOCOLOR);
 	}
 	//Done
@@ -1128,8 +1128,8 @@ void CEyeWnd::Limbus()
 	if (!m_MapShowLimbus) return;
 
 	CEyeImage* pImage = NULL;
-	real x0_um = 0.0;
-	real y0_um = 0.0;
+	real_t x0_um = 0.0;
+	real_t y0_um = 0.0;
 
 	if (m_Type == TYPE_TEYE ||
 		m_Type == TYPE_TOPM ||
@@ -1249,8 +1249,8 @@ void CEyeWnd::Rings()
 		for (int r = 0; r < pImage->m_NumRings; r++) {
 			for (int a = 0; a < 360; a++) {
 				int b = a == 359 ? 0 : a + 1;
-				real ra_um = pImage->m_ri_r_um[r][a]; if (ra_um == INVALID_VALUE) continue;
-				real rb_um = pImage->m_ri_r_um[r][b]; if (rb_um == INVALID_VALUE) continue;
+				real_t ra_um = pImage->m_ri_r_um[r][a]; if (ra_um == INVALID_VALUE) continue;
+				real_t rb_um = pImage->m_ri_r_um[r][b]; if (rb_um == INVALID_VALUE) continue;
 				int xa = intRound(m_cx + ra_um * COS[a] * m_x_px_um);
 				int ya = intRound(m_cy - ra_um * SIN[a] * m_y_px_um);
 				int xb = intRound(m_cx + rb_um * COS[b] * m_x_px_um);
@@ -1280,7 +1280,7 @@ void CEyeWnd::Numbers()
 
 	if (!m_MapShowNumbers) return;
 
-	real min = m_Cent - m_Step * (m_NumColors >> 1);
+	real_t min = m_Cent - m_Step * (m_NumColors >> 1);
 
 	int A[6];
 	if (m_SizeSmall) { A[0] = 360; A[1] = 90; A[2] = 30; A[3] = 30; A[4] = 15; A[5] = 15; }
@@ -1294,11 +1294,11 @@ void CEyeWnd::Numbers()
 
 	for (int r = 0; r <= 5; r++) {
 		for (int a = 0; a < 360; a += A[r]) {
-			real x_um = r * 1000.0 * COS[a];
-			real y_um = r * 1000.0 * SIN[a];
+			real_t x_um = r * 1000.0 * COS[a];
+			real_t y_um = r * 1000.0 * SIN[a];
 			int x = intRound(x_um * m_x_px_um);
 			int y = intRound(y_um * m_y_px_um);
-			real v = m_Map2D.GetAt(y, x);
+			real_t v = m_Map2D.GetAt(y, x);
 			if (v != INVALID_VALUE) {
 				CString s;
 				s.Format(_T("%.2f"), v);
@@ -1337,10 +1337,10 @@ void CEyeWnd::Keratometry()
 
 	int FontSize = intRound(0.033 * m_h);
 
-	real x_px_um = m_Type == TYPE_CAXM ? m_x_px_um : m_x_px_um * 1.2;
-	real y_px_um = m_Type == TYPE_CAXM ? m_y_px_um : m_y_px_um * 1.2;
-	real cx = m_Type == TYPE_CAXM ? m_cx : m_w - intRound(4000.0 * x_px_um);
-	real cy = m_Type == TYPE_CAXM ? m_cy : intRound(4000.0 * y_px_um);
+	real_t x_px_um = m_Type == TYPE_CAXM ? m_x_px_um : m_x_px_um * 1.2;
+	real_t y_px_um = m_Type == TYPE_CAXM ? m_y_px_um : m_y_px_um * 1.2;
+	real_t cx = m_Type == TYPE_CAXM ? m_cx : m_w - intRound(4000.0 * x_px_um);
+	real_t cy = m_Type == TYPE_CAXM ? m_cy : intRound(4000.0 * y_px_um);
 
 	COLORREF c[4] = { BLUE, BLUE, RED, RED };
 	int dd = 5 * FontSize / 8;
@@ -1350,7 +1350,7 @@ void CEyeWnd::Keratometry()
 		m_MemDC.DrawCircle(intRound(cx), intRound(cy), intRound(r2_um[z] * x_px_um), 1, GRAY, NOCOLOR);
 		if (m_pCTExam->m_kr_ok[z]) {
 			int a[4] = { m_pCTExam->m_kr_fl_dg[z][0], m_pCTExam->m_kr_fl_dg[z][1], m_pCTExam->m_kr_st_dg[z][0], m_pCTExam->m_kr_st_dg[z][1] };
-			real d[4] = { m_pCTExam->m_kr_fl_dp[z][0], m_pCTExam->m_kr_fl_dp[z][1], m_pCTExam->m_kr_st_dp[z][0], m_pCTExam->m_kr_st_dp[z][1] };
+			real_t d[4] = { m_pCTExam->m_kr_fl_dp[z][0], m_pCTExam->m_kr_fl_dp[z][1], m_pCTExam->m_kr_st_dp[z][0], m_pCTExam->m_kr_st_dp[z][1] };
 			int x1, y1, x2, y2;
 			for (int i = 0; i < 4; i++) {
 				int aa = a[i];
@@ -1374,7 +1374,7 @@ void CEyeWnd::Keratometry()
 	FontSize = intRound(0.040 * m_h);
 	CMFont Font(FontSize, 400, "Arial");
 
-	const real dh = m_h / 24.0;
+	const real_t dh = m_h / 24.0;
 
 	RECT Rect;
 	COLORREF white = m_Printing ? BLACK : WHITE;
@@ -1383,7 +1383,7 @@ void CEyeWnd::Keratometry()
 	//---------------------------------------------------------
 
 	int l = intRound(m_w * 0.015);
-	real t = m_h - 22.0 * dh;
+	real_t t = m_h - 22.0 * dh;
 
 	SetRect(&Rect, l, intRound(t), m_w, intRound(t + dh));
 	m_MemDC.WriteText("Sim K (D = 3 mm)", Rect, Font, white, 0);
@@ -1593,7 +1593,7 @@ void CEyeWnd::AstigmatismAxes()
 
 	for (int i = 0; i < 4; i++) {
 		COLORREF Color = i < 2 ? RED : BLUE;
-		real r_um = m_Map2D.m_r_max_um;
+		real_t r_um = m_Map2D.m_r_max_um;
 		int x1 = intRound(m_cx + r_um * COS[a[i]] * m_x_px_um);
 		int y1 = intRound(m_cy - r_um * SIN[a[i]] * m_y_px_um);
 		int x2 = intRound(m_cx - r_um * COS[a[i]] * m_x_px_um);
@@ -1634,7 +1634,7 @@ void CEyeWnd::BlueAstigmatismAxes()
 
 	for (int i = 2; i < 4; i++) {
 		COLORREF Color = i < 2 ? RED : BLUE;
-		real r_um = m_Map2D.m_r_max_um;
+		real_t r_um = m_Map2D.m_r_max_um;
 		int x1 = intRound(m_cx + r_um * COS[a[i]] * m_x_px_um);
 		int y1 = intRound(m_cy - r_um * SIN[a[i]] * m_y_px_um);
 		int x2 = intRound(m_cx - r_um * COS[a[i]] * m_x_px_um);
@@ -1674,7 +1674,7 @@ void CEyeWnd::RedAstigmatismAxes()
 
 	for (int i = 0; i < 2; i++) {
 		COLORREF Color = i < 2 ? RED : BLUE;
-		real r_um = m_Map2D.m_r_max_um;
+		real_t r_um = m_Map2D.m_r_max_um;
 		int x1 = intRound(m_cx + r_um * COS[a[i]] * m_x_px_um);
 		int y1 = intRound(m_cy - r_um * SIN[a[i]] * m_y_px_um);
 		int x2 = intRound(m_cx - r_um * COS[a[i]] * m_x_px_um);
@@ -1708,8 +1708,8 @@ void CEyeWnd::Surface()
 
 	if (!m_Method3D) return;
 
-	real _0 = m_Printing ? 1.0 : 0.0;
-	real _1 = m_Printing ? 0.0 : 1.0;
+	real_t _0 = m_Printing ? 1.0 : 0.0;
+	real_t _1 = m_Printing ? 0.0 : 1.0;
 
 	HGLRC hRenderingContext = NULL;
 	int PixelFormat = ::ChoosePixelFormat(m_MemDC.m_hDC, &m_PixelFormatDescriptor);
@@ -1724,7 +1724,7 @@ void CEyeWnd::Surface()
 
 	::glMatrixMode(GL_PROJECTION);
 	::glLoadIdentity();
-	real p = (real)(m_w - m_l) / m_h;
+	real_t p = (real_t)(m_w - m_l) / m_h;
 	::glOrtho(-p, p, -1.0, 1.0, -5.0, 5.0);
 
 	::glMatrixMode(GL_MODELVIEW);
@@ -1744,21 +1744,21 @@ void CEyeWnd::Surface()
 	::glEnable(GL_BLEND);
 	::glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	const real R_max_um = 5000.0;
+	const real_t R_max_um = 5000.0;
 
-	real z_min = m_Cent - m_Step * (m_NumColors >> 1);
-	real z_max = m_Cent + m_Step * (m_NumColors >> 1);
+	real_t z_min = m_Cent - m_Step * (m_NumColors >> 1);
+	real_t z_max = m_Cent + m_Step * (m_NumColors >> 1);
 
-	Matrix<real> R(m_NumColors);
-	Matrix<real> G(m_NumColors);
-	Matrix<real> B(m_NumColors);
+	Matrix<real_t> R(m_NumColors);
+	Matrix<real_t> G(m_NumColors);
+	Matrix<real_t> B(m_NumColors);
 	for (int i = 0; i < m_NumColors; i++) {
 		R[i] = GetRValue(m_Colors[i]) / 255.0;
 		G[i] = GetGValue(m_Colors[i]) / 255.0;
 		B[i] = GetBValue(m_Colors[i]) / 255.0;
 	}
 
-	real k = m_MapShowSolidSurface ? 0.75 : 1.0;
+	real_t k = m_MapShowSolidSurface ? 0.75 : 1.0;
 
 	::glEnable(GL_POLYGON_OFFSET_FILL);
 	::glPolygonOffset(0.0, 10000.0);
@@ -1767,7 +1767,7 @@ void CEyeWnd::Surface()
 
 		int r[4] = { ri, ri, ri + 1, ri + 1 };
 
-		real r_um[4];
+		real_t r_um[4];
 		for (int i = 0; i < 4; i++) r_um[i] = r[i] * m_Map3D.m_dr_um;
 
 		for (int ai = 0; ai < 360; ai++) {
@@ -1779,16 +1779,16 @@ void CEyeWnd::Surface()
 			a[3] = ai;
 
 			// рассчитать координаты x[i], y[i], z[i] и цвета cr[i], cg[i], cb[i]
-			real x[4], y[4], z[4], cr[4], cg[4], cb[4];
+			real_t x[4], y[4], z[4], cr[4], cg[4], cb[4];
 			{
 				int k;
 				for (k = 0; k < 4; k++) {
-					real v = m_Map3D.GetAt(r[k], a[k]); if (v == INVALID_VALUE) break;
+					real_t v = m_Map3D.GetAt(r[k], a[k]); if (v == INVALID_VALUE) break;
 					x[k] = r_um[k] * COS[a[k]] / R_max_um;
 					y[k] = r_um[k] * SIN[a[k]] / R_max_um;
 					z[k] = (v - m_Cent) / (z_max - m_Cent);
 
-					real s = (v - z_min) / m_Step;
+					real_t s = (v - z_min) / m_Step;
 					int j1 = (int)floor(s);
 					int j2 = j1 + 1;
 					if (j1 < 0) {
@@ -1802,7 +1802,7 @@ void CEyeWnd::Surface()
 						cb[k] = B[m_NumColors - 1];
 					}
 					else {
-						real t = s - j1;
+						real_t t = s - j1;
 						cr[k] = R[j1] + t * (R[j2] - R[j1]);
 						cg[k] = G[j1] + t * (G[j2] - G[j1]);
 						cb[k] = B[j1] + t * (B[j2] - B[j1]);
@@ -1882,8 +1882,8 @@ void CEyeWnd::Surface()
 	::glLineWidth(2.0);
 	::glBegin(GL_LINES);
 	for (int i = 0; i < 360; i += 5) {
-		real x1 = 1.02 * COS[i]; real y1 = 1.02 * SIN[i];
-		real x2 = 1.03 * COS[i]; real y2 = 1.03 * SIN[i];
+		real_t x1 = 1.02 * COS[i]; real_t y1 = 1.02 * SIN[i];
+		real_t x2 = 1.03 * COS[i]; real_t y2 = 1.03 * SIN[i];
 		::glVertex3d(x1, y1, 0.0);
 		::glVertex3d(x2, y2, 0.0);
 	}
@@ -1894,9 +1894,9 @@ void CEyeWnd::Surface()
 	::glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	::glColor4d(0.5, 0.5, 0.5, 0.5);
 	::glBegin(GL_LINES);
-	for (real um = -R_max_um; um < R_max_um + 0.001; um += 1000.0) {
-		real a = um / R_max_um;
-		real b = sqrt(sqr(1.0) - sqr(a));
+	for (real_t um = -R_max_um; um < R_max_um + 0.001; um += 1000.0) {
+		real_t a = um / R_max_um;
+		real_t b = sqrt(sqr(1.0) - sqr(a));
 		::glVertex3d(a, -b, 0.0); ::glVertex3d(a, b, 0.0);
 		::glVertex3d(-b, a, 0.0); ::glVertex3d(b, a, 0.0);
 	}
@@ -1911,7 +1911,7 @@ void CEyeWnd::Surface()
 	::wglUseFontOutlines(m_MemDC.m_hDC, 48, 10, 1, 0.0f, 0.0f, WGL_FONT_POLYGONS, gm);
 	::glListBase(1);
 
-	real f = m_SizeSmall ? 0.09 : 0.08;
+	real_t f = m_SizeSmall ? 0.09 : 0.08;
 	for (int i = 0; i < 360; i += 30) {
 		::glBlendFunc(GL_ONE, GL_ZERO);
 		::glColor3d(_1, _1, _1);
@@ -1985,16 +1985,16 @@ void CEyeWnd::Cursor()
 	s.Format(_T("%i°"), a);
 	m_MemDC.WriteText(s, Rect, Font, white, 2);
 
-	real cursor_x_um = m_cursor_r_um * cos(m_cursor_a_rd);
-	real cursor_y_um = m_cursor_r_um * sin(m_cursor_a_rd);
+	real_t cursor_x_um = m_cursor_r_um * cos(m_cursor_a_rd);
+	real_t cursor_y_um = m_cursor_r_um * sin(m_cursor_a_rd);
 
 	if (m_cursor_r_um <= m_Map2D.m_r_max_um) {
 		if (m_MapShowMap || m_MapShowNumbers) {
 			int x = intRound(cursor_x_um * m_x_px_um);
 			int y = intRound(cursor_y_um * m_y_px_um);
-			real v = m_Map2D.GetAt(y, x);
+			real_t v = m_Map2D.GetAt(y, x);
 			if (v != INVALID_VALUE) {
-				real min = m_Cent - m_Step * (m_NumColors >> 1);
+				real_t min = m_Cent - m_Step * (m_NumColors >> 1);
 				int i = intRound((v - min) / m_Step);
 				if (i < 0) i = 0;
 				else if (i > m_NumColors - 1) i = m_NumColors - 1;
@@ -2030,8 +2030,8 @@ void CEyeWnd::OnMouseMove(uint nFlags, CPoint Point)
 
 	if ((nFlags & MK_LBUTTON) && !m_Method3D) {
 
-		real x_um = (Point.x - m_cx) / m_x_px_um;
-		real y_um = (m_cy - Point.y) / m_y_px_um;
+		real_t x_um = (Point.x - m_cx) / m_x_px_um;
+		real_t y_um = (m_cy - Point.y) / m_y_px_um;
 
 		m_cursor_r_um = hyp(x_um, y_um);
 		m_cursor_a_rd = angle(y_um, x_um);
@@ -2044,7 +2044,7 @@ void CEyeWnd::OnMouseMove(uint nFlags, CPoint Point)
 
 		InvalidateRgn(&m_Rgn, FALSE);
 
-		static real m[2];
+		static real_t m[2];
 		m[0] = m_cursor_r_um;
 		m[1] = m_cursor_a_rd;
 		GetParent()->PostMessage(WM_CHANGE_POS, (WPARAM)this, (LPARAM)m);
@@ -2065,7 +2065,7 @@ void CEyeWnd::OnLButtonDown(uint nFlags, CPoint Point)
 void CEyeWnd::OnLButtonDblClk(uint nFlags, CPoint Point)
 {
 	if (m_MapShowMap && !m_Method3D) {
-		real mean, std_dev;
+		real_t mean, std_dev;
 		m_Map2D.ComputeMeanStdDev(mean, std_dev);
 		CString s;
 		////531
@@ -2088,8 +2088,8 @@ LRESULT CEyeWnd::OnChangePosMsg(WPARAM wParam, LPARAM lParam)
 {
 	if (!m_Method3D) {
 
-		m_cursor_r_um = ((real*)lParam)[0];
-		m_cursor_a_rd = ((real*)lParam)[1];
+		m_cursor_r_um = ((real_t*)lParam)[0];
+		m_cursor_a_rd = ((real_t*)lParam)[1];
 
 		RestoreMemDC();
 

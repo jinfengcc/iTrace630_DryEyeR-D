@@ -24,7 +24,7 @@ private:
 	CWFExam* m_pWFExam1;
 	CWFExam* m_pWFExam2;
 
-	real     m_maxRum;
+	real_t     m_maxRum;
 	CString  m_scan1;
 	CString  m_scan2;
 
@@ -33,8 +33,8 @@ private:
 	int      m_MideLine;
 
 	int      m_Slider_Top;
-	real     m_ODSliderMaxPos;
-	real     m_OSSliderMaxPos;
+	real_t     m_ODSliderMaxPos;
+	real_t     m_OSSliderMaxPos;
 
 	RECT     m_SliderRects[8];
 

@@ -302,15 +302,15 @@ void CCalDlg::OnBallRadioClicked()
 {
 	m_RingsDC.FillSolidRect(0, 0, m_w, m_h, BLACK);
 
-	real h_um = 12000.0;
-	real w_um = h_um * m_w / m_h;
-	real x_px_um = m_w / w_um;
-	real y_px_um = m_h / h_um;
-	real cx = m_w * 0.5;
-	real cy = m_h * 0.5;
+	real_t h_um = 12000.0;
+	real_t w_um = h_um * m_w / m_h;
+	real_t x_px_um = m_w / w_um;
+	real_t y_px_um = m_h / h_um;
+	real_t cx = m_w * 0.5;
+	real_t cy = m_h * 0.5;
 
-	real m = 1000.0 * ((int)(0.5 * __max(w_um, h_um) * 0.001) + 1.0);
-	for (real um = -m; um < m + 0.1; um += 1000.0) {
+	real_t m = 1000.0 * ((int)(0.5 * __max(w_um, h_um) * 0.001) + 1.0);
+	for (real_t um = -m; um < m + 0.1; um += 1000.0) {
 		int y = intRound(cy - um * y_px_um);
 		m_RingsDC.DrawHorzDottedLine(0, m_w - 1, y, 0x00606060, NOCOLOR);
 		int x = intRound(cx + um * x_px_um);
@@ -322,8 +322,8 @@ void CCalDlg::OnBallRadioClicked()
 	for (int r = 0; r < m_pCalibration->NumRings; r++) {
 		for (int a1 = 0; a1 < 360; a1++) {
 			int a2 = CheckAngle(a1 + 1);
-			real ri1_um = m_pCalibration->BallsRi[b][r][a1]; if (ri1_um == INVALID_VALUE) continue;
-			real ri2_um = m_pCalibration->BallsRi[b][r][a2]; if (ri2_um == INVALID_VALUE) continue;
+			real_t ri1_um = m_pCalibration->BallsRi[b][r][a1]; if (ri1_um == INVALID_VALUE) continue;
+			real_t ri2_um = m_pCalibration->BallsRi[b][r][a2]; if (ri2_um == INVALID_VALUE) continue;
 			int ya1 = intRound(cy - ri1_um * SIN[a1] * y_px_um);
 			int xa1 = intRound(cx + ri1_um * COS[a1] * x_px_um);
 			int ya2 = intRound(cy - ri2_um * SIN[a2] * y_px_um);
@@ -1002,8 +1002,8 @@ void CCalDlg::OnRingsToolButtonClicked()
 
 void CCalDlg::OnOptTableButtonClicked()
 {
-	real x[21];
-	real y[21];
+	real_t x[21];
+	real_t y[21];
 	for (int i = 0; i < 21; i++) {
 		x[i] = -10 + i;
 		y[i] = m_pCalibration->OptometerTable[i];
@@ -1030,15 +1030,15 @@ void CCalDlg::OnVideoMoveButtonClicked()
 //530 trigger a quick wf exam
 void CCalDlg::OnVideoQkWFExamBtnClicked()
 {
-	real backC3 = m_pCalibration->Zernike.C3;
-	real backC4 = m_pCalibration->Zernike.C4;
-	real backC5 = m_pCalibration->Zernike.C5;
+	real_t backC3 = m_pCalibration->Zernike.C3;
+	real_t backC4 = m_pCalibration->Zernike.C4;
+	real_t backC5 = m_pCalibration->Zernike.C5;
 	int  backExposureTime = m_pCalibration->LADExposureTime;
 	BOOL backLADSwapXY = m_pCalibration->LADSwapXY;
 	BOOL backADXNoFlip = m_pCalibration->LADXNoFlip;
-	real backLADXFocalDistance = m_pCalibration->LADXFocalDistance;
+	real_t backLADXFocalDistance = m_pCalibration->LADXFocalDistance;
 	BOOL backLADYNoFlip = m_pCalibration->LADYNoFlip;
-	real backLADYFocalDistance = m_pCalibration->LADYFocalDistance;
+	real_t backLADYFocalDistance = m_pCalibration->LADYFocalDistance;
 	int  backOptometerEnabled = m_pCalibration->OptometerEnabled;
 
 	GetDlgData();//

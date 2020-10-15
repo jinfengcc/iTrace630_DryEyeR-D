@@ -21,7 +21,7 @@ public:
 	BOOL m_Average;
 	int  m_Angle;
 	BOOL m_ShowDys;//531 Show Dysfunctional lens bar or not
-	real m_Dysval;//600 for Dysfunctional lens value
+	real_t m_Dysval;//600 for Dysfunctional lens value
 
 	void CreateSlider();
 

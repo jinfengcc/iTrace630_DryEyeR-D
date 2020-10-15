@@ -2790,7 +2790,7 @@ BOOL CDB::ExamExist(const GUID& ExamID)
 //***************************************************************************************
 
 //[5.1.1]
-GUID CDB::LoadFellowID(const GUID& ExamID, real& scanSize, int& NumImages, int exam_type)
+GUID CDB::LoadFellowID(const GUID& ExamID, real_t& scanSize, int& NumImages, int exam_type)
 {
 	scanSize = 0;
 	GUID FellowExamID = GUID_NULL;
@@ -3393,7 +3393,7 @@ BOOL CDB::LoadWFExam(const GUID& ExamID, CWFExam* pWFExam)
 	pImage->m_In_r_um = OK ? pExamData->InlayR0 : 0.0;
 	pImage->m_In_In_r_um = OK ? pExamData->InlayInR0 : 0.0;
 
-	real Dis = sqrt((pExamData->LinearRulerX1 - pExamData->LinearRulerX0)*(pExamData->LinearRulerX1 - pExamData->LinearRulerX0) + (pExamData->LinearRulerY1 - pExamData->LinearRulerY0)*(pExamData->LinearRulerY1 - pExamData->LinearRulerY0));
+	real_t Dis = sqrt((pExamData->LinearRulerX1 - pExamData->LinearRulerX0)*(pExamData->LinearRulerX1 - pExamData->LinearRulerX0) + (pExamData->LinearRulerY1 - pExamData->LinearRulerY0)*(pExamData->LinearRulerY1 - pExamData->LinearRulerY0));
 	BOOL RulerOk = (Dis > 0 );//6.2.0 New Bug 
 	OK = (pExamData->StructSize >= 6275 && pExamData->LinearRulerOk == 1 && RulerOk);
 	pImage->m_LRa_ok = OK;

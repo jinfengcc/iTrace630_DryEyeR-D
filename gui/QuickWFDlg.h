@@ -39,15 +39,15 @@ private:
 	//Done
 
 	//Backup of releated Calibration values
-	real m_backC3;
-	real m_backC4;
-	real m_backC5;
+	real_t m_backC3;
+	real_t m_backC4;
+	real_t m_backC5;
 	int  m_backExposureTime;
 	BOOL m_backLADSwapXY;
 	BOOL m_backADXNoFlip;
-	real m_backLADXFocalDistance;
+	real_t m_backLADXFocalDistance;
 	BOOL m_backLADYNoFlip;
-	real m_backLADYFocalDistance;
+	real_t m_backLADYFocalDistance;
 	int  m_backOptometerEnabled;
 	//Done
 
@@ -57,15 +57,15 @@ private:
 	int  m_Saved_RefractionRounding[300];
 	int  m_Saved_ScanDiameterUm[300];
 
-	real m_Saved_C3[300];
-	real m_Saved_C4[300];
-	real m_Saved_C5[300];
+	real_t m_Saved_C3[300];
+	real_t m_Saved_C4[300];
+	real_t m_Saved_C5[300];
 	int  m_Saved_ExposureTime[300];
 	BOOL m_Saved_LADSwapXY[300];
 	BOOL m_Saved_ADXNoFlip[300];
-	real m_Saved_LADXFocalDistance[300];
+	real_t m_Saved_LADXFocalDistance[300];
 	BOOL m_Saved_LADYNoFlip[300];
-	real m_Saved_LADYFocalDistance[300];
+	real_t m_Saved_LADYFocalDistance[300];
 	int  m_Saved_OptometerEnabled[300];
 	//Done
 

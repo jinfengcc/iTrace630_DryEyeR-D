@@ -31,7 +31,7 @@ public:
 	CWnd* m_pVideoWnd;
 
 	uint  m_NumFramesReceived;
-	real  m_AverageCycleTime;
+	real_t  m_AverageCycleTime;
 
 	BOOL  Start();
 	void  Finish();

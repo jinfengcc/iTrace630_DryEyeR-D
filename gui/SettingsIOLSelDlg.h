@@ -8,13 +8,13 @@ class CSettingsIOLSelDlg : public CDialog
 {
 public:
 
-	CSettingsIOLSelDlg(CWnd* pParentWnd, BOOL Default, real IOLSel_Alpha[2], real IOLSel_CHOA, real IOLSel_IHOA, real IOLSel_Astig, real IOLSel_Sph_Abbe[4]);
+	CSettingsIOLSelDlg(CWnd* pParentWnd, BOOL Default, real_t IOLSel_Alpha[2], real_t IOLSel_CHOA, real_t IOLSel_IHOA, real_t IOLSel_Astig, real_t IOLSel_Sph_Abbe[4]);
 
-	real  m_IOLSel_Alpha[2];//530 IOL SELECTION threshold
-	real  m_IOLSel_CHOA;//530 IOL SELECTION Corneal HOA threshold
-	real  m_IOLSel_Astig;//530 IOL SELECTION threshold
-	real  m_IOLSel_Sph_Abbe[4];//530 IOL SELECTION threshold
-	real  m_IOLSel_IHOA;//530 IOL SELECTION Internal HOA threshold
+	real_t  m_IOLSel_Alpha[2];//530 IOL SELECTION threshold
+	real_t  m_IOLSel_CHOA;//530 IOL SELECTION Corneal HOA threshold
+	real_t  m_IOLSel_Astig;//530 IOL SELECTION threshold
+	real_t  m_IOLSel_Sph_Abbe[4];//530 IOL SELECTION threshold
+	real_t  m_IOLSel_IHOA;//530 IOL SELECTION Internal HOA threshold
 
 private:
 

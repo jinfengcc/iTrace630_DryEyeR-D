@@ -65,10 +65,10 @@ CWFSoloCmpWnd::CWFSoloCmpWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFE
 	//----------------------------------------------------
 	RECT Rect;
 	GetWindowRect(&Rect);
-	real t = 3.0 * (0.03 * m_h) + m_g;
-	real w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
-	real h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
-	real w1 = 0.85*w;
+	real_t t = 3.0 * (0.03 * m_h) + m_g;
+	real_t w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
+	real_t h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
+	real_t w1 = 0.85*w;
 
 	m_mapTop = intRound(t);
 	m_mapBtm = intRound(t + h + m_g + h);
@@ -100,7 +100,7 @@ CWFSoloCmpWnd::CWFSoloCmpWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFE
 	m_scan.Format(_T("%.2f mm"), ::TempSettings.Com_r_max_um*0.002);
 
 	int  IconWide = 9;
-	real w2 = 0.15*w;
+	real_t w2 = 0.15*w;
 	int sliderTop = intRound(t + 0.2*h);
 	int sliderBtm = intRound(t + 0.65*h);
 
@@ -241,8 +241,8 @@ CWFSoloCmpWnd::CWFSoloCmpWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFE
 	}
 
 	int  SNum = (int)(::TempSettings.Com_r_max_um*0.002);
-	real rest = ::TempSettings.Com_r_max_um - intRound(::TempSettings.Com_r_max_um) % 500;
-	real pos = 1 - (::TempSettings.Com_r_max_um - rest) / (::TempSettings.Com_r_max_um - 500);
+	real_t rest = ::TempSettings.Com_r_max_um - intRound(::TempSettings.Com_r_max_um) % 500;
+	real_t pos = 1 - (::TempSettings.Com_r_max_um - rest) / (::TempSettings.Com_r_max_um - 500);
 	if (m_pWFExam1)
 	{
 		m_Slider[0].m_scaleNum = SNum;
@@ -472,7 +472,7 @@ void CWFSoloCmpWnd::CreateChildWnd()
 	m_Surfaces[1] = pWFExam[1]->m_WfSurface;
 
 	// change diameter
-	real r_max_um = 5000.0;
+	real_t r_max_um = 5000.0;
 	r_max_um = __min(r_max_um, m_Surfaces[0].m_r_max_um);
 	r_max_um = __min(r_max_um, m_Surfaces[1].m_r_max_um);
 	r_max_um = __min(r_max_um, pWndSettings->m_ZoneRadiusUm);
@@ -635,23 +635,23 @@ void CWFSoloCmpWnd::CreateChildWnd()
 	if (pWndSettings->m_Type == TYPE_TWFM || pWndSettings->m_Type == TYPE_TRFM) 
 	{
 		CScale* pScale = pWndSettings->GetScale();
-		real Inc = pWndSettings->GetIncrement();
-		real Cent = 0.0;
-		real Step;
+		real_t Inc = pWndSettings->GetIncrement();
+		real_t Cent = 0.0;
+		real_t Step;
 
 		if (pScale->m_StepAuto)
 		{
-			real Span = 0.0;
+			real_t Span = 0.0;
 
 			for (int d = 0; d < 3; d++) 
 			{
 				CEyeWnd* pEyeWnd = (CEyeWnd*)m_pDispWnd[d];
-				real Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
-				real Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
+				real_t Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
+				real_t Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
 				Span = __max(Span, 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent)));
 			}
 
-			real t = Span / pScale->m_NumColors;
+			real_t t = Span / pScale->m_NumColors;
 			Step = (int)(t / Inc) * Inc;
 			if (t > Step + 0.001) Step += Inc;
 		}
@@ -662,7 +662,7 @@ void CWFSoloCmpWnd::CreateChildWnd()
 
 		if (Step < Inc) Step = Inc;
 
-		real StepMax = pWndSettings->GetMaxStep();
+		real_t StepMax = pWndSettings->GetMaxStep();
 
 		if (Step > StepMax) Step = StepMax;
 		
@@ -751,7 +751,7 @@ LRESULT CWFSoloCmpWnd::OnRotateMsg(WPARAM wParam, LPARAM lParam)
 
 LRESULT CWFSoloCmpWnd::OnChangeCentMsg(WPARAM wParam, LPARAM lParam)
 {
-	real Cent = INVALID_VALUE;
+	real_t Cent = INVALID_VALUE;
 
 	for (int d = 0; d < 2; d++) {
 		if (m_pDispWnd[d] && (WPARAM)m_pDispWnd[d] == wParam) {
@@ -777,7 +777,7 @@ LRESULT CWFSoloCmpWnd::OnChangeCentMsg(WPARAM wParam, LPARAM lParam)
 
 LRESULT CWFSoloCmpWnd::OnChangeStepMsg(WPARAM wParam, LPARAM lParam)
 {
-	real Step = INVALID_VALUE;
+	real_t Step = INVALID_VALUE;
 
 	for (int d = 0; d < 2; d++) {
 		if (m_pDispWnd[d] && (WPARAM)m_pDispWnd[d] == wParam) {
@@ -1192,7 +1192,7 @@ LRESULT CWFSoloCmpWnd::OnSliderClick(WPARAM wParam, LPARAM lParam)
 	GetCursorPos(&point);
 
 	int newZoneRadiusUm;
-	real pos = 1;
+	real_t pos = 1;
 
 	if (point.x <= m_slider1Right)
 	{
@@ -1244,7 +1244,7 @@ LRESULT CWFSoloCmpWnd::OnSliderChangedPos(WPARAM wParam, LPARAM lParam)
 	GetCursorPos(&point);
 
 	int newZoneRadiusUm;
-	real pos = 1;
+	real_t pos = 1;
 
 	if (point.x <= m_slider1Right)
 	{

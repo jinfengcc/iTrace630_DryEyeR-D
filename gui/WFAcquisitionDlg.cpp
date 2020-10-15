@@ -87,7 +87,7 @@ void CWFAcquisitionDlg::OnNum(int num)
 {
 	if (::PresbiaMode == 2) return;
 
-	real    sSize;
+	real_t    sSize;
 	CString sStr;
 
 	if (num == 1) { sSize = 500;	 sStr = "1"; }
@@ -327,7 +327,7 @@ LRESULT CWFAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 	t += fs;
 	::SetRect(&Rect, 10, t, 200, t + fs);
 	m_VideoWnd.m_MemDC.WriteText("Sphere", Rect, Font, YELLOW, 0);
-	real D = m_pWFAcquisition->m_WFExam.m_PrecalcSphere;
+	real_t D = m_pWFAcquisition->m_WFExam.m_PrecalcSphere;
 	s.Format(_T("%.2f D"), fabs(D));
 	if (D < -0.01) s = "- " + s; else if (D > 0.01) s = "+ " + s;
 	m_VideoWnd.m_MemDC.WriteText(s, Rect, Font, YELLOW, 2);
@@ -448,7 +448,7 @@ LRESULT CWFAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 
 		for (int a = 0; a < 360; a++)
 		{
-			int d = intRound((real)a / 5.0);
+			int d = intRound((real_t)a / 5.0);
 
 			if (d % 2 == 0)
 			{
@@ -567,7 +567,7 @@ LRESULT CWFAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 
 	if (m_ShowTechInfo) {
 
-		real hmax = -1000000000.0;
+		real_t hmax = -1000000000.0;
 		for (int i = 0; i < 256; i++) {
 			if (hmax < pImage->m_hist[i]) hmax = pImage->m_hist[i];
 		}

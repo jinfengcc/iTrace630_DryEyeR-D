@@ -136,8 +136,8 @@ void CFarLtrWnd::RepaintMemDC()
 
 void CFarLtrWnd::Letter()
 {
-	real _0 = m_Printing ? 1.0 : 0.0;
-	real _1 = m_Printing ? 0.0 : 1.0;
+	real_t _0 = m_Printing ? 1.0 : 0.0;
+	real_t _1 = m_Printing ? 0.0 : 1.0;
 
 	int n = m_Ltr.m_Array.GetNumRows();
 
@@ -154,7 +154,7 @@ void CFarLtrWnd::Letter()
 
 	::glMatrixMode(GL_PROJECTION);
 	::glLoadIdentity();
-	real p = (real)m_w / m_h;
+	real_t p = (real_t)m_w / m_h;
 	::glOrtho(-p, p, -1.0, 1.0, -5.0, 5.0);
 
 	::glMatrixMode(GL_MODELVIEW);
@@ -164,7 +164,7 @@ void CFarLtrWnd::Letter()
 		::glRotated(-45 - m_ax, 0.0, 0.0, 1.0);
 		::glTranslated(0.0, 0.0, -0.2);
 	}
-	real q = 1.0;
+	real_t q = 1.0;
 	q *= 0.01 * m_Zoom;
 	q *= n / 1024.0;
 	q *= 2.0 / n;
@@ -182,14 +182,14 @@ void CFarLtrWnd::Letter()
 
 	// letter
 	int o = n >> 1;
-	real thr = 0.01;
+	real_t thr = 0.01;
 	for (int j = 0; j < n - 1; j++)
 	{
 		int y[4] = { j, j + 1, j + 1, j };
 		for (int i = 0; i < n - 1; i++)
 		{
 			int x[4] = { i, i, i + 1, i + 1 };
-			real z[4];
+			real_t z[4];
 			for (int k = 0; k < 4; k++)
 			{
 				z[k] = m_Ltr.m_Array(y[k], x[k]);
@@ -199,7 +199,7 @@ void CFarLtrWnd::Letter()
 				::glBegin(GL_POLYGON);
 				for (int k = 0; k < 4; k++)
 				{
-					real c = m_Printing ? 1.0 - z[k] : z[k];
+					real_t c = m_Printing ? 1.0 - z[k] : z[k];
 					::glColor3d(c, c, c);
 					::glVertex3d(x[k] - o, y[k] - o, z[k]);
 				}
@@ -210,24 +210,24 @@ void CFarLtrWnd::Letter()
 
 	// grid
 	::glColor3d(m_Printing ? 0.8 : 0.2, m_Printing ? 0.8 : 0.2, m_Printing ? 0.8 : 0.2);
-	real g_mn = 10.0;
+	real_t g_mn = 10.0;
 	int m;
 	switch (m_Zoom) {
 	case 100: m = 12; break;
 	case 200: m = 6; break;
 	case 400: m = 3; break;
 	}
-	real a = m * g_mn * m_Ltr.m_px_mn;
+	real_t a = m * g_mn * m_Ltr.m_px_mn;
 	::glBegin(GL_LINES);
 	for (int i = -m; i <= m; i++) {
-		real b = i * g_mn * m_Ltr.m_px_mn;
+		real_t b = i * g_mn * m_Ltr.m_px_mn;
 		::glVertex3d(-a, b, 0.0); ::glVertex3d(a, b, 0.0);
 		::glVertex3d(b, -a, 0.0); ::glVertex3d(b, a, 0.0);
 	}
 	::glEnd();
 
 	// axes
-	real u = 1.02 * a;
+	real_t u = 1.02 * a;
 	::glColor3d(_1, _1, _1);
 	::glBegin(GL_LINES);
 	::glVertex3d(-u, 0.0, 0.0); ::glVertex3d(-a, 0.0, 0.0); // Ox
@@ -293,12 +293,12 @@ void CFarLtrWnd::Letter()
 		CLColor[1] = RGB(66, 207, 0);
 		CLColor[0] = RGB(17, 247, 100);
 
-		real d_w = 0.05*m_w;
+		real_t d_w = 0.05*m_w;
 		int  L = m_w - 10 - intRound(d_w);
 		int  R = m_w - 10;
 
 		int d_per_h = intRound(0.08*m_h);
-		real Top = intRound(0.1*m_h);
+		real_t Top = intRound(0.1*m_h);
 		int  Bottom = intRound(0.9*m_h);
 
 		for (int i = 0; i < 10; i++)

@@ -36,9 +36,9 @@ CWFDOFCWnd::CWFDOFCWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFExam* p
 	RECT Rect;
 	GetWindowRect(&Rect);
 
-	real t = 3.0 * (0.03 * m_h) + m_g;
-	real w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
-	real h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 4.0;
+	real_t t = 3.0 * (0.03 * m_h) + m_g;
+	real_t w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
+	real_t h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 4.0;
 	::SetRect(&m_Rect[0], intRound(m_g), intRound(t), intRound(m_g + w + m_g + w + m_g + w), intRound(t + 3 * h)); // depth of focus comparison map
 	::SetRect(&m_Rect[1], intRound(m_g), intRound(t + 3 * h + m_g), intRound(m_g + w), intRound(t + 4 * h + m_g)); // info 1
 	::SetRect(&m_Rect[2], intRound(m_g + w + m_g), intRound(t + 3 * h + m_g), intRound(m_g + w + m_g + w), intRound(t + 4 * h + m_g)); // info 2
@@ -89,7 +89,7 @@ CWFDOFCWnd::CWFDOFCWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFExam* p
 	Surfaces[1] = m_pWFExam2->m_WfSurface;
 	// change diameter
 	//530
-	real n_r_max_um = 5000.0;
+	real_t n_r_max_um = 5000.0;
 	n_r_max_um = __min(n_r_max_um, Surfaces[0].m_r_max_um);
 	n_r_max_um = __min(n_r_max_um, Surfaces[1].m_r_max_um);
 	//530
@@ -114,7 +114,7 @@ CWFDOFCWnd::CWFDOFCWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFExam* p
 	//521
 
 	//Calculate the Refraction
-	real SphEq, Sph, Cyl;
+	real_t SphEq, Sph, Cyl;
 	int Axis;
 
 	CZernikeSurface Surface1 = m_pWFExam1->m_WfSurface;

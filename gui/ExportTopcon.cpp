@@ -10,7 +10,7 @@
 
 void ExportTopconCV5000(CWFExam* pWFODExam, CCTExam* pCTODExam, CWFExam* pWFOSExam, CCTExam* pCTOSExam)
 {
-	real PortNumber;
+	real_t PortNumber;
 	if (!EnterNumber(PortNumber, 0, "COM port")) return;
 
 	static int counter = -1;
@@ -62,7 +62,7 @@ void ExportTopconCV5000(CWFExam* pWFODExam, CCTExam* pCTODExam, CWFExam* pWFOSEx
 	pBuffer[k++] = CR;
 
 	CZernikeSurface Surface;
-	real SphEq, Sph, Cyl;
+	real_t SphEq, Sph, Cyl;
 	int Axis;
 
 	if (pWFODExam)

@@ -434,8 +434,8 @@ void CImageDlg1::OnLButtonDown(uint nFlags, CPoint Point)
 {
 	if (Point.x < m_l || Point.x >= m_l + m_w || Point.y < m_t || Point.y >= m_t + m_h) return;
 
-	real x = (Point.x - m_l) - m_cx;
-	real y = m_cy - (Point.y - m_t);
+	real_t x = (Point.x - m_l) - m_cx;
+	real_t y = m_cy - (Point.y - m_t);
 
 	m_x_um[0] = x / m_x_px_um;
 	m_y_um[0] = y / m_y_px_um;
@@ -446,10 +446,10 @@ void CImageDlg1::OnLButtonDown(uint nFlags, CPoint Point)
 	{
 		if (m_Image.m_pu_r_mean_um >= 800)
 		{
-			real disX = m_x_um[1] - m_Image.m_pu_x0_um;
-			real disY = m_y_um[1] - m_Image.m_pu_y0_um;
+			real_t disX = m_x_um[1] - m_Image.m_pu_x0_um;
+			real_t disY = m_y_um[1] - m_Image.m_pu_y0_um;
 
-			real dis = sqrt(disX*disX + disY*disY);
+			real_t dis = sqrt(disX*disX + disY*disY);
 
 			if (dis <= 800)
 			{
@@ -493,10 +493,10 @@ void CImageDlg1::OnLButtonDown(uint nFlags, CPoint Point)
 	{
 		if (m_Image.m_li_r_mean_um >= 800)
 		{
-			real disX = m_x_um[1] - m_Image.m_li_x0_um;
-			real disY = m_y_um[1] - m_Image.m_li_y0_um;
+			real_t disX = m_x_um[1] - m_Image.m_li_x0_um;
+			real_t disY = m_y_um[1] - m_Image.m_li_y0_um;
 
-			real dis = sqrt(disX*disX + disY*disY);
+			real_t dis = sqrt(disX*disX + disY*disY);
 
 			if (dis <= 800)
 			{
@@ -548,10 +548,10 @@ void CImageDlg1::OnLButtonDown(uint nFlags, CPoint Point)
 	{
 		if (m_Image.m_Ra_r_um >= 800)
 		{
-			real disX = m_x_um[1] - m_Image.m_Ra_x_um;
-			real disY = m_y_um[1] - m_Image.m_Ra_y_um;
+			real_t disX = m_x_um[1] - m_Image.m_Ra_x_um;
+			real_t disY = m_y_um[1] - m_Image.m_Ra_y_um;
 
-			real dis = sqrt(disX*disX + disY*disY);
+			real_t dis = sqrt(disX*disX + disY*disY);
 
 			if (dis <= 800)
 			{
@@ -582,14 +582,14 @@ void CImageDlg1::OnLButtonDown(uint nFlags, CPoint Point)
 
 	else if (m_LinearRulerRadio.GetCheck() && m_LinearRuler3Radio.GetCheck())
 	{
-		real disX1 = m_x_um[1] - m_Image.m_LRa_x0_um;
-		real disY1 = m_y_um[1] - m_Image.m_LRa_y0_um;
+		real_t disX1 = m_x_um[1] - m_Image.m_LRa_x0_um;
+		real_t disY1 = m_y_um[1] - m_Image.m_LRa_y0_um;
 
-		real disX2 = m_x_um[1] - m_Image.m_LRa_x1_um;
-		real disY2 = m_y_um[1] - m_Image.m_LRa_y1_um;
+		real_t disX2 = m_x_um[1] - m_Image.m_LRa_x1_um;
+		real_t disY2 = m_y_um[1] - m_Image.m_LRa_y1_um;
 
-		real dis1 = sqrt(disX1*disX1 + disY1*disY1);
-		real dis2 = sqrt(disX2*disX2 + disY2*disY2);
+		real_t dis1 = sqrt(disX1*disX1 + disY1*disY1);
+		real_t dis2 = sqrt(disX2*disX2 + disY2*disY2);
 
 
 		//
@@ -597,32 +597,32 @@ void CImageDlg1::OnLButtonDown(uint nFlags, CPoint Point)
 		int y0 = intRound(m_cy - m_Image.m_LRa_y0_um * m_y_px_um);
 		int x1 = intRound(m_cx + m_Image.m_LRa_x1_um * m_x_px_um);
 		int y1 = intRound(m_cy - m_Image.m_LRa_y1_um * m_y_px_um);
-		real xum, yum;
+		real_t xum, yum;
 		if (x0 < x1)
 		{
-			xum = m_Image.m_LRa_x0_um + intRound((real)fabs(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um) / 2.0);
-			if (m_Image.m_LRa_y0_um < m_Image.m_LRa_y1_um)	yum = m_Image.m_LRa_y0_um + intRound((real)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
-			else yum = m_Image.m_LRa_y1_um + intRound((real)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
+			xum = m_Image.m_LRa_x0_um + intRound((real_t)fabs(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um) / 2.0);
+			if (m_Image.m_LRa_y0_um < m_Image.m_LRa_y1_um)	yum = m_Image.m_LRa_y0_um + intRound((real_t)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
+			else yum = m_Image.m_LRa_y1_um + intRound((real_t)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
 		}
 		else
 		{
-			xum = m_Image.m_LRa_x1_um + intRound((real)fabs(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um) / 2.0);
-			if (m_Image.m_LRa_y0_um < m_Image.m_LRa_y1_um)	yum = m_Image.m_LRa_y0_um + intRound((real)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
-			else yum = m_Image.m_LRa_y1_um + intRound((real)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
+			xum = m_Image.m_LRa_x1_um + intRound((real_t)fabs(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um) / 2.0);
+			if (m_Image.m_LRa_y0_um < m_Image.m_LRa_y1_um)	yum = m_Image.m_LRa_y0_um + intRound((real_t)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
+			else yum = m_Image.m_LRa_y1_um + intRound((real_t)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
 		}
 
-		real disX3 = m_x_um[1] - xum;
-		real disY3 = m_y_um[1] - yum;
+		real_t disX3 = m_x_um[1] - xum;
+		real_t disY3 = m_y_um[1] - yum;
 
-		real dis3 = sqrt(disX3*disY3 + disY3*disY3);
+		real_t dis3 = sqrt(disX3*disY3 + disY3*disY3);
 		//real dis3 = sqrt(disX*disX + disY*disY);
 
 		if (dis1 <= 800)
 		{
 			m_Image.m_LRa_x0_um += disX1;
 			m_Image.m_LRa_y0_um += disY1;
-			real midx = m_Image.m_LRa_x0_um;
-			real midy = m_Image.m_LRa_y0_um;
+			real_t midx = m_Image.m_LRa_x0_um;
+			real_t midy = m_Image.m_LRa_y0_um;
 
 			m_Image.m_LRa_x0_um = m_Image.m_LRa_x1_um;
 			m_Image.m_LRa_y0_um = m_Image.m_LRa_y1_um;
@@ -667,15 +667,15 @@ void CImageDlg1::OnMouseMove(uint nFlags, CPoint Point)
 {
 	if (Point.x < m_l || Point.x >= m_l + m_w || Point.y < m_t || Point.y >= m_t + m_h) return;
 
-	real x = (Point.x - m_l) - m_cx;
-	real y = m_cy - (Point.y - m_t);
+	real_t x = (Point.x - m_l) - m_cx;
+	real_t y = m_cy - (Point.y - m_t);
 
 	m_x_um[1] = x / m_x_px_um;
 	m_y_um[1] = y / m_y_px_um;
 
-	real dis = 1000;
-	real disX, disY;
-	real MoveDis = 0;
+	real_t dis = 1000;
+	real_t disX, disY;
+	real_t MoveDis = 0;
 
 	if (m_PupilRadio.GetCheck() && m_Pupil4Radio.GetCheck() && m_Image.m_pu_r_mean_um >= 800)
 	{
@@ -701,25 +701,25 @@ void CImageDlg1::OnMouseMove(uint nFlags, CPoint Point)
 
 	else if (m_LinearRulerRadio.GetCheck() && m_LinearRuler3Radio.GetCheck())
 	{
-		real D = hyp(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um, m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um);
+		real_t D = hyp(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um, m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um);
 		if (D >= 1600)
 		{
 			int x0 = intRound(m_cx + m_Image.m_LRa_x0_um * m_x_px_um);
 			int y0 = intRound(m_cy - m_Image.m_LRa_y0_um * m_y_px_um);
 			int x1 = intRound(m_cx + m_Image.m_LRa_x1_um * m_x_px_um);
 			int y1 = intRound(m_cy - m_Image.m_LRa_y1_um * m_y_px_um);
-			real xum, yum;
+			real_t xum, yum;
 			if (x0 < x1)
 			{
-				xum = m_Image.m_LRa_x0_um + intRound((real)fabs(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um) / 2.0);
-				if (m_Image.m_LRa_y0_um < m_Image.m_LRa_y1_um)	yum = m_Image.m_LRa_y0_um + intRound((real)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
-				else yum = m_Image.m_LRa_y1_um + intRound((real)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
+				xum = m_Image.m_LRa_x0_um + intRound((real_t)fabs(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um) / 2.0);
+				if (m_Image.m_LRa_y0_um < m_Image.m_LRa_y1_um)	yum = m_Image.m_LRa_y0_um + intRound((real_t)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
+				else yum = m_Image.m_LRa_y1_um + intRound((real_t)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
 			}
 			else
 			{
-				xum = m_Image.m_LRa_x1_um + intRound((real)fabs(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um) / 2.0);
-				if (m_Image.m_LRa_y0_um < m_Image.m_LRa_y1_um)	yum = m_Image.m_LRa_y0_um + intRound((real)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
-				else yum = m_Image.m_LRa_y1_um + intRound((real)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
+				xum = m_Image.m_LRa_x1_um + intRound((real_t)fabs(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um) / 2.0);
+				if (m_Image.m_LRa_y0_um < m_Image.m_LRa_y1_um)	yum = m_Image.m_LRa_y0_um + intRound((real_t)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
+				else yum = m_Image.m_LRa_y1_um + intRound((real_t)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
 			}
 
 			disX = m_x_um[1] - xum;
@@ -753,7 +753,7 @@ void CImageDlg1::OnMouseMove(uint nFlags, CPoint Point)
 			{
 				m_Image.m_pu_x0_um = 0.5 * (m_x_um[0] + m_x_um[1]);
 				m_Image.m_pu_y0_um = 0.5 * (m_y_um[0] + m_y_um[1]);
-				real r_um = 0.5 * hyp(m_x_um[0] - m_x_um[1], m_y_um[0] - m_y_um[1]);
+				real_t r_um = 0.5 * hyp(m_x_um[0] - m_x_um[1], m_y_um[0] - m_y_um[1]);
 				for (int a = 0; a < 360; a++)
 				{
 					m_Image.m_pu_r_um[a] = r_um;
@@ -777,7 +777,7 @@ void CImageDlg1::OnMouseMove(uint nFlags, CPoint Point)
 			{
 				m_Image.m_li_x0_um = 0.5 * (m_x_um[0] + m_x_um[1]);
 				m_Image.m_li_y0_um = 0.5 * (m_y_um[0] + m_y_um[1]);
-				real r_um = 0.5 * hyp(m_x_um[0] - m_x_um[1], m_y_um[0] - m_y_um[1]);
+				real_t r_um = 0.5 * hyp(m_x_um[0] - m_x_um[1], m_y_um[0] - m_y_um[1]);
 				for (int a = 0; a < 360; a++) {
 					m_Image.m_li_r_um[a] = r_um;
 				}
@@ -1613,11 +1613,11 @@ void CImageDlg1::OnInlay4Clicked()//Manual
 		//Set the inner diameter range
 		CString s, InlayV;
 		m_InlayEdit.GetWindowText(InlayV);
-		real val;
+		real_t val;
 		if (!InlayV.IsEmpty() && IsDigital(InlayV))
 		{
 			G_As = InlayV;
-			val = (real)atof(G_As) - 1;
+			val = (real_t)atof(G_As) - 1;
 		}
 		else
 		{
@@ -1660,12 +1660,12 @@ void CImageDlg1::OnSetInalyDBtnClicked()
 		return;
 	}
 
-	real val;
+	real_t val;
 	if (!InlayV.IsEmpty())
 	{
 		G_As = InlayV;
 
-		val = (real)atof(G_As);
+		val = (real_t)atof(G_As);
 
 		if (val < 1 || val > 9 && val != 0)
 		{
@@ -1681,7 +1681,7 @@ void CImageDlg1::OnSetInalyDBtnClicked()
 	if (!InlayV.IsEmpty()) 	m_InnerD_Ran = val - 1;
 	else                    m_InnerD_Ran = m_Image.m_In_r_um * 2 / 1000 - 1;
 
-	real val2 = 0;
+	real_t val2 = 0;
 	if (m_InnerD_Ran == 1 || m_InnerD_Ran == 2 || m_InnerD_Ran == 3 || m_InnerD_Ran == 4 || m_InnerD_Ran == 5
 		|| m_InnerD_Ran == 6 || m_InnerD_Ran == 7 || m_InnerD_Ran == 8)
 	{
@@ -1833,7 +1833,7 @@ void CImageDlg1::DrawPupil(CMDC& MemDC)
 	{
 		if (m_wheel_n > m_last_wheel_n && m_P == 4)
 		{
-			real r_um = m_Image.m_pu_r_mean_um + 3;
+			real_t r_um = m_Image.m_pu_r_mean_um + 3;
 			for (int a = 0; a < 360; a++)
 			{
 				m_Image.m_pu_r_um[a] = r_um;
@@ -1844,7 +1844,7 @@ void CImageDlg1::DrawPupil(CMDC& MemDC)
 		}
 		else if (m_wheel_n < m_last_wheel_n && m_P == 4)
 		{
-			real r_um = m_Image.m_pu_r_mean_um - 3;
+			real_t r_um = m_Image.m_pu_r_mean_um - 3;
 			for (int a = 0; a < 360; a++)
 			{
 				m_Image.m_pu_r_um[a] = r_um;
@@ -1916,7 +1916,7 @@ void CImageDlg1::DrawLimbus(CMDC& MemDC)
 	{
 		if (m_wheel_n > m_last_wheel_n && m_L == 4)
 		{
-			real r_um = m_Image.m_li_r_mean_um + 3;
+			real_t r_um = m_Image.m_li_r_mean_um + 3;
 			for (int a = 0; a < 360; a++)
 			{
 				m_Image.m_li_r_um[a] = r_um;
@@ -1927,7 +1927,7 @@ void CImageDlg1::DrawLimbus(CMDC& MemDC)
 		}
 		else if (m_wheel_n < m_last_wheel_n && m_L == 4)
 		{
-			real r_um = m_Image.m_li_r_mean_um - 3;
+			real_t r_um = m_Image.m_li_r_mean_um - 3;
 			for (int a = 0; a < 360; a++)
 			{
 				m_Image.m_li_r_um[a] = r_um;
@@ -2052,7 +2052,7 @@ void CImageDlg1::DrawRuler(CMDC& MemDC)
 		{
 			int FontSize = intRound(0.035 * m_h);
 
-			real r_um = m_Image.m_Ra_r_um + 350.0;
+			real_t r_um = m_Image.m_Ra_r_um + 350.0;
 			int x = intRound(m_cx + (m_Image.m_Ra_x_um + r_um * COS[135]) * m_x_px_um);
 			int y = intRound(m_cy - (m_Image.m_Ra_y_um + r_um * SIN[135]) * m_y_px_um);
 			MemDC.WriteRotatedText(s, x, y, 45, FontSize, 400, "Arial", YELLOW, NOCOLOR);
@@ -2110,7 +2110,7 @@ void CImageDlg1::DrawLRuler(CMDC& MemDC)
 		MemDC.DrawLine(x0, y0, x1, y1, 2, LRulerColor);
 
 		//
-		real dis = hyp(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um, m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um);
+		real_t dis = hyp(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um, m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um);
 
 		CString s;
 		s.Format(_T("(D) = (%.3fmm)"), 0.001*dis);
@@ -2120,15 +2120,15 @@ void CImageDlg1::DrawLRuler(CMDC& MemDC)
 			int xm, ym;
 			if (x0 < x1)
 			{
-				xm = x0 + intRound((real)abs(x0 - x1) / 2.0);
-				if (y0 < y1)	ym = y0 + intRound((real)abs(y0 - y1) / 2.0);
-				else ym = y1 + intRound((real)abs(y0 - y1) / 2.0);
+				xm = x0 + intRound((real_t)abs(x0 - x1) / 2.0);
+				if (y0 < y1)	ym = y0 + intRound((real_t)abs(y0 - y1) / 2.0);
+				else ym = y1 + intRound((real_t)abs(y0 - y1) / 2.0);
 			}
 			else
 			{
-				xm = x1 + intRound((real)abs(x0 - x1) / 2.0);
-				if (y0 < y1)	ym = y0 + intRound((real)abs(y0 - y1) / 2.0);
-				else ym = y1 + intRound((real)abs(y0 - y1) / 2.0);
+				xm = x1 + intRound((real_t)abs(x0 - x1) / 2.0);
+				if (y0 < y1)	ym = y0 + intRound((real_t)abs(y0 - y1) / 2.0);
+				else ym = y1 + intRound((real_t)abs(y0 - y1) / 2.0);
 			}
 
 			MemDC.DrawLine(xm - 5, ym, xm + 6, ym, 1, LRulerColor);
@@ -2204,9 +2204,9 @@ void CImageDlg1::DrawInlay(CMDC& MemDC)
 			m_InalyDrawed = FALSE;
 			BOOL ZoomOutSide = TRUE;
 
-			real disX = m_x_um[1] - m_Image.m_In_x_um;
-			real disY = m_y_um[1] - m_Image.m_In_y_um;
-			real dis = sqrt(disX*disX + disY*disY);
+			real_t disX = m_x_um[1] - m_Image.m_In_x_um;
+			real_t disY = m_y_um[1] - m_Image.m_In_y_um;
+			real_t dis = sqrt(disX*disX + disY*disY);
 
 			if (dis < m_Image.m_In_r_um) ZoomOutSide = FALSE;
 
@@ -2236,7 +2236,7 @@ void CImageDlg1::DrawInlay(CMDC& MemDC)
 			}
 
 			CString s;
-			real val = m_Image.m_In_r_um * 2 / 1000 - 1;
+			real_t val = m_Image.m_In_r_um * 2 / 1000 - 1;
 			if (val == 0)
 			{
 				s = "mm (0mm)";
@@ -2308,10 +2308,10 @@ void CImageDlg1::DrawInlay(CMDC& MemDC)
 					}
 					else
 					{
-						real disX = (real)(i - x0);
-						real disY = (real)(j - y0);
+						real_t disX = (real_t)(i - x0);
+						real_t disY = (real_t)(j - y0);
 
-						real dis = sqrt(disX*disX + disY*disY);
+						real_t dis = sqrt(disX*disX + disY*disY);
 
 						if (dis <= r0 && dis >= r1)
 						{
@@ -2545,7 +2545,7 @@ BOOL CImageDlg1::PreTranslateMessage(MSG* pMsg)
 				else
 				{
 					G_As = D;
-					m_InnerD_Ran = (real)atof(G_As) - 1;
+					m_InnerD_Ran = (real_t)atof(G_As) - 1;
 					if (m_InnerD_Ran > 8) m_InnerD_Ran = 8;
 				}
 			}

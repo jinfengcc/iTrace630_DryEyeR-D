@@ -73,8 +73,8 @@ BOOL CWFAcquisition::CheckAlignment()
 	m_WFExam.m_sc_y0_um = 0.0;
 
 	// save previous pupil center coordinates for later comparison
-	real prv_pu_x0_um;
-	real prv_pu_y0_um;
+	real_t prv_pu_x0_um;
+	real_t prv_pu_y0_um;
 	if (m_AlignmentCounter >= 1)
 	{
 		prv_pu_x0_um = m_WFExam.m_Image.m_pu_x0_um;
@@ -126,7 +126,7 @@ BOOL CWFAcquisition::CheckAlignment()
 	}
 
 	// check pupil centration
-	real mid_auto_r_max_um;
+	real_t mid_auto_r_max_um;
 
 	if (m_WFExam.m_AlignmentMethod == ALIGNMENT_PUPIL_CENTER)
 	{
@@ -222,7 +222,7 @@ BOOL CWFAcquisition::CheckAlignment()
 	// check pupil movement
 	if (m_AlignmentCounter >= 1)
 	{
-		real moveMoment = sqr(m_WFExam.m_Image.m_pu_x0_um - prv_pu_x0_um) + sqr(m_WFExam.m_Image.m_pu_y0_um - prv_pu_y0_um);
+		real_t moveMoment = sqr(m_WFExam.m_Image.m_pu_x0_um - prv_pu_x0_um) + sqr(m_WFExam.m_Image.m_pu_y0_um - prv_pu_y0_um);
 
 		if (moveMoment > sqr(m_AllowedMovement))
 		{
@@ -384,7 +384,7 @@ void CWFAcquisition::Main()
 	m_Eye = m_pHW->GetEye();
 
 	int  Delay = 1000;//1 second delay between 1st and 2nd capture
-	real r_max_um;
+	real_t r_max_um;
 	int  ODOSCounter;
 	int  Done;
 	int  StartTime;
@@ -534,10 +534,10 @@ A:
 					{
 						m_WFExam.ProcessPoints();
 						int NumPoints = m_WFExam.m_Points.GetSize();
-						real* r_um = new real[NumPoints];
-						real* a_rd = new real[NumPoints];
-						real* dw_dx = new real[NumPoints];
-						real* dw_dy = new real[NumPoints];
+						real_t* r_um = new real_t[NumPoints];
+						real_t* a_rd = new real_t[NumPoints];
+						real_t* dw_dx = new real_t[NumPoints];
+						real_t* dw_dy = new real_t[NumPoints];
 						int k = 0;
 						CScanPoint* pPoint = m_WFExam.m_Points.MoveFirst();
 						while (pPoint)
@@ -568,7 +568,7 @@ A:
 							Surface -= CalSurface;
 
 							// calculate sph/cyl
-							real SphEq, Sph, Cyl;
+							real_t SphEq, Sph, Cyl;
 							int Axis;
 							CWFExam::GetSpheqSphCylAxis(Surface, 0, TRUE, SphEq, Sph, Cyl, Axis);
 
@@ -865,7 +865,7 @@ A:
 
 			m_ToDo = DO_NOTHING;
 
-			m_AverageCycleTime = (real)(clock() - StartTime) / (++m_NumFramesReceived);
+			m_AverageCycleTime = (real_t)(clock() - StartTime) / (++m_NumFramesReceived);
 
 			::Sleep(0);
 		}
@@ -988,7 +988,7 @@ A:
 				CScanPoint* pPoint = m_WFExam.m_Points.MoveFirst();
 				while (pPoint)
 				{
-					real dw_dx, dw_dy;
+					real_t dw_dx, dw_dy;
 
 					pDlg->m_Surface.GetAt(pPoint->m_r_um, pPoint->m_a_rd, NULL, &dw_dx, &dw_dy, NULL, NULL, NULL);
 					pPoint->m_dx_um = -dw_dx * m_WFExam.m_Calibration.LADXFocalDistance;
@@ -1043,8 +1043,8 @@ BOOL CWFAcquisition::SetupScanPointsAndScan()
 {
 	int NumPoints = m_WFExam.m_Points.GetSize();
 
-	real* scan_x_um = new real[NumPoints];
-	real* scan_y_um = new real[NumPoints];
+	real_t* scan_x_um = new real_t[NumPoints];
+	real_t* scan_y_um = new real_t[NumPoints];
 
 	CScanPoint* pPoint = m_WFExam.m_Points.MoveFirst();
 	for (int p = 0; p < NumPoints; p++)

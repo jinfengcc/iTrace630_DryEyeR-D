@@ -39,14 +39,14 @@ private:
 	CDicomInfo  m_DicomInfo;//520 for Dicom file
 
 	int  m_last_wheel_n;
-	real m_h_um;
-	real m_w_um;
-	real m_x_px_um;
-	real m_y_px_um;
-	real m_cx;
-	real m_cy;
-	real m_Adx;
-	real m_Ady;
+	real_t m_h_um;
+	real_t m_w_um;
+	real_t m_x_px_um;
+	real_t m_y_px_um;
+	real_t m_cx;
+	real_t m_cy;
+	real_t m_Adx;
+	real_t m_Ady;
 
 	int  m_Movex;
 	int  m_Movey;
@@ -55,8 +55,8 @@ private:
 	CEyeImage*  m_pImage;
 	CBasicImage m_pZoomImage2;
 	uchar* m_pZoomBackup[15];
-	real   m_cxBackup[15];	//The x center of the eye image
-	real   m_cyBackup[15];	//The y center of the eye image
+	real_t   m_cxBackup[15];	//The x center of the eye image
+	real_t   m_cyBackup[15];	//The y center of the eye image
 	BOOL   m_BackupYes[15];
 
 	int  m_MoveCalipar;
@@ -65,13 +65,13 @@ private:
 	long m_ImgSize;
 
 	int  m_a1;
-	real m_Ali_Rum1;
+	real_t m_Ali_Rum1;
 	int  m_a2;
-	real m_Ali_Rum2;
+	real_t m_Ali_Rum2;
 	int  m_a3;
-	real m_Ali_Rum3;
+	real_t m_Ali_Rum3;
 	int  m_a4;
-	real m_Ali_Rum4;
+	real_t m_Ali_Rum4;
 
 	int  m_EyeWndTop;
 	int  m_EyeWndButtom;
@@ -80,8 +80,8 @@ private:
 	int  m_EyeWndHeight;
 	int  m_EyeWndWidth;
 
-	real m_EyeWndRatioH;
-	real m_EyeWndRatioW;
+	real_t m_EyeWndRatioH;
+	real_t m_EyeWndRatioW;
 
 	BOOL   m_ShowDymImg;
 	BOOL   m_ShowOsherRing;
@@ -106,8 +106,8 @@ private:
 	CBtn   m_ZaldivarButton;
 	CBtn   m_ExitButton;
 
-	real Distance(real x0, real y0, real x1, real y1) { return sqrt((x0 - x1)*(x0 - x1) + (y0 - y1)*(y0 - y1)); }
-	void FindClearLimbus(CEyeImage* OriImage, real LastLimbuX, real LastLimbuY, real LastLimbuR);
+	real_t Distance(real_t x0, real_t y0, real_t x1, real_t y1) { return sqrt((x0 - x1)*(x0 - x1) + (y0 - y1)*(y0 - y1)); }
+	void FindClearLimbus(CEyeImage* OriImage, real_t LastLimbuX, real_t LastLimbuY, real_t LastLimbuR);
 	BOOL FindColorPupil(CEyeImage* OriImage);
 	void SafeInteRelease(int **ppT, int Row);
 	double Gaussian(int x, int y, double de);
@@ -136,9 +136,9 @@ private:
 	void Pupil();
 	void RadialRuler();
 	void LinearRuler();
-	void AlignLineDeg(int a1, int a2, real Ali_Rum1, real Ali_Rum2, real Ali_Rum3, real Ali_Rum4, int Type);//531
-	void AlignLine(int a, real Ali_Rum, int Type, CString whichLine);//531
-	void AlignHoyaLine(int a, real Ali_Rum);//531
+	void AlignLineDeg(int a1, int a2, real_t Ali_Rum1, real_t Ali_Rum2, real_t Ali_Rum3, real_t Ali_Rum4, int Type);//531
+	void AlignLine(int a, real_t Ali_Rum, int Type, CString whichLine);//531
+	void AlignHoyaLine(int a, real_t Ali_Rum);//531
 	void Caliper();//Caliper
 	void Points();//vertex(light reflexes)
 	void Labels();

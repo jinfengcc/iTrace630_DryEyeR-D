@@ -108,10 +108,10 @@ void ExportWavetouch(CWFExam* pWFExam, const Matrix<uchar>& Mem)
 	Txt[k++] = CR; Txt[k++] = LF;
 	Txt[k++] = CR; Txt[k++] = LF;
 
-	real xDis = pWFExam->m_Image.GetLensX0Um() - pWFExam->m_Image.m_pu_x0_um;
-	real yDis = pWFExam->m_Image.GetLensY0Um() - pWFExam->m_Image.m_pu_y0_um;
+	real_t xDis = pWFExam->m_Image.GetLensX0Um() - pWFExam->m_Image.m_pu_x0_um;
+	real_t yDis = pWFExam->m_Image.GetLensY0Um() - pWFExam->m_Image.m_pu_y0_um;
 
-	real Dis = sqrt(xDis*xDis + yDis*yDis);
+	real_t Dis = sqrt(xDis*xDis + yDis*yDis);
 
 	k += sprintf(Txt + k, "Lens center to Pupil center: (x: %5.2fum y: %5.2fum)", xDis, yDis);
 	Txt[k++] = CR; Txt[k++] = LF;

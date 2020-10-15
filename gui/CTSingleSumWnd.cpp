@@ -34,9 +34,9 @@ CCTSingleSumWnd::CCTSingleSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, 
 	//----------------------------------------------------
 	RECT Rect;
 	GetWindowRect(&Rect);
-	real t = 3.0 * (0.03 * m_h) + m_g;
-	real w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
-	real h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
+	real_t t = 3.0 * (0.03 * m_h) + m_g;
+	real_t w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
+	real_t h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
 	::SetRect(&m_Rect[0], intRound(m_g), intRound(t), intRound(m_g + w), intRound(t + h)); // map 1
 	::SetRect(&m_Rect[1], intRound(m_g), intRound(t + h + m_g), intRound(m_g + w), intRound(t + h + m_g + h)); // map 2
 	::SetRect(&m_Rect[2], intRound(m_g + w + m_g), intRound(t), intRound(m_g + w + m_g + w), intRound(t + h)); // map 3
@@ -172,7 +172,7 @@ void CCTSingleSumWnd::CreateChildWnd()//[520], add 'int Type'
 	// }
 
 	m_Surfaces[m_d] = m_pCTExam->m_WfSurface;
-	real r_max_um = 5000.0;
+	real_t r_max_um = 5000.0;
 	r_max_um = __min(r_max_um, m_Surfaces[m_d].m_r_max_um);
 	r_max_um = __min(r_max_um, pWndSettings->m_ZoneRadiusUm);
 	m_Surfaces[m_d].ChangeRMaxUm(r_max_um);
@@ -251,7 +251,7 @@ void CCTSingleSumWnd::CreateChildWnd()//[520], add 'int Type'
 
 	case TYPE_CELM:
 	{
-		real ax0_um, q;
+		real_t ax0_um, q;
 		if (pWndSettings->m_RefSurfaceType == REF_SURFACE_BEST_SPHERE) {
 			ax0_um = m_pCTExam->m_HtSpSurface.m_ax0_um;
 			q = 0.0;
@@ -427,10 +427,10 @@ void CCTSingleSumWnd::CreateChildWnd()//[520], add 'int Type'
 
 		CEyeWnd* pEyeWnd = (CEyeWnd*)m_pDispWnd[m_d];
 		CScale* pScale = pWndSettings->GetScale();
-		real Inc = pWndSettings->GetIncrement();
+		real_t Inc = pWndSettings->GetIncrement();
 
 		// middle value
-		real Cent;
+		real_t Cent;
 		if (pWndSettings->m_Type == TYPE_CAXM || pWndSettings->m_Type == TYPE_CTNM || pWndSettings->m_Type == TYPE_CRFM) {
 			int MapUnit = (pWndSettings->m_Type == TYPE_CRFM) || (pWndSettings->m_MapUnit == DIOPTERS) ? DIOPTERS : MILLIMETERS;
 			if (pScale->m_CentAuto) {
@@ -451,12 +451,12 @@ void CCTSingleSumWnd::CreateChildWnd()//[520], add 'int Type'
 		Cent = RealRound(Cent, Inc);
 
 		// step value
-		real Step;
+		real_t Step;
 		if (pScale->m_StepAuto) {
-			real Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
-			real Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
-			real Span = 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent));
-			real t = Span / pScale->m_NumColors;
+			real_t Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
+			real_t Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
+			real_t Span = 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent));
+			real_t t = Span / pScale->m_NumColors;
 			Step = (int)(t / Inc) * Inc;
 			if (t > Step + 0.001) Step += Inc;
 		}
@@ -464,7 +464,7 @@ void CCTSingleSumWnd::CreateChildWnd()//[520], add 'int Type'
 			Step = RealRound(pScale->m_Step, Inc);
 		}
 		if (Step < Inc) Step = Inc;
-		real StepMax = pWndSettings->GetMaxStep();
+		real_t StepMax = pWndSettings->GetMaxStep();
 		if (Step > StepMax) Step = StepMax;
 
 		pEyeWnd->m_Cent = Cent;
@@ -965,7 +965,7 @@ LRESULT CCTSingleSumWnd::OnOkulix(WPARAM wParam, LPARAM lParam)
 	//Get Line1-Line6
 	CEyeImage* pImage = &m_pCTExam->m_Image;
 	CString Radial_Dis, Tangential;
-	real r_um, tangential_um;
+	real_t r_um, tangential_um;
 
 	if (pImage->m_ri_ok)
 	{
@@ -999,7 +999,7 @@ LRESULT CCTSingleSumWnd::OnOkulix(WPARAM wParam, LPARAM lParam)
 
 
 				//Line2 
-				real a_rd = _2_Pi * a / 360;
+				real_t a_rd = _2_Pi * a / 360;
 
 				if (i < pImage->m_NumRings)
 					tangential_um = m_pCTExam->GetTnUmAt(r_um, a_rd);

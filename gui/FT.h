@@ -10,26 +10,26 @@ public:
 
 	complex() { re = 0.0; im = 0.0; }
 	complex(const complex& c) { re = c.re; im = c.im; }
-	complex(const real& r, const real& i) { re = r; im = i; }
+	complex(const real_t& r, const real_t& i) { re = r; im = i; }
 
-	real re;
-	real im;
+	real_t re;
+	real_t im;
 
 	const complex& operator=(const complex& a);
 	const complex& operator+=(const complex& a);
 	const complex& operator-=(const complex& a);
 	const complex& operator*=(const complex& a);
-	const complex& operator*=(const real& k);
+	const complex& operator*=(const real_t& k);
 	const complex& operator/=(const complex& a);
-	const complex& operator/=(const real& k);
+	const complex& operator/=(const real_t& k);
 };
 
 //***************************************************************************************
 
 complex operator~(const complex& a);
-real mod(const complex& a);
-real arg(const complex& a);
-real sqr_mod(const complex& a);
+real_t mod(const complex& a);
+real_t arg(const complex& a);
+real_t sqr_mod(const complex& a);
 
 //***************************************************************************************
 
@@ -38,9 +38,9 @@ BOOL operator!=(const complex& a, const complex& b);
 complex operator+(const complex& a, const complex& b);
 complex operator-(const complex& a, const complex& b);
 complex operator*(const complex& a, const complex& b);
-complex operator*(const complex& a, const real& k);
+complex operator*(const complex& a, const real_t& k);
 complex operator/(const complex& a, const complex& b);
-complex operator/(const complex& a, const real& k);
+complex operator/(const complex& a, const real_t& k);
 
 //***************************************************************************************
 

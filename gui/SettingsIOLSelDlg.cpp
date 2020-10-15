@@ -43,7 +43,7 @@ END_MESSAGE_MAP()
 //***************************************************************************************
 
 
-CSettingsIOLSelDlg::CSettingsIOLSelDlg(CWnd* pParentWnd, BOOL Default, real IOLSel_Alpha[2], real IOLSel_CHOA, real IOLSel_IHOA, real IOLSel_Astig, real IOLSel_Sph_Abbe[4]) :
+CSettingsIOLSelDlg::CSettingsIOLSelDlg(CWnd* pParentWnd, BOOL Default, real_t IOLSel_Alpha[2], real_t IOLSel_CHOA, real_t IOLSel_IHOA, real_t IOLSel_Astig, real_t IOLSel_Sph_Abbe[4]) :
 	CDialog(IDD_SEL_THRE_SET_DLG, pParentWnd)
 {
 	m_Defult = Default;
@@ -415,7 +415,7 @@ void CSettingsIOLSelDlg::OnOK()
 	if (::NotRealNum(s_Sph_Abbe[2])) goto G1;
 	if (::NotRealNum(s_Sph_Abbe[3])) goto H1;
 
-	real real_Alpha1, real_Alpha2, real_CHOA, real_IHOA, real_Astig, real_Sph_Abbe[4];
+	real_t real_Alpha1, real_Alpha2, real_CHOA, real_IHOA, real_Astig, real_Sph_Abbe[4];
 
 	G_As = s_Alpha1;
 	real_Alpha1 = atof(G_As);

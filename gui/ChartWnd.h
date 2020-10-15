@@ -21,7 +21,7 @@ public:
 	Matrix<CString> m_TLabels;
 	Matrix<CString> m_BLabels;
 	Matrix<CString> m_LLabels;
-	Matrix<real> m_Values;
+	Matrix<real_t> m_Values;
 	int m_min;
 	int m_max;
 

@@ -154,7 +154,7 @@ BOOL CExamAveDlg::OnInitDialog()
 
 	if (m_pExam[0]->m_Image.m_w != 0)
 	{
-		real ratioW = real(m_pExam[0]->m_Image.m_w) / real(m_EyeImageWnd.m_w);
+		real_t ratioW = real_t(m_pExam[0]->m_Image.m_w) / real_t(m_EyeImageWnd.m_w);
 
 		for (int y = 0; y < m_EyeImageWnd.m_h; y++)
 		{
@@ -480,7 +480,7 @@ void CExamAveDlg::OnLeftButtonClicked()
 	//Change the image
 	if (m_pExam[m_CurEye]->m_Image.m_w != 0)
 	{
-		real ratioW = real(m_pExam[m_CurEye]->m_Image.m_w) / real(m_EyeImageWnd.m_w);
+		real_t ratioW = real_t(m_pExam[m_CurEye]->m_Image.m_w) / real_t(m_EyeImageWnd.m_w);
 
 		for (int y = 0; y < m_EyeImageWnd.m_h; y++)
 		{
@@ -534,7 +534,7 @@ void CExamAveDlg::OnRightButtonClicked()
 	//Change the image
 	if (m_pExam[m_CurEye]->m_Image.m_w != 0)
 	{
-		real ratioW = real(m_pExam[m_CurEye]->m_Image.m_w) / real(m_EyeImageWnd.m_w);
+		real_t ratioW = real_t(m_pExam[m_CurEye]->m_Image.m_w) / real_t(m_EyeImageWnd.m_w);
 
 		for (int y = 0; y < m_EyeImageWnd.m_h; y++)
 		{

@@ -68,19 +68,19 @@ void CChartWnd::Chart()
 		ny = 2; 
 	}
 
-	real L = 0.100 * m_w;
-	real T = 0.180 * m_h;
-	real R = 0.900 * m_w;
-	real B = 0.860 * m_h;
-	real dw_px = (R - L) / (nx - 1.0);
-	real dh_px = (B - T) / (ny - 1.0);
+	real_t L = 0.100 * m_w;
+	real_t T = 0.180 * m_h;
+	real_t R = 0.900 * m_w;
+	real_t B = 0.860 * m_h;
+	real_t dw_px = (R - L) / (nx - 1.0);
+	real_t dh_px = (B - T) / (ny - 1.0);
 
 	// vertical lines
 	int nt = m_TLabels.GetSize();
 	int nb = m_BLabels.GetSize();
 	for (int i = 0; i < nx; i++)
 	{
-		real x = L + i * dw_px;
+		real_t x = L + i * dw_px;
 		m_MemDC.DrawLine(intRound(x), intRound(T), intRound(x), intRound(B + 1), 1, gray);
 		if (i < nt)
 		{
@@ -98,7 +98,7 @@ void CChartWnd::Chart()
 	int nl = m_LLabels.GetSize();
 	for (int i = m_min; i <= m_max; i++)
 	{
-		real y = B - (i - m_min) * dh_px;
+		real_t y = B - (i - m_min) * dh_px;
 		m_MemDC.DrawLine(intRound(L), intRound(y), intRound(R + 1.0), intRound(y), 1, i == 0 ? white : gray);
 		if (i < nl) 
 		{
@@ -124,7 +124,7 @@ void CChartWnd::Chart()
 	}
 
 	// Y unit label
-	real l = 0.02 * m_w;
+	real_t l = 0.02 * m_w;
 	::SetRect(&Rect, intRound(l), intRound(T), intRound(l + FontSize2), intRound(B));
 	m_MemDC.WriteRotatedText(m_YUnitLabel, intRound(0.4 * L), intRound(0.5 * (T + B)), 90, FontSize2, 400, "Arial", white, NOCOLOR);
 

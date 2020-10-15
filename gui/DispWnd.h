@@ -21,18 +21,18 @@ public:
 
 	BOOL     m_LTBigFont;//530, Lefttop lable use bigger font
 
-	real     m_LTLabelFontSizePrc;
+	real_t     m_LTLabelFontSizePrc;
 	CString  m_SIMLTLabel[4];//530 To show big font title of Simplified RMS
 	CString  m_LTLabel[5];
 	COLORREF m_LTLabelColor;
 	COLORREF m_LTLabelBkColor;
 
-	real     m_RTLabelFontSizePrc;
+	real_t     m_RTLabelFontSizePrc;
 	CString  m_RTLabel[2];
 	COLORREF m_RTLabelColor;
 	COLORREF m_RTLabelBkColor;
 
-	real     m_RBLabelFontSizePrc;
+	real_t     m_RBLabelFontSizePrc;
 	CString  m_RBLabel[6];
 	COLORREF m_RBLabelColor[6];
 	COLORREF m_RBLabelBkColor;
@@ -43,7 +43,7 @@ public:
 	//"HIGH CORNEAL ABERRATIONS" in yellow ( be sure to use the printable yellow for the print screen view)
 	//when corneal total HOAs >= 0.280 < 0.450
 	//in red when corneal total HOAs >= 0.450  
-	real     m_TMLabelFontSizePrc;//TM means top midle
+	real_t     m_TMLabelFontSizePrc;//TM means top midle
 	CString  m_TMLabel;
 	COLORREF m_TMLabelColor;
 	COLORREF m_TMLabelBkColor;

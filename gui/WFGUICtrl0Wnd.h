@@ -22,11 +22,11 @@ public:
 
 	BOOL  m_ShowWindow;
 
-	void  SetPos(real Pos_Val);
+	void  SetPos(real_t Pos_Val);
 
 	void  Clear() { m_Slider.Clear(); };	//Presbia
 
-	real  GetDiameter() { return m_ScanDiameter; };
+	real_t  GetDiameter() { return m_ScanDiameter; };
 
 	void  CrSliderInfo();//Create the slider for Presbia 256 or  Normal wf capture
 
@@ -36,7 +36,7 @@ private:
 	int     m_h;
 	int     m_FontSize;
 
-	real    m_ScanDiameter;
+	real_t    m_ScanDiameter;
 
 	RECT    m_SliderRect;
 

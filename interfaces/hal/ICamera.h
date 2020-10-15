@@ -3,6 +3,7 @@
 #include <vector>
 #include <opencv2/opencv.hpp>
 #include <libs/CommonLib/Guid.h>
+#include <interfaces/TraceyObj.h>
 
 namespace hal {
   TRACEYOBJ("a8b10028-92bb-4737-9ba6-89b686b4a5d0") ICamera : public IUnknown

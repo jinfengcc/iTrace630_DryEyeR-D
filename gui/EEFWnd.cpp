@@ -30,15 +30,15 @@ void CEEFWnd::Eef()
 	COLORREF white = m_Printing ? BLACK : WHITE;
 	COLORREF gray = m_Printing ? LIGHT_GRAY : DARK_GRAY;
 
-	real L = 0.100 * m_w;
-	real T = 0.180 * m_h;
-	real R = 0.900 * m_w;
-	real B = 0.860 * m_h;
-	real w_px = R - L;
-	real h_px = B - T;
+	real_t L = 0.100 * m_w;
+	real_t T = 0.180 * m_h;
+	real_t R = 0.900 * m_w;
+	real_t B = 0.860 * m_h;
+	real_t w_px = R - L;
+	real_t h_px = B - T;
 	int w_mn = 50;
 	int g_mn = 10;
-	real px_mn = w_px / w_mn;
+	real_t px_mn = w_px / w_mn;
 
 	CString s;
 	RECT Rect;
@@ -48,7 +48,7 @@ void CEEFWnd::Eef()
 
 	// вертикальные линии
 	for (int i_mn = 0; i_mn <= w_mn; i_mn += g_mn) {
-		real x = L + px_mn * i_mn;
+		real_t x = L + px_mn * i_mn;
 		m_MemDC.DrawLine(intRound(x), intRound(T), intRound(x), intRound(B + 1), 1, gray);
 		s.Format(_T("%i"), i_mn);
 		SetRect(&Rect, intRound(x - 1000.0), intRound(B + 3.0), intRound(x + 1000.0), intRound(B + 3.0 + FontSize));
@@ -60,16 +60,16 @@ void CEEFWnd::Eef()
 
 	// горизонтальные линии
 	for (int i_prc = 0; i_prc <= 100; i_prc += 10) {
-		real y = B - 0.01 * i_prc * h_px;
+		real_t y = B - 0.01 * i_prc * h_px;
 		m_MemDC.DrawLine(intRound(L), intRound(y), intRound(R + 1.0), intRound(y), 1, gray);
 		s.Format(_T("%i "), i_prc);
 		SetRect(&Rect, intRound(L - 1000.0), intRound(y - 100.0), intRound(L), intRound(y + 100.0));
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 
-	Matrix<real> x(w_mn + 1);
-	Matrix<real> y(w_mn + 1);
-	Matrix<real> p(w_mn + 1);
+	Matrix<real_t> x(w_mn + 1);
+	Matrix<real_t> y(w_mn + 1);
+	Matrix<real_t> p(w_mn + 1);
 	for (int i_mn = 0; i_mn <= w_mn; i_mn++) {
 		p[i_mn] = m_Psf.m_EncircledEnergy[i_mn];
 		x[i_mn] = L + i_mn * px_mn;
@@ -98,7 +98,7 @@ void CEEFWnd::Eef()
 		// вертикальная
 		m_MemDC.DrawLine(intRound(x[i_mn]), intRound(T), intRound(x[i_mn]), intRound(y[i_mn] - 3.0), 1, RED);
 		// горизонтальная
-		real y = B - 0.5 * h_px;
+		real_t y = B - 0.5 * h_px;
 		m_MemDC.DrawLine(intRound(L), intRound(y), intRound(x[i_mn] - 3.0), intRound(y), 1, RED);
 		s.Format(_T(" %i"), i_mn);
 		::SetRect(&Rect, intRound(x[i_mn] - 1000.0), intRound(T - 3.0 - FontSize), intRound(x[i_mn] + 1000.0), intRound(T - 3));

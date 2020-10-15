@@ -20,7 +20,7 @@ END_MESSAGE_MAP()
 
 //***************************************************************************************
 
-CDOFWnd::CDOFWnd(RECT& Rect, Matrix<real>& X, Matrix<real>& F, CWnd* pWnd) : CDispWnd(Rect, pWnd)
+CDOFWnd::CDOFWnd(RECT& Rect, Matrix<real_t>& X, Matrix<real_t>& F, CWnd* pWnd) : CDispWnd(Rect, pWnd)
 {
 	m_abs = TRUE;//6.2.1 01092019
 	m_thr = 0.5;
@@ -44,7 +44,7 @@ CDOFWnd::CDOFWnd(RECT& Rect, Matrix<real>& X, Matrix<real>& F, CWnd* pWnd) : CDi
 	m_fmax = -DBL_MAX;
 	for (int i = -1500; i <= 1500; i++)
 	{
-		real SphEqDpt = i * 3.0 / 1500;
+		real_t SphEqDpt = i * 3.0 / 1500;
 		m_Spline.GetAt(SphEqDpt, m_F[i + 1500], TRUE);
 		if (m_fmax < m_F[i + 1500])
 		{
@@ -114,14 +114,14 @@ void CDOFWnd::RepaintMemDC()
 		}
 
 		// curve
-		real qx = (m_r_px - m_l_px) / (m_Spline.m_x[m_Spline.m_n - 1] - m_Spline.m_x[0]);
-		real qy = (m_b_px - m_t_px) / ((m_abs ? 0.8 : m_fmax) - m_fmin);
+		real_t qx = (m_r_px - m_l_px) / (m_Spline.m_x[m_Spline.m_n - 1] - m_Spline.m_x[0]);
+		real_t qy = (m_b_px - m_t_px) / ((m_abs ? 0.8 : m_fmax) - m_fmin);
 
 		{
 			int x_px_p, y_px_p;
 			for (int x_px = m_l_px; x_px <= m_r_px; x_px++) {
-				real x = m_Spline.m_x[0] + (x_px - m_l_px) / qx;
-				real f;
+				real_t x = m_Spline.m_x[0] + (x_px - m_l_px) / qx;
+				real_t f;
 				m_Spline.GetAt(x, f, TRUE);
 				int y_px = m_b_px - intRound(qy * (f - m_fmin));
 				if (x_px > m_l_px) m_MemDC.DrawLine(x_px_p, y_px_p, x_px, y_px, 2, RED);
@@ -164,8 +164,8 @@ void CDOFWnd::RepaintMemDC()
 
 		if (m_thr != INVALID_VALUE) {
 
-			real L = 0.0;
-			real R = 0.0;
+			real_t L = 0.0;
+			real_t R = 0.0;
 			BOOL bl = FALSE;
 			BOOL br = FALSE;
 
@@ -218,7 +218,7 @@ void CDOFWnd::RepaintMemDC()
 			m_MemDC.DrawDottedLine(m_pos, m_t_px, m_pos, m_b_px, CYAN);
 
 			::SetRect(&Rect, m_pos - 50, m_b_px + 20, m_pos + 50, m_b_px + 50);
-			real x = m_Spline.m_x[0] + (m_pos - m_l_px) / qx;
+			real_t x = m_Spline.m_x[0] + (m_pos - m_l_px) / qx;
 			s.Format(_T("%.2f D"), x);
 			m_MemDC.WriteText(s, Rect, Font2, CYAN, 1);
 		}
@@ -262,14 +262,14 @@ void CDOFWnd::RepaintMemDC()
 		}
 
 		// curve
-		real qx = (m_r_px - m_l_px) / (m_Spline.m_x[m_Spline.m_n - 1] - m_Spline.m_x[0]);
-		real qy = (m_b_px - m_t_px) / ((m_abs ? 0.8 : m_fmax) - m_fmin);
+		real_t qx = (m_r_px - m_l_px) / (m_Spline.m_x[m_Spline.m_n - 1] - m_Spline.m_x[0]);
+		real_t qy = (m_b_px - m_t_px) / ((m_abs ? 0.8 : m_fmax) - m_fmin);
 
 		{
 			int x_px_p, y_px_p;
 			for (int x_px = m_l_px; x_px <= m_r_px; x_px++) {
-				real x = m_Spline.m_x[0] + (x_px - m_l_px) / qx;
-				real f;
+				real_t x = m_Spline.m_x[0] + (x_px - m_l_px) / qx;
+				real_t f;
 				m_Spline.GetAt(x, f, TRUE);
 				int y_px = m_b_px - intRound(qy * (f - m_fmin));
 				if (x_px > m_l_px) m_MemDC.DrawLine(x_px_p, y_px_p, x_px, y_px, 2, RED);
@@ -312,8 +312,8 @@ void CDOFWnd::RepaintMemDC()
 
 		if (m_thr != INVALID_VALUE) {
 
-			real L = 0.0;
-			real R = 0.0;
+			real_t L = 0.0;
+			real_t R = 0.0;
 			BOOL bl = FALSE;
 			BOOL br = FALSE;
 
@@ -366,7 +366,7 @@ void CDOFWnd::RepaintMemDC()
 			m_MemDC.DrawDottedLine(m_pos, m_t_px, m_pos, m_b_px, CYAN);
 
 			::SetRect(&Rect, m_pos - 50, m_b_px + 20, m_pos + 50, m_b_px + 50);
-			real x = m_Spline.m_x[0] + (m_pos - m_l_px) / qx;
+			real_t x = m_Spline.m_x[0] + (m_pos - m_l_px) / qx;
 			s.Format(_T("%.2f D"), x);
 			m_MemDC.WriteText(s, Rect, Font2, CYAN, 1);
 		}
@@ -383,7 +383,7 @@ void CDOFWnd::OnMouseMove(uint nFlags, CPoint Point)
 	m_my_px = Point.y;
 
 	if (nFlags & MK_LBUTTON) {
-		m_thr = (real)(m_b_px - m_my_px) / (m_b_px - m_t_px);
+		m_thr = (real_t)(m_b_px - m_my_px) / (m_b_px - m_t_px);
 		if (m_abs) m_thr *= 0.8 / m_fmax;
 		if (m_thr < 0.0 || m_thr > 1.0) m_thr = INVALID_VALUE;
 	}

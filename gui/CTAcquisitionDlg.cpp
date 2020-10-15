@@ -270,7 +270,7 @@ LRESULT CCTAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 
 	if (m_ShowTechInfo) {
 
-		real hmax = -1000000000.0;
+		real_t hmax = -1000000000.0;
 		for (int i = 0; i < 256; i++) {
 			if (hmax < pImage->m_hist[i]) hmax = pImage->m_hist[i];
 		}

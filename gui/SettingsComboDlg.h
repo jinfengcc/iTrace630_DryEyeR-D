@@ -29,11 +29,11 @@ private:
 	CTaskSetting  m_DlgTask[5];//530
 
 							   //530
-	real  m_IOLSel_Alpha[2];//530 IOL SELECTION threshold
-	real  m_IOLSel_CHOA;//530 IOL SELECTION Corneal HOAs threshold
-	real  m_IOLSel_IHOA;//530 IOL SELECTION Corneal HOAs threshold
-	real  m_IOLSel_Astig;//530 IOL SELECTION threshold
-	real  m_IOLSel_Sph_Abbe[4];//530 IOL SELECTION threshold
+	real_t  m_IOLSel_Alpha[2];//530 IOL SELECTION threshold
+	real_t  m_IOLSel_CHOA;//530 IOL SELECTION Corneal HOAs threshold
+	real_t  m_IOLSel_IHOA;//530 IOL SELECTION Corneal HOAs threshold
+	real_t  m_IOLSel_Astig;//530 IOL SELECTION threshold
+	real_t  m_IOLSel_Sph_Abbe[4];//530 IOL SELECTION threshold
 							   //530
 
 	int   m_SelTaskRadio;//531

@@ -52,9 +52,9 @@ void CImgCptCtrlWnd::CreateThisWnd(RECT& Rect, CWnd* pWnd, int ScreenTop, int Ca
 	{
 		m_Acquire = FALSE;
 
-		int Left_w = intRound(real(CapHeight) / 5);
+		int Left_w = intRound(real_t(CapHeight) / 5);
 		int BtnW = Left_w;
-		int top_h = intRound(real(m_w) / 10);
+		int top_h = intRound(real_t(m_w) / 10);
 
 		//530 New Remmber add into Presbia
 		int W = ::GetSystemMetrics(SM_CXSCREEN);
@@ -72,7 +72,7 @@ void CImgCptCtrlWnd::CreateThisWnd(RECT& Rect, CWnd* pWnd, int ScreenTop, int Ca
 	//Acq Btn
 
 	int sh = 10;
-	m_eH = intRound(real(m_h - 130) / 10);
+	m_eH = intRound(real_t(m_h - 130) / 10);
 
 	m_FontSize = intRound(0.5*m_eH);
 

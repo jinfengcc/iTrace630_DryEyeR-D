@@ -9,7 +9,7 @@
 //***************************************************************************************
 //***************************************************************************************
 
-CRefSurfaceDlg::CRefSurfaceDlg(CWnd* pParentWnd, real ax0_um, real q) :
+CRefSurfaceDlg::CRefSurfaceDlg(CWnd* pParentWnd, real_t ax0_um, real_t q) :
 	CDialog(IDD_REF_SURFACE_DLG, pParentWnd)
 {
 	m_ax0_um = ax0_um;
@@ -58,7 +58,7 @@ void CRefSurfaceDlg::OnOK()
 	}
 
 	G_As = s;
-	real ax0_mm = atof(G_As);
+	real_t ax0_mm = atof(G_As);
 
 	if (ax0_mm < 5.0 || ax0_mm > 10.0)
 	{
@@ -76,7 +76,7 @@ void CRefSurfaceDlg::OnOK()
 	}
 
 	G_As = s;
-	real q = atof(G_As);
+	real_t q = atof(G_As);
 	if (q < -2.0 || q > 2.0)
 	{
 		::Warning("Enter a reasonable value for asphericity.");

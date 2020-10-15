@@ -10,14 +10,14 @@ public:
 
 	CCubicSpline() { m_n = 0; }
 
-	BOOL Create(Matrix<real>& x, Matrix<real>& f);
+	BOOL Create(Matrix<real_t>& x, Matrix<real_t>& f);
 
-	BOOL GetAt(real x, real& f, BOOL CanExtrapolate = FALSE);
+	BOOL GetAt(real_t x, real_t& f, BOOL CanExtrapolate = FALSE);
 
 	int m_n;
-	Matrix<real> m_x;
-	Matrix<real> m_f;
-	Matrix<real> m_k;
+	Matrix<real_t> m_x;
+	Matrix<real_t> m_f;
+	Matrix<real_t> m_k;
 
 };
 

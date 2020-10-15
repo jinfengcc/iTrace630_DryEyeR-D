@@ -120,7 +120,7 @@ void CLiveVideo::Main()
 		}
 		m_ToDo = DO_NOTHING;
 
-		m_AverageCycleTime = (real)(clock() - StartTime) / (++m_NumFramesReceived);
+		m_AverageCycleTime = (real_t)(clock() - StartTime) / (++m_NumFramesReceived);
 
 		::Sleep(0);
 	}

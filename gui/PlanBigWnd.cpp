@@ -77,25 +77,25 @@ HSI CPlanBigWnd::ChangeRGBtoHSI(int R, int G, int B)
 {
 
 	HSI res;
-	res.I = (real)(R + G + B) / 3;
+	res.I = (real_t)(R + G + B) / 3;
 
 	//find the minixum of RGB for the S value
-	real min = (real)R;
+	real_t min = (real_t)R;
 	if (min>G) min = G;
 	if (min>B) min = B;
 	//
 	res.S = 1 - (min / res.I);
 
 	//find the S
-	real sita;
-	real mid1 = 0.5*(2 * R - G - B);
-	real mid2 = pow((R - G)*(R - G) + (R - B)*(G - B), 0.5) + 0.0000000001;
+	real_t sita;
+	real_t mid1 = 0.5*(2 * R - G - B);
+	real_t mid2 = pow((R - G)*(R - G) + (R - B)*(G - B), 0.5) + 0.0000000001;
 	mid1 = mid1 / mid2;
 	sita = acos(mid1);
 
 	if (B>G) sita = 2 * _Pi - sita;
 
-	real angle = sita * 180 / _Pi;
+	real_t angle = sita * 180 / _Pi;
 
 	res.H = angle;
 	//
@@ -180,7 +180,7 @@ CPlanBigWnd::CPlanBigWnd(CWnd* pParentWnd, RECT& Rect, CDicomInfo  DicomInfo, CC
 			//Judge wether the finding pupil is correct or not
 			if (m_pImage->m_ve_ok)
 			{
-				real puveDisum = Distance(m_pImage->m_pu_x0_um, m_pImage->m_pu_y0_um, m_pImage->m_ve_x_um, m_pImage->m_ve_y_um);
+				real_t puveDisum = Distance(m_pImage->m_pu_x0_um, m_pImage->m_pu_y0_um, m_pImage->m_ve_x_um, m_pImage->m_ve_y_um);
 
 				if (puveDisum > 1000)
 				{
@@ -193,7 +193,7 @@ CPlanBigWnd::CPlanBigWnd(CWnd* pParentWnd, RECT& Rect, CDicomInfo  DicomInfo, CC
 		{
 			if (m_pImage->m_ve_ok)
 			{
-				real puveDisum = Distance(m_pImage->m_pu_x0_um, m_pImage->m_pu_y0_um, m_pImage->m_ve_x_um, m_pImage->m_ve_y_um);
+				real_t puveDisum = Distance(m_pImage->m_pu_x0_um, m_pImage->m_pu_y0_um, m_pImage->m_ve_x_um, m_pImage->m_ve_y_um);
 
 				if (puveDisum > 1000)
 				{
@@ -208,8 +208,8 @@ CPlanBigWnd::CPlanBigWnd(CWnd* pParentWnd, RECT& Rect, CDicomInfo  DicomInfo, CC
 
 		m_GrayImage = &m_pCTExam->m_Image;
 
-		real xGrayDis = m_GrayImage->m_li_x0_um - m_GrayImage->m_ve_x_um;
-		real yGrayDis = m_GrayImage->m_li_y0_um - m_GrayImage->m_ve_y_um;
+		real_t xGrayDis = m_GrayImage->m_li_x0_um - m_GrayImage->m_ve_x_um;
+		real_t yGrayDis = m_GrayImage->m_li_y0_um - m_GrayImage->m_ve_y_um;
 
 		m_pImage->m_ve_x_um = m_pImage->m_li_x0_um - xGrayDis;
 		m_pImage->m_ve_y_um = m_pImage->m_li_y0_um - yGrayDis;
@@ -264,7 +264,7 @@ CPlanBigWnd::CPlanBigWnd(CWnd* pParentWnd, RECT& Rect, CDicomInfo  DicomInfo, CC
 	CreateZoomImg();
 	//
 
-	real t = 0.02 * m_w;
+	real_t t = 0.02 * m_w;
 	int h = intRound(t);
 	int w = intRound(5 * t);
 	int smallW = intRound(w / 2) - 4;
@@ -402,11 +402,11 @@ void CPlanBigWnd::CreateZoomImg()
 	m_EyeWndRight = 0;
 	for (int y = 0; y < m_h; y++)
 	{
-		real y_um = -(m_cy - y) / m_y_px_um;
+		real_t y_um = -(m_cy - y) / m_y_px_um;
 		for (int x = 0; x < m_w; x++)
 		{
-			real x_um = +(x - m_cx) / m_x_px_um;
-			real r, g, b;
+			real_t x_um = +(x - m_cx) / m_x_px_um;
+			real_t r, g, b;
 			if (m_pImage->GetRGBAtUm(x_um, y_um, &r, &g, &b))
 			{
 
@@ -425,8 +425,8 @@ void CPlanBigWnd::CreateZoomImg()
 
 	memcpy(m_pZoomImage2.m_RGBData, m_MemDC.m_RGBData, m_ImgSize);
 
-	m_Adx = m_EyeWndLeft + (real)m_EyeWndWidth / 2.0 - m_cx;
-	m_Ady = m_EyeWndTop + (real)m_EyeWndHeight / 2.0 - m_cy;
+	m_Adx = m_EyeWndLeft + (real_t)m_EyeWndWidth / 2.0 - m_cx;
+	m_Ady = m_EyeWndTop + (real_t)m_EyeWndHeight / 2.0 - m_cy;
 }
 
 //***************************************************************************************
@@ -455,35 +455,35 @@ void CPlanBigWnd::Eye()
 		}
 		else
 		{
-			real zoomRatio = 1;
+			real_t zoomRatio = 1;
 
 			for (int i = 0; i<t; i++)
 			{
 				zoomRatio *= 1.05;
 			}
 
-			real actuaLMoveX = intRound((real)m_MovePoint.x / zoomRatio);
-			real actualMoveY = intRound((real)m_MovePoint.y / zoomRatio);
+			real_t actuaLMoveX = intRound((real_t)m_MovePoint.x / zoomRatio);
+			real_t actualMoveY = intRound((real_t)m_MovePoint.y / zoomRatio);
 
-			int  zoomWidth = intRound((real)m_EyeWndWidth / zoomRatio);
-			int  zoomHeight = intRound((real)m_EyeWndHeight / zoomRatio);
+			int  zoomWidth = intRound((real_t)m_EyeWndWidth / zoomRatio);
+			int  zoomHeight = intRound((real_t)m_EyeWndHeight / zoomRatio);
 
 			//Find the center pos
-			int  zoomOutWidth = intRound((real)m_EyeWndWidth*zoomRatio);
-			int  zoomOutHeight = intRound((real)m_EyeWndHeight*zoomRatio);
+			int  zoomOutWidth = intRound((real_t)m_EyeWndWidth*zoomRatio);
+			int  zoomOutHeight = intRound((real_t)m_EyeWndHeight*zoomRatio);
 
 			int  zoomOutLeft, zoomOutTop;
 
-			zoomOutLeft = m_EyeWndLeft - intRound((real)(zoomOutWidth - m_EyeWndWidth) / 2.0);
-			zoomOutTop = m_EyeWndTop - intRound((real)(zoomOutHeight - m_EyeWndHeight) / 2.0);
+			zoomOutLeft = m_EyeWndLeft - intRound((real_t)(zoomOutWidth - m_EyeWndWidth) / 2.0);
+			zoomOutTop = m_EyeWndTop - intRound((real_t)(zoomOutHeight - m_EyeWndHeight) / 2.0);
 			zoomOutLeft += m_MovePoint.x;
 			zoomOutTop += m_MovePoint.y;
 			//Done
 
 			int  zoomLeft, zoomTop;
 
-			zoomLeft = m_EyeWndLeft + intRound((real)(m_EyeWndWidth - zoomWidth) / 2.0);
-			zoomTop = m_EyeWndTop + intRound((real)(m_EyeWndHeight - zoomHeight) / 2.0);
+			zoomLeft = m_EyeWndLeft + intRound((real_t)(m_EyeWndWidth - zoomWidth) / 2.0);
+			zoomTop = m_EyeWndTop + intRound((real_t)(m_EyeWndHeight - zoomHeight) / 2.0);
 
 			zoomLeft -= (int)actuaLMoveX;
 			zoomTop -= (int)actualMoveY;
@@ -519,8 +519,8 @@ void CPlanBigWnd::Eye()
 				memcpy(m_pZoomBackup[t], m_MemDC.m_RGBData, m_ImgSize);
 				m_BackupYes[t] = TRUE;
 
-				m_cxBackup[t] = zoomOutLeft + intRound((real)(zoomOutWidth) / 2.0) - m_Adx;
-				m_cyBackup[t] = zoomOutTop + intRound((real)(zoomOutHeight) / 2.0) - m_Ady;
+				m_cxBackup[t] = zoomOutLeft + intRound((real_t)(zoomOutWidth) / 2.0) - m_Adx;
+				m_cyBackup[t] = zoomOutTop + intRound((real_t)(zoomOutHeight) / 2.0) - m_Ady;
 
 				m_cx = m_cxBackup[t];
 				m_cy = m_cyBackup[t];
@@ -533,8 +533,8 @@ void CPlanBigWnd::Eye()
 
 void CPlanBigWnd::Grid()
 {
-	real x_px_um = m_x_px_um;
-	real y_px_um = m_y_px_um;
+	real_t x_px_um = m_x_px_um;
+	real_t y_px_um = m_y_px_um;
 
 	COLORREF Color = m_Printing ? BLACK : WHITE;
 
@@ -543,10 +543,10 @@ void CPlanBigWnd::Grid()
 	int FontSize = intRound(0.045 * m_h);
 	int FontSize2 = intRound(0.025 * m_h);
 
-	real r_um = 4000.0;
+	real_t r_um = 4000.0;
 
-	real d_efX = 0;
-	real d_efY = 0;
+	real_t d_efX = 0;
+	real_t d_efY = 0;
 
 	if (m_pImage->m_ve_ok)
 	{
@@ -555,7 +555,7 @@ void CPlanBigWnd::Grid()
 	}
 
 	int t = m_wheel_n;
-	real  zoomRatio = 1.0;
+	real_t  zoomRatio = 1.0;
 	for (int i = 0; i<t; i++) { zoomRatio *= 1.05; }
 
 	// circle
@@ -585,10 +585,10 @@ void CPlanBigWnd::Grid()
 
 	for (int a = 0; a < 360; a += IncreaseDeg)
 	{
-		real r1_um = r_um + 100.0;
+		real_t r1_um = r_um + 100.0;
 		int x1 = intRound(m_cx + d_efX*zoomRatio + x_px_um * r1_um * COS[a]);
 		int y1 = intRound(m_cy - d_efY*zoomRatio - y_px_um * r1_um * SIN[a]);
-		real r2_um = 0;
+		real_t r2_um = 0;
 
 		if (IncreaseDeg == 1) r2_um = r_um + ((a % 15) == 0 ? 400.0 : 150.0);//[cjf***04202012]
 		else r2_um = r_um + ((a % 15) == 0 ? 400.0 : 250.0);//[cjf***04202012]
@@ -611,7 +611,7 @@ void CPlanBigWnd::Grid()
 			}
 			if (DegTextStep == 30)
 			{
-				real r3_um = r_um + 900.0;
+				real_t r3_um = r_um + 900.0;
 				int x = intRound(m_cx + d_efX*zoomRatio + x_px_um * r3_um * COS[a]);
 				int y = intRound(m_cy - d_efY*zoomRatio - y_px_um * r3_um * SIN[a]);
 				s.Format(_T(" %i°"), sa);
@@ -621,7 +621,7 @@ void CPlanBigWnd::Grid()
 			{
 				if (a % 15 == 0)
 				{
-					real r3_um = r_um + 900.0;
+					real_t r3_um = r_um + 900.0;
 					int x = intRound(m_cx + d_efX*zoomRatio + x_px_um * r3_um * COS[a]);
 					int y = intRound(m_cy - d_efY*zoomRatio - y_px_um * r3_um * SIN[a]);
 					s.Format(_T(" %i°"), sa);
@@ -629,7 +629,7 @@ void CPlanBigWnd::Grid()
 				}
 				else
 				{
-					real r3_um = r_um + 500.0;
+					real_t r3_um = r_um + 500.0;
 					int x = intRound(m_cx + d_efX*zoomRatio + x_px_um * r3_um * COS[a]);
 					int y = intRound(m_cy - d_efY*zoomRatio - y_px_um * r3_um * SIN[a]);
 					s.Format(_T(" %i°"), sa);
@@ -648,15 +648,15 @@ void CPlanBigWnd::Caliper()
 	if (!m_ShowCaliper) return;
 	if (m_isCombo) return;//531
 
-	real x_px_um = m_x_px_um;
-	real y_px_um = m_y_px_um;
+	real_t x_px_um = m_x_px_um;
+	real_t y_px_um = m_y_px_um;
 
 	CString s;
 
 	int FontSize = intRound(0.045 * m_h);
 
-	real d_efX = 0;
-	real d_efY = 0;
+	real_t d_efX = 0;
+	real_t d_efY = 0;
 
 	if (m_pImage->m_ve_ok)
 	{
@@ -665,7 +665,7 @@ void CPlanBigWnd::Caliper()
 	}
 
 	int t = m_wheel_n;
-	real  zoomRatio = 1.0;
+	real_t  zoomRatio = 1.0;
 	for (int i = 0; i<t; i++) { zoomRatio *= 1.05; }
 
 	int aw[2] = { m_pCTExam->m_OpData.m_RefAxis[0], m_pCTExam->m_OpData.m_RefAxis[1] };
@@ -749,7 +749,7 @@ void CPlanBigWnd::Caliper()
 
 //***************************************************************************************
 //531
-void CPlanBigWnd::AlignLineDeg(int a1, int a2, real Ali_Rum1, real Ali_Rum2, real Ali_Rum3, real Ali_Rum4, int Type)
+void CPlanBigWnd::AlignLineDeg(int a1, int a2, real_t Ali_Rum1, real_t Ali_Rum2, real_t Ali_Rum3, real_t Ali_Rum4, int Type)
 {
 	int oria1 = a1;
 	int oria2 = a2;
@@ -795,8 +795,8 @@ void CPlanBigWnd::AlignLineDeg(int a1, int a2, real Ali_Rum1, real Ali_Rum2, rea
 		a02 = a1;
 	}
 
-	real d_efX = 0;
-	real d_efY = 0;
+	real_t d_efX = 0;
+	real_t d_efY = 0;
 
 	//if(m_pImage->m_ve_ok)
 	{
@@ -805,14 +805,14 @@ void CPlanBigWnd::AlignLineDeg(int a1, int a2, real Ali_Rum1, real Ali_Rum2, rea
 	}
 
 	int t = m_wheel_n;
-	real  zoomRatio = 1.0;
+	real_t  zoomRatio = 1.0;
 	for (int i = 0; i<t; i++) { zoomRatio *= 1.05; }
 
 	int  x = intRound(m_cx + d_efX*zoomRatio);
 	int  y = intRound(m_cy - d_efY*zoomRatio);
 
 	int  w = intRound(0.002 * m_h);
-	real r_ratio = 0.9;
+	real_t r_ratio = 0.9;
 	switch (Type)
 	{
 	case 1: r_ratio = 0.9;
@@ -822,7 +822,7 @@ void CPlanBigWnd::AlignLineDeg(int a1, int a2, real Ali_Rum1, real Ali_Rum2, rea
 	case 3: r_ratio = 0.6;
 		break;
 	}
-	real minRum = Ali_Rum1 < Ali_Rum2 ? Ali_Rum1 : Ali_Rum2;
+	real_t minRum = Ali_Rum1 < Ali_Rum2 ? Ali_Rum1 : Ali_Rum2;
 
 	if (Ali_Rum3 != 0) minRum = minRum < Ali_Rum3 ? minRum : Ali_Rum3;
 	if (Ali_Rum4 != 0) minRum = minRum < Ali_Rum4 ? minRum : Ali_Rum4;
@@ -914,17 +914,17 @@ void CPlanBigWnd::AlignLineDeg(int a1, int a2, real Ali_Rum1, real Ali_Rum2, rea
 }
 //***************************************************************************************
 
-void CPlanBigWnd::AlignHoyaLine(int a, real Ali_Rum)
+void CPlanBigWnd::AlignHoyaLine(int a, real_t Ali_Rum)
 {
 	if (m_isCombo)       return;
 	if (!m_ShowCaliper)  return;
 	if (!m_AlignLine)    return;
 
-	real x_px_um = m_x_px_um;
-	real y_px_um = m_y_px_um;
+	real_t x_px_um = m_x_px_um;
+	real_t y_px_um = m_y_px_um;
 
-	real d_efX = 0;
-	real d_efY = 0;
+	real_t d_efX = 0;
+	real_t d_efY = 0;
 
 	if (m_pImage->m_ve_ok)
 	{
@@ -933,7 +933,7 @@ void CPlanBigWnd::AlignHoyaLine(int a, real Ali_Rum)
 	}
 
 	int t = m_wheel_n;
-	real  zoomRatio = 1.0;
+	real_t  zoomRatio = 1.0;
 	for (int i = 0; i<t; i++) { zoomRatio *= 1.05; }
 
 	int x1 = intRound(m_cx + d_efX*zoomRatio);
@@ -948,15 +948,15 @@ void CPlanBigWnd::AlignHoyaLine(int a, real Ali_Rum)
 
 //***************************************************************************************
 
-void CPlanBigWnd::AlignLine(int a, real Ali_Rum, int Type, CString whichLine)//Type: 0: Base Line; 1:Protractor Line; | WhcichLine : 1, 2, 3
+void CPlanBigWnd::AlignLine(int a, real_t Ali_Rum, int Type, CString whichLine)//Type: 0: Base Line; 1:Protractor Line; | WhcichLine : 1, 2, 3
 {
 	if (a == -1 || !m_AlignLine || !m_isCombo || Ali_Rum == 0) return;
 
-	real x_px_um = m_x_px_um;
-	real y_px_um = m_y_px_um;
+	real_t x_px_um = m_x_px_um;
+	real_t y_px_um = m_y_px_um;
 
-	real d_efX = 0;
-	real d_efY = 0;
+	real_t d_efX = 0;
+	real_t d_efY = 0;
 
 	//if(m_pImage->m_ve_ok)
 	{
@@ -965,7 +965,7 @@ void CPlanBigWnd::AlignLine(int a, real Ali_Rum, int Type, CString whichLine)//T
 	}
 
 	int t = m_wheel_n;
-	real  zoomRatio = 1.0;
+	real_t  zoomRatio = 1.0;
 	for (int i = 0; i<t; i++) { zoomRatio *= 1.05; }
 
 	int x1 = intRound(m_cx + d_efX*zoomRatio);
@@ -1019,11 +1019,11 @@ void CPlanBigWnd::Pupil()
 	int x0, y0;
 
 	int t = m_wheel_n;
-	real  zoomRatio = 1.0;
+	real_t  zoomRatio = 1.0;
 	for (int i = 0; i<t; i++) { zoomRatio *= 1.05; }
 
-	real x0R = +m_pImage->m_pu_x0_um * m_x_px_um;
-	real y0R = -m_pImage->m_pu_y0_um * m_y_px_um;
+	real_t x0R = +m_pImage->m_pu_x0_um * m_x_px_um;
+	real_t y0R = -m_pImage->m_pu_y0_um * m_y_px_um;
 
 	x0 = intRound(m_cx + x0R*zoomRatio);
 	y0 = intRound(m_cy + y0R*zoomRatio);
@@ -1038,10 +1038,10 @@ void CPlanBigWnd::Pupil()
 		if (m_pImage->m_pu_r_um[a] == INVALID_VALUE) continue;
 		if (m_pImage->m_pu_r_um[b] == INVALID_VALUE) continue;
 
-		real xa0 = +(m_pImage->m_pu_x0_um + m_pImage->m_pu_r_um[a] * COS[a])* m_x_px_um;
-		real ya0 = -(m_pImage->m_pu_y0_um + m_pImage->m_pu_r_um[a] * SIN[a])* m_y_px_um;
-		real xb0 = +(m_pImage->m_pu_x0_um + m_pImage->m_pu_r_um[b] * COS[b])* m_x_px_um;
-		real yb0 = -(m_pImage->m_pu_y0_um + m_pImage->m_pu_r_um[b] * SIN[b])* m_y_px_um;
+		real_t xa0 = +(m_pImage->m_pu_x0_um + m_pImage->m_pu_r_um[a] * COS[a])* m_x_px_um;
+		real_t ya0 = -(m_pImage->m_pu_y0_um + m_pImage->m_pu_r_um[a] * SIN[a])* m_y_px_um;
+		real_t xb0 = +(m_pImage->m_pu_x0_um + m_pImage->m_pu_r_um[b] * COS[b])* m_x_px_um;
+		real_t yb0 = -(m_pImage->m_pu_y0_um + m_pImage->m_pu_r_um[b] * SIN[b])* m_y_px_um;
 
 		int xa = intRound(m_cx + xa0*zoomRatio);
 		int ya = intRound(m_cy + ya0*zoomRatio);
@@ -1063,11 +1063,11 @@ void CPlanBigWnd::RadialRuler()
 	int x0, y0;
 
 	int t = m_wheel_n;
-	real  zoomRatio = 1.0;
+	real_t  zoomRatio = 1.0;
 	for (int i = 0; i<t; i++) { zoomRatio *= 1.05; }
 
-	real x0R = +m_pImage->m_Ra_x_um * m_x_px_um;
-	real y0R = -m_pImage->m_Ra_y_um * m_y_px_um;
+	real_t x0R = +m_pImage->m_Ra_x_um * m_x_px_um;
+	real_t y0R = -m_pImage->m_Ra_y_um * m_y_px_um;
 
 	x0 = intRound(m_cx + x0R*zoomRatio);
 	y0 = intRound(m_cy + y0R*zoomRatio);
@@ -1096,7 +1096,7 @@ void CPlanBigWnd::LinearRuler()
 	if (m_pImage->m_LRa_ok != TRUE) return;
 	//
 	int t = m_wheel_n;
-	real  zoomRatio = 1.0;
+	real_t  zoomRatio = 1.0;
 	for (int i = 0; i<t; i++) { zoomRatio *= 1.05; }
 
 	COLORREF LRulerColor = RGB(255, 128, 0);
@@ -1121,11 +1121,11 @@ void CPlanBigWnd::Limbus()
 	int x0, y0;
 
 	int t = m_wheel_n;
-	real  zoomRatio = 1.0;
+	real_t  zoomRatio = 1.0;
 	for (int i = 0; i<t; i++) { zoomRatio *= 1.05; }
 
-	real x0R = +m_pImage->m_li_x0_um * m_x_px_um;
-	real y0R = -m_pImage->m_li_y0_um * m_y_px_um;
+	real_t x0R = +m_pImage->m_li_x0_um * m_x_px_um;
+	real_t y0R = -m_pImage->m_li_y0_um * m_y_px_um;
 
 	x0 = intRound(m_cx + x0R*zoomRatio);
 	y0 = intRound(m_cy + y0R*zoomRatio);
@@ -1137,10 +1137,10 @@ void CPlanBigWnd::Limbus()
 	{
 		int b = a == 359 ? 0 : a + 1;
 
-		real xa0 = +(m_pImage->m_li_x0_um + m_pImage->m_li_r_mean_um * COS[a])* m_x_px_um;
-		real ya0 = -(m_pImage->m_li_y0_um + m_pImage->m_li_r_mean_um * SIN[a])* m_y_px_um;
-		real xb0 = +(m_pImage->m_li_x0_um + m_pImage->m_li_r_mean_um * COS[b])* m_x_px_um;
-		real yb0 = -(m_pImage->m_li_y0_um + m_pImage->m_li_r_mean_um * SIN[b])* m_y_px_um;
+		real_t xa0 = +(m_pImage->m_li_x0_um + m_pImage->m_li_r_mean_um * COS[a])* m_x_px_um;
+		real_t ya0 = -(m_pImage->m_li_y0_um + m_pImage->m_li_r_mean_um * SIN[a])* m_y_px_um;
+		real_t xb0 = +(m_pImage->m_li_x0_um + m_pImage->m_li_r_mean_um * COS[b])* m_x_px_um;
+		real_t yb0 = -(m_pImage->m_li_y0_um + m_pImage->m_li_r_mean_um * SIN[b])* m_y_px_um;
 
 		int xa = intRound(m_cx + xa0*zoomRatio);
 		int ya = intRound(m_cy + ya0*zoomRatio);
@@ -1156,11 +1156,11 @@ void CPlanBigWnd::Limbus()
 void CPlanBigWnd::Points()
 {
 	int x0, y0;
-	real d_efX = m_pImage->m_ve_x_um* m_x_px_um;
-	real d_efY = m_pImage->m_ve_y_um* m_y_px_um;
+	real_t d_efX = m_pImage->m_ve_x_um* m_x_px_um;
+	real_t d_efY = m_pImage->m_ve_y_um* m_y_px_um;
 
 	int t = m_wheel_n;
-	real  zoomRatio = 1.0;
+	real_t  zoomRatio = 1.0;
 	for (int i = 0; i<t; i++) { zoomRatio *= 1.05; }
 
 	if (m_pImage->m_ve_ok)
@@ -1222,7 +1222,7 @@ void CPlanBigWnd::Labels()
 	if (m_ShowLRuler && m_pImage->m_LRa_ok == TRUE)
 	{
 		COLORREF LRulerColor = RGB(255, 128, 0);
-		real dis = hyp(m_pImage->m_LRa_x0_um - m_pImage->m_LRa_x1_um, m_pImage->m_LRa_y0_um - m_pImage->m_LRa_y1_um);
+		real_t dis = hyp(m_pImage->m_LRa_x0_um - m_pImage->m_LRa_x1_um, m_pImage->m_LRa_y0_um - m_pImage->m_LRa_y1_um);
 		if (dis > 0)
 		{
 			s1 = "Linear Ruler";
@@ -1482,19 +1482,19 @@ void CPlanBigWnd::OnMouseMove(uint nFlags, CPoint Point)
 			{
 				m_AlignLine = TRUE;
 
-				real x_px_um = m_x_px_um;
-				real y_px_um = m_y_px_um;
+				real_t x_px_um = m_x_px_um;
+				real_t y_px_um = m_y_px_um;
 
-				real x_um = (Point.x - m_cx) / x_px_um;
-				real y_um = (m_cy - Point.y) / y_px_um;
-				real a_rd = angle(y_um, x_um);
+				real_t x_um = (Point.x - m_cx) / x_px_um;
+				real_t y_um = (m_cy - Point.y) / y_px_um;
+				real_t a_rd = angle(y_um, x_um);
 				int a = intRound(_180_Pi * a_rd) % 360; if (a < 0) a += 360;
-				real Ali_Rum = sqrt(x_um*x_um + y_um*y_um);
+				real_t Ali_Rum = sqrt(x_um*x_um + y_um*y_um);
 
-				real d2 = sqr(x_um) + sqr(y_um);
+				real_t d2 = sqr(x_um) + sqr(y_um);
 
 				int t = m_wheel_n;
-				real  zoomRatio = 1.0;
+				real_t  zoomRatio = 1.0;
 				for (int i = 0; i<t; i++) { zoomRatio *= 1.05; } Ali_Rum = Ali_Rum / zoomRatio;
 
 				//
@@ -1780,14 +1780,14 @@ void CPlanBigWnd::OnMouseMove(uint nFlags, CPoint Point)
 			{
 				BOOL Redraw = FALSE;
 
-				real x_px_um = m_x_px_um;
-				real y_px_um = m_y_px_um;
+				real_t x_px_um = m_x_px_um;
+				real_t y_px_um = m_y_px_um;
 
-				real x_um = (Point.x - m_cx) / x_px_um;
-				real y_um = (m_cy - Point.y) / y_px_um;
-				real a_rd = angle(y_um, x_um);
+				real_t x_um = (Point.x - m_cx) / x_px_um;
+				real_t y_um = (m_cy - Point.y) / y_px_um;
+				real_t a_rd = angle(y_um, x_um);
 				int a = intRound(_180_Pi * a_rd) % 360; if (a < 0) a += 360;
-				real d2 = sqr(x_um) + sqr(y_um);
+				real_t d2 = sqr(x_um) + sqr(y_um);
 
 				if (sqr(4100.0) <= d2)
 				{
@@ -1857,10 +1857,10 @@ void CPlanBigWnd::OnMouseMove(uint nFlags, CPoint Point)
 
 				if (Redraw)
 				{
-					real Ali_Rum = sqrt(x_um*x_um + y_um*y_um);
+					real_t Ali_Rum = sqrt(x_um*x_um + y_um*y_um);
 
 					int t = m_wheel_n;
-					real  zoomRatio = 1.0;
+					real_t  zoomRatio = 1.0;
 					for (int i = 0; i<t; i++) { zoomRatio *= 1.05; } Ali_Rum = Ali_Rum / zoomRatio;
 
 					ClearMemDC();
@@ -2123,7 +2123,7 @@ int  CPlanBigWnd::SmallAng(int a0, int a1)
 
 
 //***************************************************************************************
-void CPlanBigWnd::FindClearLimbus(CEyeImage* OriImage, real LastLimbuX, real LastLimbuY, real LastLimbuR)
+void CPlanBigWnd::FindClearLimbus(CEyeImage* OriImage, real_t LastLimbuX, real_t LastLimbuY, real_t LastLimbuR)
 {
 	CEyeImage* TestImage = new CEyeImage();
 	int h = TestImage->m_h = OriImage->m_h;
@@ -2201,7 +2201,7 @@ BOOL CPlanBigWnd::FindColorPupil(CEyeImage* OriImage)
 	if (TestImage->m_RGBData.GetMem() == NULL) return FALSE;
 
 	int ** m_pixels = (int**)calloc(w_w, sizeof(int));
-	real** m_g = (real**)calloc(4, sizeof(real));
+	real_t** m_g = (real_t**)calloc(4, sizeof(real_t));
 	int ** m_BlurPixels = (int**)calloc(w_w, sizeof(int));
 	int ** m_gxy = (int**)calloc(w_w, sizeof(int));
 	int ** m_gx = (int**)calloc(w_w, sizeof(int));
@@ -2212,7 +2212,7 @@ BOOL CPlanBigWnd::FindColorPupil(CEyeImage* OriImage)
 
 	for (int i = 0; i<w_w; i++)
 	{
-		if (i<4)  m_g[i] = (real*)calloc(4, sizeof(real));
+		if (i<4)  m_g[i] = (real_t*)calloc(4, sizeof(real_t));
 		m_pixels[i] = (int*)calloc(h_h, sizeof(int));
 		m_BlurPixels[i] = (int*)calloc(h_h, sizeof(int));
 
@@ -2236,7 +2236,7 @@ BOOL CPlanBigWnd::FindColorPupil(CEyeImage* OriImage)
 	int EndR = intRound(0.15*w_w);
 
 
-	real de = 1.4;
+	real_t de = 1.4;
 
 
 	//*******************************************************************************
@@ -2378,7 +2378,7 @@ BOOL CPlanBigWnd::FindColorPupil(CEyeImage* OriImage)
 	//*******************************************************************************
 	//First step is the Gassusian blur
 	//*******************************************************************************	
-	real Mid = 0;
+	real_t Mid = 0;
 	for (int h = SRegion_StY + 3; h < SRegion_EndY - 3; h++)
 	{
 		for (int v = SRegion_StX + 3; v < SRegion_EndX - 3; v++)
@@ -2477,7 +2477,7 @@ BOOL CPlanBigWnd::FindColorPupil(CEyeImage* OriImage)
 	//*******************************************************************************
 	int Range = EndR - StartR;
 	int maxGradient = 0;
-	real fmean = 0;
+	real_t fmean = 0;
 	int t = 0;
 	double mid = 180 / 3.1415926;
 
@@ -2488,9 +2488,9 @@ BOOL CPlanBigWnd::FindColorPupil(CEyeImage* OriImage)
 			m_gx[v][h] = (m_BlurPixels[v - 1][h - 1] * (-1) + m_BlurPixels[v + 1][h + 1] * 1 + m_BlurPixels[v - 1][h] * (-2) + m_BlurPixels[v + 1][h] * 2 + m_BlurPixels[v - 1][h + 1] * (-1) + m_BlurPixels[v + 1][h + 1] * 1);
 			m_gy[v][h] = (m_BlurPixels[v - 1][h - 1] * (1) + m_BlurPixels[v][h - 1] * 2 + m_BlurPixels[v + 1][h + 1] * 1 + m_BlurPixels[v - 1][h + 1] * (-1) + m_BlurPixels[v][h + 1] * (-2) + m_BlurPixels[v + 1][h + 1] * (-1));
 
-			m_gxy[v][h] = intRound(sqrt((real)m_gx[v][h] * m_gx[v][h] + (real)m_gy[v][h] * m_gy[v][h]));
+			m_gxy[v][h] = intRound(sqrt((real_t)m_gx[v][h] * m_gx[v][h] + (real_t)m_gy[v][h] * m_gy[v][h]));
 
-			fmean += (real)m_gxy[v][h];
+			fmean += (real_t)m_gxy[v][h];
 			t++;
 			if (m_gxy[v][h]>maxGradient) maxGradient = m_gxy[v][h];
 
@@ -2557,7 +2557,7 @@ BOOL CPlanBigWnd::FindColorPupil(CEyeImage* OriImage)
 			}
 			else
 			{
-				m_dis[v][h] = intRound((real)m_gxy[v][h] / (real)maxGradient * 255.0);
+				m_dis[v][h] = intRound((real_t)m_gxy[v][h] / (real_t)maxGradient * 255.0);
 			}
 		}
 	}

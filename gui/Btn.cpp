@@ -232,7 +232,7 @@ void CBtn::Repaint()
 
 	if (m_Image.m_RGBData.GetMem())
 	{
-		int x = (Rect.right + Rect.left) / 2 + intRound(m_ImagePos * real(Rect.right - Rect.left));
+		int x = (Rect.right + Rect.left) / 2 + intRound(m_ImagePos * real_t(Rect.right - Rect.left));
 
 		if (m_ImagePos != 0) x += 3;
 
@@ -250,14 +250,14 @@ void CBtn::Repaint()
 
 		//6.2.0 For some computer chinese luan ma
 		if (G_IsChinese(m_Text))
-		{			
+		{
 			m_FontFace = _T("宋体");
 		}
 		//6.2.0 For some computer chinese luan ma
 
 		CStringA AFontFace(m_FontFace);
 		CMFont Font(m_FontSize, m_FontWidth, AFontFace);
-		Rect.right = Rect.left + intRound(real(Rect.right - Rect.left)*m_TextPos);
+		Rect.right = Rect.left + intRound(real_t(Rect.right - Rect.left)*m_TextPos);
 
 		Rect.left += 4;
 		Rect.right -= 4;

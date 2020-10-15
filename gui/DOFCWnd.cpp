@@ -25,7 +25,7 @@ END_MESSAGE_MAP()
 
 //***************************************************************************************
 
-CDOFCWnd::CDOFCWnd(RECT& Rect, Matrix<real>& X1, Matrix<real>& F1, Matrix<real>& X2, Matrix<real>& F2, real fraction1, real fraction2, CWnd* pWnd) : CDispWnd(Rect, pWnd)
+CDOFCWnd::CDOFCWnd(RECT& Rect, Matrix<real_t>& X1, Matrix<real_t>& F1, Matrix<real_t>& X2, Matrix<real_t>& F2, real_t fraction1, real_t fraction2, CWnd* pWnd) : CDispWnd(Rect, pWnd)
 {
 	m_thr1 = 0.5;
 	m_thr2 = 0.5;
@@ -52,7 +52,7 @@ CDOFCWnd::CDOFCWnd(RECT& Rect, Matrix<real>& X1, Matrix<real>& F1, Matrix<real>&
 	m_fmax1 = -DBL_MAX;
 	for (int i = -1500; i <= 1500; i++)
 	{
-		real SphEqDpt = i * 3.0 / 1500;
+		real_t SphEqDpt = i * 3.0 / 1500;
 		m_Spline1.GetAt(SphEqDpt, m_F1[i + 1500], TRUE);
 		if (m_fmax1 < m_F1[i + 1500])
 		{
@@ -70,7 +70,7 @@ CDOFCWnd::CDOFCWnd(RECT& Rect, Matrix<real>& X1, Matrix<real>& F1, Matrix<real>&
 	m_fmax2 = -DBL_MAX;
 	for (int i = -1500; i <= 1500; i++)
 	{
-		real SphEqDpt = i * 3.0 / 1500;
+		real_t SphEqDpt = i * 3.0 / 1500;
 		m_Spline2.GetAt(SphEqDpt, m_F2[i + 1500], TRUE);
 		if (m_fmax2 < m_F2[i + 1500])
 		{
@@ -98,12 +98,12 @@ void CDOFCWnd::RepaintMemDC()
 	BOOL bl2 = FALSE;
 	BOOL br2 = FALSE;
 
-	real L = 0.0;
-	real R = 0.0;
-	real L1 = 0.0;
-	real R1 = 0.0;
-	real L2 = 0.0;
-	real R2 = 0.0;
+	real_t L = 0.0;
+	real_t R = 0.0;
+	real_t L1 = 0.0;
+	real_t R1 = 0.0;
+	real_t L2 = 0.0;
+	real_t R2 = 0.0;
 
 	RECT Rect;
 
@@ -129,10 +129,10 @@ void CDOFCWnd::RepaintMemDC()
 
 	int LeftType = (m_fraction1 <= m_fraction2 ? 1 : 2);
 
-	real leftVal = (m_fraction1 <= m_fraction2 ? m_fraction1 : m_fraction2);
+	real_t leftVal = (m_fraction1 <= m_fraction2 ? m_fraction1 : m_fraction2);
 	leftVal -= 3.0;
 
-	real rightVal = (m_fraction1 > m_fraction2 ? m_fraction1 : m_fraction2);
+	real_t rightVal = (m_fraction1 > m_fraction2 ? m_fraction1 : m_fraction2);
 	rightVal += 3.0;
 
 	int interNum = intRound((rightVal - leftVal) / 0.25);
@@ -153,10 +153,10 @@ void CDOFCWnd::RepaintMemDC()
 	int rightR = m_l_px + intRound((m_r_px - m_l_px) * interNum / (interNum - 1));
 	int right = interNum* 0.25 + left;
 
-	int m_Exam1Highest_x = intRound(m_l_px + (rightR - m_l_px)*((m_fraction1 - left - 0.25) / real(right - left)));
-	int m_Exam2Highest_x = intRound(m_l_px + (rightR - m_l_px)*((m_fraction2 - left - 0.25) / real(right - left)));
+	int m_Exam1Highest_x = intRound(m_l_px + (rightR - m_l_px)*((m_fraction1 - left - 0.25) / real_t(right - left)));
+	int m_Exam2Highest_x = intRound(m_l_px + (rightR - m_l_px)*((m_fraction2 - left - 0.25) / real_t(right - left)));
 
-	real ratio = real(right - left) / real(rightR - m_l_px);
+	real_t ratio = real_t(right - left) / real_t(rightR - m_l_px);
 
 	// horizontal lines
 	const int ny = GetMaxHorValue(m_fmax) + 1;
@@ -176,24 +176,24 @@ void CDOFCWnd::RepaintMemDC()
 	// curve
 	int x_HighestPx1 = 0;//new
 
-	real qx = (m_r_px - m_l_px) / (m_Spline1.m_x[m_Spline1.m_n - 1] - m_Spline1.m_x[0]);
-	real qy = (m_b_px - m_t_px) / (0.8 - m_fmin1);
+	real_t qx = (m_r_px - m_l_px) / (m_Spline1.m_x[m_Spline1.m_n - 1] - m_Spline1.m_x[0]);
+	real_t qy = (m_b_px - m_t_px) / (0.8 - m_fmin1);
 
 	int y_HighestPx1 = m_b_px - intRound(qy * (m_fmax1 - m_fmin1));
 	int y_ThrPx1 = m_b_px - intRound(qy * ((m_thr1 * m_fmax1) - m_fmin1));
 
-	real difHighest = 10000;
+	real_t difHighest = 10000;
 
 	{
 		int x_px_p, y_px_p;
 		for (int x_px = m_l_px; x_px <= m_r_px; x_px++) {
-			real x = m_Spline1.m_x[0] + (x_px - m_l_px) / qx;
+			real_t x = m_Spline1.m_x[0] + (x_px - m_l_px) / qx;
 
-			real f;
+			real_t f;
 			m_Spline1.GetAt(x, f, TRUE);
 			int y_px = m_b_px - intRound(qy * (f - m_fmin1));
 
-			real thisDif = fabs(f - m_fmax1);
+			real_t thisDif = fabs(f - m_fmax1);
 			if (thisDif < difHighest)
 			{
 				difHighest = thisDif;
@@ -212,9 +212,9 @@ void CDOFCWnd::RepaintMemDC()
 		dis1 = m_Exam1Highest_x - x_HighestPx1;
 
 		for (int x_px = m_l_px; x_px <= m_r_px; x_px++) {
-			real x = m_Spline1.m_x[0] + (x_px - m_l_px) / qx;
+			real_t x = m_Spline1.m_x[0] + (x_px - m_l_px) / qx;
 
-			real f;
+			real_t f;
 			m_Spline1.GetAt(x, f, TRUE);
 			int y_px = m_b_px - intRound(qy * (f - m_fmin1));
 
@@ -278,7 +278,7 @@ void CDOFCWnd::RepaintMemDC()
 		m_MemDC.DrawDottedLine(m_pos1, m_t_px, m_pos1, m_b_px, CYAN);
 
 		::SetRect(&Rect, m_pos1 - 50, m_b_px + 20, m_pos1 + 50, m_b_px + 50);
-		real x = m_Spline1.m_x[0] + (m_pos1 - m_l_px) / qx;
+		real_t x = m_Spline1.m_x[0] + (m_pos1 - m_l_px) / qx;
 		s.Format(_T("%.2f D"), x);
 		m_MemDC.WriteText(s, Rect, Font2, CYAN, 1);
 	}
@@ -306,11 +306,11 @@ void CDOFCWnd::RepaintMemDC()
 	{
 		int x_px_p, y_px_p;
 		for (int x_px = m_l_px; x_px <= m_r_px; x_px++) {
-			real x = m_Spline2.m_x[0] + (x_px - m_l_px) / qx;
-			real f;
+			real_t x = m_Spline2.m_x[0] + (x_px - m_l_px) / qx;
+			real_t f;
 			m_Spline2.GetAt(x, f, TRUE);
 
-			real thisDif = fabs(f - m_fmax2);
+			real_t thisDif = fabs(f - m_fmax2);
 			if (thisDif < difHighest)
 			{
 				difHighest = thisDif;
@@ -326,8 +326,8 @@ void CDOFCWnd::RepaintMemDC()
 		dis2 = m_Exam2Highest_x - x_HighestPx2;
 
 		for (int x_px = m_l_px; x_px <= m_r_px; x_px++) {
-			real x = m_Spline2.m_x[0] + (x_px - m_l_px) / qx;
-			real f;
+			real_t x = m_Spline2.m_x[0] + (x_px - m_l_px) / qx;
+			real_t f;
 			m_Spline2.GetAt(x, f, TRUE);
 
 			int y_px = m_b_px - intRound(qy * (f - m_fmin2));
@@ -401,7 +401,7 @@ void CDOFCWnd::RepaintMemDC()
 
 		::SetRect(&Rect, m_pos2 - 50, m_b_px + 20, m_pos2 + 50, m_b_px + 50);
 
-		real x = m_Spline2.m_x[0] + (m_pos2 - m_l_px) / qx;
+		real_t x = m_Spline2.m_x[0] + (m_pos2 - m_l_px) / qx;
 		s.Format(_T("%.2f D"), x);
 		m_MemDC.WriteText(s, Rect, Font2, CYAN, 1);
 	}
@@ -507,7 +507,7 @@ void CDOFCWnd::RepaintMemDC()
 		m_MemDC.DrawLine(xr_px, m_t_px, xr_px, m_b_px, 1, YELLOW);
 
 		//Effective Range of Focus
-		real DisD = real(xr_px - xl_px) * ratio;
+		real_t DisD = real_t(xr_px - xl_px) * ratio;
 
 		int y_Eff_px = y_HighestPx1 > y_HighestPx2 ? y_HighestPx2 : y_HighestPx1;
 
@@ -535,8 +535,8 @@ void CDOFCWnd::RepaintMemDC()
 
 		if (Width >= (xr_px - xl_px))
 		{
-			int midWidth = intRound((real)Width / 2.0);
-			int mid = xl_px + intRound((real)(xr_px - xl_px) / 2.0);
+			int midWidth = intRound((real_t)Width / 2.0);
+			int mid = xl_px + intRound((real_t)(xr_px - xl_px) / 2.0);
 
 			::SetRect(&Rect, mid - midWidth, y_Eff_px - 55, mid + midWidth, y_Eff_px - 35);
 		}
@@ -567,7 +567,7 @@ void CDOFCWnd::RepaintMemDC()
 }
 
 //***************************************************************************************
-int CDOFCWnd::GetMaxHorValue(real fmax)
+int CDOFCWnd::GetMaxHorValue(real_t fmax)
 {
 	int val = intRound(fmax * 10 + 0.5);//fix by 0711 2018
 	if (val == 1) val = 2;

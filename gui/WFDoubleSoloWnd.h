@@ -21,12 +21,12 @@ private:
 
 #define SOLOTIMER  1 //521
 
-	real     m_w1;
-	real     m_MideLine;
-	real     m_StopX1;
-	real     m_StopX2;
+	real_t     m_w1;
+	real_t     m_MideLine;
+	real_t     m_StopX1;
+	real_t     m_StopX2;
 
-	real     m_maxRum;
+	real_t     m_maxRum;
 	CString  m_scan1;
 	CString  m_scan2;
 
@@ -36,8 +36,8 @@ private:
 	CWFExam* m_pWFExam2;
 
 	int      m_Slider_Top;
-	real     m_ODSliderMaxPos;
-	real     m_OSSliderMaxPos;
+	real_t     m_ODSliderMaxPos;
+	real_t     m_OSSliderMaxPos;
 
 	RECT     m_SliderRects[10];
 

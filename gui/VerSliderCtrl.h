@@ -17,8 +17,8 @@ public:
 	CVerSliderCtrl();
 
 	int   m_scaleNum;//nn
-	real  m_FirstPos;//mm
-	real  m_Pos;
+	real_t  m_FirstPos;//mm
+	real_t  m_Pos;
 
 	int   returnY();
 

@@ -222,7 +222,7 @@ void COnOff::OnMouseMove(uint nFlags, CPoint Point)
 
 		if (x1 <= Point.x && Point.x <= x2)
 		{
-			m_Pos = (real)(Point.x - x1) / (2 * (w - d - d));
+			m_Pos = (real_t)(Point.x - x1) / (2 * (w - d - d));
 		}
 	}
 

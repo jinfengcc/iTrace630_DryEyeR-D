@@ -17,9 +17,9 @@ public:
 
 	CWFExam m_WFExam;
 	BOOL m_Res;
-	real m_SphEq;
-	real m_Sph;
-	real m_Cyl;
+	real_t m_SphEq;
+	real_t m_Sph;
+	real_t m_Cyl;
 	int m_Axis;
 
 	void Test();

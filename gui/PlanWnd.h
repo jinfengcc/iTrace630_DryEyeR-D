@@ -18,7 +18,7 @@ public:
 	CCTExam* m_pCTExam;
 
 	CMap2D m_Map2D;
-	real m_y_px_um;
+	real_t m_y_px_um;
 
 	BOOL     m_ShowGrayEye;//521
 	BOOL     m_ShowColorEye;//521
@@ -60,18 +60,18 @@ private:
 	int m_MousePos;
 
 	BOOL    m_SurgeonView;
-	real    m_StepLength;//[cjf***05022012*004*],used to adjust postioion of axes notes
+	real_t    m_StepLength;//[cjf***05022012*004*],used to adjust postioion of axes notes
 	CString m_Angular_distance;//[cjf***05022012*004*],amount of rotation of IOL enhancement
 	BOOL    m_Clock_wise;//[cjf***05022012*004*],direction of rotation of IOL enhancement
 	int     m_MoveCalipar;//[cjf***05022012*004*],moveing which caliper point
 	BOOL    m_OverLap;//cjf***]
 	BOOL    m_Recal_Lens;//[cjf***05052012*008*],whether recalculate the len placemtn
 
-	real m_w_um;
-	real m_h_um;
-	real m_x_px_um;
-	real m_cx;
-	real m_cy;
+	real_t m_w_um;
+	real_t m_h_um;
+	real_t m_x_px_um;
+	real_t m_cx;
+	real_t m_cy;
 
 	CEyeImage*  m_pImage;
 
@@ -100,7 +100,7 @@ private:
 	BOOL OverLapFun(int a0, int a1, int b0, int b1);//[cjf***05032012*005*] wether two arcs are overlap;
 	int  SmallAng(int a0, int a1);// get the samller degree difference between a0 and a1
 
-	void FindClearLimbus(CEyeImage* OriImage, real LastLimbuX, real LastLimbuY, real LastLimbuR);
+	void FindClearLimbus(CEyeImage* OriImage, real_t LastLimbuX, real_t LastLimbuY, real_t LastLimbuR);
 
 	CBtn m_ViewButton;
 	CBtn m_ZaldivarButton;// [cjf***05022012*004*] 531 from private to public for combo gray it or not

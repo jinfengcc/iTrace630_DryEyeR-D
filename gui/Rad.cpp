@@ -145,9 +145,9 @@ void CRad::Repaint()
 
 	if (m_BkColor != NOCOLOR) m_MemDC.FillSolidRect(&Rect, m_BkColor);
 
-	int r = intRound(real(Rect.bottom - Rect.top) / 2);
+	int r = intRound(real_t(Rect.bottom - Rect.top) / 2);
 	int y = Rect.top + r;
-	r = intRound(real(r) / 2);
+	r = intRound(real_t(r) / 2);
 	int x = Rect.left + r;
 	int r2 = (r - 3 < 1 ? 1 : r - 3);
 

@@ -72,7 +72,7 @@ void CSelBtn::OnPaint()
 	m_w = Rect.right - Rect.left;
 	m_h = Rect.bottom - Rect.top;
 
-	m_Half_w = intRound(real(m_w) / 2);
+	m_Half_w = intRound(real_t(m_w) / 2);
 
 	::SetRect(&LeftRect, 0, Rect.top, m_Half_w, Rect.bottom);
 	::SetRect(&RightRect, m_Half_w, Rect.top, m_w, Rect.bottom);

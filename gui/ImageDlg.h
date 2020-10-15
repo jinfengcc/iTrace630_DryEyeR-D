@@ -34,12 +34,12 @@ private:
 	int m_h;
 	int m_l;
 	int m_t;
-	real m_w_um;
-	real m_h_um;
-	real m_x_px_um;
-	real m_y_px_um;
-	real m_cx;
-	real m_cy;
+	real_t m_w_um;
+	real_t m_h_um;
+	real_t m_x_px_um;
+	real_t m_y_px_um;
+	real_t m_cx;
+	real_t m_cy;
 
 	CMDC m_MemDC;
 	CRgn m_Rgn;
@@ -49,8 +49,8 @@ private:
 	int m_R;
 	int m_V;
 
-	real m_x_um[2];
-	real m_y_um[2];
+	real_t m_x_um[2];
+	real_t m_y_um[2];
 
 	CButton m_OKButton;
 	CButton m_CancelButton;

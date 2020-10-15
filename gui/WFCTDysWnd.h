@@ -17,9 +17,9 @@ public:
 
 private:
 
-	real     m_StaticDysVal; //531
-	real     m_rms[3]; //531
-	real     m_HoTotalRms[3]; //
+	real_t     m_StaticDysVal; //531
+	real_t     m_rms[3]; //531
+	real_t     m_HoTotalRms[3]; //
 
 	BOOL     SameSum();//521  Change Analysis,Summary,Visual Acuity
 
@@ -29,8 +29,8 @@ private:
 	BOOL m_ShowLargeMap;//530 show large map?
 	RECT m_OutLineRect[12];//530 For outline of Chang Analysis
 
-	void CreateAdjustedUm(real um1, real um2, real um3, real um4, real um5, real um6, real& newum1, real& newum2);
-	real CalDysVal(int d, real pupilSize);
+	void CreateAdjustedUm(real_t um1, real_t um2, real_t um3, real_t um4, real_t um5, real_t um6, real_t& newum1, real_t& newum2);
+	real_t CalDysVal(int d, real_t pupilSize);
 
 	virtual CString GetName() override { return "Dysfunctional Lens Analysis"; }
 	virtual CWndSettings* GetWndSettings() override { return m_pWndSettings + m_d; }

@@ -126,7 +126,7 @@ BOOL CPatientDlg::OnInitDialog()
 		//
 
 		int Total_w = TempRect.right - left - win_Left;
-		int in_w = intRound(real((Total_w - (w)) / 2.0)) - 2;
+		int in_w = intRound(real_t((Total_w - (w)) / 2.0)) - 2;
 
 		if (::Settings.m_DateFormat == DATE_FORMAT_DD_MM_YYYY)
 		{

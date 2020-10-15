@@ -23,7 +23,7 @@ class CDOFCWnd : public CDispWnd
 {
 public:
 
-	CDOFCWnd(RECT& Rect, Matrix<real>& X1, Matrix<real>& F1, Matrix<real>& X2, Matrix<real>& F2, real fraction1, real fraction2, CWnd* pWnd);
+	CDOFCWnd(RECT& Rect, Matrix<real_t>& X1, Matrix<real_t>& F1, Matrix<real_t>& X2, Matrix<real_t>& F2, real_t fraction1, real_t fraction2, CWnd* pWnd);
 
 	CCubicSpline m_Spline1;
 	CCubicSpline m_Spline2;
@@ -32,25 +32,25 @@ private:
 
 	CMRgn m_Rgn;
 
-	real m_fraction1;
-	real m_fraction2;
+	real_t m_fraction1;
+	real_t m_fraction2;
 
-	real m_F1[3001];
+	real_t m_F1[3001];
 	int  m_imax1;
-	real m_xmax1;
-	real m_fmax1;
-	real m_fmin1;
+	real_t m_xmax1;
+	real_t m_fmax1;
+	real_t m_fmin1;
 
-	real m_F2[3001];
+	real_t m_F2[3001];
 	int  m_imax2;
-	real m_xmax2;
-	real m_fmax2;
-	real m_fmin2;
+	real_t m_xmax2;
+	real_t m_fmax2;
+	real_t m_fmin2;
 
-	real m_fmax;
+	real_t m_fmax;
 
-	real m_thr1;
-	real m_thr2;
+	real_t m_thr1;
+	real_t m_thr2;
 
 	int  m_pos1;
 	int  m_pos2;
@@ -67,7 +67,7 @@ private:
 
 	CBtn m_SwitchButton;
 
-	int    GetMaxHorValue(real fmax);
+	int    GetMaxHorValue(real_t fmax);
 	virtual void RepaintMemDC() override;
 
 	DECLARE_MESSAGE_MAP()

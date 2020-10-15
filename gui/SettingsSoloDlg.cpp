@@ -71,9 +71,9 @@ void CSettingsSoloDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_ROUND_1_100_RADIO2, m_Round100Radio);//1
 	DDX_Control(pDX, IDCANCEL, m_CancelButton);//1
 	DDX_Control(pDX, IDOK, m_OKButton);//1
-	DDX_Control(pDX, IDDEFAULT, m_DefaultButton);//1 
-	DDX_Control(pDX, IDSAVE, m_SaveButton);//1 
-	DDX_Control(pDX, IDLOAD, m_LoadButton);//1 
+	DDX_Control(pDX, IDDEFAULT, m_DefaultButton);//1
+	DDX_Control(pDX, IDSAVE, m_SaveButton);//1
+	DDX_Control(pDX, IDLOAD, m_LoadButton);//1
 
 	DDX_Control(pDX, IDC_TARGETTIME_EDIT, m_TargetTimeEdit);//530
 	DDX_Control(pDX, IDC_TT_STATIC, m_TargetTimeLabel);//530
@@ -93,7 +93,7 @@ BOOL CSettingsSoloDlg::OnInitDialog()
 
 	m_PosCylCheck.SetCheck(::Settings.m_PositiveCylinder);
 
-	for (real v = 0.0; v < 20.001; v += 0.5)
+	for (real_t v = 0.0; v < 20.001; v += 0.5)
 	{
 		s.Format(_T("%.1f"), v);
 		m_VertexComboBox.AddString(s);
@@ -101,7 +101,7 @@ BOOL CSettingsSoloDlg::OnInitDialog()
 	s.Format(_T("%.1f"), ::Settings.m_VertexDistanceUm * 0.001);
 	m_VertexComboBox.SelectString(-1, s);
 
-	for (real d = 2.0; d < 8.001; d += 0.1)
+	for (real_t d = 2.0; d < 8.001; d += 0.1)
 	{
 		s.Format(_T("%.1f"), d);
 		m_ZonesComboBox[0].AddString(s);
@@ -122,7 +122,7 @@ BOOL CSettingsSoloDlg::OnInitDialog()
 	s.Format(_T("%.1f"), ::Settings.m_ManualScanDiameterUm * 0.001);
 	m_ManualScanDiameterEdit.SetWindowText(s);
 
-	  
+
 	s.Format(_T("%.1f"), ::Settings.m_AutoScanDiameterUm * 0.001);
 	m_AutoScanDiameterEdit.SetWindowText(s);
 	//Done
@@ -158,9 +158,9 @@ BOOL CSettingsSoloDlg::OnInitDialog()
 	case 0: m_WFVrfRadio.SetCheck(1); break; //Point
 	case 1: m_WFRfaRadio.SetCheck(1); break; //Refraction analysis
 	case 2: m_WFAbaRadio.SetCheck(1); break; //Refraction
-	case 3: m_WFVfaRadio.SetCheck(1); break;	//VFA  
+	case 3: m_WFVfaRadio.SetCheck(1); break;	//VFA
 	}
-	
+
 
 	m_WavetouchCheck.SetCheck(::Settings.m_ShowWavetouch);
 	m_AccommTargetLightOnCheck.SetCheck(!::Settings.m_AccommTargetLightOff);
@@ -239,7 +239,7 @@ BOOL CSettingsSoloDlg::OnInitDialog()
 
 void CSettingsSoloDlg::OnOK()
 {
-	if (!CheckSetting()) return;//530 To check if there are some dis-allowed inputs 
+	if (!CheckSetting()) return;//530 To check if there are some dis-allowed inputs
 	SetSetting();
 	CDialog::OnOK();
 }
@@ -257,7 +257,7 @@ void CSettingsSoloDlg::OnProbingButtonClicked()
 // set the default values of setting
 void CSettingsSoloDlg::OnDefaultButtonClicked()
 {
-	
+
 	CSettingsDefaultDlg* pDlg = new CSettingsDefaultDlg(this);
 
 	if (pDlg->DoModal() == IDOK)
@@ -271,7 +271,7 @@ void CSettingsSoloDlg::OnDefaultButtonClicked()
 		m_GUIDef = FALSE;
 	}
 	delete pDlg;
-	
+
 
 	if (m_CtlDef)
 	{
@@ -432,7 +432,7 @@ void CSettingsSoloDlg::SetSetting()
 		else if (m_WFVfaRadio.GetCheck())
 			::NewSettings.m_DefaultWFSolo = 3;
 	}
-	
+
 
 	//520 Set display default settings
 	if (m_BackSomeDefaults)
@@ -513,7 +513,7 @@ void CSettingsSoloDlg::SetSetting()
 
 
 
-		//WF visual acuity display	
+		//WF visual acuity display
 		::Settings.m_TSsmSettings[0][0].m_Mask.SetType(MASK_TOTAL);
 		::Settings.m_TSsmSettings[0][0].m_Piston = TRUE;
 		::Settings.m_TSsmSettings[0][0].m_Tilt = TRUE;
@@ -683,8 +683,8 @@ void CSettingsSoloDlg::SetSetting()
 		//Done
 
 
-		//CT OD/OS	
-		::Settings.m_CDsmSettings[0].m_Type = 31;//Axial map       TYPE_CAXM	 
+		//CT OD/OS
+		::Settings.m_CDsmSettings[0].m_Type = 31;//Axial map       TYPE_CAXM
 		::Settings.m_CDsmSettings[1].m_Type = 32;//local Roc  map  TYPE_CTNM
 
 		for (int i = 0; i < 2; i++)
@@ -732,7 +732,7 @@ void CSettingsSoloDlg::SetSetting()
 
 		//CT Summary
 		::Settings.m_CSsmSettings[0][0].m_Type = 31; //Axial map       TYPE_CAXM
-		::Settings.m_CSsmSettings[0][1].m_Type = 34; //z elevation     TYPE_CELM 
+		::Settings.m_CSsmSettings[0][1].m_Type = 34; //z elevation     TYPE_CELM
 		::Settings.m_CSsmSettings[0][2].m_Type = 32; //local Roc  map  TYPE_CTNM
 		::Settings.m_CSsmSettings[0][3].m_Type = 33; //refrective map  TYPE_CRFM
 
@@ -769,7 +769,7 @@ void CSettingsSoloDlg::SetSetting()
 
 
 		//CT 3D Z Elevation Display
-		::Settings.m_CSsmSettings[2][0].m_Type = 34; //z elevation     TYPE_CELM 
+		::Settings.m_CSsmSettings[2][0].m_Type = 34; //z elevation     TYPE_CELM
 		::Settings.m_CSsmSettings[2][0].m_SizeSmall = FALSE;
 		::Settings.m_CSsmSettings[2][0].m_Method3D = 1;
 		::Settings.m_CSsmSettings[2][0].m_MapShowSolidSurface = TRUE;
@@ -783,7 +783,7 @@ void CSettingsSoloDlg::SetSetting()
 
 		//CT Custom Display
 		::Settings.m_CSsmSettings[3][0].m_Type = 31; //Axial map       TYPE_CAXM
-		::Settings.m_CSsmSettings[3][1].m_Type = 34; //z elevation     TYPE_CELM 
+		::Settings.m_CSsmSettings[3][1].m_Type = 34; //z elevation     TYPE_CELM
 		::Settings.m_CSsmSettings[3][2].m_Type = 32; //local Roc  map  TYPE_CTNM
 		::Settings.m_CSsmSettings[3][3].m_Type = 33; //refrective map  TYPE_CRFM
 
@@ -800,7 +800,7 @@ void CSettingsSoloDlg::SetSetting()
 			::Settings.m_CSsmSettings[3][i].m_SizeSmall = TRUE;
 
 			::Settings.m_CSsmSettings[3][i].m_MapShowMap = 1;
-			::Settings.m_CSsmSettings[3][i].m_MapShowEye = 1;	
+			::Settings.m_CSsmSettings[3][i].m_MapShowEye = 1;
 			::Settings.m_CSsmSettings[3][i].m_MapShowNumbers = 0;
 			::Settings.m_CSsmSettings[3][i].m_MapShowPupil = 0;
 			::Settings.m_CSsmSettings[3][i].m_MapShowLimbus = 0;
@@ -852,9 +852,9 @@ void CSettingsSoloDlg::SetSetting()
 		{
 			if (i != 2)
 			{
-				::Settings.m_IDsmSettings[i][0].m_Type = 40; //Wavefront map     
-				::Settings.m_IDsmSettings[i][1].m_Type = 36; //Wavefront map     
-				::Settings.m_IDsmSettings[i][2].m_Type = 16; //Wavefront map     
+				::Settings.m_IDsmSettings[i][0].m_Type = 40; //Wavefront map
+				::Settings.m_IDsmSettings[i][1].m_Type = 36; //Wavefront map
+				::Settings.m_IDsmSettings[i][2].m_Type = 16; //Wavefront map
 
 				::Settings.m_IDsmSettings[i][0].m_Method3D = 0;
 				::Settings.m_IDsmSettings[i][0].m_MapShowSolidSurface = TRUE;
@@ -1027,7 +1027,7 @@ void CSettingsSoloDlg::SetSetting()
 
 		//Done 530
 
-		//Astiagmatism source 530 
+		//Astiagmatism source 530
 		::NewSettings.m_InAstigSettings[0] = ::Settings.m_IDsmSettings[2][0];
 		::NewSettings.m_InAstigSettings[0] = ::Settings.m_IDsmSettings[2][1];
 		::NewSettings.m_InAstigSettings[0] = ::Settings.m_IDsmSettings[2][2];
@@ -1040,7 +1040,7 @@ void CSettingsSoloDlg::SetSetting()
 		}
 		//Astiagmatism source 530  done
 
-		//Dysfunctional Lens Analysis 531 
+		//Dysfunctional Lens Analysis 531
 		::NewSettings.m_DysfuncSettings[0].m_Type = TYPE_IMTF;
 		::NewSettings.m_DysfuncSettings[0].m_MTFAverage = TRUE;
 		::NewSettings.m_DysfuncSettings[0].m_SimplifiedWFPanel = TRUE;
@@ -1071,7 +1071,7 @@ void CSettingsSoloDlg::SetSetting()
 			::NewSettings.m_DysfuncSettings[i].m_MapTranslucent = 0;
 			::NewSettings.m_DysfuncSettings[i].m_MapShowKeratometry = 0;
 			::NewSettings.m_DysfuncSettings[i].m_MapShowAstigmatismAxes = 0;
-			//::NewSettings.m_DysfuncSettings[i].SetDefaultColors(1);	
+			//::NewSettings.m_DysfuncSettings[i].SetDefaultColors(1);
 
 			::NewSettings.m_DysfuncSettings[i].SetDefaultScale();
 			CScale* pScale = ::NewSettings.m_DysfuncSettings[i].GetScale();
@@ -1154,7 +1154,7 @@ void CSettingsSoloDlg::SetSetting()
 		}
 		//Done
 
-		//Excel Export	 
+		//Excel Export
 		for (int i = 0; i < 89; i++)
 		{
 			if (i < 53) ::Settings.m_EXCEL_WF_SETS[i] = '0';
@@ -1168,7 +1168,7 @@ void CSettingsSoloDlg::SetSetting()
 		::NewSettings.m_NEW_EXCEL_WFCT_SETS[0] = '0';//WFCT DLI Value
 		::NewSettings.m_NEW_EXCEL_WFCT_SETS[1] = '0';//WFCT Opacity Grade
 													 //
-													 //Done	 
+													 //Done
 
 													 //Others in newsettings
 		::NewSettings.m_IncLoC_OD = 0;
@@ -1177,10 +1177,10 @@ void CSettingsSoloDlg::SetSetting()
 		::NewSettings.m_SurInAst_OS = 0.0;
 		if (m_isCombo) ::NewSettings.m_OSHER_ALIG_CUS[2] = 1;
 
-		SetDef_ExList_Width();//Set the default widths of the exam list	
+		SetDef_ExList_Width();//Set the default widths of the exam list
 
 							  //for screen shot saving
-		::NewSettings.m_ScreenShotFormat = 0; //0: save 'jpg' format while the users save the screen	  
+		::NewSettings.m_ScreenShotFormat = 0; //0: save 'jpg' format while the users save the screen
 											  //Done
 
 											  //For solo Aberration and Refraction analysis settings
@@ -1227,7 +1227,7 @@ void CSettingsSoloDlg::SetSetting()
 
 
 		//Aberration Analysis Settings
-		::NewSettings.m_WFSoloSettings[1][0].m_Type = 10;//Wavefront map 
+		::NewSettings.m_WFSoloSettings[1][0].m_Type = 10;//Wavefront map
 		::NewSettings.m_WFSoloSettings[1][0].m_Mask.SetType(MASK_TOTAL);
 		::NewSettings.m_WFSoloSettings[1][0].m_SizeSmall = TRUE;
 		::NewSettings.m_WFSoloSettings[1][0].m_Piston = FALSE;
@@ -1254,7 +1254,7 @@ void CSettingsSoloDlg::SetSetting()
 
 
 
-		::NewSettings.m_WFSoloSettings[1][1].m_Type = 10;//Wavefront map 
+		::NewSettings.m_WFSoloSettings[1][1].m_Type = 10;//Wavefront map
 		::NewSettings.m_WFSoloSettings[1][1].m_Mask.SetType(MASK_HO_TOTAL);
 		::NewSettings.m_WFSoloSettings[1][1].m_SizeSmall = TRUE;
 		::NewSettings.m_WFSoloSettings[1][1].m_Piston = FALSE;
@@ -1283,7 +1283,7 @@ void CSettingsSoloDlg::SetSetting()
 
 		::NewSettings.m_WFSoloSettings[1][2].m_Type = TYPE_TRMS;//TYPE_TMTF;
 		::NewSettings.m_WFSoloSettings[1][2].m_Mask.SetType(MASK_TOTAL);
-		::NewSettings.m_WFSoloSettings[1][2].m_RMSIndividual = FALSE;//Combined 
+		::NewSettings.m_WFSoloSettings[1][2].m_RMSIndividual = FALSE;//Combined
 		::NewSettings.m_WFSoloSettings[1][2].m_SizeSmall = TRUE;
 		::NewSettings.m_WFSoloSettings[1][2].m_Piston = FALSE;
 		::NewSettings.m_WFSoloSettings[1][2].m_Tilt = FALSE;
@@ -1322,7 +1322,7 @@ void CSettingsSoloDlg::SetSetting()
 		::NewSettings.m_WFSoloSettings[1][3].m_MapTranslucent = 0;
 		::NewSettings.m_WFSoloSettings[1][3].m_MapShowKeratometry = 0;
 		::NewSettings.m_WFSoloSettings[1][3].m_ZoneRadiusUm = 5000;
-		//Done	 
+		//Done
 
 		//531 For Showing wf or ct buttons setting
 		for (int i = 0; i < 8; i++)
@@ -1625,7 +1625,7 @@ BOOL CSettingsSoloDlg::CheckSetting()
 	}
 
 	G_As = s_MSD;
-	real MSD = atof(G_As);
+	real_t MSD = atof(G_As);
 	if (MSD < 2 || MSD > 8) goto B2;
 	//Done
 
@@ -1640,7 +1640,7 @@ BOOL CSettingsSoloDlg::CheckSetting()
 	}
 
 	G_As = s_ASD;
-	real ASD = atof(G_As);
+	real_t ASD = atof(G_As);
 	if (ASD < 2 || ASD > 8) goto C2;
 	//Done
 

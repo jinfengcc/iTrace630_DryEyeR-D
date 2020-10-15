@@ -30,7 +30,7 @@ private:
 
 	int m_k;//520,only show the Radial Ruler under the Angle K/A
 
-	Matrix<real> m_X, m_F;//cjf
+	Matrix<real_t> m_X, m_F;//cjf
 
 	BOOL m_MapShowRRuler;
 	BOOL m_MapShowLRuler;

@@ -25,7 +25,7 @@ private:
 	int  m_Scale;//521 
 	BOOL SameOU();//521
 
-	real m_vals[4];
+	real_t m_vals[4];
 
 	BOOL m_TraceySet;
 	BOOL m_CorHoa;
@@ -71,7 +71,7 @@ private:
 	virtual void CreateChildWnd() override;
 
 	void    GetVals();
-	int     GetGridScale(real r_um);
+	int     GetGridScale(real_t r_um);
 	afx_msg void OnShowDefaultItemClicked();
 
 	afx_msg LRESULT OnChangeCentMsg(WPARAM wParam, LPARAM lParam);

@@ -23,7 +23,7 @@ public:
 	CSumWnd(CWnd* pParentWnd, RECT& Rect, CPatient* pPatient, CWndSettings* pWndSettings);
 	virtual ~CSumWnd();
 
-	real m_g;
+	real_t m_g;
 	int m_Axes[3];
 	BOOL m_VFASumWnd;// for judge it is vfa summary window
 	BOOL m_OUSumWnd; // for judge it is OU summary window
@@ -79,8 +79,8 @@ public:
 
 	virtual void RepaintMemDC() override;
 
-	void CSADisplay(real psSize, CCTExam* pExam, RECT Rect);//(for wfct iol selection assistant) Corneal Spherical Aberration Function Display
-	void WFCTIolPan(RECT Rect, BOOL TraceySet, BOOL CorHoa, BOOL Inter, int Alpha_Dec, int TCHoa_Dec, int Cor_Ast_Dec, int Cor_SphAb_Dec, real vals[4]);//530 (for wfct iol selection assistant)
+	void CSADisplay(real_t psSize, CCTExam* pExam, RECT Rect);//(for wfct iol selection assistant) Corneal Spherical Aberration Function Display
+	void WFCTIolPan(RECT Rect, BOOL TraceySet, BOOL CorHoa, BOOL Inter, int Alpha_Dec, int TCHoa_Dec, int Cor_Ast_Dec, int Cor_SphAb_Dec, real_t vals[4]);//530 (for wfct iol selection assistant)
 	void WFCTIolCon(RECT Rect, CString Con_Res1, CString Con_Res2, CString Con_Res3, CString Con_Res4); //for wfct iol consideration box
 
 	void WFExamSmallInfo(CWFExam* pExam, RECT Rect, int type, int ColorType);
@@ -99,7 +99,7 @@ public:
 	void WFNearVisionInfo2(CWFExam* pWFExam, RECT Rect);//6.2.0 WF Near Vision GUI
 
 
-	void DysInfo(CWFExam* pExam, RECT Rect, real dysVal, real *rms, int type);// To show Dysfunctional lens info
+	void DysInfo(CWFExam* pExam, RECT Rect, real_t dysVal, real_t *rms, int type);// To show Dysfunctional lens info
 
 	void CTExamInfo(CCTExam* pExam, RECT Rect, int NumRows, BOOL* Rows);
 	void CTExamLargeInfo(CCTExam* pExam, RECT Rect, int NumRows, BOOL* Rows);
@@ -116,7 +116,7 @@ public:
 	void DrawGlassIcon(int makeType, int SizeSmall, int i);
 	void WFCTTorRefInfo(CWFExam* pWFExam, CCTExam* pCTExam, RECT Rect);
 	void CalIolEnh(CCTExam* pCTExam, CString &s1, CString &s2); // Calculate the IOL enhancement
-	void CalTraceyRef(CWFExam* pWFExam, COLORREF &Color, real &Spre, real &Apre, CString &s);// Calculate the Tracey Refraction
+	void CalTraceyRef(CWFExam* pWFExam, COLORREF &Color, real_t &Spre, real_t &Apre, CString &s);// Calculate the Tracey Refraction
 
 	void OnType(int Type);
 	afx_msg void OnTypeTEyeItemClicked() { OnType(TYPE_TEYE); }
@@ -236,7 +236,7 @@ public:
 	afx_msg void OnMapCentAutoItemClicked();
 	afx_msg void OnMapCentUserItemClicked();
 
-	void OnMapStep(real Step);
+	void OnMapStep(real_t Step);
 	afx_msg void OnMapStep0001ItemClicked() { OnMapStep(0.01); }
 	afx_msg void OnMapStep0002ItemClicked() { OnMapStep(0.02); }
 	afx_msg void OnMapStep0005ItemClicked() { OnMapStep(0.05); }

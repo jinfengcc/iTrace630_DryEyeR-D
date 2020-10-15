@@ -142,8 +142,8 @@ void CCTExam::CopyRiFromImage()
 void CCTExam::FindAx()
 {
 	CCubicSpline Spline;
-	Matrix<real> r_um(4);
-	Matrix<real> ax_um(4, 1, m_Calibration.BallsAx);
+	Matrix<real_t> r_um(4);
+	Matrix<real_t> ax_um(4, 1, m_Calibration.BallsAx);
 
 	for (int r = 0; r < m_Image.m_NumRings; r++)
 	{
@@ -170,19 +170,19 @@ BOOL CCTExam::CreateHeightSurface()
 {
 	BOOL Res = FALSE;
 
-	real* _r_um = new real[360 * m_Image.m_NumRings];
-	real* _a_rd = new real[360 * m_Image.m_NumRings];
-	real* _dh_dr = new real[360 * m_Image.m_NumRings];
+	real_t* _r_um = new real_t[360 * m_Image.m_NumRings];
+	real_t* _a_rd = new real_t[360 * m_Image.m_NumRings];
+	real_t* _dh_dr = new real_t[360 * m_Image.m_NumRings];
 	int n = 0;
 
 	for (int r = 0; r < m_Image.m_NumRings; r++)
 	{
 		for (int a = 0; a < 360; a++)
 		{
-			real r_um = m_Image.m_ri_r_um[r][a];
+			real_t r_um = m_Image.m_ri_r_um[r][a];
 			if (r_um != INVALID_VALUE && r_um <= CT_R_MAX_UM)
 			{
-				real t = sqr(m_ax_um[r][a]) - sqr(r_um);
+				real_t t = sqr(m_ax_um[r][a]) - sqr(r_um);
 				if (t > 0.0)
 				{
 					_r_um[n] = r_um;
@@ -218,9 +218,9 @@ BOOL CCTExam::FindCentralPower()
 
 	for (int a = 0; a < 360; a++)
 	{
-		real a_rd = a * _Pi_180;
-		real ax0 = GetAxUmAt(1.0, a_rd);
-		real rf0 = GetRfUmAt(1.0, a_rd);
+		real_t a_rd = a * _Pi_180;
+		real_t ax0 = GetAxUmAt(1.0, a_rd);
+		real_t rf0 = GetRfUmAt(1.0, a_rd);
 		if (ax0 == INVALID_VALUE || rf0 == INVALID_VALUE) return FALSE;
 		m_ax0_um += ax0;
 		m_rf0_um += rf0;
@@ -240,12 +240,12 @@ void CCTExam::FindKeratometry()
 	// average keratometry at 11 circles
 	for (int z = 0; z <= 10; z++)
 	{
-		real sa = 0.0;
+		real_t sa = 0.0;
 		int na = 0;
 
 		for (int a = 0; a < 360; a++)
 		{
-			real v = GetAxUmAt(z * 500.0, a * _Pi_180);
+			real_t v = GetAxUmAt(z * 500.0, a * _Pi_180);
 			if (v != INVALID_VALUE)
 			{
 				sa += v;
@@ -271,16 +271,16 @@ void CCTExam::FindKeratometry()
 
 	for (int z = 0; z < 3; z++)
 	{
-		Matrix<real> FA(360);
+		Matrix<real_t> FA(360);
 		int na = 0;
 		for (int a = 0; a < 360; a++)
 		{
 			int nr = 0;
-			real sr = 0.0;
+			real_t sr = 0.0;
 
 			for (int r_um = r1_um[z]; r_um <= r2_um[z]; r_um += 100)
 			{
-				real v = GetAxUmAt(r_um, a * _Pi_180);
+				real_t v = GetAxUmAt(r_um, a * _Pi_180);
 				if (v != INVALID_VALUE)
 				{
 					nr++;
@@ -297,9 +297,9 @@ void CCTExam::FindKeratometry()
 
 		if (na == 360)
 		{
-			real min = DBL_MAX;
+			real_t min = DBL_MAX;
 			int amin;
-			real max = -DBL_MAX;
+			real_t max = -DBL_MAX;
 			int amax;
 
 			for (int a = 0; a < 360; a++)
@@ -364,13 +364,13 @@ void CCTExam::FindKeratometry()
 
 
 	// sim k
-	real X1[360];
-	real F1[360];
+	real_t X1[360];
+	real_t F1[360];
 	int n = 0;
 
 	for (int a = 0; a < 360; a++)
 	{
-		real v = GetAxUmAt(1500.0, a * _Pi_180);
+		real_t v = GetAxUmAt(1500.0, a * _Pi_180);
 		if (v != INVALID_VALUE)
 		{
 			X1[n] = a;
@@ -381,8 +381,8 @@ void CCTExam::FindKeratometry()
 
 	if (n >= 270)  // let it be at least three quarters
 	{
-		Matrix<real> X2(n + 4);
-		Matrix<real> F2(n + 4);
+		Matrix<real_t> X2(n + 4);
+		Matrix<real_t> F2(n + 4);
 
 		X2[0] = X1[n - 2] - 360;
 		F2[0] = F1[n - 2];
@@ -403,14 +403,14 @@ void CCTExam::FindKeratometry()
 		CCubicSpline Spline;
 		Spline.Create(X2, F2);
 
-		Matrix<real> F3(360);
+		Matrix<real_t> F3(360);
 
 		for (int a = 0; a < 360; a++)
 		{
 			Spline.GetAt(a, F3[a]);
 		}
 
-		Matrix<real> A(360, 2);
+		Matrix<real_t> A(360, 2);
 		for (int a = 0; a < 360; a++)
 		{
 			int b = (a + a) % 360;
@@ -418,7 +418,7 @@ void CCTExam::FindKeratometry()
 			A(a, 1) = COS[b];
 		}
 
-		Matrix<real> C;
+		Matrix<real_t> C;
 		if (LSM(A, C, F3))
 		{
 			int amax = intRound(0.5 * _180_Pi * angle(C[0], C[1])); if (amax >= 180) amax -= 180;
@@ -441,27 +441,27 @@ void CCTExam::FindKeratometry()
 
 void CCTExam::FindRefractivePower()
 {
-	real rf_um_min = DBL_MAX;
-	real rf_um_max = -DBL_MAX;
-	real rf_um_avg = 0.0;
+	real_t rf_um_min = DBL_MAX;
+	real_t rf_um_max = -DBL_MAX;
+	real_t rf_um_avg = 0.0;
 	int a_min = 0;
 	int a_max = 0;
 	int n = 0;
 
 	for (int a = 0; a < 180; a++)
 	{
-		real rf_um_a_avg = 0.0;
-		real sa = 0.0;
+		real_t rf_um_a_avg = 0.0;
+		real_t sa = 0.0;
 		int na = 0;
 
 		for (int i = 1; i <= 15; i++)
 		{
-			real r_um = i * 100.0;
-			real r1_um = r_um - 50.0;
-			real r2_um = r_um + 50.0;
-			real s = r2_um * r2_um - r1_um * r1_um;
-			real rf1_um = GetRfUmAt(r_um, a        * _Pi_180);
-			real rf2_um = GetRfUmAt(r_um, (a + 180) * _Pi_180);
+			real_t r_um = i * 100.0;
+			real_t r1_um = r_um - 50.0;
+			real_t r2_um = r_um + 50.0;
+			real_t s = r2_um * r2_um - r1_um * r1_um;
+			real_t rf1_um = GetRfUmAt(r_um, a        * _Pi_180);
+			real_t rf2_um = GetRfUmAt(r_um, (a + 180) * _Pi_180);
 
 			if (rf1_um != INVALID_VALUE && rf2_um != INVALID_VALUE)
 			{
@@ -509,14 +509,14 @@ void CCTExam::FindRefractivePower()
 
 void CCTExam::FindIS()
 {
-	real ax_sup_um = 0.0;
-	real ax_inf_um = 0.0;
+	real_t ax_sup_um = 0.0;
+	real_t ax_inf_um = 0.0;
 	int ns = 0;
 	int ni = 0;
 
 	for (int a = 30; a <= 150; a += 30)
 	{
-		real ax_um = GetAxUmAt(2200.0, a * _Pi_180);
+		real_t ax_um = GetAxUmAt(2200.0, a * _Pi_180);
 
 		if (ax_um != INVALID_VALUE)
 		{
@@ -527,7 +527,7 @@ void CCTExam::FindIS()
 
 	for (int a = 210; a <= 330; a += 30)
 	{
-		real ax_um = GetAxUmAt(2200.0, a * _Pi_180);
+		real_t ax_um = GetAxUmAt(2200.0, a * _Pi_180);
 
 		if (ax_um != INVALID_VALUE)
 		{
@@ -540,8 +540,8 @@ void CCTExam::FindIS()
 	{
 		ax_sup_um /= ns;
 		ax_inf_um /= ni;
-		real ax_sup_dp = SKI_UM / ax_sup_um;
-		real ax_inf_dp = SKI_UM / ax_inf_um;
+		real_t ax_sup_dp = SKI_UM / ax_sup_um;
+		real_t ax_inf_dp = SKI_UM / ax_inf_um;
 		m_is_df_dp = ax_inf_dp - ax_sup_dp;
 		m_is_ok = TRUE;
 	}
@@ -559,9 +559,9 @@ void CCTExam::CreateBestFitConicoidHeightSurfaces()
 		if (CZernikeSurface::m_frq[z] != 0) HtZrSurface.SetCUm(z, 0.0);
 	}
 
-	real d_um = 10.0;
-	real r_min_um = 1500.0;
-	real r_max_um = m_HtZrSurface.m_r_max_um;
+	real_t d_um = 10.0;
+	real_t r_min_um = 1500.0;
+	real_t r_max_um = m_HtZrSurface.m_r_max_um;
 
 	int n = (int)((r_max_um - r_min_um) / d_um) + 1;
 
@@ -572,8 +572,8 @@ void CCTExam::CreateBestFitConicoidHeightSurfaces()
 	}
 	//6.2.0
 
-	Matrix<real> r_um(n);
-	Matrix<real> ax_um_zernike(n);
+	Matrix<real_t> r_um(n);
+	Matrix<real_t> ax_um_zernike(n);
 
 	for (int k = 0; k < n; k++)
 	{
@@ -581,26 +581,26 @@ void CCTExam::CreateBestFitConicoidHeightSurfaces()
 		HtZrSurface.GetAxUmAt(r_um[k], 0.0, ax_um_zernike[k]);
 	}
 
-	real ax0_um_rounded = RealRound(m_ax0_um, 10.0);
+	real_t ax0_um_rounded = RealRound(m_ax0_um, 10.0);
 
 	// best fit conicoid
 	m_HtCnSurface.Create(r_max_um, m_ax0_um, 0.0);
-	real s_best = DBL_MAX;
+	real_t s_best = DBL_MAX;
 	CConicSurface HtCnSurface;
 
 	for (int i = -200; i <= 200; i++)
 	{
-		real q = 0.01 * i;
+		real_t q = 0.01 * i;
 
 		for (int j = -50; j <= 50; j++)
 		{
-			real ax0_um_j = ax0_um_rounded + j * 10;
-			real s = 0.0;
+			real_t ax0_um_j = ax0_um_rounded + j * 10;
+			real_t s = 0.0;
 			HtCnSurface.Create(r_max_um, ax0_um_j, q);
 
 			for (int k = 0; k < n; k++)
 			{
-				real ax_um_conic;
+				real_t ax_um_conic;
 				HtCnSurface.GetAxUmAt(r_um[k], 0.0, ax_um_conic);
 				s += fabs(ax_um_conic - ax_um_zernike[k]);
 			}
@@ -620,13 +620,13 @@ void CCTExam::CreateBestFitConicoidHeightSurfaces()
 	s_best = DBL_MAX;
 	for (int j = -50; j <= 50; j++)
 	{
-		real ax0_um_j = ax0_um_rounded + j * 10;
-		real s = 0.0;
+		real_t ax0_um_j = ax0_um_rounded + j * 10;
+		real_t s = 0.0;
 		HtCnSurface.Create(r_max_um, ax0_um_j, 0.0);
 
 		for (int k = 0; k < n; k++)
 		{
-			real ax_um_conic = ax0_um_j;
+			real_t ax_um_conic = ax0_um_j;
 			s += fabs(ax_um_conic - ax_um_zernike[k]);
 		}
 
@@ -644,39 +644,39 @@ void CCTExam::CreateBestFitConicoidHeightSurfaces()
 
 void CCTExam::CreateWavefrontSurface()
 {
-	real* _r_um = new real[720];
-	real* _a_rd = new real[720];
-	real* _dw_dx = new real[720];
-	real* _dw_dy = new real[720];
+	real_t* _r_um = new real_t[720];
+	real_t* _a_rd = new real_t[720];
+	real_t* _dw_dx = new real_t[720];
+	real_t* _dw_dy = new real_t[720];
 
 	int n = 0;
 
 	for (int a = 0; a < 360; a += 10)
 	{
-		real a_rd = a * _Pi_180;
+		real_t a_rd = a * _Pi_180;
 		for (int r = 1; r <= 20; r++)
 		{
-			real r_um = r * CT_R_MAX_UM / 20.0;
+			real_t r_um = r * CT_R_MAX_UM / 20.0;
 			if (r_um > m_ra_max_um[a]) break;
 
-			real h_um, dh_dx, dh_dy;
+			real_t h_um, dh_dx, dh_dy;
 			if (!m_HtZrSurface.GetAt(r_um, a_rd, &h_um, &dh_dx, &dh_dy, NULL, NULL, NULL)) continue;
 
-			real tan_ax = dh_dx;
-			real tan_ay = dh_dy;
-			real tan_a = hyp(tan_ax, tan_ay); if (tan_a == 0.0) continue;
-			real sin_a = tan_a / sqrt(1.0 + sqr(tan_a));
+			real_t tan_ax = dh_dx;
+			real_t tan_ay = dh_dy;
+			real_t tan_a = hyp(tan_ax, tan_ay); if (tan_a == 0.0) continue;
+			real_t sin_a = tan_a / sqrt(1.0 + sqr(tan_a));
 
-			real sin_g = sin_a / 1.3375; // Snell's law
-			real tan_g = sin_g / sqrt(1.0 - sqr(sin_g));
+			real_t sin_g = sin_a / 1.3375; // Snell's law
+			real_t tan_g = sin_g / sqrt(1.0 - sqr(sin_g));
 
-			real tan_b = (tan_a - tan_g) / (1.0 + tan_a * tan_g);
-			real k = tan_b / tan_a;
-			real tan_bx = k * tan_ax;
-			real tan_by = k * tan_ay;
+			real_t tan_b = (tan_a - tan_g) / (1.0 + tan_a * tan_g);
+			real_t k = tan_b / tan_a;
+			real_t tan_bx = k * tan_ax;
+			real_t tan_by = k * tan_ay;
 
-			real dx_um = r_um * COS[a] - (m_rf0_um - h_um) * tan_bx;
-			real dy_um = r_um * SIN[a] - (m_rf0_um - h_um) * tan_by;
+			real_t dx_um = r_um * COS[a] - (m_rf0_um - h_um) * tan_bx;
+			real_t dy_um = r_um * SIN[a] - (m_rf0_um - h_um) * tan_by;
 
 			_r_um[n] = r_um;
 			_a_rd[n] = a_rd;
@@ -705,7 +705,7 @@ void CCTExam::CreateWavefrontSurface()
 
 //***************************************************************************************
 
-void CCTExam::CreateDpm2D(CMap2D& Map, const int Type, const int Unit, const real dr_um)
+void CCTExam::CreateDpm2D(CMap2D& Map, const int Type, const int Unit, const real_t dr_um)
 {
 	if (!m_OK) return;
 
@@ -713,17 +713,17 @@ void CCTExam::CreateDpm2D(CMap2D& Map, const int Type, const int Unit, const rea
 
 	for (int y = -Map.m_nr; y <= Map.m_nr; y++)
 	{
-		real y_um = y * dr_um;
+		real_t y_um = y * dr_um;
 
 		for (int x = -Map.m_nr; x <= Map.m_nr; x++)
 		{
-			real x_um = x * dr_um;
-			real r_um = hyp(y_um, x_um);
+			real_t x_um = x * dr_um;
+			real_t r_um = hyp(y_um, x_um);
 
 			if (r_um <= m_r_max_um)
 			{
-				real a_rd = angle(y_um, x_um);
-				real v = INVALID_VALUE;
+				real_t a_rd = angle(y_um, x_um);
+				real_t v = INVALID_VALUE;
 
 				if (Unit == DIOPTERS)
 				{
@@ -765,7 +765,7 @@ void CCTExam::CreateDpm3D(CMap3D& Map, const int Type, const int Unit)
 
 	for (int r = 0; r <= Map.m_nr; r++)
 	{
-		real r_um = r * Map.m_dr_um;
+		real_t r_um = r * Map.m_dr_um;
 
 		if (r_um == 0.0)
 		{
@@ -774,8 +774,8 @@ void CCTExam::CreateDpm3D(CMap3D& Map, const int Type, const int Unit)
 
 		for (int a = 0; a < 360; a++)
 		{
-			real a_rd = _Pi_180 * a;
-			real v = INVALID_VALUE;
+			real_t a_rd = _Pi_180 * a;
+			real_t v = INVALID_VALUE;
 			if (Unit == DIOPTERS)
 			{
 				switch (Type)
@@ -806,13 +806,13 @@ void CCTExam::CreateDpm3D(CMap3D& Map, const int Type, const int Unit)
 
 //***************************************************************************************
 
-real CCTExam::GetAxUmAt(const real r_um, const real a_rd)
+real_t CCTExam::GetAxUmAt(const real_t r_um, const real_t a_rd)
 {
 	if (!CheckAt(r_um, a_rd)) return INVALID_VALUE;
 
 	if (r_um == 0.0) return m_ax0_um;
 
-	real ax_um;
+	real_t ax_um;
 
 	if (!m_HtZrSurface.GetAxUmAt(r_um, a_rd, ax_um)) return INVALID_VALUE;
 
@@ -821,9 +821,9 @@ real CCTExam::GetAxUmAt(const real r_um, const real a_rd)
 
 //***************************************************************************************
 
-real CCTExam::GetAxDpAt(const real r_um, const real a_rd)
+real_t CCTExam::GetAxDpAt(const real_t r_um, const real_t a_rd)
 {
-	real ax_um = GetAxUmAt(r_um, a_rd);
+	real_t ax_um = GetAxUmAt(r_um, a_rd);
 
 	if (ax_um == INVALID_VALUE) return INVALID_VALUE;
 
@@ -832,13 +832,13 @@ real CCTExam::GetAxDpAt(const real r_um, const real a_rd)
 
 //***************************************************************************************
 
-real CCTExam::GetTnUmAt(const real r_um, const real a_rd)
+real_t CCTExam::GetTnUmAt(const real_t r_um, const real_t a_rd)
 {
 	if (!CheckAt(r_um, a_rd)) return INVALID_VALUE;
 
 	if (r_um == 0.0) return m_ax0_um;
 
-	real tn_um;
+	real_t tn_um;
 
 	if (!m_HtZrSurface.GetTnUmAt(r_um, a_rd, tn_um)) return INVALID_VALUE;
 
@@ -847,9 +847,9 @@ real CCTExam::GetTnUmAt(const real r_um, const real a_rd)
 
 //***************************************************************************************
 
-real CCTExam::GetTnDpAt(const real r_um, const real a_rd)
+real_t CCTExam::GetTnDpAt(const real_t r_um, const real_t a_rd)
 {
-	real tn_um = GetTnUmAt(r_um, a_rd);
+	real_t tn_um = GetTnUmAt(r_um, a_rd);
 
 	if (tn_um == INVALID_VALUE) return INVALID_VALUE;
 
@@ -858,13 +858,13 @@ real CCTExam::GetTnDpAt(const real r_um, const real a_rd)
 
 //***************************************************************************************
 
-real CCTExam::GetRfUmAt(const real r_um, const real a_rd)
+real_t CCTExam::GetRfUmAt(const real_t r_um, const real_t a_rd)
 {
 	if (!CheckAt(r_um, a_rd)) return INVALID_VALUE;
 
 	if (r_um == 0.0) return m_rf0_um;
 
-	real rf_um;
+	real_t rf_um;
 
 	if (!m_HtZrSurface.GetRfUmAt(r_um, a_rd, rf_um)) return INVALID_VALUE;
 
@@ -873,9 +873,9 @@ real CCTExam::GetRfUmAt(const real r_um, const real a_rd)
 
 //***************************************************************************************
 
-real CCTExam::GetRfDpAt(const real r_um, const real a_rd)
+real_t CCTExam::GetRfDpAt(const real_t r_um, const real_t a_rd)
 {
-	real rf_um = GetRfUmAt(r_um, a_rd);
+	real_t rf_um = GetRfUmAt(r_um, a_rd);
 
 	if (rf_um == INVALID_VALUE) return INVALID_VALUE;
 
@@ -884,14 +884,14 @@ real CCTExam::GetRfDpAt(const real r_um, const real a_rd)
 
 //***************************************************************************************
 
-real CCTExam::GetElUmAt(const real r_um, const real a_rd, const CSurface& RefSurface)
+real_t CCTExam::GetElUmAt(const real_t r_um, const real_t a_rd, const CSurface& RefSurface)
 {
 	if (!CheckAt(r_um, a_rd)) return INVALID_VALUE;
 
-	real ht_ref_um;
+	real_t ht_ref_um;
 	if (!RefSurface.GetAt(r_um, a_rd, &ht_ref_um, NULL, NULL, NULL, NULL, NULL)) return INVALID_VALUE;
 
-	real ht_um;
+	real_t ht_um;
 	if (!m_HtZrSurface.GetAt(r_um, a_rd, &ht_um, NULL, NULL, NULL, NULL, NULL)) return INVALID_VALUE;
 
 	return ht_ref_um - ht_um;
@@ -899,7 +899,7 @@ real CCTExam::GetElUmAt(const real r_um, const real a_rd, const CSurface& RefSur
 
 //***************************************************************************************
 
-void CCTExam::CreateElm2D(CMap2D& Map, const CSurface& RefSurface, const real dr_um)
+void CCTExam::CreateElm2D(CMap2D& Map, const CSurface& RefSurface, const real_t dr_um)
 {
 	if (!m_OK) return;
 
@@ -907,16 +907,16 @@ void CCTExam::CreateElm2D(CMap2D& Map, const CSurface& RefSurface, const real dr
 
 	for (int y = -Map.m_nr; y <= Map.m_nr; y++)
 	{
-		real y_um = y * dr_um;
+		real_t y_um = y * dr_um;
 		for (int x = -Map.m_nr; x <= Map.m_nr; x++)
 		{
-			real x_um = x * dr_um;
-			real r_um = hyp(y_um, x_um);
+			real_t x_um = x * dr_um;
+			real_t r_um = hyp(y_um, x_um);
 
 			if (r_um <= m_r_max_um)
 			{
-				real a_rd = angle(y_um, x_um);
-				real v = GetElUmAt(r_um, a_rd, RefSurface);
+				real_t a_rd = angle(y_um, x_um);
+				real_t v = GetElUmAt(r_um, a_rd, RefSurface);
 				Map.SetAt(y, x, v);
 			}
 		}
@@ -933,11 +933,11 @@ void CCTExam::CreateElm3D(CMap3D& Map, const CSurface& RefSurface)
 
 	for (int r = 0; r <= Map.m_nr; r++)
 	{
-		real r_um = r * Map.m_dr_um;
+		real_t r_um = r * Map.m_dr_um;
 		for (int a = 0; a < 360; a++)
 		{
-			real a_rd = _Pi_180 * a;
-			real v = GetElUmAt(r_um, a_rd, RefSurface);
+			real_t a_rd = _Pi_180 * a;
+			real_t v = GetElUmAt(r_um, a_rd, RefSurface);
 			Map.SetAt(r, a, v);
 		}
 	}
@@ -945,11 +945,11 @@ void CCTExam::CreateElm3D(CMap3D& Map, const CSurface& RefSurface)
 
 //***************************************************************************************
 
-real CCTExam::GetWfUmAt(const real r_um, const real a_rd, const CSurface& WfSurface) const
+real_t CCTExam::GetWfUmAt(const real_t r_um, const real_t a_rd, const CSurface& WfSurface) const
 {
 	if (!CheckAt(r_um, a_rd)) return INVALID_VALUE;
 
-	real wf_um;
+	real_t wf_um;
 	WfSurface.GetAt(r_um, a_rd, &wf_um, NULL, NULL, NULL, NULL, NULL);
 
 	return wf_um;
@@ -957,7 +957,7 @@ real CCTExam::GetWfUmAt(const real r_um, const real a_rd, const CSurface& WfSurf
 
 //***************************************************************************************
 
-void CCTExam::CreateWfm2D(CMap2D& Map, const CSurface& WfSurface, const real dr_um)
+void CCTExam::CreateWfm2D(CMap2D& Map, const CSurface& WfSurface, const real_t dr_um)
 {
 	if (!m_OK) return;
 
@@ -965,14 +965,14 @@ void CCTExam::CreateWfm2D(CMap2D& Map, const CSurface& WfSurface, const real dr_
 
 	for (int y = -Map.m_nr; y <= Map.m_nr; y++)
 	{
-		real y_um = y * dr_um;
+		real_t y_um = y * dr_um;
 		for (int x = -Map.m_nr; x <= Map.m_nr; x++)
 		{
-			real x_um = x * dr_um;
-			real r_um = hyp(y_um, x_um);
+			real_t x_um = x * dr_um;
+			real_t r_um = hyp(y_um, x_um);
 			if (r_um <= WfSurface.m_r_max_um) {
-				real a_rd = angle(y_um, x_um);
-				real v = GetWfUmAt(r_um, a_rd, WfSurface);
+				real_t a_rd = angle(y_um, x_um);
+				real_t v = GetWfUmAt(r_um, a_rd, WfSurface);
 				Map.SetAt(y, x, v);
 			}
 		}
@@ -989,11 +989,11 @@ void CCTExam::CreateWfm3D(CMap3D& Map, const CSurface& WfSurface)
 
 	for (int r = 0; r <= Map.m_nr; r++)
 	{
-		real r_um = r * Map.m_dr_um;
+		real_t r_um = r * Map.m_dr_um;
 		for (int a = 0; a < 360; a++)
 		{
-			real a_rd = _Pi_180 * a;
-			real v = GetWfUmAt(r_um, a_rd, WfSurface);
+			real_t a_rd = _Pi_180 * a;
+			real_t v = GetWfUmAt(r_um, a_rd, WfSurface);
 			Map.SetAt(r, a, v);
 		}
 	}
@@ -1001,7 +1001,7 @@ void CCTExam::CreateWfm3D(CMap3D& Map, const CSurface& WfSurface)
 
 //***************************************************************************************
 
-BOOL CCTExam::CheckAt(const real r_um, const real a_rd) const
+BOOL CCTExam::CheckAt(const real_t r_um, const real_t a_rd) const
 {
 	return r_um <= m_ra_max_um[CheckAngle(intRound(a_rd * _180_Pi))];
 }

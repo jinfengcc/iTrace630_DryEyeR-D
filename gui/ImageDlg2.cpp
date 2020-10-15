@@ -373,8 +373,8 @@ void CImageDlg2::OnLButtonDown(uint nFlags, CPoint Point)
 {
 	if (Point.x < m_l || Point.x >= m_l + m_w || Point.y < m_t || Point.y >= m_t + m_h) return;
 
-	real x = (Point.x - m_l) - m_cx;
-	real y = m_cy - (Point.y - m_t);
+	real_t x = (Point.x - m_l) - m_cx;
+	real_t y = m_cy - (Point.y - m_t);
 
 	m_x_um[0] = x / m_x_px_um;
 	m_y_um[0] = y / m_y_px_um;
@@ -385,10 +385,10 @@ void CImageDlg2::OnLButtonDown(uint nFlags, CPoint Point)
 	{
 		if (m_Image.m_pu_r_mean_um >= 800)
 		{
-			real disX = m_x_um[1] - m_Image.m_pu_x0_um;
-			real disY = m_y_um[1] - m_Image.m_pu_y0_um;
+			real_t disX = m_x_um[1] - m_Image.m_pu_x0_um;
+			real_t disY = m_y_um[1] - m_Image.m_pu_y0_um;
 
-			real dis = sqrt(disX*disX + disY*disY);
+			real_t dis = sqrt(disX*disX + disY*disY);
 
 			if (dis <= 800)
 			{
@@ -432,10 +432,10 @@ void CImageDlg2::OnLButtonDown(uint nFlags, CPoint Point)
 	{
 		if (m_Image.m_li_r_mean_um >= 800)
 		{
-			real disX = m_x_um[1] - m_Image.m_li_x0_um;
-			real disY = m_y_um[1] - m_Image.m_li_y0_um;
+			real_t disX = m_x_um[1] - m_Image.m_li_x0_um;
+			real_t disY = m_y_um[1] - m_Image.m_li_y0_um;
 
-			real dis = sqrt(disX*disX + disY*disY);
+			real_t dis = sqrt(disX*disX + disY*disY);
 
 			if (dis <= 800)
 			{
@@ -487,10 +487,10 @@ void CImageDlg2::OnLButtonDown(uint nFlags, CPoint Point)
 	{
 		if (m_Image.m_Ra_r_um >= 800)
 		{
-			real disX = m_x_um[1] - m_Image.m_Ra_x_um;
-			real disY = m_y_um[1] - m_Image.m_Ra_y_um;
+			real_t disX = m_x_um[1] - m_Image.m_Ra_x_um;
+			real_t disY = m_y_um[1] - m_Image.m_Ra_y_um;
 
-			real dis = sqrt(disX*disX + disY*disY);
+			real_t dis = sqrt(disX*disX + disY*disY);
 
 			if (dis <= 800)
 			{
@@ -521,14 +521,14 @@ void CImageDlg2::OnLButtonDown(uint nFlags, CPoint Point)
 
 	else if (m_LinearRulerRadio.GetCheck() && m_LinearRuler3Radio.GetCheck())
 	{
-		real disX1 = m_x_um[1] - m_Image.m_LRa_x0_um;
-		real disY1 = m_y_um[1] - m_Image.m_LRa_y0_um;
+		real_t disX1 = m_x_um[1] - m_Image.m_LRa_x0_um;
+		real_t disY1 = m_y_um[1] - m_Image.m_LRa_y0_um;
 
-		real disX2 = m_x_um[1] - m_Image.m_LRa_x1_um;
-		real disY2 = m_y_um[1] - m_Image.m_LRa_y1_um;
+		real_t disX2 = m_x_um[1] - m_Image.m_LRa_x1_um;
+		real_t disY2 = m_y_um[1] - m_Image.m_LRa_y1_um;
 
-		real dis1 = sqrt(disX1*disX1 + disY1*disY1);
-		real dis2 = sqrt(disX2*disX2 + disY2*disY2);
+		real_t dis1 = sqrt(disX1*disX1 + disY1*disY1);
+		real_t dis2 = sqrt(disX2*disX2 + disY2*disY2);
 
 
 		//
@@ -536,32 +536,32 @@ void CImageDlg2::OnLButtonDown(uint nFlags, CPoint Point)
 		int y0 = intRound(m_cy - m_Image.m_LRa_y0_um * m_y_px_um);
 		int x1 = intRound(m_cx + m_Image.m_LRa_x1_um * m_x_px_um);
 		int y1 = intRound(m_cy - m_Image.m_LRa_y1_um * m_y_px_um);
-		real xum, yum;
+		real_t xum, yum;
 		if (x0 < x1)
 		{
-			xum = m_Image.m_LRa_x0_um + intRound((real)fabs(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um) / 2.0);
-			if (m_Image.m_LRa_y0_um < m_Image.m_LRa_y1_um)	yum = m_Image.m_LRa_y0_um + intRound((real)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
-			else yum = m_Image.m_LRa_y1_um + intRound((real)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
+			xum = m_Image.m_LRa_x0_um + intRound((real_t)fabs(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um) / 2.0);
+			if (m_Image.m_LRa_y0_um < m_Image.m_LRa_y1_um)	yum = m_Image.m_LRa_y0_um + intRound((real_t)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
+			else yum = m_Image.m_LRa_y1_um + intRound((real_t)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
 		}
 		else
 		{
-			xum = m_Image.m_LRa_x1_um + intRound((real)fabs(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um) / 2.0);
-			if (m_Image.m_LRa_y0_um < m_Image.m_LRa_y1_um)	yum = m_Image.m_LRa_y0_um + intRound((real)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
-			else yum = m_Image.m_LRa_y1_um + intRound((real)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
+			xum = m_Image.m_LRa_x1_um + intRound((real_t)fabs(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um) / 2.0);
+			if (m_Image.m_LRa_y0_um < m_Image.m_LRa_y1_um)	yum = m_Image.m_LRa_y0_um + intRound((real_t)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
+			else yum = m_Image.m_LRa_y1_um + intRound((real_t)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
 		}
 
-		real disX3 = m_x_um[1] - xum;
-		real disY3 = m_y_um[1] - yum;
+		real_t disX3 = m_x_um[1] - xum;
+		real_t disY3 = m_y_um[1] - yum;
 
-		real dis3 = sqrt(disX3*disY3 + disY3*disY3);
+		real_t dis3 = sqrt(disX3*disY3 + disY3*disY3);
 		//real dis3 = sqrt(disX*disX + disY*disY);
 
 		if (dis1 <= 800)
 		{
 			m_Image.m_LRa_x0_um += disX1;
 			m_Image.m_LRa_y0_um += disY1;
-			real midx = m_Image.m_LRa_x0_um;
-			real midy = m_Image.m_LRa_y0_um;
+			real_t midx = m_Image.m_LRa_x0_um;
+			real_t midy = m_Image.m_LRa_y0_um;
 
 			m_Image.m_LRa_x0_um = m_Image.m_LRa_x1_um;
 			m_Image.m_LRa_y0_um = m_Image.m_LRa_y1_um;
@@ -601,15 +601,15 @@ void CImageDlg2::OnMouseMove(uint nFlags, CPoint Point)
 {
 	if (Point.x < m_l || Point.x >= m_l + m_w || Point.y < m_t || Point.y >= m_t + m_h) return;
 
-	real x = (Point.x - m_l) - m_cx;
-	real y = m_cy - (Point.y - m_t);
+	real_t x = (Point.x - m_l) - m_cx;
+	real_t y = m_cy - (Point.y - m_t);
 
 	m_x_um[1] = x / m_x_px_um;
 	m_y_um[1] = y / m_y_px_um;
 
-	real dis = 1000;
-	real disX, disY;
-	real MoveDis = 0;
+	real_t dis = 1000;
+	real_t disX, disY;
+	real_t MoveDis = 0;
 
 	if (m_PupilRadio.GetCheck() && m_Pupil4Radio.GetCheck() && m_Image.m_pu_r_mean_um >= 800)
 	{
@@ -635,25 +635,25 @@ void CImageDlg2::OnMouseMove(uint nFlags, CPoint Point)
 
 	else if (m_LinearRulerRadio.GetCheck() && m_LinearRuler3Radio.GetCheck())
 	{
-		real D = hyp(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um, m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um);
+		real_t D = hyp(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um, m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um);
 		if (D >= 1600)
 		{
 			int x0 = intRound(m_cx + m_Image.m_LRa_x0_um * m_x_px_um);
 			int y0 = intRound(m_cy - m_Image.m_LRa_y0_um * m_y_px_um);
 			int x1 = intRound(m_cx + m_Image.m_LRa_x1_um * m_x_px_um);
 			int y1 = intRound(m_cy - m_Image.m_LRa_y1_um * m_y_px_um);
-			real xum, yum;
+			real_t xum, yum;
 			if (x0 < x1)
 			{
-				xum = m_Image.m_LRa_x0_um + intRound((real)fabs(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um) / 2.0);
-				if (m_Image.m_LRa_y0_um < m_Image.m_LRa_y1_um)	yum = m_Image.m_LRa_y0_um + intRound((real)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
-				else yum = m_Image.m_LRa_y1_um + intRound((real)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
+				xum = m_Image.m_LRa_x0_um + intRound((real_t)fabs(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um) / 2.0);
+				if (m_Image.m_LRa_y0_um < m_Image.m_LRa_y1_um)	yum = m_Image.m_LRa_y0_um + intRound((real_t)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
+				else yum = m_Image.m_LRa_y1_um + intRound((real_t)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
 			}
 			else
 			{
-				xum = m_Image.m_LRa_x1_um + intRound((real)fabs(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um) / 2.0);
-				if (m_Image.m_LRa_y0_um < m_Image.m_LRa_y1_um)	yum = m_Image.m_LRa_y0_um + intRound((real)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
-				else yum = m_Image.m_LRa_y1_um + intRound((real)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
+				xum = m_Image.m_LRa_x1_um + intRound((real_t)fabs(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um) / 2.0);
+				if (m_Image.m_LRa_y0_um < m_Image.m_LRa_y1_um)	yum = m_Image.m_LRa_y0_um + intRound((real_t)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
+				else yum = m_Image.m_LRa_y1_um + intRound((real_t)fabs(m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um) / 2.0);
 			}
 
 			disX = m_x_um[1] - xum;
@@ -680,7 +680,7 @@ void CImageDlg2::OnMouseMove(uint nFlags, CPoint Point)
 			{
 				m_Image.m_pu_x0_um = 0.5 * (m_x_um[0] + m_x_um[1]);
 				m_Image.m_pu_y0_um = 0.5 * (m_y_um[0] + m_y_um[1]);
-				real r_um = 0.5 * hyp(m_x_um[0] - m_x_um[1], m_y_um[0] - m_y_um[1]);
+				real_t r_um = 0.5 * hyp(m_x_um[0] - m_x_um[1], m_y_um[0] - m_y_um[1]);
 				for (int a = 0; a < 360; a++)
 				{
 					m_Image.m_pu_r_um[a] = r_um;
@@ -704,7 +704,7 @@ void CImageDlg2::OnMouseMove(uint nFlags, CPoint Point)
 			{
 				m_Image.m_li_x0_um = 0.5 * (m_x_um[0] + m_x_um[1]);
 				m_Image.m_li_y0_um = 0.5 * (m_y_um[0] + m_y_um[1]);
-				real r_um = 0.5 * hyp(m_x_um[0] - m_x_um[1], m_y_um[0] - m_y_um[1]);
+				real_t r_um = 0.5 * hyp(m_x_um[0] - m_x_um[1], m_y_um[0] - m_y_um[1]);
 				for (int a = 0; a < 360; a++) {
 					m_Image.m_li_r_um[a] = r_um;
 				}
@@ -847,7 +847,7 @@ void CImageDlg2::OnPupil3RadioClicked()
 
 	if (m_Image.m_ve_ok)
 	{
-		real puveDisum = Distance(m_Image.m_pu_x0_um, m_Image.m_pu_y0_um, m_Image.m_ve_x_um, m_Image.m_ve_y_um);
+		real_t puveDisum = Distance(m_Image.m_pu_x0_um, m_Image.m_pu_y0_um, m_Image.m_ve_x_um, m_Image.m_ve_y_um);
 
 		if (puveDisum > 1000)
 		{
@@ -1331,7 +1331,7 @@ void CImageDlg2::DrawPupil(CMDC& MemDC)
 		//520
 		if (m_wheel_n > m_last_wheel_n && m_P == 4)
 		{
-			real r_um = m_Image.m_pu_r_mean_um + 3;
+			real_t r_um = m_Image.m_pu_r_mean_um + 3;
 			for (int a = 0; a < 360; a++)
 			{
 				m_Image.m_pu_r_um[a] = r_um;
@@ -1342,7 +1342,7 @@ void CImageDlg2::DrawPupil(CMDC& MemDC)
 		}
 		else if (m_wheel_n < m_last_wheel_n && m_P == 4)
 		{
-			real r_um = m_Image.m_pu_r_mean_um - 3;
+			real_t r_um = m_Image.m_pu_r_mean_um - 3;
 			for (int a = 0; a < 360; a++)
 			{
 				m_Image.m_pu_r_um[a] = r_um;
@@ -1416,7 +1416,7 @@ void CImageDlg2::DrawLimbus(CMDC& MemDC)
 		//520
 		if (m_wheel_n > m_last_wheel_n && m_L == 4)
 		{
-			real r_um = m_Image.m_li_r_mean_um + 3;
+			real_t r_um = m_Image.m_li_r_mean_um + 3;
 			for (int a = 0; a < 360; a++)
 			{
 				m_Image.m_li_r_um[a] = r_um;
@@ -1427,7 +1427,7 @@ void CImageDlg2::DrawLimbus(CMDC& MemDC)
 		}
 		else if (m_wheel_n < m_last_wheel_n && m_L == 4)
 		{
-			real r_um = m_Image.m_li_r_mean_um - 3;
+			real_t r_um = m_Image.m_li_r_mean_um - 3;
 			for (int a = 0; a < 360; a++)
 			{
 				m_Image.m_li_r_um[a] = r_um;
@@ -1548,7 +1548,7 @@ void CImageDlg2::DrawRuler(CMDC& MemDC)
 		{
 			int FontSize = intRound(0.035 * m_h);
 
-			real r_um = m_Image.m_Ra_r_um + 350.0;
+			real_t r_um = m_Image.m_Ra_r_um + 350.0;
 			int x = intRound(m_cx + (m_Image.m_Ra_x_um + r_um * COS[135]) * m_x_px_um);
 			int y = intRound(m_cy - (m_Image.m_Ra_y_um + r_um * SIN[135]) * m_y_px_um);
 			MemDC.WriteRotatedText(s, x, y, 45, FontSize, 400, "Arial", YELLOW, NOCOLOR);
@@ -1595,7 +1595,7 @@ void CImageDlg2::DrawLRuler(CMDC& MemDC)
 		MemDC.DrawLine(x0, y0, x1, y1, 2, LRulerColor);
 
 		//
-		real dis = hyp(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um, m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um);
+		real_t dis = hyp(m_Image.m_LRa_x0_um - m_Image.m_LRa_x1_um, m_Image.m_LRa_y0_um - m_Image.m_LRa_y1_um);
 
 		CString s;
 		s.Format(_T("(D) = (%.3fmm)"), 0.001*dis);
@@ -1605,15 +1605,15 @@ void CImageDlg2::DrawLRuler(CMDC& MemDC)
 			int xm, ym;
 			if (x0 < x1)
 			{
-				xm = x0 + intRound((real)abs(x0 - x1) / 2.0);
-				if (y0 < y1)	ym = y0 + intRound((real)abs(y0 - y1) / 2.0);
-				else ym = y1 + intRound((real)abs(y0 - y1) / 2.0);
+				xm = x0 + intRound((real_t)abs(x0 - x1) / 2.0);
+				if (y0 < y1)	ym = y0 + intRound((real_t)abs(y0 - y1) / 2.0);
+				else ym = y1 + intRound((real_t)abs(y0 - y1) / 2.0);
 			}
 			else
 			{
-				xm = x1 + intRound((real)abs(x0 - x1) / 2.0);
-				if (y0 < y1)	ym = y0 + intRound((real)abs(y0 - y1) / 2.0);
-				else ym = y1 + intRound((real)abs(y0 - y1) / 2.0);
+				xm = x1 + intRound((real_t)abs(x0 - x1) / 2.0);
+				if (y0 < y1)	ym = y0 + intRound((real_t)abs(y0 - y1) / 2.0);
+				else ym = y1 + intRound((real_t)abs(y0 - y1) / 2.0);
 			}
 
 			MemDC.DrawLine(xm - 5, ym, xm + 6, ym, 1, LRulerColor);
@@ -1750,7 +1750,7 @@ BOOL CImageDlg2::FindColorPupil(CEyeImage* OriImage)
 	if (TestImage->m_RGBData.GetMem() == NULL) return FALSE;
 
 	int ** m_pixels = (int**)calloc(w_w, sizeof(int));
-	real** m_g = (real**)calloc(4, sizeof(real));
+	real_t** m_g = (real_t**)calloc(4, sizeof(real_t));
 	int ** m_BlurPixels = (int**)calloc(w_w, sizeof(int));
 	int ** m_gxy = (int**)calloc(w_w, sizeof(int));
 	int ** m_gx = (int**)calloc(w_w, sizeof(int));
@@ -1761,7 +1761,7 @@ BOOL CImageDlg2::FindColorPupil(CEyeImage* OriImage)
 
 	for (int i = 0; i<w_w; i++)
 	{
-		if (i<4)  m_g[i] = (real*)calloc(4, sizeof(real));
+		if (i<4)  m_g[i] = (real_t*)calloc(4, sizeof(real_t));
 		m_pixels[i] = (int*)calloc(h_h, sizeof(int));
 		m_BlurPixels[i] = (int*)calloc(h_h, sizeof(int));
 
@@ -1785,7 +1785,7 @@ BOOL CImageDlg2::FindColorPupil(CEyeImage* OriImage)
 	int EndR = intRound(0.15*w_w);
 
 
-	real de = 1.4;
+	real_t de = 1.4;
 
 
 	//*******************************************************************************
@@ -1927,7 +1927,7 @@ BOOL CImageDlg2::FindColorPupil(CEyeImage* OriImage)
 	//*******************************************************************************
 	//First step is the Gassusian blur
 	//*******************************************************************************	
-	real Mid = 0;
+	real_t Mid = 0;
 	for (int h = SRegion_StY + 3; h < SRegion_EndY - 3; h++)
 	{
 		for (int v = SRegion_StX + 3; v < SRegion_EndX - 3; v++)
@@ -2026,7 +2026,7 @@ BOOL CImageDlg2::FindColorPupil(CEyeImage* OriImage)
 	//*******************************************************************************
 	int Range = EndR - StartR;
 	int maxGradient = 0;
-	real fmean = 0;
+	real_t fmean = 0;
 	int t = 0;
 	double mid = 180 / 3.1415926;
 
@@ -2037,9 +2037,9 @@ BOOL CImageDlg2::FindColorPupil(CEyeImage* OriImage)
 			m_gx[v][h] = (m_BlurPixels[v - 1][h - 1] * (-1) + m_BlurPixels[v + 1][h + 1] * 1 + m_BlurPixels[v - 1][h] * (-2) + m_BlurPixels[v + 1][h] * 2 + m_BlurPixels[v - 1][h + 1] * (-1) + m_BlurPixels[v + 1][h + 1] * 1);
 			m_gy[v][h] = (m_BlurPixels[v - 1][h - 1] * (1) + m_BlurPixels[v][h - 1] * 2 + m_BlurPixels[v + 1][h + 1] * 1 + m_BlurPixels[v - 1][h + 1] * (-1) + m_BlurPixels[v][h + 1] * (-2) + m_BlurPixels[v + 1][h + 1] * (-1));
 
-			m_gxy[v][h] = intRound(sqrt((real)m_gx[v][h] * m_gx[v][h] + (real)m_gy[v][h] * m_gy[v][h]));
+			m_gxy[v][h] = intRound(sqrt((real_t)m_gx[v][h] * m_gx[v][h] + (real_t)m_gy[v][h] * m_gy[v][h]));
 
-			fmean += (real)m_gxy[v][h];
+			fmean += (real_t)m_gxy[v][h];
 			t++;
 			if (m_gxy[v][h]>maxGradient) maxGradient = m_gxy[v][h];
 
@@ -2106,7 +2106,7 @@ BOOL CImageDlg2::FindColorPupil(CEyeImage* OriImage)
 			}
 			else
 			{
-				m_dis[v][h] = intRound((real)m_gxy[v][h] / (real)maxGradient * 255.0);
+				m_dis[v][h] = intRound((real_t)m_gxy[v][h] / (real_t)maxGradient * 255.0);
 			}
 		}
 	}
@@ -2313,25 +2313,25 @@ HSI CImageDlg2::ChangeRGBtoHSI(int R, int G, int B)
 {
 
 	HSI res;
-	res.I = (real)(R + G + B) / 3;
+	res.I = (real_t)(R + G + B) / 3;
 
 	//find the minixum of RGB for the S value
-	real min = (real)R;
+	real_t min = (real_t)R;
 	if (min>G) min = G;
 	if (min>B) min = B;
 	//
 	res.S = 1 - (min / res.I);
 
 	//find the S
-	real sita;
-	real mid1 = 0.5*(2 * R - G - B);
-	real mid2 = pow((R - G)*(R - G) + (R - B)*(G - B), 0.5) + 0.0000000001;
+	real_t sita;
+	real_t mid1 = 0.5*(2 * R - G - B);
+	real_t mid2 = pow((R - G)*(R - G) + (R - B)*(G - B), 0.5) + 0.0000000001;
 	mid1 = mid1 / mid2;
 	sita = acos(mid1);
 
 	if (B>G) sita = 2 * _Pi - sita;
 
-	real angle = sita * 180 / _Pi;
+	real_t angle = sita * 180 / _Pi;
 
 	res.H = angle;
 	//

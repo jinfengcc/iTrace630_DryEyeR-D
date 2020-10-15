@@ -10,7 +10,7 @@ public:
 
 	CNumDlg(CWnd* pParentWnd, const CString& title);
 
-	real m_number;
+	real_t m_number;
 	CString m_title;
 
 private:
@@ -24,6 +24,6 @@ private:
 
 //***************************************************************************************
 
-BOOL EnterNumber(real& number, CWnd* parent, const CString& title);
+BOOL EnterNumber(real_t& number, CWnd* parent, const CString& title);
 
 //***************************************************************************************

@@ -13,19 +13,19 @@ T sqr(const T& x) { return x * x; }
 template<typename T>
 T cube(const T& x) { return x * x * x; }
 
-int intRound(const real v);
-real RealRound(const real v, const real d);
-real round8(const real v);
+int intRound(const real_t v);
+real_t RealRound(const real_t v, const real_t d);
+real_t round8(const real_t v);
 
-real angle(const real y, const real x);
+real_t angle(const real_t y, const real_t x);
 
 int CheckAngle(int a);
 
-real hyp(const real x, const real y);
+real_t hyp(const real_t x, const real_t y);
 
 int log2(const uint n);
 
-real factorial(const int n);
+real_t factorial(const int n);
 
 void rev_byte_memcpy(void* dst_bytes, const void* src_bytes, uint num_bytes);
 void rev_word_memcpy(void* dst_words, const void* src_words, uint num_words);

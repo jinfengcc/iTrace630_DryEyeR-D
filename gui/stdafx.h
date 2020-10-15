@@ -53,7 +53,7 @@ typedef unsigned long    ulong;
 typedef unsigned int     uint;
 typedef __int64          int64;
 typedef unsigned __int64 uint64;
-typedef double           real;
+typedef double           real_t;
 
 //***************************************************************************************
 
@@ -240,8 +240,8 @@ extern const uint SOFTWARE_VERSION_3;
 extern const uint SOFTWARE_VERSION_4;
 extern const uint SOFTWARE_VERSION;
 
-extern real COS[360];
-extern real SIN[360];
+extern real_t COS[360];
+extern real_t SIN[360];
 
 extern int  MutiCOS[800][360];
 extern int  MutiSIN[800][360];
@@ -296,7 +296,7 @@ BOOL  NotRealNum(CString inputStr);// check the str is real number or not
 
 BOOL  NotIntNum(CString inputStr);// check the str is int number or not
 
-int   GetDegree(real x, real y);// for DLI
+int   GetDegree(real_t x, real_t y);// for DLI
 
 void  CopyFolder(CString OriFolder, CString DestFolder);// For folders copy
 

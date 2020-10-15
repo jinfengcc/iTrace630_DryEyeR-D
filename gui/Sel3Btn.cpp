@@ -78,7 +78,7 @@ void CSel3Btn::OnPaint()
 	m_w = Rect.right - Rect.left;
 	m_h = Rect.bottom - Rect.top;
 
-	m_Third_w = intRound(real(m_w) / 3);
+	m_Third_w = intRound(real_t(m_w) / 3);
 
 	::SetRect(&m_LeftRect, 0, Rect.top, m_Third_w, Rect.bottom);
 	::SetRect(&m_MidRect, m_Third_w, Rect.top, 2 * m_Third_w, Rect.bottom);

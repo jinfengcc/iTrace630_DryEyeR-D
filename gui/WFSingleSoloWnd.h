@@ -25,7 +25,7 @@ private:
 	int      m_AverageExam;//new
 	GUID     m_SelectExamsID[1024];//new
 
-	real     m_SliderTop;
+	real_t     m_SliderTop;
 
 	int            m_HighLight;
 	CImgInfoWnd    m_NoteInfo;

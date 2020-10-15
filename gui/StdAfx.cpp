@@ -29,8 +29,8 @@ const   uint SOFTWARE_VERSION_4 = 0x04000000;
 // </summary>
 const   uint SOFTWARE_VERSION = 0x06214116;// V V V V Y M D D
 
-real    COS[360];
-real    SIN[360];
+real_t    COS[360];
+real_t    SIN[360];
 int     MutiCOS[800][360];
 int     MutiSIN[800][360];
 
@@ -274,9 +274,9 @@ BOOL NotIntNum(CString inputStr)
 //***************************************************************************************
 
 //for DLI Branch
-int GetDegree(real x, real y)
+int GetDegree(real_t x, real_t y)
 {
-	real ang = atan(y / x);
+	real_t ang = atan(y / x);
 
 	if (x < 0.0)
 	{

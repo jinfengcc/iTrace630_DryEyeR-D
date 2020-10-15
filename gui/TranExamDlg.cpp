@@ -79,7 +79,7 @@ BOOL CTranExamDlg::OnInitDialog()
 	m_PatientsList.SetFont(&Font);
 	m_PatientsList.CreateWnd(0, ListRect, this, IDC_PATIENTS_LIST);
 
-	real w1[5] = { 0.10 * ListW, 0.20*ListW, 0.23 * ListW, 0.23 * ListW, 0.23 * ListW };
+	real_t w1[5] = { 0.10 * ListW, 0.20*ListW, 0.23 * ListW, 0.23 * ListW, 0.23 * ListW };
 
 	m_PatientsList.InsertColumn(0, _T("ID"), intRound(w1[0]));
 	m_PatientsList.InsertColumn(1, _T("Reg. Date"), intRound(w1[1]));

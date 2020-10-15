@@ -36,7 +36,7 @@ public:
 	BOOL       m_ChangeToPresbia256;//Presbia
 	BOOL       m_FromPreToNat;//Presbia
 
-	real       m_NewScanSize;
+	real_t       m_NewScanSize;
 	CString    m_LastNumStr;
 
 	CString    m_ss;
@@ -54,9 +54,9 @@ public:
 	int        m_AllowedDecentError;
 	int        m_AllowedMovement;
 
-	real        m_auto_r_max_um;
-	real        m_user_r_max_um;
-	real        m_user_r_max_um2;
+	real_t        m_auto_r_max_um;
+	real_t        m_user_r_max_um;
+	real_t        m_user_r_max_um2;
 
 	void        NotifyIncScanSize() { m_ToDo = INC_SCAN_SIZE; }
 	void        NotifyDecScanSize() { m_ToDo = DEC_SCAN_SIZE; }

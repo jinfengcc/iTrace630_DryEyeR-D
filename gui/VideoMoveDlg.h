@@ -28,10 +28,10 @@ private:
 
 	int         m_w;
 	int         m_h;
-	real        m_w_um;
-	real        m_h_um;
-	real        m_x_px_um;
-	real        m_y_px_um;
+	real_t        m_w_um;
+	real_t        m_h_um;
+	real_t        m_x_px_um;
+	real_t        m_y_px_um;
 
 	int         m_StepLeft;
 	int         m_StepRight;

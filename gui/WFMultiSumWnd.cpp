@@ -40,9 +40,9 @@ CWFMultiSumWnd::CWFMultiSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, in
 	//----------------------------------------------------
 	RECT Rect;
 	GetWindowRect(&Rect);
-	real t = 3.0 * (0.03 * m_h) + m_g;
-	real w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
-	real h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
+	real_t t = 3.0 * (0.03 * m_h) + m_g;
+	real_t w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
+	real_t h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
 	::SetRect(&m_Rect[0], intRound(m_g), intRound(t), intRound(m_g + w), intRound(t + h));
 	::SetRect(&m_Rect[1], intRound(m_g), intRound(t + h + m_g), intRound(m_g + w), intRound(t + h + m_g + h));
 	::SetRect(&m_Rect[2], intRound(m_g + w + m_g), intRound(t), intRound(m_g + w + m_g + w), intRound(t + h));
@@ -53,7 +53,7 @@ CWFMultiSumWnd::CWFMultiSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, in
 	m_ppWFExams = ppWFExams;
 
 	//*007*[cjf***05052012],record the increase and decrease range
-	real min_r_max_um = 100000;
+	real_t min_r_max_um = 100000;
 	for (int i = 0; i<m_NumExams; i++)
 	{
 		if (m_ppWFExams[i]->m_WfSurface.m_r_max_um <  min_r_max_um)
@@ -82,7 +82,7 @@ void CWFMultiSumWnd::CreateChildWnd()
 
 	CWndSettings* pWndSettings = GetWndSettings();
 
-	real r_max_um = 5000.0;
+	real_t r_max_um = 5000.0;
 	for (int j = 0; j < m_NumExams; j++) {
 		r_max_um = __min(r_max_um, m_ppWFExams[j]->m_WfSurface.m_r_max_um);
 	}
@@ -165,12 +165,12 @@ void CWFMultiSumWnd::CreateChildWnd()
 	CZernikeMask MaskHo;
 	MaskHo.SetType(MASK_HO_TOTAL);
 
-	Matrix<real> rf_min(m_NumExams);
-	Matrix<real> rf_max(m_NumExams);
-	Matrix<real> x_min_um(m_NumExams);
-	Matrix<real> y_min_um(m_NumExams);
-	Matrix<real> x_max_um(m_NumExams);
-	Matrix<real> y_max_um(m_NumExams);
+	Matrix<real_t> rf_min(m_NumExams);
+	Matrix<real_t> rf_max(m_NumExams);
+	Matrix<real_t> x_min_um(m_NumExams);
+	Matrix<real_t> y_min_um(m_NumExams);
+	Matrix<real_t> x_max_um(m_NumExams);
+	Matrix<real_t> y_max_um(m_NumExams);
 	for (int j = 0; j < m_NumExams; j++) {
 
 		CWFExam* pWFExam = m_ppWFExams[j];
@@ -181,7 +181,7 @@ void CWFMultiSumWnd::CreateChildWnd()
 		WfSurface &= pWndSettings->m_Mask;
 		if (m_diff) WfSurface -= WfSurface1;
 
-		real SphEq, Sph, Cyl;
+		real_t SphEq, Sph, Cyl;
 		int Axis;
 		CWFExam::GetSpheqSphCylAxis(WfSurface, ::Settings.m_VertexDistanceUm, ::Settings.m_PositiveCylinder, SphEq, Sph, Cyl, Axis);
 		pChartWnd[0]->m_Values(j, 0) = SphEq;
@@ -205,16 +205,16 @@ void CWFMultiSumWnd::CreateChildWnd()
 		pChartWnd[2]->m_Values(j, 1) = rf_max[j];
 		pChartWnd[2]->m_Values(j, 2) = CWFExam::GetAverageRfAt(WfSurface, m_r_um);
 
-		real mx = rf_max[j];
-		real mn = rf_min[j];
+		real_t mx = rf_max[j];
+		real_t mn = rf_min[j];
 		pChartWnd[2]->m_TLabels[j].Format(_T("%.1f"), rf_max[j] - rf_min[j]);
 	}
 
-	real min, max;
+	real_t min, max;
 
 	pChartWnd[0]->m_Values.GetMin(min);
 	pChartWnd[0]->m_Values.GetMax(max);
-	real t1 = __max(fabs(min), fabs(max));
+	real_t t1 = __max(fabs(min), fabs(max));
 	int t2 = (int)t1;
 	if (t1 > t2 + 0.001) t2++;
 	else if (t2 == 0) t2 = 1;
@@ -286,14 +286,14 @@ void CWFMultiSumWnd::CreateChildWnd()
 		pEyeWnd->CreateZoneButtons();
 		m_pDispWnd[3] = pEyeWnd;
 
-		real Inc = pWndSettings->GetIncrement();
-		real Cent = 0.0;
-		real Step;
+		real_t Inc = pWndSettings->GetIncrement();
+		real_t Cent = 0.0;
+		real_t Step;
 		if (pScale->m_StepAuto) {
-			real Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
-			real Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
-			real Span = 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent));
-			real t = Span / pScale->m_NumColors;
+			real_t Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
+			real_t Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
+			real_t Span = 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent));
+			real_t t = Span / pScale->m_NumColors;
 			Step = (int)(t / Inc) * Inc;
 			if (t > Step + 0.001) Step += Inc;
 		}
@@ -301,7 +301,7 @@ void CWFMultiSumWnd::CreateChildWnd()
 			Step = RealRound(pScale->m_Step, Inc);
 		}
 		if (Step < Inc) Step = Inc;
-		real StepMax = pWndSettings->GetMaxStep();
+		real_t StepMax = pWndSettings->GetMaxStep();
 		if (Step > StepMax) Step = StepMax;
 		//
 		pEyeWnd->m_Cent = Cent;
@@ -374,7 +374,7 @@ void CWFMultiSumWnd::OnDiffItemClicked()
 
 void CWFMultiSumWnd::OnAvgZoneItemClicked()
 {
-	real d_um;
+	real_t d_um;
 	if (!::EnterNumber(d_um, this, "Enter a number in microns")) return;
 	if (d_um < 0.0) d_um = 0.0; else if (d_um > 10000.0) d_um = 10000.0;
 	m_r_um = 0.5 * d_um;

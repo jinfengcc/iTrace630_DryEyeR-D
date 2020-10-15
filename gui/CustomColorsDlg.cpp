@@ -134,7 +134,7 @@ void CCustomColorsDlg::OnColor(const int i)
 
 void CCustomColorsDlg::OnNewButtonClicked()
 {
-	real t;
+	real_t t;
 	if (!EnterNumber(t, this, "Number of colors")) return;
 
 	int NumColors = (int)t;

@@ -292,8 +292,8 @@ void CImageDlg::OnLButtonDown(uint nFlags, CPoint Point)
 {
 	if (Point.x < m_l || Point.x >= m_l + m_w || Point.y < m_t || Point.y >= m_t + m_h) return;
 
-	real x = (Point.x - m_l) - m_cx;
-	real y = m_cy - (Point.y - m_t);
+	real_t x = (Point.x - m_l) - m_cx;
+	real_t y = m_cy - (Point.y - m_t);
 
 	m_x_um[0] = x / m_x_px_um;
 	m_y_um[0] = y / m_y_px_um;
@@ -304,10 +304,10 @@ void CImageDlg::OnLButtonDown(uint nFlags, CPoint Point)
 	{
 		if (m_Image.m_pu_r_mean_um >= 800)
 		{
-			real disX = m_x_um[1] - m_Image.m_pu_x0_um;
-			real disY = m_y_um[1] - m_Image.m_pu_y0_um;
+			real_t disX = m_x_um[1] - m_Image.m_pu_x0_um;
+			real_t disY = m_y_um[1] - m_Image.m_pu_y0_um;
 
-			real dis = sqrt(disX*disX + disY*disY);
+			real_t dis = sqrt(disX*disX + disY*disY);
 
 			if (dis <= 800)
 			{
@@ -351,10 +351,10 @@ void CImageDlg::OnLButtonDown(uint nFlags, CPoint Point)
 	{
 		if (m_Image.m_li_r_mean_um >= 800)
 		{
-			real disX = m_x_um[1] - m_Image.m_li_x0_um;
-			real disY = m_y_um[1] - m_Image.m_li_y0_um;
+			real_t disX = m_x_um[1] - m_Image.m_li_x0_um;
+			real_t disY = m_y_um[1] - m_Image.m_li_y0_um;
 
-			real dis = sqrt(disX*disX + disY*disY);
+			real_t dis = sqrt(disX*disX + disY*disY);
 
 			if (dis <= 800)
 			{
@@ -408,15 +408,15 @@ void CImageDlg::OnMouseMove(uint nFlags, CPoint Point)
 {
 	if (Point.x < m_l || Point.x >= m_l + m_w || Point.y < m_t || Point.y >= m_t + m_h) return;
 
-	real x = (Point.x - m_l) - m_cx;
-	real y = m_cy - (Point.y - m_t);
+	real_t x = (Point.x - m_l) - m_cx;
+	real_t y = m_cy - (Point.y - m_t);
 
 	m_x_um[1] = x / m_x_px_um;
 	m_y_um[1] = y / m_y_px_um;
 
-	real dis = 1000;
-	real disX, disY;
-	real MoveDis = 0;
+	real_t dis = 1000;
+	real_t disX, disY;
+	real_t MoveDis = 0;
 
 	if (m_PupilRadio.GetCheck() && m_Pupil4Radio.GetCheck() && m_Image.m_pu_r_mean_um >= 800)
 	{
@@ -449,7 +449,7 @@ void CImageDlg::OnMouseMove(uint nFlags, CPoint Point)
 			{
 				m_Image.m_pu_x0_um = 0.5 * (m_x_um[0] + m_x_um[1]);
 				m_Image.m_pu_y0_um = 0.5 * (m_y_um[0] + m_y_um[1]);
-				real r_um = 0.5 * hyp(m_x_um[0] - m_x_um[1], m_y_um[0] - m_y_um[1]);
+				real_t r_um = 0.5 * hyp(m_x_um[0] - m_x_um[1], m_y_um[0] - m_y_um[1]);
 				for (int a = 0; a < 360; a++)
 				{
 					m_Image.m_pu_r_um[a] = r_um;
@@ -473,7 +473,7 @@ void CImageDlg::OnMouseMove(uint nFlags, CPoint Point)
 			{
 				m_Image.m_li_x0_um = 0.5 * (m_x_um[0] + m_x_um[1]);
 				m_Image.m_li_y0_um = 0.5 * (m_y_um[0] + m_y_um[1]);
-				real r_um = 0.5 * hyp(m_x_um[0] - m_x_um[1], m_y_um[0] - m_y_um[1]);
+				real_t r_um = 0.5 * hyp(m_x_um[0] - m_x_um[1], m_y_um[0] - m_y_um[1]);
 				for (int a = 0; a < 360; a++) {
 					m_Image.m_li_r_um[a] = r_um;
 				}
@@ -942,7 +942,7 @@ void CImageDlg::DrawPupil(CMDC& MemDC)
 		//520
 		if (m_wheel_n > m_last_wheel_n && m_P == 4)
 		{
-			real r_um = m_Image.m_pu_r_mean_um + 3;
+			real_t r_um = m_Image.m_pu_r_mean_um + 3;
 			for (int a = 0; a < 360; a++)
 			{
 				m_Image.m_pu_r_um[a] = r_um;
@@ -953,7 +953,7 @@ void CImageDlg::DrawPupil(CMDC& MemDC)
 		}
 		else if (m_wheel_n < m_last_wheel_n && m_P == 4)
 		{
-			real r_um = m_Image.m_pu_r_mean_um - 3;
+			real_t r_um = m_Image.m_pu_r_mean_um - 3;
 			for (int a = 0; a < 360; a++)
 			{
 				m_Image.m_pu_r_um[a] = r_um;
@@ -1029,7 +1029,7 @@ void CImageDlg::DrawLimbus(CMDC& MemDC)
 		//520
 		if (m_wheel_n > m_last_wheel_n && m_L == 4)
 		{
-			real r_um = m_Image.m_li_r_mean_um + 3;
+			real_t r_um = m_Image.m_li_r_mean_um + 3;
 			for (int a = 0; a < 360; a++)
 			{
 				m_Image.m_li_r_um[a] = r_um;
@@ -1040,7 +1040,7 @@ void CImageDlg::DrawLimbus(CMDC& MemDC)
 		}
 		else if (m_wheel_n < m_last_wheel_n && m_L == 4)
 		{
-			real r_um = m_Image.m_li_r_mean_um - 3;
+			real_t r_um = m_Image.m_li_r_mean_um - 3;
 			for (int a = 0; a < 360; a++)
 			{
 				m_Image.m_li_r_um[a] = r_um;

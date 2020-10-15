@@ -76,9 +76,9 @@ CWFCTAngleSumWnd::CWFCTAngleSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient
 	RECT Rect;
 	GetWindowRect(&Rect);
 
-	real t = 3.0 * (0.03 * m_h) + m_g;
-	real w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
-	real h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
+	real_t t = 3.0 * (0.03 * m_h) + m_g;
+	real_t w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
+	real_t h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
 	::SetRect(&m_Rect[0], intRound(m_g), intRound(t), intRound(m_g + w), intRound(t + h)); // map 1
 	::SetRect(&m_Rect[1], intRound(m_g), intRound(t + h + m_g), intRound(m_g + w), intRound(t + h + m_g + h)); // map 2
 	::SetRect(&m_Rect[2], intRound(m_g + w + m_g), intRound(t), intRound(m_g + w + m_g + w), intRound(t + h)); // map 3
@@ -327,7 +327,7 @@ void CWFCTAngleSumWnd::CreateChildWnd()
 	}
 		
 	m_Surfaces[m_d] = m_pWFExam->m_WfSurface;
-	real r_max_um = 5000.0;
+	real_t r_max_um = 5000.0;
 	r_max_um = __min(r_max_um, m_Surfaces[m_d].m_r_max_um);
 	r_max_um = __min(r_max_um, pWndSettings->m_ZoneRadiusUm);
 
@@ -337,7 +337,7 @@ void CWFCTAngleSumWnd::CreateChildWnd()
 	CString PresbisRBs;
 	if (m_InsideZone[m_d] == TRUE)
 	{
-		real SphEq, Sph, Cyl; int Axis;
+		real_t SphEq, Sph, Cyl; int Axis;
 
 		CWFExam::GetSpheqSphCylAxis(m_Surfaces[m_d], ::Settings.m_VertexDistanceUm, ::Settings.m_PositiveCylinder, SphEq, Sph, Cyl, Axis);
 		//
@@ -414,7 +414,7 @@ void CWFCTAngleSumWnd::CreateChildWnd()
 			if (m_pWFExam->m_Header.m_LinearRulerOK)
 			{
 				pEyeWnd->m_LBLabel[0] = "Linear Ruler";
-				real dis = hyp(m_pWFExam->m_Image.m_LRa_x0_um - m_pWFExam->m_Image.m_LRa_x1_um, m_pWFExam->m_Image.m_LRa_y0_um - m_pWFExam->m_Image.m_LRa_y1_um)*0.001;
+				real_t dis = hyp(m_pWFExam->m_Image.m_LRa_x0_um - m_pWFExam->m_Image.m_LRa_x1_um, m_pWFExam->m_Image.m_LRa_y0_um - m_pWFExam->m_Image.m_LRa_y1_um)*0.001;
 				pEyeWnd->m_LBLabel[1].Format(_T("(D) = (%.3f)"), dis);
 			}
 
@@ -790,7 +790,7 @@ void CWFCTAngleSumWnd::CreateChildWnd()
 			pAZRWnd->m_LTLabel[2] = "Presbia 2.4mm";
 		}
 	
-		real dr_um = 100.0;
+		real_t dr_um = 100.0;
 		int n = (int)(r_max_um / dr_um) + 1;
 	
 		pAZRWnd->m_MainLabels.Create(2);
@@ -809,7 +809,7 @@ void CWFCTAngleSumWnd::CreateChildWnd()
 
 		for (int i = 0; i < n; i++)
 		{
-			real d_mm = 0.002 * i * dr_um;
+			real_t d_mm = 0.002 * i * dr_um;
 			if (fabs(d_mm - (int)d_mm) < 0.001) 
 			{
 				pAZRWnd->m_BLabels[i].Format(_T("%i"), (int)d_mm);
@@ -820,7 +820,7 @@ void CWFCTAngleSumWnd::CreateChildWnd()
 
 		for (int i = 0; i < n; i++)
 		{
-			real r_um = i * dr_um;
+			real_t r_um = i * dr_um;
 			pAZRWnd->m_Values(i, 0) = CWFExam::GetAnnularRfAt(m_Surfaces[m_d], r_um);
 			pAZRWnd->m_Values(i, 1) = CWFExam::GetAverageRfAt(m_Surfaces[m_d], r_um);
 		}
@@ -878,16 +878,16 @@ void CWFCTAngleSumWnd::CreateChildWnd()
 		CEyeWnd* pEyeWnd = (CEyeWnd*)m_pDispWnd[m_d];
 		CScale* pScale = pWndSettings->GetScale();
 
-		real Inc = pWndSettings->GetIncrement();
+		real_t Inc = pWndSettings->GetIncrement();
 
-		real Cent = 0.0;
+		real_t Cent = 0.0;
 
-		real Step;
+		real_t Step;
 		if (pScale->m_StepAuto) {
-			real Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
-			real Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
-			real Span = 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent));
-			real t = Span / pScale->m_NumColors;
+			real_t Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
+			real_t Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
+			real_t Span = 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent));
+			real_t t = Span / pScale->m_NumColors;
 			Step = (int)(t / Inc) * Inc;
 			if (t > Step + 0.001) Step += Inc;
 		}
@@ -895,7 +895,7 @@ void CWFCTAngleSumWnd::CreateChildWnd()
 			Step = RealRound(pScale->m_Step, Inc);
 		}
 		if (Step < Inc) Step = Inc;
-		real StepMax = pWndSettings->GetMaxStep();
+		real_t StepMax = pWndSettings->GetMaxStep();
 		if (Step > StepMax) Step = StepMax;
 
 		pEyeWnd->m_Cent = Cent;
@@ -920,9 +920,9 @@ void CWFCTAngleSumWnd::CreateChildWnd()
 
 	else if (pWndSettings->m_Type == TYPE_TAZR) {
 		CChartWnd* pAZRWnd = (CChartWnd*)m_pDispWnd[m_d];
-		real rmin; pAZRWnd->m_Values.GetMin(rmin);
-		real rmax; pAZRWnd->m_Values.GetMax(rmax);
-		real t = __max(fabs(rmin), fabs(rmax));
+		real_t rmin; pAZRWnd->m_Values.GetMin(rmin);
+		real_t rmax; pAZRWnd->m_Values.GetMax(rmax);
+		real_t t = __max(fabs(rmin), fabs(rmax));
 		int imax = (int)t;
 		if (t > imax + 0.001) imax++;
 		int imin = -imax;
@@ -1258,7 +1258,7 @@ void CWFCTAngleSumWnd::OnEditLimbusItemClicked()
 		if (m_pWFExam->m_Header.m_LinearRulerOK)
 		{
 			m_pDispWnd[m_d]->m_LBLabel[0] = "Linear Ruler";
-			real dis = hyp(m_pWFExam->m_Image.m_LRa_x0_um - m_pWFExam->m_Image.m_LRa_x1_um, m_pWFExam->m_Image.m_LRa_y0_um - m_pWFExam->m_Image.m_LRa_y1_um)*0.001;
+			real_t dis = hyp(m_pWFExam->m_Image.m_LRa_x0_um - m_pWFExam->m_Image.m_LRa_x1_um, m_pWFExam->m_Image.m_LRa_y0_um - m_pWFExam->m_Image.m_LRa_y1_um)*0.001;
 			m_pDispWnd[m_d]->m_LBLabel[1].Format(_T("(D) = (%.3f)"), dis);
 		}
 		else

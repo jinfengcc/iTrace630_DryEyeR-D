@@ -30,12 +30,12 @@ void CWFTest::Test()
 	m_WFExam.m_sc_x0_um = 0.0;
 	m_WFExam.m_sc_y0_um = 0.0;
 
-	real r_max_um = 3000.0;
+	real_t r_max_um = 3000.0;
 	m_WFExam.CreateScanPattern(r_max_um);
 
 	int NumPoints = m_WFExam.m_Points.GetSize();
-	real* x_um = new real[NumPoints];
-	real* y_um = new real[NumPoints];
+	real_t* x_um = new real_t[NumPoints];
+	real_t* y_um = new real_t[NumPoints];
 	CScanPoint* pPoint = m_WFExam.m_Points.MoveFirst();
 
 	for (int p = 0; p < NumPoints; p++)
@@ -70,10 +70,10 @@ void CWFTest::Test()
 		if (m_Res)
 		{
 			m_WFExam.ProcessPoints();
-			real* r_um = new real[NumPoints];
-			real* a_rd = new real[NumPoints];
-			real* dw_dx = new real[NumPoints];
-			real* dw_dy = new real[NumPoints];
+			real_t* r_um = new real_t[NumPoints];
+			real_t* a_rd = new real_t[NumPoints];
+			real_t* dw_dx = new real_t[NumPoints];
+			real_t* dw_dy = new real_t[NumPoints];
 			int k = 0;
 			pPoint = m_WFExam.m_Points.MoveFirst();
 			while (pPoint)

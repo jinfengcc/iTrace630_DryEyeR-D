@@ -87,8 +87,8 @@ BOOL CSelectImgDlg::OnInitDialog()
 	int W = Rect.right - Rect.left;
 	int H = Rect.bottom - Rect.top;
 
-	real ratio = real(m_pExam[0]->m_Image.m_h) / real(m_pExam[0]->m_Image.m_w);
-	real w = 0.5*W;
+	real_t ratio = real_t(m_pExam[0]->m_Image.m_h) / real_t(m_pExam[0]->m_Image.m_w);
+	real_t w = 0.5*W;
 	int  h = intRound(w*ratio);
 
 	int  Btm = intRound(0.10*H) + h;
@@ -119,7 +119,7 @@ BOOL CSelectImgDlg::OnInitDialog()
 
 	if (m_pExam[0]->m_Image.m_w != 0)
 	{
-		real ratioW = real(m_pExam[0]->m_Image.m_w) / real(m_EyeImageWnd.m_w);
+		real_t ratioW = real_t(m_pExam[0]->m_Image.m_w) / real_t(m_EyeImageWnd.m_w);
 
 		for (int y = 0; y < m_EyeImageWnd.m_h; y++)
 		{
@@ -172,7 +172,7 @@ void CSelectImgDlg::OnLeftButtonClicked()
 	//Change the image
 	if (m_pExam[m_CurEye]->m_Image.m_w != 0)
 	{
-		real ratioW = real(m_pExam[m_CurEye]->m_Image.m_w) / real(m_EyeImageWnd.m_w);
+		real_t ratioW = real_t(m_pExam[m_CurEye]->m_Image.m_w) / real_t(m_EyeImageWnd.m_w);
 
 		for (int y = 0; y < m_EyeImageWnd.m_h; y++)
 		{
@@ -225,7 +225,7 @@ void CSelectImgDlg::OnRightButtonClicked()
 	//Change the image
 	if (m_pExam[m_CurEye]->m_Image.m_w != 0)
 	{
-		real ratioW = real(m_pExam[m_CurEye]->m_Image.m_w) / real(m_EyeImageWnd.m_w);
+		real_t ratioW = real_t(m_pExam[m_CurEye]->m_Image.m_w) / real_t(m_EyeImageWnd.m_w);
 
 		for (int y = 0; y < m_EyeImageWnd.m_h; y++)
 		{

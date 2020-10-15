@@ -61,12 +61,12 @@ void CLAD::Process()
 		}
 
 		// area under the curve above baseline
-		real d = m_Signal[i] - m_Baseline;
+		real_t d = m_Signal[i] - m_Baseline;
 		if (d > 0.0) m_Area += d;
 	}
 
 	// filtering
-	real PrcSignal[512];
+	real_t PrcSignal[512];
 	memset(PrcSignal, 0, sizeof(PrcSignal));
 
 	for (int i = il; i <= ir; i++)
@@ -84,11 +84,11 @@ void CLAD::Process()
 			k += q;
 		}
 
-		PrcSignal[i] = (real)s / k;
+		PrcSignal[i] = (real_t)s / k;
 	}
 
 	// global maximum
-	real vmax = 0.0;
+	real_t vmax = 0.0;
 	int imax = 255;
 
 	for (int i = il; i <= ir; i++)
@@ -103,13 +103,13 @@ void CLAD::Process()
 	if (vmax - m_Baseline < 40.0) return;
 
 	// 90% centroid
-	real vthr90 = m_Baseline + 0.9 * (vmax - m_Baseline);
-	real vs = 0.0;
-	real s = 0.0;
+	real_t vthr90 = m_Baseline + 0.9 * (vmax - m_Baseline);
+	real_t vs = 0.0;
+	real_t s = 0.0;
 
 	for (int i = imax - 1; i >= il; i--)
 	{
-		real d = PrcSignal[i] - vthr90;
+		real_t d = PrcSignal[i] - vthr90;
 		if (d < 0.0) break;
 		vs += i * d;
 		s += d;
@@ -117,7 +117,7 @@ void CLAD::Process()
 
 	for (int i = imax + 1; i <= ir; i++)
 	{
-		real d = PrcSignal[i] - vthr90;
+		real_t d = PrcSignal[i] - vthr90;
 		if (d < 0.0) break;
 		vs += i * d;
 		s += d;
@@ -130,7 +130,7 @@ void CLAD::Process()
 	// validation
 
 	// signal above the 50% threshold
-	real vthr50 = m_Baseline + 0.5 * (vmax - m_Baseline);
+	real_t vthr50 = m_Baseline + 0.5 * (vmax - m_Baseline);
 	int ithrl50 = imax; // на всякий
 
 	for (int i = imax - 1; i >= il; i--)
@@ -165,7 +165,7 @@ void CLAD::Process()
 	}
 
 	// local maxima
-	real local_vmin = PrcSignal[imax];
+	real_t local_vmin = PrcSignal[imax];
 
 	for (int i = imax - 1; i >= ithrl50 + 1; i--)
 	{

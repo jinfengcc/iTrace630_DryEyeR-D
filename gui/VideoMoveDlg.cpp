@@ -97,7 +97,7 @@ BOOL CVideoMoveDlg::OnInitDialog()
 	CString s;
 	if (m_StepLeft < -8 || m_StepLeft > 8) m_StepLeft = 0;
 
-	real EditC = m_StepLeft / m_x_px_um;
+	real_t EditC = m_StepLeft / m_x_px_um;
 	s.Format(_T("%.2f"), EditC);
 	m_LeftEdit.SetWindowText(s);
 	//
@@ -221,7 +221,7 @@ void CVideoMoveDlg::OnVideoLeftButtonClicked()
 	m_RightButton.SetEnabled(TRUE);  m_RightButton.Repaint();
 
 	CString s;
-	real EditC = m_StepLeft / m_x_px_um;
+	real_t EditC = m_StepLeft / m_x_px_um;
 	s.Format(_T("%.2f"), EditC);
 	m_LeftEdit.SetWindowText(s);
 
@@ -245,7 +245,7 @@ void CVideoMoveDlg::OnVideoRightButtonClicked()
 	m_LeftButton.SetEnabled(TRUE);  m_LeftButton.Repaint();
 
 	CString s;
-	real EditC = m_StepLeft / m_x_px_um;
+	real_t EditC = m_StepLeft / m_x_px_um;
 	s.Format(_T("%.2f"), EditC);
 	m_LeftEdit.SetWindowText(s);
 
@@ -269,7 +269,7 @@ void CVideoMoveDlg::OnVideoUpButtonClicked()
 	m_DownButton.SetEnabled(TRUE);  m_DownButton.Repaint();
 
 	CString s;
-	real EditC = m_StepUp / m_y_px_um;
+	real_t EditC = m_StepUp / m_y_px_um;
 	s.Format(_T("%.2f"), EditC);
 	m_UpEdit.SetWindowText(s);
 
@@ -293,7 +293,7 @@ void CVideoMoveDlg::OnVideoDownButtonClicked()
 	m_UpButton.SetEnabled(TRUE);  m_UpButton.Repaint();
 
 	CString s;
-	real EditC = m_StepUp / m_y_px_um;
+	real_t EditC = m_StepUp / m_y_px_um;
 	s.Format(_T("%.2f"), EditC);
 	m_UpEdit.SetWindowText(s);
 

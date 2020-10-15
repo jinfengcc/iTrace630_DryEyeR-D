@@ -28,8 +28,8 @@ public:
 	void SetFont(const int Size, const int Width = 400, const CString& Face = "Arial") { m_FontSize = Size; m_FontWidth = Width; m_FontFace = Face; }
 	void SetImage(int ResourceID) { m_Image.LoadFromRes(ResourceID); }
 	void SetEdgeColor(const COLORREF EdgeColor) { m_EdgeColor = EdgeColor; }
-	void SetTextWidth(const real pos) { m_TextPos = pos; }
-	void SetImagePos(const real pos) { m_ImagePos = pos; }
+	void SetTextWidth(const real_t pos) { m_TextPos = pos; }
+	void SetImagePos(const real_t pos) { m_ImagePos = pos; }
 
 	void Repaint();
 
@@ -37,8 +37,8 @@ private:
 
 	CMDC m_MemDC;
 
-	real m_ImagePos;
-	real m_TextPos;
+	real_t m_ImagePos;
+	real_t m_TextPos;
 	BOOL m_Enabled;
 	BOOL m_Highlighted;
 	BOOL m_Pushed;

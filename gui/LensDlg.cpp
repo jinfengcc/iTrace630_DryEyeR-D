@@ -206,8 +206,8 @@ void CLensDlg::OnMouseMove(uint nFlags, CPoint Point)
 
 	if (Point.x < m_l || Point.x >= m_l + m_w || Point.y < m_t || Point.y >= m_t + m_h) return;
 
-	real x = (Point.x - m_l) - m_cx;
-	real y = m_cy - (Point.y - m_t);
+	real_t x = (Point.x - m_l) - m_cx;
+	real_t y = m_cy - (Point.y - m_t);
 
 	m_le_x_um[m_d] = x / m_x_px_um;
 	m_le_y_um[m_d] = y / m_y_px_um;

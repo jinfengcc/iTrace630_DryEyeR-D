@@ -27,7 +27,7 @@ count = s.Left(i).Find(_T("Alpha", 0);
 
 0.::Licensing.m_LicenseType == LT_HOYA 
 
-real t = pRMSWnd->m_Surface.ComputeRms();
+real_t t = pRMSWnd->m_Surface.ComputeRms();
 should be another function GetMaxRms????????????10152014
 
 
@@ -162,7 +162,7 @@ PreTranslateMessage
 
 //How many bytes for different types
 BOOL 4 bytes
-real 8 bytes
+real_t 8 bytes
 //Done
 //
 //Some info about DICOM,

@@ -50,7 +50,7 @@ void CNumDlg::OnOK()
 
 //***************************************************************************************
 
-BOOL EnterNumber(real& number, CWnd* parent, const CString& title)
+BOOL EnterNumber(real_t& number, CWnd* parent, const CString& title)
 {
 	CNumDlg dlg(parent, title);
 	if (dlg.DoModal() != IDOK) return FALSE;

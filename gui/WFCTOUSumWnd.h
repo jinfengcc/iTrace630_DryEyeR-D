@@ -41,7 +41,7 @@ private:
 	virtual void RepaintMemDC() override;
 	virtual void CreateChildWnd() override;
 
-	int     GetGridScale(real r_um1, real r_um2);//521
+	int     GetGridScale(real_t r_um1, real_t r_um2);//521
 	afx_msg void OnShowDefaultItemClicked();//521
 
 	afx_msg void OnCornealItemClicked();//530  

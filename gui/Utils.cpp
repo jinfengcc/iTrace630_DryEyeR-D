@@ -7,28 +7,28 @@
 //***************************************************************************************
 //***************************************************************************************
 
-int intRound(const real v)
+int intRound(const real_t v)
 {
 	return (int)floor(v + 0.5);
 }
 
-real RealRound(const real v, const real d)
+real_t RealRound(const real_t v, const real_t d)
 {
 	return intRound(v / d) * d;
 }
 
-real round8(const real v)
+real_t round8(const real_t v)
 {
 	return (int)(100.0 * RealRound(v, 0.125)) * 0.01;
 }
 
 //***************************************************************************************
 
-real hyp(const real x, const real y) { return sqrt(x * x + y * y); }
+real_t hyp(const real_t x, const real_t y) { return sqrt(x * x + y * y); }
 
 //***************************************************************************************
 
-real angle(const real y, const real x)
+real_t angle(const real_t y, const real_t x)
 {
 	if (x == 0.0)
 	{
@@ -36,7 +36,7 @@ real angle(const real y, const real x)
 		if (y < 0.0) return 3.0 * _Pi_2;
 		return _Pi_2;
 	}
-	real a = atan(y / x);
+	real_t a = atan(y / x);
 
 	if (x < 0.0) return a + _Pi;
 
@@ -62,9 +62,9 @@ int log2(const uint n)
 
 //***************************************************************************************
 
-real factorial(const int n)
+real_t factorial(const int n)
 {
-	real res = 1.0;
+	real_t res = 1.0;
 
 	for (int i = 2; i <= n; i++) res *= i;
 

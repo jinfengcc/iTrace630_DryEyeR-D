@@ -44,11 +44,11 @@ CWFSingleSoloWnd::CWFSingleSoloWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient
 	//----------------------------------------------------
 	RECT Rect;
 	GetWindowRect(&Rect);
-	real t = 3.0 * (0.03 * m_h) + m_g;
-	real w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
-	real h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
+	real_t t = 3.0 * (0.03 * m_h) + m_g;
+	real_t w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
+	real_t h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
 
-	real Space = 5 * m_g;
+	real_t Space = 5 * m_g;
 
 	::SetRect(&m_Rect[0], intRound(m_g), intRound(t), intRound(m_g + w), intRound(t + h)); // map 1
 	::SetRect(&m_Rect[1], intRound(m_g), intRound(t + h + m_g), intRound(m_g + w), intRound(t + h + m_g + h)); // map 2
@@ -61,7 +61,7 @@ CWFSingleSoloWnd::CWFSingleSoloWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient
 
 	//Cotrol components
 	m_SliderTop = t + h / 2.0;
-	real SliderBottom = 2 * h - h / 2.0;
+	real_t SliderBottom = 2 * h - h / 2.0;
 	::SetRect(&m_Rect[5], intRound(m_g + w + m_g + w + m_g), intRound(m_SliderTop), intRound(m_g + w + m_g + w + 4 * m_g), intRound(SliderBottom + m_g)); // Slider
 																																						  //Done
 
@@ -157,7 +157,7 @@ CWFSingleSoloWnd::CWFSingleSoloWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient
 	m_Slider.m_Pos = 1;
 	m_Slider.m_scaleNum = (int)(::TempSettings.Com_r_max_um*0.002);
 
-	real rest = ::TempSettings.Com_r_max_um - intRound(::TempSettings.Com_r_max_um) % 500;
+	real_t rest = ::TempSettings.Com_r_max_um - intRound(::TempSettings.Com_r_max_um) % 500;
 	m_Slider.m_FirstPos = 1 - (::TempSettings.Com_r_max_um - rest) / (::TempSettings.Com_r_max_um - 500);
 
 	m_HighLight = FALSE;
@@ -230,7 +230,7 @@ void CWFSingleSoloWnd::CreateChildWnd()
 
 	m_Surfaces[m_d] = m_pWFExam->m_WfSurface;
 
-	real r_max_um = 5000.0;
+	real_t r_max_um = 5000.0;
 
 	r_max_um = __min(r_max_um, m_Surfaces[m_d].m_r_max_um);
 	r_max_um = __min(r_max_um, pWndSettings->m_ZoneRadiusUm);
@@ -383,17 +383,17 @@ void CWFSingleSoloWnd::CreateChildWnd()
 		CEyeWnd* pEyeWnd = (CEyeWnd*)m_pDispWnd[m_d];
 		CScale* pScale = pWndSettings->GetScale();
 
-		real Inc = pWndSettings->GetIncrement();
+		real_t Inc = pWndSettings->GetIncrement();
 
-		real Cent = 0.0;
+		real_t Cent = 0.0;
 
-		real Step;
+		real_t Step;
 		if (pScale->m_StepAuto)
 		{
-			real Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
-			real Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
-			real Span = 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent));
-			real t = Span / pScale->m_NumColors;
+			real_t Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
+			real_t Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
+			real_t Span = 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent));
+			real_t t = Span / pScale->m_NumColors;
 			Step = (int)(t / Inc) * Inc;
 			if (t > Step + 0.001) Step += Inc;
 		}
@@ -401,7 +401,7 @@ void CWFSingleSoloWnd::CreateChildWnd()
 			Step = RealRound(pScale->m_Step, Inc);
 		}
 		if (Step < Inc) Step = Inc;
-		real StepMax = pWndSettings->GetMaxStep();
+		real_t StepMax = pWndSettings->GetMaxStep();
 		if (Step > StepMax) Step = StepMax;
 
 		pEyeWnd->m_Cent = Cent;

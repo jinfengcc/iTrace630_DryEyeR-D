@@ -20,7 +20,7 @@ private:
 	CWFExam** m_ppWFExams;
 
 	BOOL m_diff;
-	real m_r_um;
+	real_t m_r_um;
 	int m_series;
 
 	virtual CString GetName() override { return "Multi-Exam Summary Display"; }

@@ -138,39 +138,39 @@ public:
 
 	void Destroy();
 
-	real m_w_um;
-	real m_h_um;
+	real_t m_w_um;
+	real_t m_h_um;
 
-	real m_BlurryValue; //[cjf***03302012], the boundary rms to judge wether the pupil image is blurry
+	real_t m_BlurryValue; //[cjf***03302012], the boundary rms to judge wether the pupil image is blurry
 	BOOL m_Find_BL_Val; //[cjf***03302012], Find the Blurry value;
 	int m_Loop_Time;    //[cjf***03302012], The loop times used to find the BlurryValue;
 	void CheckClear(int timeLeft);//[cjf***04042012],
 	BOOL m_pu_clear; //[cjf***04042012],
 
-	BOOL GetRGBAtUm(real x_um, real y_um, real* pR, real* pG, real* pB);
+	BOOL GetRGBAtUm(real_t x_um, real_t y_um, real_t* pR, real_t* pG, real_t* pB);
 
 	BOOL m_pu_ok;
-	real m_pu_x0_um;
-	real m_pu_y0_um;
-	real m_pu_r_um[360];
-	real m_pu_r_min_um;
-	real m_pu_r_max_um;
-	real m_pu_r_mean_um;
+	real_t m_pu_x0_um;
+	real_t m_pu_y0_um;
+	real_t m_pu_r_um[360];
+	real_t m_pu_r_min_um;
+	real_t m_pu_r_max_um;
+	real_t m_pu_r_mean_um;
 	void ClearPupil();
 	void FindPupil();
 	int  m_pu_thr; // ��������������� ����������
 	int  m_pu_d_um; // ��������������� ����������
 
 	BOOL m_li_ok;
-	real m_li_x0_um;
-	real m_li_y0_um;
-	real m_li_r_um[360];
-	real m_li_r_min_um;
-	real m_li_r_max_um;
-	real m_li_r_mean_um;
+	real_t m_li_x0_um;
+	real_t m_li_y0_um;
+	real_t m_li_r_um[360];
+	real_t m_li_r_min_um;
+	real_t m_li_r_max_um;
+	real_t m_li_r_mean_um;
 	void ClearLimbus();
 	void FindLimbus();
-	void FindLimbus2(real LastCenX, real LastCenY, real LastR);
+	void FindLimbus2(real_t LastCenX, real_t LastCenY, real_t LastR);
 	void ImproveComprison();
 
 	BOOL m_ve0_ok;
@@ -189,25 +189,25 @@ public:
 	int  m_ve0_thr;
 
 	BOOL m_ve_ok;
-	real m_ve_x_um;
-	real m_ve_y_um;
+	real_t m_ve_x_um;
+	real_t m_ve_y_um;
 	int  m_ve_r;
 	void ClearVertex();
 	void FindWFVertex();
 
 	int  m_NumRings;
 	BOOL m_ri_ok;
-	real m_ri_r_um[MAX_NUM_RINGS][360];
+	real_t m_ri_r_um[MAX_NUM_RINGS][360];
 	void ClearVertexAndRings();
 	void FindVertexAndRings();
 	BOOL IsRingsDataComplete();
 
 	BOOL m_le_ok; //black marks lens
-	real m_le_x_um[3];
-	real m_le_y_um[3];
-	real GetLensX0Um();
-	real GetLensY0Um();
-	real GetLensRotationAngle();
+	real_t m_le_x_um[3];
+	real_t m_le_y_um[3];
+	real_t GetLensX0Um();
+	real_t GetLensY0Um();
+	real_t GetLensRotationAngle();
 	void ClearLensDots();
 	void FindLensDots();
 	void ValidateLensDots();
@@ -215,28 +215,28 @@ public:
 	//The new attributes also nned to be added into the SaveWFExam and LoadWFExam, and TDB_WF_EXAM_DATA
 	//Add the info of the Radial Ruler
 	BOOL m_Ra_ok;
-	real m_Ra_x_um;
-	real m_Ra_y_um;
-	real m_Ra_r_um;
+	real_t m_Ra_x_um;
+	real_t m_Ra_y_um;
+	real_t m_Ra_r_um;
 	void ClearRuler();
 
 	//Linear Ruler
 	BOOL m_LRa_ok;
-	real m_LRa_x0_um;
-	real m_LRa_y0_um;
-	real m_LRa_x1_um;
-	real m_LRa_y1_um;
+	real_t m_LRa_x0_um;
+	real_t m_LRa_y0_um;
+	real_t m_LRa_x1_um;
+	real_t m_LRa_y1_um;
 	void ClearLRuler();
 
 	//Add the info of the  Inlay
 	BOOL m_In_ok;
-	real m_In_x_um;
-	real m_In_y_um;
-	real m_In_r_um;
-	real m_In_In_r_um;//inner inlay radius
+	real_t m_In_x_um;
+	real_t m_In_y_um;
+	real_t m_In_r_um;
+	real_t m_In_In_r_um;//inner inlay radius
 
-	real m_hist[256];
-	real m_hist_max;
+	real_t m_hist[256];
+	real_t m_hist_max;
 	Matrix<int> m_table;
 	List<CNode> m_hull;
 

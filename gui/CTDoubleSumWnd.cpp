@@ -39,9 +39,9 @@ CCTDoubleSumWnd::CCTDoubleSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, 
 	//----------------------------------------------------
 	RECT Rect;
 	GetWindowRect(&Rect);
-	real t = 3.0 * (0.03 * m_h) + m_g;
-	real w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
-	real h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
+	real_t t = 3.0 * (0.03 * m_h) + m_g;
+	real_t w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
+	real_t h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
 
 	::SetRect(&m_Rect[0], intRound(m_g), intRound(t), intRound(m_g + w), intRound(t + h)); // exam 1 map 1
 	::SetRect(&m_Rect[1], intRound(m_g), intRound(t + h + m_g), intRound(m_g + w), intRound(t + h + m_g + h)); // exam 2 map 1
@@ -65,7 +65,7 @@ CCTDoubleSumWnd::CCTDoubleSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, 
 
 	//*007*[cjf***05052012],record the increase and decrease range
 	int invalidValue = 0;
-	real m_r1, m_r2;
+	real_t m_r1, m_r2;
 	if (m_pCTExam1 == NULL) invalidValue = 1;
 	else m_r1 = m_pCTExam1->m_WfSurface.m_r_max_um;
 
@@ -189,7 +189,7 @@ void CCTDoubleSumWnd::CreateChildWnd()
 		}
 	}
 
-	real r_max_um = 5000.0;
+	real_t r_max_um = 5000.0;
 	if (m_pCTExam1) r_max_um = __min(r_max_um, m_pCTExam1->m_WfSurface.m_r_max_um);
 	if (m_pCTExam2) r_max_um = __min(r_max_um, m_pCTExam2->m_WfSurface.m_r_max_um);
 	r_max_um = __min(r_max_um, pWndSettings->m_ZoneRadiusUm);
@@ -414,10 +414,10 @@ void CCTDoubleSumWnd::CreateChildWnd()
 		pWndSettings->m_Type == TYPE_CELM || pWndSettings->m_Type == TYPE_CWFM) {
 
 		CScale* pScale = pWndSettings->GetScale();
-		real Inc = pWndSettings->GetIncrement();
+		real_t Inc = pWndSettings->GetIncrement();
 
 		// middle value
-		real Cent;
+		real_t Cent;
 		if (pWndSettings->m_Type == TYPE_CAXM || pWndSettings->m_Type == TYPE_CTNM || pWndSettings->m_Type == TYPE_CRFM) {
 			int MapUnit = (pWndSettings->m_Type == TYPE_CRFM) || (pWndSettings->m_MapUnit == DIOPTERS) ? DIOPTERS : MILLIMETERS;
 			if (pScale->m_CentAuto) {
@@ -459,20 +459,20 @@ void CCTDoubleSumWnd::CreateChildWnd()
 		Cent = RealRound(Cent, Inc);//y
 
 									// Step value
-		real Step;
+		real_t Step;
 		if (pScale->m_StepAuto) {
-			real Span = 0.0;
+			real_t Span = 0.0;
 			for (int e = 0; e < 2; e++) {
 				CCTExam* pCTExam = e == 0 ? m_pCTExam1 : m_pCTExam2;
 				if (pCTExam) {
 					int d = q + e;
 					CEyeWnd* pEyeWnd = (CEyeWnd*)m_pDispWnd[d];
-					real Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
-					real Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
+					real_t Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
+					real_t Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
 					Span = __max(Span, 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent)));
 				}
 			}
-			real t = Span / pScale->m_NumColors;
+			real_t t = Span / pScale->m_NumColors;
 			Step = (int)(t / Inc) * Inc;
 			if (t > Step + 0.001) Step += Inc;
 		}
@@ -480,7 +480,7 @@ void CCTDoubleSumWnd::CreateChildWnd()
 			Step = RealRound(pScale->m_Step, Inc);//y
 		}
 		if (Step < Inc) Step = Inc;
-		real StepMax = pWndSettings->GetMaxStep();
+		real_t StepMax = pWndSettings->GetMaxStep();
 		if (Step > StepMax) Step = StepMax;
 
 		for (int e = 0; e < 2; e++) {
@@ -628,7 +628,7 @@ LRESULT CCTDoubleSumWnd::OnRotateMsg(WPARAM wParam, LPARAM lParam)
 
 LRESULT CCTDoubleSumWnd::OnChangeCentMsg(WPARAM wParam, LPARAM lParam)
 {
-	real Cent;
+	real_t Cent;
 	int d;
 	for (d = 0; d < 4; d++) {
 		if (m_pDispWnd[d] && (WPARAM)m_pDispWnd[d] == wParam) {
@@ -654,7 +654,7 @@ LRESULT CCTDoubleSumWnd::OnChangeCentMsg(WPARAM wParam, LPARAM lParam)
 
 LRESULT CCTDoubleSumWnd::OnChangeStepMsg(WPARAM wParam, LPARAM lParam)
 {
-	real Step;
+	real_t Step;
 	int d;
 	for (d = 0; d < 4; d++) {
 		if (m_pDispWnd[d] && (WPARAM)m_pDispWnd[d] == wParam) {

@@ -57,9 +57,9 @@ CWFVrfTestWnd::CWFVrfTestWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFE
 	//----------------------------------------------------
 	RECT Rect;
 	GetWindowRect(&Rect);
-	real t = 3.0 * (0.03 * m_h) + m_g;
-	real w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
-	real h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
+	real_t t = 3.0 * (0.03 * m_h) + m_g;
+	real_t w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
+	real_t h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
 	::SetRect(&m_Rect[0], intRound(m_g), intRound(t), intRound(m_g + w), intRound(t + h)); // map 1
 	::SetRect(&m_Rect[1], intRound(m_g), intRound(t + h + m_g), intRound(m_g + w), intRound(t + h + m_g + h)); // map 2
 	::SetRect(&m_Rect[2], intRound(m_g + w + m_g), intRound(t), intRound(m_g + w + m_g + w), intRound(t + h)); // map 3
@@ -409,13 +409,13 @@ void CWFVrfTestWnd::CreateChildWnd()
 		{
 			m_pWFExam->CreateOpm2D(pEyeWnd->m_Map2D, 1.0 / pEyeWnd->m_y_px_um, m_pWFExam->m_CurShot, 2);
 
-			real mean, std_dev;
+			real_t mean, std_dev;
 			pEyeWnd->m_Map2D.ComputeMeanStdDev(mean, std_dev);
 
 			std_dev = fabs(std_dev);
 
 			int  GradeMean, GradeSd;
-			real Grade;
+			real_t Grade;
 
 			CString GradeStr = "";
 
@@ -431,7 +431,7 @@ void CWFVrfTestWnd::CreateChildWnd()
 			else if (std_dev > 0.09 && std_dev <= 0.12) GradeSd = 3;
 			else                                        GradeSd = 4;
 
-			Grade = real(GradeMean + GradeSd) / 2.0;
+			Grade = real_t(GradeMean + GradeSd) / 2.0;
 
 			GradeStr.Format(_T("%.1f"), Grade);
 
@@ -633,7 +633,7 @@ void CWFVrfTestWnd::OnAccept(BOOL accept)
 
 //***************************************************************************************
 
-void CWFVrfTestWnd::AddDefocus(real SphEq)
+void CWFVrfTestWnd::AddDefocus(real_t SphEq)
 {
 	if ((m_pWndSettings + 1)->m_Type == TYPE_TRSD)
 	{

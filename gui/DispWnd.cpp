@@ -91,7 +91,7 @@ void CDispWnd::CreateSimpButtons(BOOL ShowDetails)
 
 	int W = ::GetSystemMetrics(SM_CXSCREEN);
 
-	int r = intRound(real(m_w) / 2.0 - 2);
+	int r = intRound(real_t(m_w) / 2.0 - 2);
 	int b = m_h - 2;
 	::SetRect(&Rect, r - w, b - w, r, b);
 

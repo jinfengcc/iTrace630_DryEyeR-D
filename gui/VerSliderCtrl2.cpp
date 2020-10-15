@@ -84,7 +84,7 @@ void CVerSliderCtrl2::OnPaint()
 	//Draw the scales
 	for (int i = 0; i <= m_scaleNum; i++)
 	{
-		int  yPos = intRound(y1 + real(i) * real(y2 - y1) / m_scaleNum);
+		int  yPos = intRound(y1 + real_t(i) * real_t(y2 - y1) / m_scaleNum);
 
 		if (i == m_scaleNum)  yPos = y2;
 		DC.DrawLine(x0, yPos, x0 + 8, yPos, 2, RED);
@@ -136,12 +136,12 @@ int  CVerSliderCtrl2::returnY()
 //***************************************************************************************
 void CVerSliderCtrl2::OnLButtonUp(uint nFlags, CPoint Point)
 {
-	real xPower = (real)Point.x - (real)m_DownX;
+	real_t xPower = (real_t)Point.x - (real_t)m_DownX;
 	xPower *= xPower;
 
-	real yPower = (real)Point.y - (real)m_DownY;
+	real_t yPower = (real_t)Point.y - (real_t)m_DownY;
 	yPower *= yPower;
-	real dis = sqrt(xPower + yPower);
+	real_t dis = sqrt(xPower + yPower);
 
 	if (dis != 0) return;
 
@@ -161,7 +161,7 @@ void CVerSliderCtrl2::OnLButtonUp(uint nFlags, CPoint Point)
 
 	if (Rect.top <= Point.y && Point.y <= Rect.bottom)
 	{
-		m_Pos = 1 - (real)(Point.y - Rect.top) / h;
+		m_Pos = 1 - (real_t)(Point.y - Rect.top) / h;
 
 		if (m_Pos < LowerstPos) m_Pos = LowerstPos;
 
@@ -194,7 +194,7 @@ void CVerSliderCtrl2::OnMouseMove(uint nFlags, CPoint Point)
 		if (Rect.top <= Point.y && Point.y <= Rect.bottom)
 		{
 
-			m_Pos = 1 - (real)(Point.y - Rect.top) / h;
+			m_Pos = 1 - (real_t)(Point.y - Rect.top) / h;
 
 			if (m_Pos < LowerstPos) m_Pos = LowerstPos;
 

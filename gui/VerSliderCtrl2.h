@@ -19,9 +19,9 @@ public:
 
 	int  m_scaleNum;//nn 
 
-	real m_Pos;
+	real_t m_Pos;
 
-	real LowerstPos;//Presbia, the allowed lowest pos
+	real_t LowerstPos;//Presbia, the allowed lowest pos
 
 	afx_msg void OnPaint();
 

@@ -8,19 +8,19 @@ class CSurface
 {
 public:
 
-	real m_r_max_um;
+	real_t m_r_max_um;
 
 	virtual void Reset() { m_r_max_um = 0.0; }
 
-	virtual BOOL GetAt(const real r_um, const real a_rd,
-		real* z_um, real* dz_dx, real* dz_dy, real* dz_dr, real* dz_da, real* rc_um) const
+	virtual BOOL GetAt(const real_t r_um, const real_t a_rd,
+		real_t* z_um, real_t* dz_dx, real_t* dz_dy, real_t* dz_dr, real_t* dz_da, real_t* rc_um) const
 	{
 		return FALSE;
 	}
 
-	virtual BOOL GetAxUmAt(const real r_um, const real a_rd, real& ax_um) const;
-	virtual BOOL GetTnUmAt(const real r_um, const real a_rd, real& tn_um) const;
-	virtual BOOL GetRfUmAt(const real r_um, const real a_rd, real& rf_um) const;
+	virtual BOOL GetAxUmAt(const real_t r_um, const real_t a_rd, real_t& ax_um) const;
+	virtual BOOL GetTnUmAt(const real_t r_um, const real_t a_rd, real_t& tn_um) const;
+	virtual BOOL GetRfUmAt(const real_t r_um, const real_t a_rd, real_t& rf_um) const;
 };
 
 //***************************************************************************************
@@ -33,23 +33,23 @@ public:
 
 	virtual void Reset() override;
 
-	void Create(const real r_max_um, const real ax0_um, const real q);
+	void Create(const real_t r_max_um, const real_t ax0_um, const real_t q);
 
-	real GetEccentricity();
+	real_t GetEccentricity();
 
-	virtual BOOL GetAt(const real r_um, const real a_rd,
-		real* z_um, real* dz_dx, real* dz_dy, real* dz_dr, real* dz_da, real* rc_um) const override;
+	virtual BOOL GetAt(const real_t r_um, const real_t a_rd,
+		real_t* z_um, real_t* dz_dx, real_t* dz_dy, real_t* dz_dr, real_t* dz_da, real_t* rc_um) const override;
 
-	virtual BOOL GetAxUmAt(const real r_um, const real a_rd, real& ax_um) const override;
+	virtual BOOL GetAxUmAt(const real_t r_um, const real_t a_rd, real_t& ax_um) const override;
 
-	real m_ax0_um;
-	real m_q;
+	real_t m_ax0_um;
+	real_t m_q;
 
 private:
 
-	real m_a_um;
-	real m_b_um;
-	real m_p_um;
+	real_t m_a_um;
+	real_t m_b_um;
+	real_t m_p_um;
 };
 
 //***************************************************************************************
@@ -115,33 +115,33 @@ public:
 
 	static int m_ord[ZERNIKE_NUM_MODES];
 	static int m_frq[ZERNIKE_NUM_MODES];
-	static real m_nrm[ZERNIKE_NUM_MODES];
-	static real m_rc[ZERNIKE_NUM_MODES][ZERNIKE_NUM_ORDERS];
-	static Matrix<real> m_cs;
-	static Matrix<real> m_sc;
+	static real_t m_nrm[ZERNIKE_NUM_MODES];
+	static real_t m_rc[ZERNIKE_NUM_MODES][ZERNIKE_NUM_ORDERS];
+	static Matrix<real_t> m_cs;
+	static Matrix<real_t> m_sc;
 	static CString m_rms_name[ZERNIKE_NUM_MODES];
 
-	real m_c[ZERNIKE_NUM_MODES];
+	real_t m_c[ZERNIKE_NUM_MODES];
 
 	virtual void Reset() override;
 
-	BOOL CreateXY(const int max_order, const real r_max_um, const int num_points, real* r_um, real* a_rd, real* dw_dx, real* dw_dy, real* rmse);
-	BOOL CreateR(const int max_order, const real r_max_um, const int num_points, real* r_um, real* a_rd, real* dw_dr, real* rmse);
+	BOOL CreateXY(const int max_order, const real_t r_max_um, const int num_points, real_t* r_um, real_t* a_rd, real_t* dw_dx, real_t* dw_dy, real_t* rmse);
+	BOOL CreateR(const int max_order, const real_t r_max_um, const int num_points, real_t* r_um, real_t* a_rd, real_t* dw_dr, real_t* rmse);
 
 	void ComputePiston(const BOOL balance);
 	void ComputeTilt(const BOOL balance);
 
-	void AddSphEq(const real SphEq);
+	void AddSphEq(const real_t SphEq);
 
-	real GetCUm(const int mode) const;
-	void SetCUm(const int mode, const real c_um);
+	real_t GetCUm(const int mode) const;
+	void SetCUm(const int mode, const real_t c_um);
 
-	void ChangeRMaxUm(const real r_max_um);
+	void ChangeRMaxUm(const real_t r_max_um);
 
-	virtual BOOL GetAt(const real r_um, const real a_rd,
-		real* w_um, real* dw_dx, real* dw_dy, real* dw_dr, real* dw_da, real* rc_um) const override;
+	virtual BOOL GetAt(const real_t r_um, const real_t a_rd,
+		real_t* w_um, real_t* dw_dx, real_t* dw_dy, real_t* dw_dr, real_t* dw_da, real_t* rc_um) const override;
 
-	void GetTiltAt(const real a_rd, real* tilt, real* tilt_x, real* tilt_y) const;
+	void GetTiltAt(const real_t a_rd, real_t* tilt, real_t* tilt_x, real_t* tilt_y) const;
 
 	void SaveTxtFile(const CString& FileName);
 	BOOL LoadTxtFile(const CString& FileName);
@@ -150,12 +150,12 @@ public:
 	void operator-=(const CZernikeSurface& Surface) { Subtract(Surface); }
 	void operator&=(const CZernikeMask& Mask) { ApplyMask(Mask); }
 
-	real ComputeRms() const;
-	void GetCombinedRms(const int mode, real& value, int& axis) const;
+	real_t ComputeRms() const;
+	void GetCombinedRms(const int mode, real_t& value, int& axis) const;
 
 	int EvaluateMode(const int mode1, const int mode2);
 
-	void SetSphEq(const real SphEq);
+	void SetSphEq(const real_t SphEq);
 
 private:
 

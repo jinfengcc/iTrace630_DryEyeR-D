@@ -475,15 +475,15 @@ void CAlignmentDlg::OnAODToolButtonClicked()
 
 void CAlignmentDlg::OnVideoQkWFExamBtnClicked()
 {
-	real backC3 = m_pCalibration->Zernike.C3;
-	real backC4 = m_pCalibration->Zernike.C4;
-	real backC5 = m_pCalibration->Zernike.C5;
+	real_t backC3 = m_pCalibration->Zernike.C3;
+	real_t backC4 = m_pCalibration->Zernike.C4;
+	real_t backC5 = m_pCalibration->Zernike.C5;
 	int  backExposureTime = m_pCalibration->LADExposureTime;
 	BOOL backLADSwapXY = m_pCalibration->LADSwapXY;
 	BOOL backADXNoFlip = m_pCalibration->LADXNoFlip;
-	real backLADXFocalDistance = m_pCalibration->LADXFocalDistance;
+	real_t backLADXFocalDistance = m_pCalibration->LADXFocalDistance;
 	BOOL backLADYNoFlip = m_pCalibration->LADYNoFlip;
-	real backLADYFocalDistance = m_pCalibration->LADYFocalDistance;
+	real_t backLADYFocalDistance = m_pCalibration->LADYFocalDistance;
 	int  backOptometerEnabled = m_pCalibration->OptometerEnabled;
 
 	GetDlgData();//610 1

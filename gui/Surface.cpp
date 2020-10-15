@@ -9,9 +9,9 @@
 //***************************************************************************************
 //***************************************************************************************
 
-BOOL CSurface::GetAxUmAt(const real r_um, const real a_rd, real& ax_um) const
+BOOL CSurface::GetAxUmAt(const real_t r_um, const real_t a_rd, real_t& ax_um) const
 {
-	real dz_dr;
+	real_t dz_dr;
 
 	if (!GetAt(r_um, a_rd, NULL, NULL, NULL, &dz_dr, NULL, NULL)) return FALSE;
 	if (dz_dr == 0.0) return FALSE;
@@ -23,7 +23,7 @@ BOOL CSurface::GetAxUmAt(const real r_um, const real a_rd, real& ax_um) const
 
 //***************************************************************************************
 
-BOOL CSurface::GetTnUmAt(const real r_um, const real a_rd, real& tn_um) const
+BOOL CSurface::GetTnUmAt(const real_t r_um, const real_t a_rd, real_t& tn_um) const
 {
 	if (!GetAt(r_um, a_rd, NULL, NULL, NULL, NULL, NULL, &tn_um)) return FALSE;
 
@@ -34,23 +34,23 @@ BOOL CSurface::GetTnUmAt(const real r_um, const real a_rd, real& tn_um) const
 
 //***************************************************************************************
 
-BOOL CSurface::GetRfUmAt(const real r_um, const real a_rd, real& rf_um) const
+BOOL CSurface::GetRfUmAt(const real_t r_um, const real_t a_rd, real_t& rf_um) const
 {
-	real z_um, dz_dr;
+	real_t z_um, dz_dr;
 	if (!GetAt(r_um, a_rd, &z_um, NULL, NULL, &dz_dr, NULL, NULL)) return FALSE;
 
 	if (dz_dr == 0.0) return FALSE;
 
-	real tan_a = dz_dr;
-	real sin_a = tan_a / sqrt(1.0 + sqr(tan_a));
-	real cos_a = sqrt(1.0 - sqr(sin_a));
+	real_t tan_a = dz_dr;
+	real_t sin_a = tan_a / sqrt(1.0 + sqr(tan_a));
+	real_t cos_a = sqrt(1.0 - sqr(sin_a));
 
-	real sin_g = sin_a / 1.3375; // Snell's law //cjf note : is 1.3375 be the corneal refractive index?  
-	real cos_g = sqrt(1.0 - sqr(sin_g));
+	real_t sin_g = sin_a / 1.3375; // Snell's law //cjf note : is 1.3375 be the corneal refractive index?  
+	real_t cos_g = sqrt(1.0 - sqr(sin_g));
 
-	real sin_b = sin_a * cos_g - cos_a * sin_g; // b = a - g
-	real cos_b = sqrt(1.0 - sqr(sin_b));
-	real cot_b = cos_b / sin_b;
+	real_t sin_b = sin_a * cos_g - cos_a * sin_g; // b = a - g
+	real_t cos_b = sqrt(1.0 - sqr(sin_b));
+	real_t cot_b = cos_b / sin_b;
 
 	rf_um = z_um + r_um * cot_b;
 
@@ -82,7 +82,7 @@ void CConicSurface::Reset()
 
 //***************************************************************************************
 
-void CConicSurface::Create(const real r_max_um, const real ax0_um, const real q)
+void CConicSurface::Create(const real_t r_max_um, const real_t ax0_um, const real_t q)
 {
 	m_r_max_um = r_max_um;
 
@@ -116,8 +116,8 @@ void CConicSurface::Create(const real r_max_um, const real ax0_um, const real q)
 
 //***************************************************************************************
 
-BOOL CConicSurface::GetAt(const real r_um, const real a_rd, real* z_um, real* dz_dx, real* dz_dy,
-	real* dz_dr, real* dz_da, real* rc_um) const
+BOOL CConicSurface::GetAt(const real_t r_um, const real_t a_rd, real_t* z_um, real_t* dz_dx, real_t* dz_dy,
+	real_t* dz_dr, real_t* dz_da, real_t* rc_um) const
 {
 	if (r_um > m_r_max_um) return FALSE;
 
@@ -142,7 +142,7 @@ BOOL CConicSurface::GetAt(const real r_um, const real a_rd, real* z_um, real* dz
 	}
 
 	//
-	real _dz_dr = 0.0;
+	real_t _dz_dr = 0.0;
 	if (dz_dr || dz_dx || dz_dy)
 	{
 		// hyperbola
@@ -173,26 +173,26 @@ BOOL CConicSurface::GetAt(const real r_um, const real a_rd, real* z_um, real* dz
 		// hyperbola
 		if (m_q < -1.0)
 		{
-			real b2 = sqr(m_b_um);
-			real b4 = sqr(b2);
-			real a2 = sqr(m_a_um);
-			real r2 = sqr(r_um);
+			real_t b2 = sqr(m_b_um);
+			real_t b4 = sqr(b2);
+			real_t a2 = sqr(m_a_um);
+			real_t r2 = sqr(r_um);
 			*rc_um = sqrt(cube(b4 + r2 * (a2 + b2))) / (m_a_um * b4);
 		}
 		// parabola
 		else if (m_q == -1.0)
 		{
-			real p2 = sqr(m_p_um);
-			real r2 = sqr(r_um);
+			real_t p2 = sqr(m_p_um);
+			real_t r2 = sqr(r_um);
 			*rc_um = sqrt(cube(p2 + r2)) / p2;
 		}
 		// prolate ellipse, circle, oblate ellipse
 		else
 		{
-			real b2 = sqr(m_b_um);
-			real b4 = sqr(b2);
-			real a2 = sqr(m_a_um);
-			real r2 = sqr(r_um);
+			real_t b2 = sqr(m_b_um);
+			real_t b4 = sqr(b2);
+			real_t a2 = sqr(m_a_um);
+			real_t r2 = sqr(r_um);
 			*rc_um = sqrt(cube(b4 + r2 * (a2 - b2))) / (m_a_um * b4);
 		}
 	}
@@ -202,7 +202,7 @@ BOOL CConicSurface::GetAt(const real r_um, const real a_rd, real* z_um, real* dz
 
 //***************************************************************************************
 
-real CConicSurface::GetEccentricity()
+real_t CConicSurface::GetEccentricity()
 {
 	// hyperbola, parabola, prolate ellipse, circle
 	if (m_q <= 0) return sqrt(-m_q);
@@ -212,7 +212,7 @@ real CConicSurface::GetEccentricity()
 
 //***************************************************************************************
 
-BOOL CConicSurface::GetAxUmAt(const real r_um, const real a_rd, real& ax_um) const
+BOOL CConicSurface::GetAxUmAt(const real_t r_um, const real_t a_rd, real_t& ax_um) const
 {
 	if (r_um > m_r_max_um) return FALSE;
 
@@ -227,10 +227,10 @@ BOOL CConicSurface::GetAxUmAt(const real r_um, const real a_rd, real& ax_um) con
 
 int CZernikeSurface::m_ord[ZERNIKE_NUM_MODES];
 int CZernikeSurface::m_frq[ZERNIKE_NUM_MODES];
-real CZernikeSurface::m_nrm[ZERNIKE_NUM_MODES];
-real CZernikeSurface::m_rc[ZERNIKE_NUM_MODES][ZERNIKE_NUM_ORDERS];
-Matrix<real> CZernikeSurface::m_cs;
-Matrix<real> CZernikeSurface::m_sc;
+real_t CZernikeSurface::m_nrm[ZERNIKE_NUM_MODES];
+real_t CZernikeSurface::m_rc[ZERNIKE_NUM_MODES][ZERNIKE_NUM_ORDERS];
+Matrix<real_t> CZernikeSurface::m_cs;
+Matrix<real_t> CZernikeSurface::m_sc;
 
 //***************************************************************************************
 
@@ -253,7 +253,7 @@ CZernikeSurface::CZernikeSurface()
 				for (int k = 0; k <= ((o - abs(f)) >> 1); k++)
 				{
 					int i = o - 2 * k;
-					real c = factorial(o - k) /
+					real_t c = factorial(o - k) /
 						(factorial(k) * factorial(((o + abs(f)) >> 1) - k) * factorial(((o - abs(f)) >> 1) - k));
 					m_rc[z][i] = (k & 1) ? -c : c;
 				}
@@ -400,11 +400,11 @@ BOOL CZernikeSurface::LoadTxtFile(const CString& FileName)
 
 //***************************************************************************************
 
-BOOL CZernikeSurface::GetAt(const real r_um, const real a_rd,
-	real* w_um, real* dw_dx, real* dw_dy, real* dw_dr, real* dw_da, real* rc_um) const
+BOOL CZernikeSurface::GetAt(const real_t r_um, const real_t a_rd,
+	real_t* w_um, real_t* dw_dx, real_t* dw_dy, real_t* dw_dr, real_t* dw_da, real_t* rc_um) const
 {
-	real r = r_um / m_r_max_um;
-	real P[ZERNIKE_NUM_ORDERS];
+	real_t r = r_um / m_r_max_um;
+	real_t P[ZERNIKE_NUM_ORDERS];
 	P[0] = 1.0;
 
 	for (int o = 1; o < ZERNIKE_NUM_ORDERS; o++)
@@ -412,8 +412,8 @@ BOOL CZernikeSurface::GetAt(const real r_um, const real a_rd,
 		P[o] = r * P[o - 1];
 	}
 
-	real S[ZERNIKE_NUM_FREQUENCIES];
-	real C[ZERNIKE_NUM_FREQUENCIES];
+	real_t S[ZERNIKE_NUM_FREQUENCIES];
+	real_t C[ZERNIKE_NUM_FREQUENCIES];
 
 	for (int f = 0; f < ZERNIKE_NUM_FREQUENCIES; f++)
 	{
@@ -421,16 +421,16 @@ BOOL CZernikeSurface::GetAt(const real r_um, const real a_rd,
 		C[f] = cos(f * a_rd);
 	}
 
-	real w_ = 0.0;
-	real dw_dr_ = 0.0;
-	real dw_da_ = 0.0;
-	real d2w_dr2_ = 0.0;
+	real_t w_ = 0.0;
+	real_t dw_dr_ = 0.0;
+	real_t dw_da_ = 0.0;
+	real_t d2w_dr2_ = 0.0;
 
 	for (int z = 0; z < ZERNIKE_NUM_MODES; z++)
 	{
-		real R = 0.0;
-		real dR_dr = 0.0;
-		real d2R_dr2 = 0.0;
+		real_t R = 0.0;
+		real_t dR_dr = 0.0;
+		real_t d2R_dr2 = 0.0;
 
 		for (int o = abs(m_frq[z]); o <= m_ord[z]; o += 2)
 		{
@@ -445,7 +445,7 @@ BOOL CZernikeSurface::GetAt(const real r_um, const real a_rd,
 			}
 		}
 
-		real c = m_c[z];
+		real_t c = m_c[z];
 		int f = m_frq[z];
 
 		if (f >= 0)
@@ -490,9 +490,9 @@ BOOL CZernikeSurface::GetAt(const real r_um, const real a_rd,
 
 //***************************************************************************************
 
-void CZernikeSurface::GetTiltAt(const real a_rd, real* tilt, real* tilt_x, real* tilt_y) const
+void CZernikeSurface::GetTiltAt(const real_t a_rd, real_t* tilt, real_t* tilt_x, real_t* tilt_y) const
 {
-	real tx = 0.0, ty = 0.0;
+	real_t tx = 0.0, ty = 0.0;
 
 	for (int z = 0; z < ZERNIKE_NUM_MODES; z++)
 	{
@@ -510,8 +510,8 @@ void CZernikeSurface::GetTiltAt(const real a_rd, real* tilt, real* tilt_x, real*
 
 //***************************************************************************************
 
-BOOL CZernikeSurface::CreateXY(const int max_order, const real r_max_um, const int num_points,
-	real* r_um, real* a_rd, real* dw_dx, real* dw_dy, real* rmse)
+BOOL CZernikeSurface::CreateXY(const int max_order, const real_t r_max_um, const int num_points,
+	real_t* r_um, real_t* a_rd, real_t* dw_dx, real_t* dw_dy, real_t* rmse)
 {
 	Reset();
 
@@ -526,12 +526,12 @@ BOOL CZernikeSurface::CreateXY(const int max_order, const real r_max_um, const i
 
 	if (num_points < num_unknowns) return FALSE;
 
-	Matrix<real> A(num_equations, num_unknowns);
+	Matrix<real_t> A(num_equations, num_unknowns);
 	A.Fill(0.0);
 
-	Matrix<real> COS(max_order + 1);
-	Matrix<real> SIN(max_order + 1);
-	Matrix<real> POW(max_order + 1);
+	Matrix<real_t> COS(max_order + 1);
+	Matrix<real_t> SIN(max_order + 1);
+	Matrix<real_t> POW(max_order + 1);
 
 	for (int p = 0; p < num_points; p++)
 	{
@@ -541,7 +541,7 @@ BOOL CZernikeSurface::CreateXY(const int max_order, const real r_max_um, const i
 			SIN[f] = sin(f * a_rd[p]);
 		}
 
-		real r = r_um[p] / m_r_max_um;
+		real_t r = r_um[p] / m_r_max_um;
 		POW[0] = 1.0;
 
 		for (int o = 1; o <= max_order; o++)
@@ -553,8 +553,8 @@ BOOL CZernikeSurface::CreateXY(const int max_order, const real r_max_um, const i
 		{
 			if (r != 0.0)
 			{
-				real R = 0.0;
-				real dR_dr = 0.0;
+				real_t R = 0.0;
+				real_t dR_dr = 0.0;
 
 				for (int o = abs(m_frq[z]); o <= m_ord[z]; o += 2)
 				{
@@ -566,7 +566,7 @@ BOOL CZernikeSurface::CreateXY(const int max_order, const real r_max_um, const i
 					}
 				}
 
-				real dZ_dr, dZ_da;
+				real_t dZ_dr, dZ_da;
 				int f = m_frq[z];
 
 				if (f >= 0)
@@ -605,8 +605,8 @@ BOOL CZernikeSurface::CreateXY(const int max_order, const real r_max_um, const i
 		}
 	}
 
-	Matrix<real> F(num_equations);
-	Matrix<real> C;
+	Matrix<real_t> F(num_equations);
+	Matrix<real_t> C;
 
 	for (int p = 0; p < num_points; p++)
 	{
@@ -627,7 +627,7 @@ BOOL CZernikeSurface::CreateXY(const int max_order, const real r_max_um, const i
 
 		for (int p = 0; p < num_points; p++)
 		{
-			real w_um, _dw_dx, _dw_dy;
+			real_t w_um, _dw_dx, _dw_dy;
 			GetAt(r_um[p], a_rd[p], &w_um, &_dw_dx, &_dw_dy, NULL, NULL, NULL);
 			*rmse += sqr(_dw_dx - dw_dx[p]) + sqr(_dw_dy - dw_dy[p]);
 		}
@@ -640,8 +640,8 @@ BOOL CZernikeSurface::CreateXY(const int max_order, const real r_max_um, const i
 
 //***************************************************************************************
 
-BOOL CZernikeSurface::CreateR(const int max_order, const real r_max_um, const int num_points,
-	real* r_um, real* a_rd, real* dw_dr, real* rmse)
+BOOL CZernikeSurface::CreateR(const int max_order, const real_t r_max_um, const int num_points,
+	real_t* r_um, real_t* a_rd, real_t* dw_dr, real_t* rmse)
 {
 	Reset();
 
@@ -656,12 +656,12 @@ BOOL CZernikeSurface::CreateR(const int max_order, const real r_max_um, const in
 
 	if (num_points < num_unknowns) return FALSE;
 
-	Matrix<real> A(num_equations, num_unknowns);
+	Matrix<real_t> A(num_equations, num_unknowns);
 	A.Fill(0.0);
 
-	Matrix<real> COS(max_order + 1);
-	Matrix<real> SIN(max_order + 1);
-	Matrix<real> POW(max_order + 1);
+	Matrix<real_t> COS(max_order + 1);
+	Matrix<real_t> SIN(max_order + 1);
+	Matrix<real_t> POW(max_order + 1);
 
 	for (int p = 0; p < num_points; p++)
 	{
@@ -671,7 +671,7 @@ BOOL CZernikeSurface::CreateR(const int max_order, const real r_max_um, const in
 			SIN[f] = sin(f * a_rd[p]);
 		}
 
-		real r = r_um[p] / m_r_max_um;
+		real_t r = r_um[p] / m_r_max_um;
 		POW[0] = 1.0;
 
 		for (int o = 1; o <= max_order; o++)
@@ -681,7 +681,7 @@ BOOL CZernikeSurface::CreateR(const int max_order, const real r_max_um, const in
 
 		for (int z = 1; z < num_modes; z++)
 		{
-			real dR_dr = 0.0;
+			real_t dR_dr = 0.0;
 			for (int o = abs(m_frq[z]); o <= m_ord[z]; o += 2)
 			{
 				if (o > 0)
@@ -695,8 +695,8 @@ BOOL CZernikeSurface::CreateR(const int max_order, const real r_max_um, const in
 		}
 	}
 
-	Matrix<real> F(num_equations, 1, (real*)dw_dr);
-	Matrix<real> C;
+	Matrix<real_t> F(num_equations, 1, (real_t*)dw_dr);
+	Matrix<real_t> C;
 
 	if (!LSM(A, C, F)) return FALSE;
 
@@ -711,7 +711,7 @@ BOOL CZernikeSurface::CreateR(const int max_order, const real r_max_um, const in
 
 		for (int p = 0; p < num_points; p++)
 		{
-			real w_um, _dw_dr;
+			real_t w_um, _dw_dr;
 			GetAt(r_um[p], a_rd[p], &w_um, NULL, NULL, &_dw_dr, NULL, NULL);
 			*rmse += sqr(_dw_dr - dw_dr[p]);
 		}
@@ -757,7 +757,7 @@ void CZernikeSurface::ComputeTilt(const BOOL balance)
 
 //***************************************************************************************
 
-void CZernikeSurface::SetCUm(const int z, const real c_um)
+void CZernikeSurface::SetCUm(const int z, const real_t c_um)
 {
 	if (z < 0 || z >= ZERNIKE_NUM_MODES) return;
 
@@ -766,7 +766,7 @@ void CZernikeSurface::SetCUm(const int z, const real c_um)
 
 //***************************************************************************************
 
-real CZernikeSurface::GetCUm(const int z) const
+real_t CZernikeSurface::GetCUm(const int z) const
 {
 	if (z < 0 || z >= ZERNIKE_NUM_MODES) return 0.0;
 	return m_c[z] * m_r_max_um / m_nrm[z];
@@ -774,7 +774,7 @@ real CZernikeSurface::GetCUm(const int z) const
 
 //***************************************************************************************
 
-void CZernikeSurface::ChangeRMaxUm(const real r_max_um)
+void CZernikeSurface::ChangeRMaxUm(const real_t r_max_um)
 {
 	if (r_max_um >= m_r_max_um) return;
 
@@ -785,13 +785,13 @@ void CZernikeSurface::ChangeRMaxUm(const real r_max_um)
 		return;
 	}
 
-	Matrix<real> c(ZERNIKE_NUM_MODES, 1, m_c);
-	Matrix<real> s;
+	Matrix<real_t> c(ZERNIKE_NUM_MODES, 1, m_c);
+	Matrix<real_t> s;
 
 	Multiply(m_cs, c, s);
 
-	real r = r_max_um / m_r_max_um;
-	Matrix<real> p(ZERNIKE_NUM_MODES);
+	real_t r = r_max_um / m_r_max_um;
+	Matrix<real_t> p(ZERNIKE_NUM_MODES);
 	p[0] = 1.0 / r;
 
 	for (int o = 1; o < ZERNIKE_NUM_ORDERS; o++)
@@ -813,9 +813,9 @@ void CZernikeSurface::ChangeRMaxUm(const real r_max_um)
 
 //***************************************************************************************
 
-real CZernikeSurface::ComputeRms() const
+real_t CZernikeSurface::ComputeRms() const
 {
-	real v = 0.0;
+	real_t v = 0.0;
 
 	for (int z = 3; z < ZERNIKE_NUM_MODES; z++)
 	{
@@ -841,7 +841,7 @@ void CZernikeSurface::ApplyMask(const CZernikeMask& Mask)
 
 //***************************************************************************************
 
-void CZernikeSurface::GetCombinedRms(const int mode, real& value, int& axis) const
+void CZernikeSurface::GetCombinedRms(const int mode, real_t& value, int& axis) const
 {
 	int mode1 = -1, mode2 = -1;
 	int z = 0;
@@ -875,7 +875,7 @@ void CZernikeSurface::GetCombinedRms(const int mode, real& value, int& axis) con
 
 //***************************************************************************************
 
-void CZernikeSurface::AddSphEq(const real SphEq)
+void CZernikeSurface::AddSphEq(const real_t SphEq)
 {
 	m_c[4] -= SphEq * (m_r_max_um * 0.000001) / 4.0;
 }
@@ -1092,19 +1092,19 @@ void CZernikeMask::GetName(CString& Name) const
 
 int CZernikeSurface::EvaluateMode(const int mode1, const int mode2)
 {
-	real rms1 = 0.0;
+	real_t rms1 = 0.0;
 	if (0 <= mode1 && mode1 < ZERNIKE_NUM_MODES)
 	{
 		rms1 = GetCUm(mode1);
 	}
 
-	real rms2 = 0.0;
+	real_t rms2 = 0.0;
 	if (0 <= mode2 && mode2 < ZERNIKE_NUM_MODES)
 	{
 		rms2 = GetCUm(mode2);
 	}
 
-	real rms = hyp(rms1, rms2);
+	real_t rms = hyp(rms1, rms2);
 
 	rms += 0.0001;//
 
@@ -1132,7 +1132,7 @@ int CZernikeSurface::EvaluateMode(const int mode1, const int mode2)
 
 //***************************************************************************************
 
-void CZernikeSurface::SetSphEq(const real SphEq)
+void CZernikeSurface::SetSphEq(const real_t SphEq)
 {
 	m_c[4] = 0.0;
 

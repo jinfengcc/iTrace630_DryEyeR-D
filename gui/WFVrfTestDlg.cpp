@@ -55,8 +55,8 @@ BOOL CWFVrfTestDlg::OnInitDialog()
 
 	SetWindowPos(NULL, 0, 0, m_w, m_h, SWP_NOZORDER);
 
-	real d = 0.005 * m_h;
-	real BH = (m_h - 17 * d) / 16;
+	real_t d = 0.005 * m_h;
+	real_t BH = (m_h - 17 * d) / 16;
 
 	int  BT = intRound(d);
 	int  BB = intRound(d + (BH));

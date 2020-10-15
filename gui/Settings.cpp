@@ -54,7 +54,7 @@ void CScale::SaveColors(const CString& FileName)
 //***************************************************************************************
 //***************************************************************************************
 
-real CWndSettings::GetIncrement()
+real_t CWndSettings::GetIncrement()
 {
 	switch (m_Type)
 	{
@@ -75,7 +75,7 @@ real CWndSettings::GetIncrement()
 
 //***************************************************************************************
 
-real CWndSettings::GetMaxStep()
+real_t CWndSettings::GetMaxStep()
 {
 	switch (m_Type)
 	{
@@ -161,9 +161,9 @@ void CWndSettings::SetDefaultColors(int ColorsIndex)
 	if (m_Type == TYPE_TOPM)
 	{
 		pScale->m_NumColors = 11;
-		real dr = 255.0 / (pScale->m_NumColors - 1);
-		real dg = 255.0 / (pScale->m_NumColors - 1);
-		real db = 155.0 / (pScale->m_NumColors - 1);
+		real_t dr = 255.0 / (pScale->m_NumColors - 1);
+		real_t dg = 255.0 / (pScale->m_NumColors - 1);
+		real_t db = 155.0 / (pScale->m_NumColors - 1);
 
 		for (int i = 0; i < pScale->m_NumColors; i++)
 		{

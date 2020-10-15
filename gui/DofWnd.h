@@ -15,7 +15,7 @@ class CDOFWnd : public CDispWnd
 {
 public:
 
-	CDOFWnd(RECT& Rect, Matrix<real>& X, Matrix<real>& F, CWnd* pWnd);
+	CDOFWnd(RECT& Rect, Matrix<real_t>& X, Matrix<real_t>& F, CWnd* pWnd);
 
 	CCubicSpline m_Spline;
 
@@ -25,14 +25,14 @@ private:
 
 	CMRgn m_Rgn;
 
-	real m_F[3001];
+	real_t m_F[3001];
 	int m_imax;
-	real m_xmax;
-	real m_fmax;
-	real m_fmin;
+	real_t m_xmax;
+	real_t m_fmax;
+	real_t m_fmin;
 
 	BOOL m_abs;
-	real m_thr;
+	real_t m_thr;
 
 	int m_pos;
 

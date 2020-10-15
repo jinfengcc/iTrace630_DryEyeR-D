@@ -56,9 +56,9 @@ void CWFGUICtrlWnd::CreateThisWnd(RECT& Rect, CWnd* pWnd, int CapWidth)
 	{
 		m_Acquire = FALSE;
 
-		int Left_w = intRound(real(CapWidth) / 5);
+		int Left_w = intRound(real_t(CapWidth) / 5);
 		int BtnW = Left_w;
-		int top_h = intRound(real(m_h) / 10);
+		int top_h = intRound(real_t(m_h) / 10);
 
 		int W = ::GetSystemMetrics(SM_CXSCREEN);
 		int q = W == 1920 ? 2 : (W == 1600 ? 1 : 0);
@@ -75,7 +75,7 @@ void CWFGUICtrlWnd::CreateThisWnd(RECT& Rect, CWnd* pWnd, int CapWidth)
 
 	if (m_isPresbia)
 	{
-		int mid_w = intRound(real(m_w) / 2);
+		int mid_w = intRound(real_t(m_w) / 2);
 
 		int OnoffWidth = intRound(0.07    * m_w);
 		int Half_OnoffHeight = intRound(0.5 * 0.45 * OnoffWidth);
@@ -100,12 +100,12 @@ void CWFGUICtrlWnd::CreateThisWnd(RECT& Rect, CWnd* pWnd, int CapWidth)
 		int top = mid_h1 - Half_OnoffHeight;
 		int btm = mid_h1 + Half_OnoffHeight;
 
-		int BtnW = intRound(0.5 * real(OnoffWidth));
+		int BtnW = intRound(0.5 * real_t(OnoffWidth));
 
-		int space = intRound(real(m_w - (LableaW + LablebW + LablecW + BtnW + 3 * OnoffWidth)) / 2.4);
+		int space = intRound(real_t(m_w - (LableaW + LablebW + LablecW + BtnW + 3 * OnoffWidth)) / 2.4);
 
 		//Bk Rect (if it WF and CT exam togther, do not allow to change pupil/dot center,thus need change the components position)
-		int Bk_Left = intRound(real(m_w) / 4);
+		int Bk_Left = intRound(real_t(m_w) / 4);
 
 		::SetRect(&m_Bk_LabelRect[0], Bk_Left - LableaW, top, Bk_Left, btm);
 		::SetRect(&m_Bk_OnoffRect[0], Bk_Left, top, Bk_Left + OnoffWidth, btm);
@@ -214,8 +214,8 @@ void CWFGUICtrlWnd::CreateThisWnd(RECT& Rect, CWnd* pWnd, int CapWidth)
 	}
 	else
 	{
-		int mid_w = intRound(real(m_w) / 2);
-		int mid_h = intRound(real(m_h) / 3);
+		int mid_w = intRound(real_t(m_w) / 2);
+		int mid_h = intRound(real_t(m_h) / 3);
 
 		int OnoffWidth = intRound(0.07    * m_w);
 		int Half_OnoffHeight = intRound(0.5 * 0.45 * OnoffWidth);
@@ -237,12 +237,12 @@ void CWFGUICtrlWnd::CreateThisWnd(RECT& Rect, CWnd* pWnd, int CapWidth)
 		int top = mid_h - Half_OnoffHeight;
 		int btm = mid_h + Half_OnoffHeight;
 
-		int BtnW = intRound(0.5 * real(OnoffWidth));
+		int BtnW = intRound(0.5 * real_t(OnoffWidth));
 
-		int space = intRound(real(m_w - (LableaW + LablebW + LablecW + BtnW + 3 * OnoffWidth)) / 2.4); // From 2.0 to 2.4
+		int space = intRound(real_t(m_w - (LableaW + LablebW + LablecW + BtnW + 3 * OnoffWidth)) / 2.4); // From 2.0 to 2.4
 
 																									   //Bk Rect (if it WF and CT exam togther, do not allow to change pupil/dot center,thus need change the components position)
-		int Bk_Left = intRound(real(m_w) / 4);
+		int Bk_Left = intRound(real_t(m_w) / 4);
 
 		::SetRect(&m_Bk_LabelRect[0], Bk_Left - LableaW, top, Bk_Left, btm);
 		::SetRect(&m_Bk_OnoffRect[0], Bk_Left, top, Bk_Left + OnoffWidth, btm);

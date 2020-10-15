@@ -252,7 +252,7 @@ void CPatientChartDlg::DrawChart(CMDC& MemDC)
 		}
 
 		int Num = m_PatienNumByTime[i].Num;
-		real ratio = (real)Num / (real)m_maxNuminOneMonth;
+		real_t ratio = (real_t)Num / (real_t)m_maxNuminOneMonth;
 		int PosY = intRound(ratio*DisY);
 
 		int y = intRound((m_PatienNumByTime[i].Num / m_maxNuminOneMonth)*newY0);

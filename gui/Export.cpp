@@ -337,8 +337,8 @@ void ExportScreen(CExam* pExam1, CExam* pExam2, const Matrix<uchar>& Mem, CDicom
 
 			if (pHeader->m_Type == EXAM_TYPE_WF && pExam->m_Image.m_ve_ok)
 			{
-				real x = -1 * 0.001 * pExam->m_Image.m_ve_x_um;
-				real y = -1 * 0.001 * pExam->m_Image.m_ve_y_um;
+				real_t x = -1 * 0.001 * pExam->m_Image.m_ve_x_um;
+				real_t y = -1 * 0.001 * pExam->m_Image.m_ve_y_um;
 
 				s.Format(_T("%.10f"), x);
 				G_As = s;//6.2.1
@@ -348,7 +348,7 @@ void ExportScreen(CExam* pExam1, CExam* pExam2, const Matrix<uchar>& Mem, CDicom
 				G_As = s;//6.2.1
 				fprintf(pFile, "<y_coordinate>%s</y_coordinate>\n", G_As);
 
-				real dis = sqrt(x*x + y*y);
+				real_t dis = sqrt(x*x + y*y);
 
 				s.Format(_T("%.10f"), dis);
 				G_As = s;//6.2.1
@@ -442,7 +442,7 @@ void ExportScreen(CExam* pExam1, CExam* pExam2, const Matrix<uchar>& Mem, CDicom
 
 				BOOL OK[5] = { 0, 0, 0, 0, 0 };
 				CZernikeSurface Surface[5];
-				real ZoneRUm[5] =
+				real_t ZoneRUm[5] =
 				{
 					2000.0,
 					0.5 * ::Settings.m_ZoneDiameterUm[0],
@@ -450,9 +450,9 @@ void ExportScreen(CExam* pExam1, CExam* pExam2, const Matrix<uchar>& Mem, CDicom
 					0.5 * ::Settings.m_ZoneDiameterUm[2],
 					pWFExam->m_WfSurface.m_r_max_um
 				};
-				real SphEq[5] = { 0.0, 0.0, 0.0, 0.0, 0.0 };
-				real Sph[5] = { 0.0, 0.0, 0.0, 0.0, 0.0 };
-				real Cyl[5] = { 0.0, 0.0, 0.0, 0.0, 0.0 };
+				real_t SphEq[5] = { 0.0, 0.0, 0.0, 0.0, 0.0 };
+				real_t Sph[5] = { 0.0, 0.0, 0.0, 0.0, 0.0 };
+				real_t Cyl[5] = { 0.0, 0.0, 0.0, 0.0, 0.0 };
 				int Axis[5] = { 0, 0, 0, 0, 0 };
 
 				// Tracey refraction
@@ -873,11 +873,11 @@ void ExportScreen(CExam* pExam1, CExam* pExam2, const Matrix<uchar>& Mem, CDicom
 					//Judge wether the finding pupil is correct or not
 					if (pImage->m_ve_ok)
 					{
-						real x0 = pImage->m_pu_x0_um;
-						real x1 = pImage->m_ve_x_um;
-						real y0 = pImage->m_pu_y0_um;
-						real y1 = pImage->m_ve_y_um;
-						real puveDisum = sqrt((x0 - x1)*(x0 - x1) + (y0 - y1)*(y0 - y1));
+						real_t x0 = pImage->m_pu_x0_um;
+						real_t x1 = pImage->m_ve_x_um;
+						real_t y0 = pImage->m_pu_y0_um;
+						real_t y1 = pImage->m_ve_y_um;
+						real_t puveDisum = sqrt((x0 - x1)*(x0 - x1) + (y0 - y1)*(y0 - y1));
 
 						if (puveDisum > 1000)
 						{
@@ -894,8 +894,8 @@ void ExportScreen(CExam* pExam1, CExam* pExam2, const Matrix<uchar>& Mem, CDicom
 
 				GrayImage = &cExam->m_Image;
 
-				real xGrayDis = GrayImage->m_li_x0_um - GrayImage->m_ve_x_um;
-				real yGrayDis = GrayImage->m_li_y0_um - GrayImage->m_ve_y_um;
+				real_t xGrayDis = GrayImage->m_li_x0_um - GrayImage->m_ve_x_um;
+				real_t yGrayDis = GrayImage->m_li_y0_um - GrayImage->m_ve_y_um;
 
 				pImage->m_ve_x_um = pImage->m_li_x0_um - xGrayDis;
 				pImage->m_ve_y_um = pImage->m_li_y0_um - yGrayDis;
@@ -912,8 +912,8 @@ void ExportScreen(CExam* pExam1, CExam* pExam2, const Matrix<uchar>& Mem, CDicom
 					fprintf(pFile, "<ImageCenter>\n");
 					if (pImage->m_ve_ok)
 					{
-						real x = -1 * 0.001 * pImage->m_ve_x_um;
-						real y = -1 * 0.001 * pImage->m_ve_y_um;
+						real_t x = -1 * 0.001 * pImage->m_ve_x_um;
+						real_t y = -1 * 0.001 * pImage->m_ve_y_um;
 
 						s.Format(_T("%.10f"), x);
 						G_As = s;//6.2.1
@@ -922,7 +922,7 @@ void ExportScreen(CExam* pExam1, CExam* pExam2, const Matrix<uchar>& Mem, CDicom
 						G_As = s;//6.2.1
 						fprintf(pFile, "<y_coordinate>%s</y_coordinate>\n", G_As);
 
-						real dis = sqrt(x*x + y*y);
+						real_t dis = sqrt(x*x + y*y);
 						s.Format(_T("%.10f"), dis);
 						G_As = s;//6.2.1
 						fprintf(pFile, "<Distance_mm>%s</Distance_mm>\n", G_As);
@@ -939,10 +939,10 @@ void ExportScreen(CExam* pExam1, CExam* pExam2, const Matrix<uchar>& Mem, CDicom
 
 					if (pImage->m_pu_ok && pImage->m_ve_ok)
 					{
-						real AngleKappaXUm = pImage->m_pu_x0_um - pImage->m_ve_x_um;
-						real AngleKappaYUm = pImage->m_pu_y0_um - pImage->m_ve_y_um;
-						real AngleKappaRUm = hyp(AngleKappaYUm, AngleKappaXUm);
-						real AngleKappaADg = intRound(_180_Pi * angle(AngleKappaYUm, AngleKappaXUm)) % 360;
+						real_t AngleKappaXUm = pImage->m_pu_x0_um - pImage->m_ve_x_um;
+						real_t AngleKappaYUm = pImage->m_pu_y0_um - pImage->m_ve_y_um;
+						real_t AngleKappaRUm = hyp(AngleKappaYUm, AngleKappaXUm);
+						real_t AngleKappaADg = intRound(_180_Pi * angle(AngleKappaYUm, AngleKappaXUm)) % 360;
 
 						s.Format(_T("%.10f"), 0.001 * AngleKappaRUm);
 						G_As = s;//6.2.1
@@ -959,10 +959,10 @@ void ExportScreen(CExam* pExam1, CExam* pExam2, const Matrix<uchar>& Mem, CDicom
 
 					if (pImage->m_li_ok && pImage->m_ve_ok)
 					{
-						real AngleAlphaXUm = pImage->m_li_x0_um - pImage->m_ve_x_um;
-						real AngleAlphaYUm = pImage->m_li_y0_um - pImage->m_ve_y_um;
-						real AngleAlphaRUm = hyp(AngleAlphaYUm, AngleAlphaXUm);
-						real AngleAlphaADg = intRound(_180_Pi * angle(AngleAlphaYUm, AngleAlphaXUm)) % 360;
+						real_t AngleAlphaXUm = pImage->m_li_x0_um - pImage->m_ve_x_um;
+						real_t AngleAlphaYUm = pImage->m_li_y0_um - pImage->m_ve_y_um;
+						real_t AngleAlphaRUm = hyp(AngleAlphaYUm, AngleAlphaXUm);
+						real_t AngleAlphaADg = intRound(_180_Pi * angle(AngleAlphaYUm, AngleAlphaXUm)) % 360;
 
 						s.Format(_T("%.10f"), 0.001 * AngleAlphaRUm);
 						G_As = s;//6.2.1
@@ -1160,7 +1160,7 @@ BOOL FindColorPupil(CEyeImage* OriImage)
 	if (TestImage->m_RGBData.GetMem() == NULL) return FALSE;
 
 	int ** m_pixels = (int**)calloc(w_w, sizeof(int));
-	real** m_g = (real**)calloc(4, sizeof(real));
+	real_t** m_g = (real_t**)calloc(4, sizeof(real_t));
 	int ** m_BlurPixels = (int**)calloc(w_w, sizeof(int));
 	int ** m_gxy = (int**)calloc(w_w, sizeof(int));
 	int ** m_gx = (int**)calloc(w_w, sizeof(int));
@@ -1171,7 +1171,7 @@ BOOL FindColorPupil(CEyeImage* OriImage)
 
 	for (int i = 0; i<w_w; i++)
 	{
-		if (i<4)  m_g[i] = (real*)calloc(4, sizeof(real));
+		if (i<4)  m_g[i] = (real_t*)calloc(4, sizeof(real_t));
 		m_pixels[i] = (int*)calloc(h_h, sizeof(int));
 		m_BlurPixels[i] = (int*)calloc(h_h, sizeof(int));
 
@@ -1194,7 +1194,7 @@ BOOL FindColorPupil(CEyeImage* OriImage)
 	int StartR = intRound(0.05*w_w);
 	int EndR = intRound(0.15*w_w);
 
-	real de = 1.4;
+	real_t de = 1.4;
 
 	//*******************************************************************************
 	//The arrays definition
@@ -1335,7 +1335,7 @@ BOOL FindColorPupil(CEyeImage* OriImage)
 	//*******************************************************************************
 	//First step is the Gassusian blur
 	//*******************************************************************************	
-	real Mid = 0;
+	real_t Mid = 0;
 	for (int h = SRegion_StY + 3; h < SRegion_EndY - 3; h++)
 	{
 		for (int v = SRegion_StX + 3; v < SRegion_EndX - 3; v++)
@@ -1434,7 +1434,7 @@ BOOL FindColorPupil(CEyeImage* OriImage)
 	//*******************************************************************************
 	int Range = EndR - StartR;
 	int maxGradient = 0;
-	real fmean = 0;
+	real_t fmean = 0;
 	int t = 0;
 	double mid = 180 / 3.1415926;
 
@@ -1445,9 +1445,9 @@ BOOL FindColorPupil(CEyeImage* OriImage)
 			m_gx[v][h] = (m_BlurPixels[v - 1][h - 1] * (-1) + m_BlurPixels[v + 1][h + 1] * 1 + m_BlurPixels[v - 1][h] * (-2) + m_BlurPixels[v + 1][h] * 2 + m_BlurPixels[v - 1][h + 1] * (-1) + m_BlurPixels[v + 1][h + 1] * 1);
 			m_gy[v][h] = (m_BlurPixels[v - 1][h - 1] * (1) + m_BlurPixels[v][h - 1] * 2 + m_BlurPixels[v + 1][h + 1] * 1 + m_BlurPixels[v - 1][h + 1] * (-1) + m_BlurPixels[v][h + 1] * (-2) + m_BlurPixels[v + 1][h + 1] * (-1));
 
-			m_gxy[v][h] = intRound(sqrt((real)m_gx[v][h] * m_gx[v][h] + (real)m_gy[v][h] * m_gy[v][h]));
+			m_gxy[v][h] = intRound(sqrt((real_t)m_gx[v][h] * m_gx[v][h] + (real_t)m_gy[v][h] * m_gy[v][h]));
 
-			fmean += (real)m_gxy[v][h];
+			fmean += (real_t)m_gxy[v][h];
 			t++;
 			if (m_gxy[v][h]>maxGradient) maxGradient = m_gxy[v][h];
 
@@ -1514,7 +1514,7 @@ BOOL FindColorPupil(CEyeImage* OriImage)
 			}
 			else
 			{
-				m_dis[v][h] = intRound((real)m_gxy[v][h] / (real)maxGradient * 255.0);
+				m_dis[v][h] = intRound((real_t)m_gxy[v][h] / (real_t)maxGradient * 255.0);
 			}
 		}
 	}
@@ -1704,25 +1704,25 @@ HSI ChangeRGBtoHSI(int R, int G, int B)
 {
 
 	HSI res;
-	res.I = (real)(R + G + B) / 3;
+	res.I = (real_t)(R + G + B) / 3;
 
 	//find the minixum of RGB for the S value
-	real min = (real)R;
+	real_t min = (real_t)R;
 	if (min>G) min = G;
 	if (min>B) min = B;
 	//
 	res.S = 1 - (min / res.I);
 
 	//find the S
-	real sita;
-	real mid1 = 0.5*(2 * R - G - B);
-	real mid2 = pow((R - G)*(R - G) + (R - B)*(G - B), 0.5) + 0.0000000001;
+	real_t sita;
+	real_t mid1 = 0.5*(2 * R - G - B);
+	real_t mid2 = pow((R - G)*(R - G) + (R - B)*(G - B), 0.5) + 0.0000000001;
 	mid1 = mid1 / mid2;
 	sita = acos(mid1);
 
 	if (B>G) sita = 2 * _Pi - sita;
 
-	real angle = sita * 180 / _Pi;
+	real_t angle = sita * 180 / _Pi;
 
 	res.H = angle;
 

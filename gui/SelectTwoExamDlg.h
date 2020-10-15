@@ -14,7 +14,7 @@ class CSelectTwoExamDlg : public CDialog
 {
 public:
 
-	CSelectTwoExamDlg(CWnd* pParentWnd, GUID& PatientID, int Eye, CMFont* pFont, int WFn, int CTn, real ScanSize[NUM_EXAMS_MAX], int NumImages[NUM_EXAMS_MAX], CString  FellowIDStr[NUM_EXAMS_MAX]);
+	CSelectTwoExamDlg(CWnd* pParentWnd, GUID& PatientID, int Eye, CMFont* pFont, int WFn, int CTn, real_t ScanSize[NUM_EXAMS_MAX], int NumImages[NUM_EXAMS_MAX], CString  FellowIDStr[NUM_EXAMS_MAX]);
 
 	GUID m_WFExamID;
 	GUID m_CTExamID;
@@ -47,7 +47,7 @@ private:
 	int m_EXAM_List_ColW0;
 
 	CString  m_FellowIDStr[NUM_EXAMS_MAX];
-	real m_ScanSize[NUM_EXAMS_MAX];
+	real_t m_ScanSize[NUM_EXAMS_MAX];
 	int  m_NumImages[NUM_EXAMS_MAX];
 
 	int m_Eye;

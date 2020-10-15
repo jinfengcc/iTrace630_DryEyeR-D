@@ -4,7 +4,7 @@
 
 //***************************************************************************************
 
-void ShowFunction(RECT rect, BOOL SmallMap, Matrix<real> &X, Matrix<real> &F);
+void ShowFunction(RECT rect, BOOL SmallMap, Matrix<real_t> &X, Matrix<real_t> &F);
 
 //***************************************************************************************
 

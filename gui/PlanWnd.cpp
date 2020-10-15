@@ -77,7 +77,7 @@ CPlanWnd::CPlanWnd(RECT& Rect, CWnd* pWnd) :
 	CMRgn Rgn;
 
 	int W = ::GetSystemMetrics(SM_CXSCREEN);
-	real t = 0.02 * W;
+	real_t t = 0.02 * W;
 	int h = intRound(t);
 	int w = intRound(5.5 * t);
 
@@ -329,16 +329,16 @@ void CPlanWnd::Eye()
 	if (m_pImage == NULL) return;
 	if (m_pImage->m_RGBData.GetMem() == NULL) return;
 
-	real x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
-	real y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
+	real_t x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
+	real_t y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
 
-	real ve_x_um = m_pImage->m_ve_x_um;
-	real ve_y_um = m_pImage->m_ve_y_um;
+	real_t ve_x_um = m_pImage->m_ve_x_um;
+	real_t ve_y_um = m_pImage->m_ve_y_um;
 	for (int y = 0; y < m_h; y++) {
-		real y_um = ve_y_um + (m_cy - y) / y_px_um;
+		real_t y_um = ve_y_um + (m_cy - y) / y_px_um;
 		for (int x = m_l; x < m_w; x++) {
-			real x_um = ve_x_um + (x - m_cx) / x_px_um;
-			real r, g, b;
+			real_t x_um = ve_x_um + (x - m_cx) / x_px_um;
+			real_t r, g, b;
 			if (m_pImage->GetRGBAtUm(x_um, y_um, &r, &g, &b)) {
 				m_MemDC.SetPixel(x, y, (int)r, (int)g, (int)b);
 			}
@@ -403,13 +403,13 @@ void CPlanWnd::Map()
 	Colors[2] = 0x00c8004b;
 	Colors[1] = 0x00c80082;
 	Colors[0] = 0x007d0052;
-	real Inc = 0.25;
-	real Cent = m_pCTExam->m_ax0_dp;
-	real Min = m_Map2D.m_min;
-	real Max = m_Map2D.m_max;
-	real Span = 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent));
-	real t = Span / NumColors;
-	real Step = (int)(t / Inc) * Inc;
+	real_t Inc = 0.25;
+	real_t Cent = m_pCTExam->m_ax0_dp;
+	real_t Min = m_Map2D.m_min;
+	real_t Max = m_Map2D.m_max;
+	real_t Span = 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent));
+	real_t t = Span / NumColors;
+	real_t Step = (int)(t / Inc) * Inc;
 	if (t > Step + 0.001) Step += Inc;
 
 	Min = Cent - Step * (NumColors >> 1);
@@ -419,7 +419,7 @@ void CPlanWnd::Map()
 
 	for (int y = -m_Map2D.m_nr; y <= m_Map2D.m_nr; y++) {
 		for (int x = -m_Map2D.m_nr; x <= m_Map2D.m_nr; x++) {
-			real v = m_Map2D.GetAt(y, x);
+			real_t v = m_Map2D.GetAt(y, x);
 			if (v != INVALID_VALUE) {
 				int i = intRound((v - Min) / Step);
 				if (i < 0) i = 0;
@@ -437,8 +437,8 @@ void CPlanWnd::Map()
 
 void CPlanWnd::Grid()
 {
-	real x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
-	real y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
+	real_t x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
+	real_t y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
 
 	COLORREF Color = m_Printing ? BLACK : WHITE;
 
@@ -446,7 +446,7 @@ void CPlanWnd::Grid()
 
 	int FontSize = intRound(0.045 * m_h);
 
-	real r_um = 5000.0;
+	real_t r_um = 5000.0;
 
 	// circle
 	int rx = intRound(r_um * m_x_px_um);
@@ -472,12 +472,12 @@ void CPlanWnd::Grid()
 
 		if (a == 20) a = a;
 
-		real r1_um = r_um + 100.0;
+		real_t r1_um = r_um + 100.0;
 
 		int x1 = intRound(m_cx + x_px_um * r1_um * COS[a]);
 		int y1 = intRound(m_cy - y_px_um * r1_um * SIN[a]);
 
-		real r2_um = 0;
+		real_t r2_um = 0;
 
 		if (IncreaseDeg == 1) r2_um = r_um + ((a % 15) == 0 ? 400.0 : 150.0);//[cjf***04202012]
 		else r2_um = r_um + ((a % 15) == 0 ? 400.0 : 250.0);//[cjf***04202012]
@@ -492,7 +492,7 @@ void CPlanWnd::Grid()
 		int sa = 0;
 		if (a % 30 == 0)
 		{
-			real r3_um = r_um + 900.0;
+			real_t r3_um = r_um + 900.0;
 			int x = intRound(m_cx + x_px_um * r3_um * COS[a]);
 			int y = intRound(m_cy - y_px_um * r3_um * SIN[a]);
 
@@ -540,8 +540,8 @@ void CPlanWnd::CorneaPreopAxes()
 	if (m_pCTExam->m_OpData.m_CorneaPreopAxis == INVALID_VALUE) return;
 	if (m_pCTExam->m_OpData.m_CorneaPreopAxis < 0 || m_pCTExam->m_OpData.m_CorneaPreopAxis >= 180) return;
 
-	real x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
-	real y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
+	real_t x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
+	real_t y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
 
 	int r = intRound(0.005 * m_h);
 
@@ -551,7 +551,7 @@ void CPlanWnd::CorneaPreopAxes()
 
 	for (int i = 0; i < 2; i++) {
 		for (int k = 0; k < 6; k++) {
-			real r_um = 2750.0 + k * 400.0;
+			real_t r_um = 2750.0 + k * 400.0;
 			int x = intRound(m_cx + r_um * COS[a[i]] * x_px_um);
 			int y = intRound(m_cy - r_um * SIN[a[i]] * y_px_um);
 			m_MemDC.DrawCircle(x, y, r, 1, m_CorneaAxesColor, m_CorneaAxesColor);
@@ -575,8 +575,8 @@ void CPlanWnd::CorneaPostopAxes()
 	if (m_pCTExam->m_OpData.m_CorneaPostopAxis == INVALID_VALUE) return;
 	if (m_pCTExam->m_OpData.m_CorneaPostopAxis < 0 || m_pCTExam->m_OpData.m_CorneaPostopAxis >= 180) return;
 
-	real x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
-	real y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
+	real_t x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
+	real_t y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
 
 	int w = intRound(0.010 * m_h);
 
@@ -585,8 +585,8 @@ void CPlanWnd::CorneaPostopAxes()
 	a[1] = a[0] + 180;
 
 	for (int i = 0; i < 2; i++) {
-		real r1_um = 2750.0;
-		real r2_um = 4750.0;
+		real_t r1_um = 2750.0;
+		real_t r2_um = 4750.0;
 		int x1 = intRound(m_cx + r1_um * COS[a[i]] * x_px_um);
 		int y1 = intRound(m_cy - r1_um * SIN[a[i]] * y_px_um);
 		int x2 = intRound(m_cx + r2_um * COS[a[i]] * x_px_um);
@@ -631,7 +631,7 @@ void CPlanWnd::Incision()
 	{
 		RECT Rect;
 		int FontSize = intRound(0.025 * m_h);
-		real t = 0.02 * ::GetSystemMetrics(SM_CXSCREEN);
+		real_t t = 0.02 * ::GetSystemMetrics(SM_CXSCREEN);
 		int w = intRound(5.5 * t);
 		COLORREF white = m_Printing ? BLACK : WHITE;
 
@@ -645,8 +645,8 @@ void CPlanWnd::Incision()
 	}
 	//[cjf***05052012*008*]
 
-	real x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
-	real y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
+	real_t x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
+	real_t y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
 
 	int w = intRound(0.015 * m_h);
 
@@ -739,8 +739,8 @@ void CPlanWnd::EyePreopAxes()
 	if (m_pCTExam->m_OpData.m_EyePreopAxis == INVALID_VALUE) return;
 	if (m_pCTExam->m_OpData.m_EyePreopAxis < 0 || m_pCTExam->m_OpData.m_EyePreopAxis >= 180) return;
 
-	real x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
-	real y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
+	real_t x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
+	real_t y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
 
 	int r = intRound(0.005 * m_h);
 
@@ -750,7 +750,7 @@ void CPlanWnd::EyePreopAxes()
 
 	for (int i = 0; i < 2; i++) {
 		for (int k = 0; k < 6; k++) {
-			real r_um = 2750.0 + k * 400.0;
+			real_t r_um = 2750.0 + k * 400.0;
 			int x = intRound(m_cx + r_um * COS[a[i]] * x_px_um);
 			int y = intRound(m_cy - r_um * SIN[a[i]] * y_px_um);
 			m_MemDC.DrawCircle(x, y, r, 1, m_EntireEyeAxesColor, m_EntireEyeAxesColor);
@@ -773,8 +773,8 @@ void CPlanWnd::EyePostopAxes()
 	if (m_pCTExam->m_OpData.m_EyePostopAxis == INVALID_VALUE) return;
 	if (m_pCTExam->m_OpData.m_EyePostopAxis < 0 || m_pCTExam->m_OpData.m_EyePostopAxis >= 180) return;
 
-	real x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
-	real y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
+	real_t x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
+	real_t y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
 
 	int w = intRound(0.010 * m_h);
 	int halfw = intRound(0.005 * m_h);//[cjf***04202012]
@@ -800,8 +800,8 @@ void CPlanWnd::EyePostopAxes()
 	//[cjf***04202012]
 
 	for (int i = 0; i < 2; i++) {
-		real r1_um = 2750.0;
-		real r2_um = 4750.0;
+		real_t r1_um = 2750.0;
+		real_t r2_um = 4750.0;
 		int x1 = intRound(m_cx + r1_um * COS[a[i]] * x_px_um);
 		int y1 = intRound(m_cy - r1_um * SIN[a[i]] * y_px_um);
 		int x2 = intRound(m_cx + r2_um * COS[a[i]] * x_px_um);
@@ -856,8 +856,8 @@ void CPlanWnd::InternalPreopAxes()
 	if (m_pCTExam->m_OpData.m_InternalPreopAxis == INVALID_VALUE) return;
 	if (m_pCTExam->m_OpData.m_InternalPreopAxis < 0 || m_pCTExam->m_OpData.m_InternalPreopAxis >= 180) return;
 
-	real x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
-	real y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
+	real_t x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
+	real_t y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
 
 	int r = intRound(0.005 * m_h);
 
@@ -867,7 +867,7 @@ void CPlanWnd::InternalPreopAxes()
 
 	for (int i = 0; i < 2; i++) {
 		for (int k = 0; k < 6; k++) {
-			real r_um = 2250.0 - k * 400.0;
+			real_t r_um = 2250.0 - k * 400.0;
 			int x = intRound(m_cx + r_um * COS[a[i]] * x_px_um);
 			int y = intRound(m_cy - r_um * SIN[a[i]] * y_px_um);
 			m_MemDC.DrawCircle(x, y, r, 1, m_InternalAxesColor, m_InternalAxesColor);
@@ -891,8 +891,8 @@ void CPlanWnd::InternalPostopAxes()
 	if (m_pCTExam->m_OpData.m_InternalPostopAxis == INVALID_VALUE) return;
 	if (m_pCTExam->m_OpData.m_InternalPostopAxis < 0 || m_pCTExam->m_OpData.m_InternalPostopAxis >= 180) return;
 
-	real x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
-	real y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
+	real_t x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
+	real_t y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
 
 	int w = intRound(0.010 * m_h);
 
@@ -901,8 +901,8 @@ void CPlanWnd::InternalPostopAxes()
 	a[1] = a[0] + 180;
 
 	for (int i = 0; i < 2; i++) {
-		real r1_um = 250.0;
-		real r2_um = 2250.0;
+		real_t r1_um = 250.0;
+		real_t r2_um = 2250.0;
 		int x1 = intRound(m_cx + r1_um * COS[a[i]] * x_px_um);
 		int y1 = intRound(m_cy - r1_um * SIN[a[i]] * y_px_um);
 		int x2 = intRound(m_cx + r2_um * COS[a[i]] * x_px_um);
@@ -928,8 +928,8 @@ void CPlanWnd::ICLPostopAxes()
 	if (m_pCTExam->m_OpData.m_ICL.m_InducedAxis < 0 || m_pCTExam->m_OpData.m_ICL.m_InducedAxis >= 180) return;
 	if (!m_ShowICLIndSteep && !m_ShowICLIndFlat) return;//[cjf***05072012]
 
-	real x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
-	real y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
+	real_t x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
+	real_t y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
 
 	int w = intRound(0.010 * m_h);
 
@@ -947,8 +947,8 @@ void CPlanWnd::ICLPostopAxes()
 														  //[cjf***05072012]
 
 	for (int i = start; i < end; i++) {
-		real r1_um = 250.0;
-		real r2_um = 2250.0;
+		real_t r1_um = 250.0;
+		real_t r2_um = 2250.0;
 		int x1 = intRound(m_cx + r1_um * COS[a[i]] * x_px_um);
 		int y1 = intRound(m_cy - r1_um * SIN[a[i]] * y_px_um);
 		int x2 = intRound(m_cx + r2_um * COS[a[i]] * x_px_um);
@@ -972,8 +972,8 @@ void CPlanWnd::ICLPostopAxes()
 
 void CPlanWnd::Lens2()
 {
-	real x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
-	real y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
+	real_t x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
+	real_t y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
 
 	int w = intRound(0.010 * m_h);
 	int r = intRound(0.005 * m_h);
@@ -1011,8 +1011,8 @@ void CPlanWnd::Lens2()
 				if (j == 1)
 				{
 					COLORREF Color = m_Printing ? ORANGE : YELLOW;
-					real r1_um = 1500.0;
-					real r2_um = 2500.0;
+					real_t r1_um = 1500.0;
+					real_t r2_um = 2500.0;
 					int x1 = intRound(m_cx + r1_um * COS[b] * x_px_um);
 					int y1 = intRound(m_cy - r1_um * SIN[b] * y_px_um);
 					int x2 = intRound(m_cx + r2_um * COS[b] * x_px_um);
@@ -1023,7 +1023,7 @@ void CPlanWnd::Lens2()
 
 			for (int k = 0; k < 3; k++)
 			{
-				real r_um = 2250.0 - k * 400.0;
+				real_t r_um = 2250.0 - k * 400.0;
 				int x = intRound(m_cx + r_um * COS[b] * x_px_um);
 				int y = intRound(m_cy - r_um * SIN[b] * y_px_um);
 				m_MemDC.DrawCircle(x, y, r, 1, m_LensColor, m_LensColor);
@@ -1031,16 +1031,16 @@ void CPlanWnd::Lens2()
 			//
 			if (m_pCTExam->m_OpData.m_OpType == 0 || m_pCTExam->m_OpData.m_OpType == 1)
 			{
-				real x1_um = 2500.0 * COS[b];
-				real y1_um = 2500.0 * SIN[b];
+				real_t x1_um = 2500.0 * COS[b];
+				real_t y1_um = 2500.0 * SIN[b];
 
 				int a0 = CheckAngle(b + 60);
-				real x0_um = 1500.0 * COS[a0];
-				real y0_um = 1500.0 * SIN[a0];
+				real_t x0_um = 1500.0 * COS[a0];
+				real_t y0_um = 1500.0 * SIN[a0];
 				int x0 = intRound(m_cx + x0_um * x_px_um);
 				int y0 = intRound(m_cy - y0_um * y_px_um);
 
-				real r_um = hyp((x1_um - x0_um), (y1_um - y0_um));
+				real_t r_um = hyp((x1_um - x0_um), (y1_um - y0_um));
 
 				int o = intRound(_180_Pi * (angle(y1_um - y0_um, x1_um - x0_um)));
 
@@ -1151,8 +1151,8 @@ void CPlanWnd::Protractor()
 {
 	if (!m_ShowCaliper) return;
 
-	real x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
-	real y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
+	real_t x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
+	real_t y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
 
 
 	int FontSize = intRound(0.045 * m_h);
@@ -1393,8 +1393,8 @@ void CPlanWnd::Caliper()
 {
 	if (!m_ShowCaliper) return;
 
-	real x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
-	real y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
+	real_t x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
+	real_t y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
 
 	CString s;
 
@@ -1552,7 +1552,7 @@ void CPlanWnd::Labels2()
 	}
 
 	// legend
-	real dx_um = 400.0;
+	real_t dx_um = 400.0;
 	int l1 = m_l + intRound(0.010 * m_w);
 	int l2 = l1 + intRound(2 * dx_um * m_x_px_um);
 	int l3 = l2 + intRound(0.010 * m_w);
@@ -1734,14 +1734,14 @@ void CPlanWnd::OnMouseMove(uint nFlags, CPoint Point)
 
 		BOOL Redraw = FALSE;
 
-		real x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
-		real y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
+		real_t x_px_um = m_SurgeonView ? -m_x_px_um : m_x_px_um;
+		real_t y_px_um = m_SurgeonView ? -m_y_px_um : m_y_px_um;
 
-		real x_um = (Point.x - m_cx) / x_px_um;
-		real y_um = (m_cy - Point.y) / y_px_um;
-		real a_rd = angle(y_um, x_um);
+		real_t x_um = (Point.x - m_cx) / x_px_um;
+		real_t y_um = (m_cy - Point.y) / y_px_um;
+		real_t a_rd = angle(y_um, x_um);
 		int a = intRound(_180_Pi * a_rd) % 360; if (a < 0) a += 360;
-		real d2 = sqr(x_um) + sqr(y_um);
+		real_t d2 = sqr(x_um) + sqr(y_um);
 
 		//cancel by [cjf***05032012*004*]
 		/* if (sqr(6400.0) < d2) {
@@ -2181,7 +2181,7 @@ void CPlanWnd::OnNextButtonClicked()
 //[cjf***05072012]
 
 //**********************************************************************************
-void CPlanWnd::FindClearLimbus(CEyeImage* OriImage, real LastLimbuX, real LastLimbuY, real LastLimbuR)
+void CPlanWnd::FindClearLimbus(CEyeImage* OriImage, real_t LastLimbuX, real_t LastLimbuY, real_t LastLimbuR)
 {
 	CEyeImage* TestImage = new CEyeImage();
 	int h = TestImage->m_h = OriImage->m_h;

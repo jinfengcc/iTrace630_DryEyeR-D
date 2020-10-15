@@ -31,8 +31,8 @@ const complex& complex::operator-=(const complex& a)
 
 const complex& complex::operator*=(const complex& a)
 {
-	real _re = re * a.re - im * a.im;
-	real _im = re * a.im + im * a.re;
+	real_t _re = re * a.re - im * a.im;
+	real_t _im = re * a.im + im * a.re;
 	re = _re;
 	im = _im;
 	return *this;
@@ -40,9 +40,9 @@ const complex& complex::operator*=(const complex& a)
 
 const complex& complex::operator/=(const complex& a)
 {
-	real d = a.re * a.re + a.im * a.im;
-	real _re = (re * a.re + im * a.im) / d;
-	real _im = (im * a.re - re * a.im) / d;
+	real_t d = a.re * a.re + a.im * a.im;
+	real_t _re = (re * a.re + im * a.im) / d;
+	real_t _im = (im * a.re - re * a.im) / d;
 	re = _re;
 	im = _im;
 	return *this;
@@ -50,7 +50,7 @@ const complex& complex::operator/=(const complex& a)
 
 //***************************************************************************************
 
-const complex& complex::operator*=(const real& k)
+const complex& complex::operator*=(const real_t& k)
 {
 	re *= k;
 	im *= k;
@@ -59,7 +59,7 @@ const complex& complex::operator*=(const real& k)
 
 //***************************************************************************************
 
-const complex& complex::operator/=(const real& k)
+const complex& complex::operator/=(const real_t& k)
 {
 	re /= k;
 	im /= k;
@@ -75,21 +75,21 @@ complex operator~(const complex& a)
 
 //***************************************************************************************
 
-real mod(const complex& a)
+real_t mod(const complex& a)
 {
 	return sqrt(a.re * a.re + a.im * a.im);
 }
 
 //***************************************************************************************
 
-real arg(const complex& a)
+real_t arg(const complex& a)
 {
 	return angle(a.im, a.re);
 }
 
 //***************************************************************************************
 
-real sqr_mod(const complex& a)
+real_t sqr_mod(const complex& a)
 {
 	return a.re * a.re + a.im * a.im;
 }
@@ -133,20 +133,20 @@ complex operator*(const complex& a, const complex& b)
 
 complex operator/(const complex& a, const complex& b)
 {
-	real d = b.re * b.re + b.im * b.im;
+	real_t d = b.re * b.re + b.im * b.im;
 	return complex((a.re * b.re + a.im * b.im) / d, (a.im * b.re - a.re * b.im) / d);
 }
 
 //***************************************************************************************
 
-complex operator*(const complex& a, const real& k)
+complex operator*(const complex& a, const real_t& k)
 {
 	return complex(a.re * k, a.im * k);
 }
 
 //***************************************************************************************
 
-complex operator/(const complex& a, const real& k)
+complex operator/(const complex& a, const real_t& k)
 {
 	return complex(a.re / k, a.im / k);
 }
@@ -183,7 +183,7 @@ void FourierTransform1D(Matrix<complex>& Data, BOOL Forward)
 
 		if (Forward)
 		{
-			for (int i = 0; i < N; i++) Data[i] = _Data[i] / (real)N;
+			for (int i = 0; i < N; i++) Data[i] = _Data[i] / (real_t)N;
 		}
 		else
 		{
@@ -239,7 +239,7 @@ void FourierTransform1D(Matrix<complex>& Data, BOOL Forward)
 
 		if (Forward)
 		{
-			for (i = 0; i < N; i++) Data[i] /= (real)N;
+			for (i = 0; i < N; i++) Data[i] /= (real_t)N;
 		}
 	}
 }

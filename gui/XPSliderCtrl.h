@@ -14,7 +14,7 @@ public:
 
 	CXPSliderCtrl();
 
-	real m_Pos;
+	real_t m_Pos;
 
 	void RePaint();
 

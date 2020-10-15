@@ -39,9 +39,9 @@ CCTSingleCmpWnd::CCTSingleCmpWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, 
 	//----------------------------------------------------
 	RECT Rect;
 	GetWindowRect(&Rect);
-	real t = 3.0 * (0.03 * m_h) + m_g;
-	real w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
-	real h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
+	real_t t = 3.0 * (0.03 * m_h) + m_g;
+	real_t w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
+	real_t h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
 	::SetRect(&m_Rect[0], intRound(m_g), intRound(t), intRound(m_g + w), intRound(t + h)); // exam 1 map
 	::SetRect(&m_Rect[1], intRound(m_g + w + m_g), intRound(t), intRound(m_g + w + m_g + w), intRound(t + h)); // exam 2 map
 	::SetRect(&m_Rect[2], intRound(m_g + w + m_g + w + m_g), intRound(t), intRound(m_g + w + m_g + w + m_g + w), intRound(t + h)); // diff map
@@ -167,7 +167,7 @@ void CCTSingleCmpWnd::CreateChildWnd()
 	m_Surfaces[0] = pCTExam[0]->m_WfSurface;
 	m_Surfaces[1] = pCTExam[1]->m_WfSurface;
 	// change diameter
-	real r_max_um = 5000.0;
+	real_t r_max_um = 5000.0;
 	r_max_um = __min(r_max_um, m_Surfaces[0].m_r_max_um);
 	r_max_um = __min(r_max_um, m_Surfaces[1].m_r_max_um);
 	r_max_um = __min(r_max_um, pWndSettings->m_ZoneRadiusUm);
@@ -437,10 +437,10 @@ void CCTSingleCmpWnd::CreateChildWnd()
 		pWndSettings->m_Type == TYPE_CELM || pWndSettings->m_Type == TYPE_CWFM) {
 
 		CScale* pScale = pWndSettings->GetScale();
-		real Inc = pWndSettings->GetIncrement();
+		real_t Inc = pWndSettings->GetIncrement();
 
 		// middle value
-		real Cent;
+		real_t Cent;
 		if (pWndSettings->m_Type == TYPE_CAXM || pWndSettings->m_Type == TYPE_CTNM || pWndSettings->m_Type == TYPE_CRFM) {
 			int MapUnit = (pWndSettings->m_Type == TYPE_CRFM) || (pWndSettings->m_MapUnit == DIOPTERS) ? DIOPTERS : MILLIMETERS;
 			if (pScale->m_CentAuto) {
@@ -461,17 +461,17 @@ void CCTSingleCmpWnd::CreateChildWnd()
 		Cent = RealRound(Cent, Inc);
 
 		// step value
-		real Step;
+		real_t Step;
 		if (pScale->m_StepAuto) {
-			real Span = 0.0;
+			real_t Span = 0.0;
 			for (int d = 0; d < 3; d++) {
 				CEyeWnd* pEyeWnd = (CEyeWnd*)m_pDispWnd[d];
-				real Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
-				real Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
-				real Cnt = d == 2 ? 0.0 : Cent;
+				real_t Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
+				real_t Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
+				real_t Cnt = d == 2 ? 0.0 : Cent;
 				Span = __max(Span, 2.0 * __max(fabs(Min - Cnt), fabs(Max - Cnt)));
 			}
-			real t = Span / pScale->m_NumColors;
+			real_t t = Span / pScale->m_NumColors;
 			Step = (int)(t / Inc) * Inc;
 			if (t > Step + 0.001) Step += Inc;
 		}
@@ -479,7 +479,7 @@ void CCTSingleCmpWnd::CreateChildWnd()
 			Step = RealRound(pScale->m_Step, Inc);
 		}
 		if (Step < Inc) Step = Inc;
-		real StepMax = pWndSettings->GetMaxStep();
+		real_t StepMax = pWndSettings->GetMaxStep();
 		if (Step > StepMax) Step = StepMax;
 
 		for (int d = 0; d < 3; d++) {
@@ -617,7 +617,7 @@ LRESULT CCTSingleCmpWnd::OnRotateMsg(WPARAM wParam, LPARAM lParam)
 
 LRESULT CCTSingleCmpWnd::OnChangeCentMsg(WPARAM wParam, LPARAM lParam)
 {
-	real Cent = INVALID_VALUE;
+	real_t Cent = INVALID_VALUE;
 
 	for (int d = 0; d < 2; d++) {
 		if (m_pDispWnd[d] && (WPARAM)m_pDispWnd[d] == wParam) {
@@ -643,7 +643,7 @@ LRESULT CCTSingleCmpWnd::OnChangeCentMsg(WPARAM wParam, LPARAM lParam)
 
 LRESULT CCTSingleCmpWnd::OnChangeStepMsg(WPARAM wParam, LPARAM lParam)
 {
-	real Step = INVALID_VALUE;
+	real_t Step = INVALID_VALUE;
 
 	for (int d = 0; d < 2; d++) {
 		if (m_pDispWnd[d] && (WPARAM)m_pDispWnd[d] == wParam) {

@@ -34,19 +34,19 @@ private:
 
 	int m_InlayPos[180000];
 
-	real m_x_um[2];
-	real m_y_um[2];
+	real_t m_x_um[2];
+	real_t m_y_um[2];
 
 	int m_w;
 	int m_h;
 	int m_l;
 	int m_t;
-	real m_w_um;
-	real m_h_um;
-	real m_x_px_um;
-	real m_y_px_um;
-	real m_cx;
-	real m_cy;
+	real_t m_w_um;
+	real_t m_h_um;
+	real_t m_x_px_um;
+	real_t m_y_px_um;
+	real_t m_cx;
+	real_t m_cy;
 
 	CMDC m_MemDC;
 	CRgn m_Rgn;
@@ -58,11 +58,11 @@ private:
 	int m_L_R;//520 Linear Ruler Click note
 	int m_I;//520  disk click note
 
-	real m_Last_x;//520
-	real m_Last_y;//520
-	real m_Last_I_R;//520
-	real m_Last_I_I_R;//520
-	real m_InnerD_Ran;//520
+	real_t m_Last_x;//520
+	real_t m_Last_y;//520
+	real_t m_Last_I_R;//520
+	real_t m_Last_I_I_R;//520
+	real_t m_InnerD_Ran;//520
 
 					  // int  m_InsideEmptyWidth;//520
 	int  m_InsideWidth;//520

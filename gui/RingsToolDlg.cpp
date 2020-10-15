@@ -179,7 +179,7 @@ void CRingsToolDlg::OnOK()
 		}
 	}
 
-	real D = 0.0;
+	real_t D = 0.0;
 	for (int r = 0; r < pCalibration->NumRings; r++) {
 		for (int a = 0; a < 360; a++) {
 			for (int e = 0; e < 4; e++) {
@@ -263,8 +263,8 @@ void CRingsToolDlg::OnRadioClicked()
 		m_Video1Wnd.m_MemDC.DrawLine(x0, y0 - 5, x0, y0 + 6, 1, RED);
 		for (int a = 0; a < 360; a++) {
 			int b = a == 359 ? 0 : a + 1;
-			real ra_um = pImage->m_ri_r_um[0][a]; if (ra_um == INVALID_VALUE) continue;
-			real rb_um = pImage->m_ri_r_um[0][b]; if (rb_um == INVALID_VALUE) continue;
+			real_t ra_um = pImage->m_ri_r_um[0][a]; if (ra_um == INVALID_VALUE) continue;
+			real_t rb_um = pImage->m_ri_r_um[0][b]; if (rb_um == INVALID_VALUE) continue;
 			int ya = intRound(m_cy - (pImage->m_ve_y_um + ra_um * SIN[a]) * m_y_px_um);
 			int xa = intRound(m_cx + (pImage->m_ve_x_um + ra_um * COS[a]) * m_x_px_um);
 			int yb = intRound(m_cy - (pImage->m_ve_y_um + rb_um * SIN[b]) * m_y_px_um);
@@ -276,8 +276,8 @@ void CRingsToolDlg::OnRadioClicked()
 		for (int r = 0; r < pImage->m_NumRings; r++) {
 			for (int a = 0; a < 360; a++) {
 				int b = a == 359 ? 0 : a + 1;
-				real ra_um = pImage->m_ri_r_um[r][a]; if (ra_um == INVALID_VALUE) continue;
-				real rb_um = pImage->m_ri_r_um[r][b]; if (rb_um == INVALID_VALUE) continue;
+				real_t ra_um = pImage->m_ri_r_um[r][a]; if (ra_um == INVALID_VALUE) continue;
+				real_t rb_um = pImage->m_ri_r_um[r][b]; if (rb_um == INVALID_VALUE) continue;
 				int ya = intRound(m_cy - (pImage->m_ve_y_um + ra_um * SIN[a]) * m_y_px_um);
 				int xa = intRound(m_cx + (pImage->m_ve_x_um + ra_um * COS[a]) * m_x_px_um);
 				int yb = intRound(m_cy - (pImage->m_ve_y_um + rb_um * SIN[b]) * m_y_px_um);
@@ -457,7 +457,7 @@ LRESULT CRingsToolDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 	}
 
 	{
-		real hmax = -1000000000.0;
+		real_t hmax = -1000000000.0;
 
 		for (int i = 0; i < 256; i++)
 		{

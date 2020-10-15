@@ -42,9 +42,9 @@ CWFCTTorAliWnd::CWFCTTorAliWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CW
 	//----------------------------------------------------
 	RECT Rect;
 	GetWindowRect(&Rect);
-	real t = 3.0 * (0.03 * m_h) + m_g;
-	real w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
-	real h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
+	real_t t = 3.0 * (0.03 * m_h) + m_g;
+	real_t w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
+	real_t h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
 	::SetRect(&m_Rect[0], intRound(m_g), intRound(t), intRound(m_g + w), intRound(t + h)); // internal	wavefront Map
 	::SetRect(&m_Rect[1], intRound(m_g + w + m_g), intRound(t), intRound(m_g + w + m_g + w), intRound(t + h)); // Cornea wavefront map	
 	::SetRect(&m_Rect[2], intRound(m_g + w + m_g + w + m_g), intRound(t), intRound(m_g + w + m_g + w + m_g + w), intRound(t + h)); // Cornea axial map	
@@ -184,7 +184,7 @@ void CWFCTTorAliWnd::CreateChildWnd()
 		// total wavefront surface
 		m_Surfaces[2] = m_pWFExam->m_WfSurface;
 
-		real r_max_um = 5000.0;
+		real_t r_max_um = 5000.0;
 		r_max_um = __min(r_max_um, m_Surfaces[1].m_r_max_um);
 		r_max_um = __min(r_max_um, m_Surfaces[2].m_r_max_um);
 		r_max_um = __min(r_max_um, m_ThisWndSetting.m_ZoneRadiusUm);
@@ -204,7 +204,7 @@ void CWFCTTorAliWnd::CreateChildWnd()
 		m_Surfaces[0] -= m_Surfaces[1];
 
 		//0: Internal; 1:Corneal; 2:Total
-		real SphEq[3], Sph[3], Cyl[3];
+		real_t SphEq[3], Sph[3], Cyl[3];
 		int Axes[3];
 		for (int i = 0; i < 3; i++) {
 			CWFExam::GetSpheqSphCylAxis(m_Surfaces[i], 0, TRUE, SphEq[i], Sph[i], Cyl[i], Axes[i]);
@@ -344,23 +344,23 @@ void CWFCTTorAliWnd::CreateChildWnd()
 
 
 		//middle value
-		real Cent = 0.0;
-		real Inc = 0.10;
-		real Step;	// step value
+		real_t Cent = 0.0;
+		real_t Inc = 0.10;
+		real_t Step;	// step value
 
 					//Wavefront map
 		if (pScale0->m_StepAuto)
 		{
-			real Span = 0.0;
+			real_t Span = 0.0;
 
 			for (int d = 0; d < 2; d++)
 			{
 				CEyeWnd* pEyeWnd = (CEyeWnd*)m_pDispWnd[d];
-				real Min = pEyeWnd->m_Map2D.m_min;
-				real Max = pEyeWnd->m_Map2D.m_max;
+				real_t Min = pEyeWnd->m_Map2D.m_min;
+				real_t Max = pEyeWnd->m_Map2D.m_max;
 				Span = __max(Span, 2.0 * __max(fabs(Min), fabs(Max)));
 			}
-			real t = Span / pScale0->m_NumColors;
+			real_t t = Span / pScale0->m_NumColors;
 			Step = (int)(t / Inc) * Inc;
 			if (t > Step + 0.001) Step += Inc;
 		}
@@ -369,7 +369,7 @@ void CWFCTTorAliWnd::CreateChildWnd()
 			Step = RealRound(pScale0->m_Step, Inc);
 		}
 		if (Step < Inc) Step = Inc;
-		real StepMax = 10;
+		real_t StepMax = 10;
 		if (Step > StepMax) Step = StepMax;
 		//
 		for (int d = 0; d < 3; d++)
@@ -508,7 +508,7 @@ void CWFCTTorAliWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	int num = NumRows;
 
 	if (m_isCombo) num = num + 4;
-	real h = (Rect.bottom - Rect.top) / (real)num;
+	real_t h = (Rect.bottom - Rect.top) / (real_t)num;
 
 	CMFont Font(intRound(1.1 * h), 400, "Arial");
 
@@ -531,7 +531,7 @@ void CWFCTTorAliWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	int R2 = R3 - w1;
 	int R1 = R3 - w3;
 
-	real t = T;
+	real_t t = T;
 	::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
 	m_MemDC.WriteText(" Pre-Op Corneal Astigmatism", Rect, Font, white, 0);
 

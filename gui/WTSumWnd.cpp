@@ -32,9 +32,9 @@ CWTSumWnd::CWTSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFExam* pWF
 	//----------------------------------------------------
 	RECT Rect;
 	GetWindowRect(&Rect);
-	real t = 3.0 * (0.03 * m_h) + m_g;
-	real w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
-	real h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
+	real_t t = 3.0 * (0.03 * m_h) + m_g;
+	real_t w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
+	real_t h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
 	::SetRect(&m_Rect[0], intRound(m_g), intRound(t), intRound(m_g + w), intRound(t + h)); // eye image
 	::SetRect(&m_Rect[1], intRound(m_g + w + m_g), intRound(t), intRound(m_g + w + m_g + w), intRound(t + h)); // wavefront map
 	::SetRect(&m_Rect[2], intRound(m_g + w + m_g), intRound(t + h + m_g), intRound(m_g + w + m_g + w), intRound(t + h + m_g + h)); // axial map
@@ -75,8 +75,8 @@ void CWTSumWnd::LensInfo(RECT Rect, int NumRows)
 
 	int L = Rect.left, T = Rect.top, R = Rect.right, B = Rect.bottom;
 
-	real t = T;
-	real h = (Rect.bottom - Rect.top) / (real)NumRows;
+	real_t t = T;
+	real_t h = (Rect.bottom - Rect.top) / (real_t)NumRows;
 
 	CMFont Font(intRound(1.1 * h), 400, "Arial");
 
@@ -230,7 +230,7 @@ void CWTSumWnd::CreateChildWnd()
 		pWndSettings->m_Mask.GetName(pEyeWnd->m_LTLabel[1]);
 
 		pWndSettings->m_ZoneRadiusUm = 5000;
-		real r_max_um = 5000.0;
+		real_t r_max_um = 5000.0;
 		r_max_um = __min(r_max_um, m_pWFExam->m_WfSurface.m_r_max_um);
 		r_max_um = __min(r_max_um, pWndSettings->m_ZoneRadiusUm);
 
@@ -261,16 +261,16 @@ void CWTSumWnd::CreateChildWnd()
 
 		m_pDispWnd[1] = pEyeWnd;
 
-		real Inc = pWndSettings->GetIncrement();
+		real_t Inc = pWndSettings->GetIncrement();
 
-		real Cent = 0.0;
+		real_t Cent = 0.0;
 
-		real Step;
+		real_t Step;
 		if (pScale->m_StepAuto) {
-			real Min = pEyeWnd->m_Map2D.m_min;
-			real Max = pEyeWnd->m_Map2D.m_max;
-			real Span = 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent));
-			real t = Span / pScale->m_NumColors;
+			real_t Min = pEyeWnd->m_Map2D.m_min;
+			real_t Max = pEyeWnd->m_Map2D.m_max;
+			real_t Span = 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent));
+			real_t t = Span / pScale->m_NumColors;
 			Step = (int)(t / Inc) * Inc;
 			if (t > Step + 0.001) Step += Inc;
 		}
@@ -278,7 +278,7 @@ void CWTSumWnd::CreateChildWnd()
 			Step = RealRound(pScale->m_Step, Inc);
 		}
 		if (Step < Inc) Step = Inc;
-		real StepMax = pWndSettings->GetMaxStep();
+		real_t StepMax = pWndSettings->GetMaxStep();
 		if (Step > StepMax) Step = StepMax;
 
 		pEyeWnd->m_Cent = Cent;
@@ -320,9 +320,9 @@ void CWTSumWnd::CreateChildWnd()
 
 		m_pDispWnd[2] = pEyeWnd;
 
-		real Inc = pWndSettings->GetIncrement();
+		real_t Inc = pWndSettings->GetIncrement();
 
-		real Cent;
+		real_t Cent;
 		if (pScale->m_CentAuto) {
 			if (pWndSettings->m_MapUnit == DIOPTERS) {
 				Cent = m_pCTExam->m_ax0_dp;
@@ -336,12 +336,12 @@ void CWTSumWnd::CreateChildWnd()
 		}
 		Cent = RealRound(Cent, Inc);
 
-		real Step;
+		real_t Step;
 		if (pScale->m_StepAuto) {
-			real Min = pEyeWnd->m_Map2D.m_min;
-			real Max = pEyeWnd->m_Map2D.m_max;
-			real Span = 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent));
-			real t = Span / pScale->m_NumColors;
+			real_t Min = pEyeWnd->m_Map2D.m_min;
+			real_t Max = pEyeWnd->m_Map2D.m_max;
+			real_t Span = 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent));
+			real_t t = Span / pScale->m_NumColors;
 			Step = (int)(t / Inc) * Inc;
 			if (t > Step + 0.001) Step += Inc;
 		}
@@ -349,7 +349,7 @@ void CWTSumWnd::CreateChildWnd()
 			Step = RealRound(pScale->m_Step, Inc);
 		}
 		if (Step < Inc) Step = Inc;
-		real StepMax = pWndSettings->GetMaxStep();
+		real_t StepMax = pWndSettings->GetMaxStep();
 		if (Step > StepMax) Step = StepMax;
 
 		pEyeWnd->m_Cent = Cent;

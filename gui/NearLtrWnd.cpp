@@ -136,8 +136,8 @@ void CNearLtrWnd::RepaintMemDC()
 
 void CNearLtrWnd::Letter()
 {
-	real _0 = m_Printing ? 1.0 : 0.0;
-	real _1 = m_Printing ? 0.0 : 1.0;
+	real_t _0 = m_Printing ? 1.0 : 0.0;
+	real_t _1 = m_Printing ? 0.0 : 1.0;
 
 	int n;
 	switch (m_NearLtrDisType)
@@ -172,7 +172,7 @@ void CNearLtrWnd::Letter()
 
 	::glMatrixMode(GL_PROJECTION);
 	::glLoadIdentity();
-	real p = (real)m_w / m_h;
+	real_t p = (real_t)m_w / m_h;
 	::glOrtho(-p, p, -1.0, 1.0, -5.0, 5.0);
 
 	::glMatrixMode(GL_MODELVIEW);
@@ -182,7 +182,7 @@ void CNearLtrWnd::Letter()
 		::glRotated(-45 - m_ax, 0.0, 0.0, 1.0);
 		::glTranslated(0.0, 0.0, -0.2);
 	}
-	real q = 1.0;
+	real_t q = 1.0;
 	q *= 0.01 * m_Zoom;
 	q *= n / 1024.0;
 	q *= 2.0 / n;
@@ -200,14 +200,14 @@ void CNearLtrWnd::Letter()
 
 	// letter
 	int o = n >> 1;
-	real thr = 0.01;
+	real_t thr = 0.01;
 	for (int j = 0; j < n - 1; j++)
 	{
 		int y[4] = { j, j + 1, j + 1, j };
 		for (int i = 0; i < n - 1; i++)
 		{
 			int x[4] = { i, i, i + 1, i + 1 };
-			real z[4];
+			real_t z[4];
 			for (int k = 0; k < 4; k++)
 			{
 				switch (m_NearLtrDisType)
@@ -235,7 +235,7 @@ void CNearLtrWnd::Letter()
 				::glBegin(GL_POLYGON);
 				for (int k = 0; k < 4; k++)
 				{
-					real c = m_Printing ? 1.0 - z[k] : z[k];
+					real_t c = m_Printing ? 1.0 - z[k] : z[k];
 					::glColor3d(c, c, c);
 					::glVertex3d(x[k] - o, y[k] - o, z[k]);
 				}
@@ -246,7 +246,7 @@ void CNearLtrWnd::Letter()
 
 	// grid
 	::glColor3d(m_Printing ? 0.8 : 0.2, m_Printing ? 0.8 : 0.2, m_Printing ? 0.8 : 0.2);
-	real g_mn = 10.0;
+	real_t g_mn = 10.0;
 	int m;
 	switch (m_Zoom) {
 	case 100: m = 12; break;
@@ -254,7 +254,7 @@ void CNearLtrWnd::Letter()
 	case 400: m = 3; break;
 	}
 
-	real a;
+	real_t a;
 	switch (m_NearLtrDisType)
 	{
 	case 1:
@@ -277,7 +277,7 @@ void CNearLtrWnd::Letter()
 	::glBegin(GL_LINES);
 	for (int i = -m; i <= m; i++)
 	{
-		real b;
+		real_t b;
 		switch (m_NearLtrDisType)
 		{
 		case 1:
@@ -303,7 +303,7 @@ void CNearLtrWnd::Letter()
 	::glEnd();
 
 	// axes
-	real u = 1.02 * a;
+	real_t u = 1.02 * a;
 	::glColor3d(_1, _1, _1);
 	::glBegin(GL_LINES);
 	::glVertex3d(-u, 0.0, 0.0); ::glVertex3d(-a, 0.0, 0.0); // Ox

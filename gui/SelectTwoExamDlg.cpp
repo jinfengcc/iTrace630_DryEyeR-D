@@ -31,7 +31,7 @@ END_MESSAGE_MAP()
 
 //***************************************************************************************
 
-CSelectTwoExamDlg::CSelectTwoExamDlg(CWnd* pParentWnd, GUID& PatientID, int Eye, CMFont* pFont, int WFn, int CTn, real ScanSize[NUM_EXAMS_MAX], int NumImages[NUM_EXAMS_MAX], CString  FellowIDStr[NUM_EXAMS_MAX]) :
+CSelectTwoExamDlg::CSelectTwoExamDlg(CWnd* pParentWnd, GUID& PatientID, int Eye, CMFont* pFont, int WFn, int CTn, real_t ScanSize[NUM_EXAMS_MAX], int NumImages[NUM_EXAMS_MAX], CString  FellowIDStr[NUM_EXAMS_MAX]) :
 	CDialog(IDD_SELECT_TWO_EXAM_DLG, pParentWnd)
 {
 	::DB.LoadExamHeaders(PatientID);//Big Database Research since 03062019
@@ -746,7 +746,7 @@ void CSelectTwoExamDlg::OnExamsListHOVER(NMHDR* pNotifyStruct, LRESULT* pRes)
 				return;
 			}
 
-			real ratioW = real(pWFExam->m_Image.m_w) / real(m_ExamImgInfo.m_w);
+			real_t ratioW = real_t(pWFExam->m_Image.m_w) / real_t(m_ExamImgInfo.m_w);
 
 			for (int y = 0; y < m_ExamImgInfo.m_h; y++)
 			{
@@ -793,7 +793,7 @@ void CSelectTwoExamDlg::OnExamsListHOVER(NMHDR* pNotifyStruct, LRESULT* pRes)
 			}
 
 			//m_ExamImgInfo.ClearMemDC();
-			real ratioW = real(pCTExam->m_Image.m_w) / real(m_ExamImgInfo.m_w);
+			real_t ratioW = real_t(pCTExam->m_Image.m_w) / real_t(m_ExamImgInfo.m_w);
 
 			for (int y = 0; y < m_ExamImgInfo.m_h; y++)
 			{

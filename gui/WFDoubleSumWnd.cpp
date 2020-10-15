@@ -39,11 +39,11 @@ CWFDoubleSumWnd::CWFDoubleSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, 
 	//----------------------------------------------------
 	RECT Rect;
 	GetWindowRect(&Rect);
-	real t = 3.0 * (0.03 * m_h) + m_g;
-	real w2 = ((Rect.right - Rect.left) - 5.0 * m_g) / 6.0;
-	real h2 = ((Rect.bottom - Rect.top - t) - 4.0 * m_g) / 4.0;
-	real w = w2 + w2;
-	real h = h2 + m_g + h2;
+	real_t t = 3.0 * (0.03 * m_h) + m_g;
+	real_t w2 = ((Rect.right - Rect.left) - 5.0 * m_g) / 6.0;
+	real_t h2 = ((Rect.bottom - Rect.top - t) - 4.0 * m_g) / 4.0;
+	real_t w = w2 + w2;
+	real_t h = h2 + m_g + h2;
 	::SetRect(&m_Rect[0], intRound(m_g), intRound(t), intRound(m_g + w), intRound(t + h)); // exam 1 map
 	::SetRect(&m_Rect[1], intRound(m_g + w + m_g), intRound(t), intRound(m_g + w + m_g + w2), intRound(t + h2)); // exam 1 psf
 	::SetRect(&m_Rect[2], intRound(m_g + w + m_g), intRound(t + h2 + m_g), intRound(m_g + w + m_g + w2), intRound(t + h)); // exam 1 letter
@@ -73,7 +73,7 @@ CWFDoubleSumWnd::CWFDoubleSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, 
 	m_VFASumWnd = TRUE;
 
 	int invalidValue = 0;
-	real m_r1, m_r2;
+	real_t m_r1, m_r2;
 	if (m_pWFExam1 == NULL) invalidValue = 1;
 	else m_r1 = m_pWFExam1->m_WfSurface.m_r_max_um;
 
@@ -462,8 +462,8 @@ void CWFDoubleSumWnd::CreateChildWnd()
 	}
 
 
-	real r_max_um = 5000;
-	real r_max_um1, r_max_um2;
+	real_t r_max_um = 5000;
+	real_t r_max_um1, r_max_um2;
 
 	if (m_pWFExam1) r_max_um1 = m_pWFExam1->m_WfSurface.m_r_max_um;
 	if (m_pWFExam2) r_max_um2 = m_pWFExam2->m_WfSurface.m_r_max_um;
@@ -489,7 +489,7 @@ void CWFDoubleSumWnd::CreateChildWnd()
 	{
 		CZernikeSurface Surface;
 
-		real SphEq, Sph, Cyl; int Axis;
+		real_t SphEq, Sph, Cyl; int Axis;
 
 		if (m_pWFExam1)
 		{
@@ -761,24 +761,24 @@ void CWFDoubleSumWnd::CreateChildWnd()
 	{
 		CWndSettings* pWndSettings = m_pWndSettings;
 		CScale* pScale = pWndSettings->GetScale();
-		real Inc = pWndSettings->GetIncrement();
-		real Cent = 0.0;
-		real Step;
+		real_t Inc = pWndSettings->GetIncrement();
+		real_t Cent = 0.0;
+		real_t Step;
 
 		if (pScale->m_StepAuto)
 		{
-			real Span = 0.0;
+			real_t Span = 0.0;
 			for (int e = 0; e < 2; e++)
 			{
 				CEyeWnd* pEyeWnd = (CEyeWnd*)m_pDispWnd[e * 3];
 				if (pEyeWnd)
 				{
-					real Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
-					real Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
+					real_t Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
+					real_t Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
 					Span = __max(Span, 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent)));
 				}
 			}
-			real t = Span / pScale->m_NumColors;
+			real_t t = Span / pScale->m_NumColors;
 			Step = (int)(t / Inc) * Inc;
 			if (t > Step + 0.001) Step += Inc;
 		}
@@ -788,7 +788,7 @@ void CWFDoubleSumWnd::CreateChildWnd()
 		}
 		if (Step < Inc) Step = Inc;
 
-		real StepMax = pWndSettings->GetMaxStep();
+		real_t StepMax = pWndSettings->GetMaxStep();
 
 		if (Step > StepMax) Step = StepMax;
 

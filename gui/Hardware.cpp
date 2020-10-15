@@ -1257,9 +1257,9 @@ int CHW::GetTriangulationSensorReading()
 
 //***************************************************************************************
 
-int CHW::UmToHzX(const real XUm)
+int CHW::UmToHzX(const real_t XUm)
 {
-	real d = XUm * m_Calibration.AODX.HzUm;
+	real_t d = XUm * m_Calibration.AODX.HzUm;
 
 	if (!m_Calibration.AODXNoFlip) d = -d;
 
@@ -1268,9 +1268,9 @@ int CHW::UmToHzX(const real XUm)
 
 //***************************************************************************************
 
-int CHW::UmToHzY(const real YUm)
+int CHW::UmToHzY(const real_t YUm)
 {
-	real d = YUm * m_Calibration.AODY.HzUm;
+	real_t d = YUm * m_Calibration.AODY.HzUm;
 
 	if (!m_Calibration.AODYNoFlip) d = -d;
 
@@ -1279,7 +1279,7 @@ int CHW::UmToHzY(const real YUm)
 
 //***************************************************************************************
 
-BOOL CHW::DoWFExam(const int NumPoints, const real* pXUm, const real* pYUm)
+BOOL CHW::DoWFExam(const int NumPoints, const real_t* pXUm, const real_t* pYUm)
 {
 	if (m_hDLL == NULL) return FALSE;
 
@@ -1394,7 +1394,7 @@ BOOL CHW::GetLADsData(const int NumPoints, ushort* pLADXData, ushort* pLADYData)
 
 //***************************************************************************************
 
-void CHW::StartContinuousScanning(const int NumPoints, const real* pXUm, const real* pYUm)
+void CHW::StartContinuousScanning(const int NumPoints, const real_t* pXUm, const real_t* pYUm)
 {
 	if (m_hDLL == NULL) return;
 
@@ -1424,7 +1424,7 @@ void CHW::StopContinuousScanning()
 
 //***************************************************************************************
 
-void CHW::SetAODsFrequencies(const real XUm, const real YUm)
+void CHW::SetAODsFrequencies(const real_t XUm, const real_t YUm)
 {
 	if (m_hDLL == NULL) return;
 
@@ -1499,7 +1499,7 @@ void CHW::InitializeOptometer()
 
 	if (Complete && WorkingCorrectly)
 	{
-		real RangeMm = 0.0;
+		real_t RangeMm = 0.0;
 		if (DllGetAccommodationMotorRange(&RangeMm))
 		{
 			m_OptometerInitialized = TRUE;
@@ -1515,21 +1515,21 @@ void CHW::InitializeOptometer()
 
 //***************************************************************************************
 
-void CHW::MoveOptometerTargetToPositionD(real PositionD, BOOL Wait)
+void CHW::MoveOptometerTargetToPositionD(real_t PositionD, BOOL Wait)
 {
 	if (m_hDLL == NULL) return;
 	if (m_Calibration.OptometerEnabled != 1) return;
 	if (!IsConnected()) return;
 	if (!m_OptometerInitialized) return;
 
-	real LowerLimitUm = 0.0;
-	real UpperLimitUm = m_OptometerTargetRangeUm;
+	real_t LowerLimitUm = 0.0;
+	real_t UpperLimitUm = m_OptometerTargetRangeUm;
 	if (LowerLimitUm > UpperLimitUm) return;
 
 	PositionD = RealRound(PositionD, 0.25);
 
-	Matrix<real> X(21);
-	Matrix<real> Y(21);
+	Matrix<real_t> X(21);
+	Matrix<real_t> Y(21);
 
 	for (int i = 0; i <= 20; i++)
 	{
@@ -1540,7 +1540,7 @@ void CHW::MoveOptometerTargetToPositionD(real PositionD, BOOL Wait)
 	CCubicSpline Spline;
 	Spline.Create(X, Y);
 
-	real PositionUm;
+	real_t PositionUm;
 	Spline.GetAt(PositionD, PositionUm, TRUE);
 
 	while (PositionUm > UpperLimitUm)
@@ -1606,7 +1606,7 @@ void CHW::OptometerMain()
 {
 	TurnAccommodationMotorOn();
 
-	real PositionMm = 0.001 * m_OptometerTargetMoveToPositionUm;
+	real_t PositionMm = 0.001 * m_OptometerTargetMoveToPositionUm;
 
 	DllMoveAccommodationMotor(PositionMm);
 

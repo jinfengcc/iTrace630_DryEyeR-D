@@ -34,24 +34,24 @@ void CCTColorImgWnd::RepaintMemDC()
 	if (pImage == NULL) return;
 	if (pImage->m_RGBData.GetMem() == NULL) return;
 
-	real cx = 0.5 * m_w;
-	real cy = 0.5 * m_h;
+	real_t cx = 0.5 * m_w;
+	real_t cy = 0.5 * m_h;
 
-	real x0_um = pImage->m_ve_x_um;
-	real y0_um = pImage->m_ve_y_um;
+	real_t x0_um = pImage->m_ve_x_um;
+	real_t y0_um = pImage->m_ve_y_um;
 
-	real h_um = 12000.0;
-	real w_um = h_um * m_w / m_h;
-	real x_px_um = m_w / w_um;
-	real y_px_um = m_h / h_um;
+	real_t h_um = 12000.0;
+	real_t w_um = h_um * m_w / m_h;
+	real_t x_px_um = m_w / w_um;
+	real_t y_px_um = m_h / h_um;
 
 	for (int y = 0; y < m_h; y++)
 	{
-		real y_um = y0_um - (cy - y) / y_px_um;
+		real_t y_um = y0_um - (cy - y) / y_px_um;
 		for (int x = 0; x < m_w; x++)
 		{
-			real x_um = x0_um + (x - cx) / x_px_um;
-			real r, g, b;
+			real_t x_um = x0_um + (x - cx) / x_px_um;
+			real_t r, g, b;
 			if (pImage->GetRGBAtUm(x_um, y_um, &r, &g, &b))
 			{
 				m_MemDC.SetPixel(x, m_h - y - 1, (int)r, (int)g, (int)b);

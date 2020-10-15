@@ -21,16 +21,16 @@ public:
 
 private:
 
-	Matrix<real> m_X1, m_F1;
-	Matrix<real> m_X2, m_F2;
+	Matrix<real_t> m_X1, m_F1;
+	Matrix<real_t> m_X2, m_F2;
 
 	CWFExam* m_pWFExam1;
 	CWFExam* m_pWFExam2;
 
 	BOOL    SameDepthFocus();
 
-	real    m_fraction1;
-	real    m_fraction2;
+	real_t    m_fraction1;
+	real_t    m_fraction2;
 
 	virtual CString GetName() override { return "WF Summary Display"; }
 	virtual CWndSettings* GetWndSettings() override { return m_pWndSettings + m_d; }

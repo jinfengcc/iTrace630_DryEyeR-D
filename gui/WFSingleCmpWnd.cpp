@@ -48,9 +48,9 @@ CWFSingleCmpWnd::CWFSingleCmpWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, 
 	//----------------------------------------------------
 	RECT Rect;
 	GetWindowRect(&Rect);
-	real t = 3.0 * (0.03 * m_h) + m_g;
-	real w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
-	real h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
+	real_t t = 3.0 * (0.03 * m_h) + m_g;
+	real_t w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
+	real_t h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
 	::SetRect(&m_Rect[0], intRound(m_g), intRound(t), intRound(m_g + w), intRound(t + h)); // exam 1 map
 	::SetRect(&m_Rect[1], intRound(m_g + w + m_g), intRound(t), intRound(m_g + w + m_g + w), intRound(t + h)); // exam 2 map
 	::SetRect(&m_Rect[2], intRound(m_g + w + m_g + w + m_g), intRound(t), intRound(m_g + w + m_g + w + m_g + w), intRound(t + h)); // diff map
@@ -360,7 +360,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 	m_Surfaces[0] = pWFExam[0]->m_WfSurface;
 	m_Surfaces[1] = pWFExam[1]->m_WfSurface;
 	// change diameter
-	real r_max_um = 5000.0;
+	real_t r_max_um = 5000.0;
 	r_max_um = __min(r_max_um, m_Surfaces[0].m_r_max_um);
 	r_max_um = __min(r_max_um, m_Surfaces[1].m_r_max_um);
 	r_max_um = __min(r_max_um, pWndSettings->m_ZoneRadiusUm);
@@ -382,7 +382,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 	CString PresbisRBs[3];
 	if (m_InsideZone[m_d] == TRUE)
 	{
-		real SphEq, Sph, Cyl; int Axis;
+		real_t SphEq, Sph, Cyl; int Axis;
 		for (int i = 0; i < 3; i++)
 		{
 			CWFExam::GetSpheqSphCylAxis(m_Surfaces[i], ::Settings.m_VertexDistanceUm, ::Settings.m_PositiveCylinder, SphEq, Sph, Cyl, Axis);
@@ -401,7 +401,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 	Surfaces[1] = m_pWFExam2->m_WfSurface;
 
 	// change diameter
-	real n_r_max_um = 5000.0;
+	real_t n_r_max_um = 5000.0;
 	n_r_max_um = __min(n_r_max_um, Surfaces[0].m_r_max_um);
 	n_r_max_um = __min(n_r_max_um, Surfaces[1].m_r_max_um);
 
@@ -746,7 +746,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 
 			if (m_InsideZone[m_d] == TRUE) pAZRWnd->m_LTLabel[2] = "Presbia 2.4mm";
 		
-			real dr_um = 100.0;
+			real_t dr_um = 100.0;
 			int n = (int)(r_max_um / dr_um) + 1;
 
 			//
@@ -766,7 +766,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 
 			for (int i = 0; i < n; i++) 
 			{
-				real r_mm = 0.002 * i * dr_um;
+				real_t r_mm = 0.002 * i * dr_um;
 				if (fabs(r_mm - (int)r_mm) < 0.001) 
 				{
 					pAZRWnd->m_BLabels[i].Format(_T("%i"), (int)r_mm);
@@ -776,7 +776,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 			pAZRWnd->m_Values.Create(n, 2);
 			for (int i = 0; i < n; i++)
 			{
-				real r_um = i == 0 ? 1.0 : i * dr_um;
+				real_t r_um = i == 0 ? 1.0 : i * dr_um;
 				pAZRWnd->m_Values(i, 0) = CWFExam::GetAnnularRfAt(m_Surfaces[d], r_um);
 				pAZRWnd->m_Values(i, 1) = CWFExam::GetAverageRfAt(m_Surfaces[d], r_um);
 			}		
@@ -812,19 +812,19 @@ void CWFSingleCmpWnd::CreateChildWnd()
 	if (pWndSettings->m_Type == TYPE_TWFM || pWndSettings->m_Type == TYPE_TRFM)
 	{
 		CScale* pScale = pWndSettings->GetScale();
-		real Inc = pWndSettings->GetIncrement();
-		real Cent = 0.0;
-		real Step;
+		real_t Inc = pWndSettings->GetIncrement();
+		real_t Cent = 0.0;
+		real_t Step;
 		if (pScale->m_StepAuto)
 		{
-			real Span = 0.0;
+			real_t Span = 0.0;
 			for (int d = 0; d < 3; d++) {
 				CEyeWnd* pEyeWnd = (CEyeWnd*)m_pDispWnd[d];
-				real Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
-				real Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
+				real_t Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
+				real_t Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
 				Span = __max(Span, 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent)));
 			}
-			real t = Span / pScale->m_NumColors;
+			real_t t = Span / pScale->m_NumColors;
 			Step = (int)(t / Inc) * Inc;
 			if (t > Step + 0.001) Step += Inc;
 		}
@@ -835,7 +835,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 
 		if (Step < Inc) Step = Inc;
 
-		real StepMax = pWndSettings->GetMaxStep();
+		real_t StepMax = pWndSettings->GetMaxStep();
 		if (Step > StepMax) Step = StepMax;
 		//
 		for (int d = 0; d < 3; d++)
@@ -858,8 +858,8 @@ void CWFSingleCmpWnd::CreateChildWnd()
 
 	else if (pWndSettings->m_Type == TYPE_TAZR)
 	{
-		Matrix<real> max_arr(3);
-		Matrix<real> min_arr(3);
+		Matrix<real_t> max_arr(3);
+		Matrix<real_t> min_arr(3);
 
 		for (int d = 0; d < 3; d++)
 		{
@@ -868,9 +868,9 @@ void CWFSingleCmpWnd::CreateChildWnd()
 			pAZRWnd->m_Values.GetMin(min_arr[d]);
 		}
 
-		real rmax; max_arr.GetMax(rmax);
-		real rmin; min_arr.GetMin(rmin);
-		real t = __max(fabs(rmin), fabs(rmax));
+		real_t rmax; max_arr.GetMax(rmax);
+		real_t rmin; min_arr.GetMin(rmin);
+		real_t t = __max(fabs(rmin), fabs(rmax));
 		int imax = (int)t;
 		if (t > imax + 0.001) imax++;
 		int imin = -imax;
@@ -938,7 +938,7 @@ LRESULT CWFSingleCmpWnd::OnRotateMsg(WPARAM wParam, LPARAM lParam)
 
 LRESULT CWFSingleCmpWnd::OnChangeCentMsg(WPARAM wParam, LPARAM lParam)
 {
-	real Cent = INVALID_VALUE;
+	real_t Cent = INVALID_VALUE;
 
 	for (int d = 0; d < 2; d++)
 	{
@@ -968,7 +968,7 @@ LRESULT CWFSingleCmpWnd::OnChangeCentMsg(WPARAM wParam, LPARAM lParam)
 
 LRESULT CWFSingleCmpWnd::OnChangeStepMsg(WPARAM wParam, LPARAM lParam)
 {
-	real Step = INVALID_VALUE;
+	real_t Step = INVALID_VALUE;
 
 	for (int d = 0; d < 2; d++)
 	{

@@ -144,9 +144,9 @@ void CRSDWnd::Grid()
 	COLORREF white = m_Printing ? BLACK : WHITE;
 	COLORREF gray = m_Printing ? LIGHT_GRAY : DARK_GRAY;
 
-	real px_mn = ((0.8 * m_h)/*pix*/ / 240.0/*min*/) * (m_Zoom * 0.01);
+	real_t px_mn = ((0.8 * m_h)/*pix*/ / 240.0/*min*/) * (m_Zoom * 0.01);
 	int g_mn = 10;
-	real g_px = g_mn * px_mn;
+	real_t g_px = g_mn * px_mn;
 
 	int m;
 	switch (m_Zoom) {
@@ -157,8 +157,8 @@ void CRSDWnd::Grid()
 	default: return;
 	}
 
-	real cx = 0.5 * m_w;
-	real cy = 0.5 * m_h;
+	real_t cx = 0.5 * m_w;
+	real_t cy = 0.5 * m_h;
 
 	// vertical lines
 	int y1 = intRound(cy - g_px * m);
@@ -196,12 +196,12 @@ void CRSDWnd::Points()
 	COLORREF white = m_Printing ? BLACK : WHITE;
 	COLORREF black = m_Printing ? WHITE : BLACK;
 
-	real cx = 0.5 * m_w;
-	real cy = 0.5 * m_h;
+	real_t cx = 0.5 * m_w;
+	real_t cy = 0.5 * m_h;
 
-	real px_mn = ((0.8 * m_h) / 240.0) * (m_Zoom * 0.01);
+	real_t px_mn = ((0.8 * m_h) / 240.0) * (m_Zoom * 0.01);
 
-	real f = CWFExam::m_f_eye_um * CPSF::m_mn_um;
+	real_t f = CWFExam::m_f_eye_um * CPSF::m_mn_um;
 
 	COLORREF colors[7] = { MAGENTA, RED, ORANGE, YELLOW, GREEN, CYAN, BLUE };
 	CPen Pen[7], *pPen;
@@ -210,8 +210,8 @@ void CRSDWnd::Points()
 	}
 
 	int circle = -1;
-	real r_um_prev = -1.0;
-	real a_rd_prev;
+	real_t r_um_prev = -1.0;
+	real_t a_rd_prev;
 
 	int CurShot = m_pWFExam->m_CurShot;
 	int CurPoint = m_pWFExam->m_CurPoint;
@@ -222,8 +222,8 @@ void CRSDWnd::Points()
 	{
 		if (pPoint->m_shot == CurShot)
 		{
-			real r_um = pPoint->m_r_um - 0.00001;
-			real a_rd = pPoint->m_a_rd;
+			real_t r_um = pPoint->m_r_um - 0.00001;
+			real_t a_rd = pPoint->m_a_rd;
 
 			if (r_um <= m_Surface.m_r_max_um)
 			{
@@ -232,7 +232,7 @@ void CRSDWnd::Points()
 					circle++;
 				}
 
-				real dw_dx, dw_dy;
+				real_t dw_dx, dw_dy;
 				m_Surface.GetAt(r_um, a_rd, NULL, &dw_dx, &dw_dy, NULL, NULL, NULL);
 				int x = intRound(cx + (-f * dw_dx) * px_mn);
 				int y = intRound(cy - (-f * dw_dy) * px_mn);
@@ -244,7 +244,7 @@ void CRSDWnd::Points()
 				else
 				{
 					pPen = m_MemDC.SelectObject(&Pen[circle % 7]);
-					real da_rd = (a_rd - a_rd_prev) / 20.0;
+					real_t da_rd = (a_rd - a_rd_prev) / 20.0;
 
 					for (int l = 0; l <= 20; l++)
 					{
@@ -271,7 +271,7 @@ void CRSDWnd::Points()
 
 	if (pPoint = m_pWFExam->m_Points.Get(CurPoint))
 	{
-		real dw_dx, dw_dy;
+		real_t dw_dx, dw_dy;
 		m_Surface.GetAt(pPoint->m_r_um, pPoint->m_a_rd, NULL, &dw_dx, &dw_dy, NULL, NULL, NULL);
 		int x = intRound(cx + (-f * dw_dx) * px_mn);
 		int y = intRound(cy - (-f * dw_dy) * px_mn);
@@ -299,15 +299,15 @@ void CRSDWnd::Cursor()
 	COLORREF white = m_Printing ? BLACK : WHITE;
 	COLORREF black = m_Printing ? WHITE : BLACK;
 
-	real cx = 0.5 * m_w;
-	real cy = 0.5 * m_h;
+	real_t cx = 0.5 * m_w;
+	real_t cy = 0.5 * m_h;
 
-	real dw_dx, dw_dy;
+	real_t dw_dx, dw_dy;
 	m_Surface.GetAt(m_cursor_r_um, m_cursor_a_rd, NULL, &dw_dx, &dw_dy, NULL, NULL, NULL);
 
-	real px_mn = ((0.8 * m_h) / 240.0) * (m_Zoom * 0.01);
+	real_t px_mn = ((0.8 * m_h) / 240.0) * (m_Zoom * 0.01);
 
-	real f = CWFExam::m_f_eye_um * CPSF::m_mn_um;
+	real_t f = CWFExam::m_f_eye_um * CPSF::m_mn_um;
 
 	int x = intRound(cx + (-f * dw_dx) * px_mn);
 	int y = intRound(cy - (-f * dw_dy) * px_mn);
@@ -328,8 +328,8 @@ LRESULT CRSDWnd::OnChangePosMsg(WPARAM wParam, LPARAM lParam)
 {
 	RestoreMemDC();
 
-	m_cursor_r_um = ((real*)lParam)[0];
-	m_cursor_a_rd = ((real*)lParam)[1];
+	m_cursor_r_um = ((real_t*)lParam)[0];
+	m_cursor_a_rd = ((real_t*)lParam)[1];
 	Cursor();
 
 	InvalidateRgn(&m_Rgn, FALSE);

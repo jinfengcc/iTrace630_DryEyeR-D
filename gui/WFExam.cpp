@@ -31,14 +31,14 @@ void CComplaints::Reset()
 
 //***************************************************************************************
 
-const real CPSF::m_um_mn = 16600.0 * tan(_Pi_180 * (1.0 / 60.0));//4.8287444000472437
-const real CPSF::m_mn_um = 1.0 / CPSF::m_um_mn;
+const real_t CPSF::m_um_mn = 16600.0 * tan(_Pi_180 * (1.0 / 60.0));//4.8287444000472437
+const real_t CPSF::m_mn_um = 1.0 / CPSF::m_um_mn;
 
-const real CWFExam::m_LADPixelSize = 25.0;
+const real_t CWFExam::m_LADPixelSize = 25.0;
 
-const real CWFExam::m_d_eye_um = 22890.0;
-const real CWFExam::m_vn = 1.3375;
-const real CWFExam::m_f_eye_um = m_d_eye_um / m_vn;
+const real_t CWFExam::m_d_eye_um = 22890.0;
+const real_t CWFExam::m_vn = 1.3375;
+const real_t CWFExam::m_f_eye_um = m_d_eye_um / m_vn;
 
 //***************************************************************************************
 
@@ -58,11 +58,11 @@ void CWFExam::ProcessPresbiaPoints()
 {
 	m_SignalMax = 0;
 	m_NumGoodPoints = 0;
-	real AverageDX = 0.0;
-	real AverageDY = 0.0;
-	real MaxOpacityX = 0.0;
-	real MaxOpacityY = 0.0;
-	real MaxOpacity = 0.0;
+	real_t AverageDX = 0.0;
+	real_t AverageDY = 0.0;
+	real_t MaxOpacityX = 0.0;
+	real_t MaxOpacityY = 0.0;
+	real_t MaxOpacity = 0.0;
 
 	CScanPoint* pPoint = m_Points.MoveFirst();
 
@@ -128,16 +128,16 @@ void CWFExam::ProcessPoints()
 {
 	m_SignalMax = 0;
 	m_NumGoodPoints = 0;
-	real AverageDX = 0.0;
-	real AverageDY = 0.0;
-	real MaxOpacityX = 0.0;
-	real MaxOpacityY = 0.0;
-	real MaxOpacity = 0.0;
+	real_t AverageDX = 0.0;
+	real_t AverageDY = 0.0;
+	real_t MaxOpacityX = 0.0;
+	real_t MaxOpacityY = 0.0;
+	real_t MaxOpacity = 0.0;
 
 	CScanPoint* pPoint = m_Points.MoveFirst();
 
 	//select 10th maxOpcity as real maximum, in the future judge the 10th maximum opacity to find the noise
-	real Max10thOpacity[10];
+	real_t Max10thOpacity[10];
 	for (int i = 0; i < 10; i++) Max10thOpacity[i] = 0;
 	//select 10th maxOpcity Done
 
@@ -208,12 +208,12 @@ void CWFExam::ProcessPoints()
 
 //***************************************************************************************
 
-real CWFExam::GetClosestPointOpacity(const real r_um, const real a_rd, const int shot, const int op_type)
+real_t CWFExam::GetClosestPointOpacity(const real_t r_um, const real_t a_rd, const int shot, const int op_type)
 {
 	CScanPoint* pClosestPoint = NULL;
-	real x_um = r_um * cos(a_rd);
-	real y_um = r_um * sin(a_rd);
-	real dmin = DBL_MAX;
+	real_t x_um = r_um * cos(a_rd);
+	real_t y_um = r_um * sin(a_rd);
+	real_t dmin = DBL_MAX;
 
 	CScanPoint* pPoint = m_Points.MoveFirst();
 	
@@ -221,7 +221,7 @@ real CWFExam::GetClosestPointOpacity(const real r_um, const real a_rd, const int
 	{
 		if (pPoint->m_shot == shot)
 		{
-			real d = sqr(x_um - pPoint->x_um()) + sqr(y_um - pPoint->y_um());
+			real_t d = sqr(x_um - pPoint->x_um()) + sqr(y_um - pPoint->y_um());
 			if (d < dmin)
 			{
 				dmin = d;
@@ -357,7 +357,7 @@ int CWFExam::GetNumShotPoints()
 
 //***************************************************************************************
 
-void CWFExam::CreateScanPattern(real& r_max_um)
+void CWFExam::CreateScanPattern(real_t& r_max_um)
 {
 	m_Points.Destroy();
 
@@ -368,13 +368,13 @@ void CWFExam::CreateScanPattern(real& r_max_um)
 		const int nc = 5;
 		int np[nc] = { 1, 6, 13, 19, 25 };
 
-		real r_min_um = 0.0;
-		real dr_um = (r_max_um - r_min_um) / (nc - 1);
+		real_t r_min_um = 0.0;
+		real_t dr_um = (r_max_um - r_min_um) / (nc - 1);
 
 		for (int c = 0; c < nc; c++)
 		{
-			real r_um = r_min_um + c * dr_um;
-			real da_rd = _2_Pi / np[c];
+			real_t r_um = r_min_um + c * dr_um;
+			real_t da_rd = _2_Pi / np[c];
 
 			for (int p = 0; p < np[c]; p++)
 			{
@@ -394,13 +394,13 @@ void CWFExam::CreateScanPattern(real& r_max_um)
 			const int nc = 5;
 			int np[nc] = { 1, 6, 13, 19, 25 };
 
-			real r_min_um = 0.0;
-			real dr_um = (r_max_um - r_min_um) / (nc - 1);
+			real_t r_min_um = 0.0;
+			real_t dr_um = (r_max_um - r_min_um) / (nc - 1);
 
 			for (int c = 0; c < nc; c++)
 			{
-				real r_um = r_min_um + c * dr_um;
-				real da_rd = _2_Pi / np[c];
+				real_t r_um = r_min_um + c * dr_um;
+				real_t da_rd = _2_Pi / np[c];
 
 				for (int p = 0; p < np[c]; p++)
 				{
@@ -433,16 +433,16 @@ void CWFExam::CreateScanPattern(real& r_max_um)
 			const int nc = 7;
 			int np[nc] = { 1, 6, 12, 18, 24, 30, 37 };
 
-			real r_min_um = 0.0;
-			real dr_um = (r_max_um - r_min_um) / (nc - 1);
+			real_t r_min_um = 0.0;
+			real_t dr_um = (r_max_um - r_min_um) / (nc - 1);
 
 			for (int s = 0; s < 2; s++)
 			{
 				for (int c = 0; c < nc; c++)
 				{
-					real r_um = r_min_um + c * dr_um;
-					real da_rd = _2_Pi / np[c];
-					real a0_rd = s * da_rd * 0.5;
+					real_t r_um = r_min_um + c * dr_um;
+					real_t da_rd = _2_Pi / np[c];
+					real_t a0_rd = s * da_rd * 0.5;
 
 					for (int p = 0; p < np[c]; p++)
 					{
@@ -460,19 +460,19 @@ void CWFExam::CreateScanPattern(real& r_max_um)
 
 //***************************************************************************************
 
-void CWFExam::CreateProbePattern(real& r_max_um)
+void CWFExam::CreateProbePattern(real_t& r_max_um)
 {
 	m_Points.Destroy();
 
 	if (r_max_um > 1000.0) r_max_um = 1000.0;
 
 	const int np[3] = { 1, 6, 10 };
-	real dr_um = r_max_um / 2.0;
+	real_t dr_um = r_max_um / 2.0;
 
 	for (int c = 0; c < 3; c++)
 	{
-		real r_um = c * dr_um;
-		real da_rd = _2_Pi / np[c];
+		real_t r_um = c * dr_um;
+		real_t da_rd = _2_Pi / np[c];
 
 		for (int p = 0; p < np[c]; p++)
 		{
@@ -581,14 +581,14 @@ BOOL CWFExam::Presbia24Process()
 
 	ProcessPresbiaPoints();
 
-	real* r_um = new real[m_NumGoodPoints];
-	real* a_rd = new real[m_NumGoodPoints];
-	real* dw_dx = new real[m_NumGoodPoints];
-	real* dw_dy = new real[m_NumGoodPoints];
+	real_t* r_um = new real_t[m_NumGoodPoints];
+	real_t* a_rd = new real_t[m_NumGoodPoints];
+	real_t* dw_dx = new real_t[m_NumGoodPoints];
+	real_t* dw_dy = new real_t[m_NumGoodPoints];
 
 	int k = 0;
 	CScanPoint* pPoint = m_Points.MoveFirst();
-	real maxum = 0;
+	real_t maxum = 0;
 
 	while (pPoint)
 	{
@@ -606,12 +606,12 @@ BOOL CWFExam::Presbia24Process()
 		pPoint = m_Points.MoveNext();
 	}
 
-	real rmse_min = DBL_MAX;
+	real_t rmse_min = DBL_MAX;
 	int order_max;
 	for (order_max = 2; order_max <= ZERNIKE_ORDER_MAX; order_max++)
 	{
 		CZernikeSurface Surface;
-		real rmse;
+		real_t rmse;
 		if (Surface.CreateXY(order_max, 0.5 * m_ScanDiameter, m_NumGoodPoints, r_um, a_rd, dw_dx, dw_dy, &rmse))
 		{
 			if (rmse < rmse_min)
@@ -722,10 +722,10 @@ BOOL CWFExam::Process()
 
 	ProcessPoints();
 
-	real* r_um = new real[m_NumGoodPoints];
-	real* a_rd = new real[m_NumGoodPoints];
-	real* dw_dx = new real[m_NumGoodPoints];
-	real* dw_dy = new real[m_NumGoodPoints];
+	real_t* r_um = new real_t[m_NumGoodPoints];
+	real_t* a_rd = new real_t[m_NumGoodPoints];
+	real_t* dw_dx = new real_t[m_NumGoodPoints];
+	real_t* dw_dy = new real_t[m_NumGoodPoints];
 
 	int k = 0;
 
@@ -744,12 +744,12 @@ BOOL CWFExam::Process()
 		pPoint = m_Points.MoveNext();
 	}
 
-	real rmse_min = DBL_MAX;
+	real_t rmse_min = DBL_MAX;
 	int order_max;
 	for (order_max = 2; order_max <= ZERNIKE_ORDER_MAX; order_max++)
 	{
 		CZernikeSurface Surface;
-		real rmse;
+		real_t rmse;
 
 		if (Surface.CreateXY(order_max, 0.5 * m_ScanDiameter, m_NumGoodPoints, r_um, a_rd, dw_dx, dw_dy, &rmse))
 		{
@@ -782,25 +782,25 @@ BOOL CWFExam::Process()
 
 //***************************************************************************************
 
-void CWFExam::CreateOpm2D(CMap2D& Map, const real dr_um, const int shot, const int op_type)
+void CWFExam::CreateOpm2D(CMap2D& Map, const real_t dr_um, const int shot, const int op_type)
 {
 	if (!m_OK) return;
 
-	real r_max_um = 0.5 * m_ScanDiameter;
+	real_t r_max_um = 0.5 * m_ScanDiameter;
 
 	Map.Create(r_max_um, dr_um);
 
 	for (int y = -Map.m_nr; y <= Map.m_nr; y++)
 	{
-		real y_um = y * dr_um;
+		real_t y_um = y * dr_um;
 		for (int x = -Map.m_nr; x <= Map.m_nr; x++)
 		{
-			real x_um = x * dr_um;
-			real r_um = hyp(y_um, x_um);
+			real_t x_um = x * dr_um;
+			real_t r_um = hyp(y_um, x_um);
 			if (r_um <= r_max_um)
 			{
-				real a_rd = angle(y_um, x_um);
-				real v = GetClosestPointOpacity(r_um, a_rd, shot, op_type);
+				real_t a_rd = angle(y_um, x_um);
+				real_t v = GetClosestPointOpacity(r_um, a_rd, shot, op_type);
 				Map.SetAt(y, x, v);
 			}
 		}
@@ -810,23 +810,23 @@ void CWFExam::CreateOpm2D(CMap2D& Map, const real dr_um, const int shot, const i
 }
 
 //***************************************************************************************
-void CWFExam::CreateWfm2D(CMap2D& Map, const CZernikeSurface& Surface, const real dr_um)
+void CWFExam::CreateWfm2D(CMap2D& Map, const CZernikeSurface& Surface, const real_t dr_um)
 {
-	real r_max_um = Surface.m_r_max_um;
+	real_t r_max_um = Surface.m_r_max_um;
 
 	Map.Create(r_max_um, dr_um);
 
 	for (int y = -Map.m_nr; y <= Map.m_nr; y++)
 	{
-		real y_um = y * dr_um;
+		real_t y_um = y * dr_um;
 		for (int x = -Map.m_nr; x <= Map.m_nr; x++)
 		{
-			real x_um = x * dr_um;
-			real r_um = hyp(y_um, x_um);
+			real_t x_um = x * dr_um;
+			real_t r_um = hyp(y_um, x_um);
 			if (r_um <= r_max_um)
 			{
-				real a_rd = angle(y_um, x_um);
-				real w_um;
+				real_t a_rd = angle(y_um, x_um);
+				real_t w_um;
 				Surface.GetAt(r_um, a_rd, &w_um, NULL, NULL, NULL, NULL, NULL);
 				Map.SetAt(y, x, w_um);
 			}
@@ -836,25 +836,25 @@ void CWFExam::CreateWfm2D(CMap2D& Map, const CZernikeSurface& Surface, const rea
 //***************************************************************************************
 
 //For showing Presbia 2.4mm...
-void CWFExam::CreatePresbiaWfm2D(CMap2D& Map, const CZernikeSurface& Surface, const real dr_um)
+void CWFExam::CreatePresbiaWfm2D(CMap2D& Map, const CZernikeSurface& Surface, const real_t dr_um)
 {
-	real r_max_um = Surface.m_r_max_um;
+	real_t r_max_um = Surface.m_r_max_um;
 
 	Map.Create(r_max_um, dr_um);
 
 	for (int y = -Map.m_nr; y <= Map.m_nr; y++)
 	{
-		real y_um = y * dr_um;
+		real_t y_um = y * dr_um;
 
 		for (int x = -Map.m_nr; x <= Map.m_nr; x++)
 		{
-			real x_um = x * dr_um;
-			real r_um = hyp(y_um, x_um);
+			real_t x_um = x * dr_um;
+			real_t r_um = hyp(y_um, x_um);
 
 			if (r_um <= r_max_um && r_um >= 700)
 			{
-				real a_rd = angle(y_um, x_um);
-				real w_um;
+				real_t a_rd = angle(y_um, x_um);
+				real_t w_um;
 				Surface.GetAt(r_um, a_rd, &w_um, NULL, NULL, NULL, NULL, NULL);
 				Map.SetAt(y, x, w_um);
 			}
@@ -866,17 +866,17 @@ void CWFExam::CreatePresbiaWfm2D(CMap2D& Map, const CZernikeSurface& Surface, co
 
 void CWFExam::CreateWfm3D(CMap3D& Map, const CZernikeSurface& Surface)
 {
-	real r_max_um = Surface.m_r_max_um;
+	real_t r_max_um = Surface.m_r_max_um;
 
 	Map.Create(r_max_um);
 
 	for (int r = 0; r <= Map.m_nr; r++)
 	{
-		real r_um = r * Map.m_dr_um;
+		real_t r_um = r * Map.m_dr_um;
 		for (int a = 0; a < 360; a++)
 		{
-			real a_rd = _Pi_180 * a;
-			real w_um;
+			real_t a_rd = _Pi_180 * a;
+			real_t w_um;
 			Surface.GetAt(r_um, a_rd, &w_um, NULL, NULL, NULL, NULL, NULL);
 			Map.SetAt(r, a, w_um);
 		}
@@ -888,19 +888,19 @@ void CWFExam::CreateWfm3D(CMap3D& Map, const CZernikeSurface& Surface)
 //For showing Presbia 2.4mm...
 void CWFExam::CreatePresbiaWfm3D(CMap3D& Map, const CZernikeSurface& Surface)
 {
-	real r_max_um = Surface.m_r_max_um;
+	real_t r_max_um = Surface.m_r_max_um;
 
 	Map.Create(r_max_um);
 
 	for (int r = 0; r <= Map.m_nr; r++)
 	{
-		real r_um = r * Map.m_dr_um;
+		real_t r_um = r * Map.m_dr_um;
 		if (r_um >= 700)
 		{
 			for (int a = 0; a < 360; a++)
 			{
-				real a_rd = _Pi_180 * a;
-				real w_um;
+				real_t a_rd = _Pi_180 * a;
+				real_t w_um;
 				Surface.GetAt(r_um, a_rd, &w_um, NULL, NULL, NULL, NULL, NULL);
 				Map.SetAt(r, a, w_um);
 			}
@@ -910,23 +910,23 @@ void CWFExam::CreatePresbiaWfm3D(CMap3D& Map, const CZernikeSurface& Surface)
 
 //***************************************************************************************
 
-void CWFExam::CreateRfm2D(CMap2D& Map, const CZernikeSurface& Surface, const real dr_um)
+void CWFExam::CreateRfm2D(CMap2D& Map, const CZernikeSurface& Surface, const real_t dr_um)
 {
-	real r_max_um = Surface.m_r_max_um;
+	real_t r_max_um = Surface.m_r_max_um;
 
 	Map.Create(r_max_um, dr_um);
 
 	for (int y = -Map.m_nr; y <= Map.m_nr; y++)
 	{
-		real y_um = y * dr_um;
+		real_t y_um = y * dr_um;
 		for (int x = -Map.m_nr; x <= Map.m_nr; x++)
 		{
-			real x_um = x * dr_um;
-			real r_um = hyp(y_um, x_um);
+			real_t x_um = x * dr_um;
+			real_t r_um = hyp(y_um, x_um);
 			if (r_um <= r_max_um)
 			{
-				real a_rd = angle(y_um, x_um);
-				real v = CWFExam::GetRfAt(Surface, r_um, a_rd);
+				real_t a_rd = angle(y_um, x_um);
+				real_t v = CWFExam::GetRfAt(Surface, r_um, a_rd);
 				Map.SetAt(y, x, v);
 			}
 		}
@@ -936,23 +936,23 @@ void CWFExam::CreateRfm2D(CMap2D& Map, const CZernikeSurface& Surface, const rea
 //***************************************************************************************
 
 //For showing Presbia 2.4mm.
-void CWFExam::CreatePresbiaRfm2D(CMap2D& Map, const CZernikeSurface& Surface, const real dr_um)
+void CWFExam::CreatePresbiaRfm2D(CMap2D& Map, const CZernikeSurface& Surface, const real_t dr_um)
 {
-	real r_max_um = Surface.m_r_max_um;
+	real_t r_max_um = Surface.m_r_max_um;
 
 	Map.Create(r_max_um, dr_um);
 
 	for (int y = -Map.m_nr; y <= Map.m_nr; y++)
 	{
-		real y_um = y * dr_um;
+		real_t y_um = y * dr_um;
 		for (int x = -Map.m_nr; x <= Map.m_nr; x++)
 		{
-			real x_um = x * dr_um;
-			real r_um = hyp(y_um, x_um);
+			real_t x_um = x * dr_um;
+			real_t r_um = hyp(y_um, x_um);
 			if (r_um <= r_max_um && r_um >= 700)
 			{
-				real a_rd = angle(y_um, x_um);
-				real v = CWFExam::GetRfAt(Surface, r_um, a_rd);
+				real_t a_rd = angle(y_um, x_um);
+				real_t v = CWFExam::GetRfAt(Surface, r_um, a_rd);
 				Map.SetAt(y, x, v);
 			}
 		}
@@ -963,20 +963,20 @@ void CWFExam::CreatePresbiaRfm2D(CMap2D& Map, const CZernikeSurface& Surface, co
 
 void CWFExam::CreateRfm3D(CMap3D& Map, const CZernikeSurface& Surface)
 {
-	real r_max_um = Surface.m_r_max_um;
+	real_t r_max_um = Surface.m_r_max_um;
 
 	Map.Create(r_max_um);
 
 	for (int r = 0; r <= Map.m_nr; r++)
 	{
-		real r_um = r * Map.m_dr_um;
+		real_t r_um = r * Map.m_dr_um;
 
 		if (r_um == 0.0) r_um = 1.0;
 
 		for (int a = 0; a < 360; a++)
 		{
-			real a_rd = _Pi_180 * a;
-			real v = CWFExam::GetRfAt(Surface, r_um, a_rd);
+			real_t a_rd = _Pi_180 * a;
+			real_t v = CWFExam::GetRfAt(Surface, r_um, a_rd);
 			Map.SetAt(r, a, v);
 		}
 	}
@@ -986,21 +986,21 @@ void CWFExam::CreateRfm3D(CMap3D& Map, const CZernikeSurface& Surface)
 //For showing Presbia 2.4mm.
 void CWFExam::CreatePresbiaRfm3D(CMap3D& Map, const CZernikeSurface& Surface)
 {
-	real r_max_um = Surface.m_r_max_um;
+	real_t r_max_um = Surface.m_r_max_um;
 
 	Map.Create(r_max_um);
 
 	for (int r = 0; r <= Map.m_nr; r++)
 	{
-		real r_um = r * Map.m_dr_um;
+		real_t r_um = r * Map.m_dr_um;
 		if (r_um == 0.0) r_um = 1.0;
 
 		if (r_um >= 700)
 		{
 			for (int a = 0; a < 360; a++)
 			{
-				real a_rd = _Pi_180 * a;
-				real v = CWFExam::GetRfAt(Surface, r_um, a_rd);
+				real_t a_rd = _Pi_180 * a;
+				real_t v = CWFExam::GetRfAt(Surface, r_um, a_rd);
 				Map.SetAt(r, a, v);
 			}
 		}
@@ -1009,11 +1009,11 @@ void CWFExam::CreatePresbiaRfm3D(CMap3D& Map, const CZernikeSurface& Surface)
 
 //***************************************************************************************
 
-real CWFExam::GetRfAt(const CZernikeSurface& Surface, const real r_um, const real a_rd)
+real_t CWFExam::GetRfAt(const CZernikeSurface& Surface, const real_t r_um, const real_t a_rd)
 {
 	if (r_um == 0.0) return INVALID_VALUE;
 
-	real dw_dr, tilt;
+	real_t dw_dr, tilt;
 	Surface.GetAt(r_um, a_rd, NULL, NULL, NULL, &dw_dr, NULL, NULL);
 
 	Surface.GetTiltAt(a_rd, &tilt, NULL, NULL);
@@ -1024,7 +1024,7 @@ real CWFExam::GetRfAt(const CZernikeSurface& Surface, const real r_um, const rea
 
 //***************************************************************************************
 
-real CWFExam::GetAnnularRfAt(const CZernikeSurface& Surface, real r_um)
+real_t CWFExam::GetAnnularRfAt(const CZernikeSurface& Surface, real_t r_um)
 {
 	if (r_um < 1.0) r_um = 1.0;
 	if (r_um > Surface.m_r_max_um) r_um = Surface.m_r_max_um;
@@ -1045,7 +1045,7 @@ real CWFExam::GetAnnularRfAt(const CZernikeSurface& Surface, real r_um)
 
 //***************************************************************************************
 
-real CWFExam::GetAverageRfAt(const CZernikeSurface& Surface, real r_um)
+real_t CWFExam::GetAverageRfAt(const CZernikeSurface& Surface, real_t r_um)
 {
 	if (r_um < 1.0)
 	{
@@ -1061,7 +1061,7 @@ real CWFExam::GetAverageRfAt(const CZernikeSurface& Surface, real r_um)
 	SubSurface = Surface;
 	SubSurface.ChangeRMaxUm(r_um);
 
-	real c = 0.0;
+	real_t c = 0.0;
 	for (int z = 0; z < ZERNIKE_NUM_MODES; z++)
 	{
 		int a = SubSurface.m_ord[z];
@@ -1079,30 +1079,30 @@ real CWFExam::GetAverageRfAt(const CZernikeSurface& Surface, real r_um)
 
 //***************************************************************************************
 
-real CWFExam::GetAverageRfAt(const CZernikeSurface& Surface, const real r_um, const real x0_um, const real y0_um)
+real_t CWFExam::GetAverageRfAt(const CZernikeSurface& Surface, const real_t r_um, const real_t x0_um, const real_t y0_um)
 {
-	real d_um = 50.0;
+	real_t d_um = 50.0;
 	int n = (int)(r_um / d_um);
-	real rf_avg = 0.0;
+	real_t rf_avg = 0.0;
 	int k = 0;
 
 	for (int j = -n; j <= n; j++)
 	{
-		real dy_um = j * d_um;
-		real y_um = y0_um + dy_um;
+		real_t dy_um = j * d_um;
+		real_t y_um = y0_um + dy_um;
 
 		for (int i = -n; i <= n; i++)
 		{
-			real dx_um = i * d_um;
+			real_t dx_um = i * d_um;
 
 			if (sqr(dy_um) + sqr(dx_um) > sqr(r_um)) continue;
 
-			real x_um = x0_um + dx_um;
-			real r1_um = hyp(y_um, x_um);
+			real_t x_um = x0_um + dx_um;
+			real_t r1_um = hyp(y_um, x_um);
 
 			if (r1_um > Surface.m_r_max_um) continue;
 
-			real rf = CWFExam::GetRfAt(Surface, r1_um, angle(y_um, x_um));
+			real_t rf = CWFExam::GetRfAt(Surface, r1_um, angle(y_um, x_um));
 
 			if (rf == INVALID_VALUE) continue;
 
@@ -1119,7 +1119,7 @@ real CWFExam::GetAverageRfAt(const CZernikeSurface& Surface, const real r_um, co
 //***************************************************************************************
 
 void CWFExam::GetMinMaxRf(const CZernikeSurface& Surface,
-	real& rf_min, real& x_min_um, real& y_min_um, real& rf_max, real& x_max_um, real& y_max_um)
+	real_t& rf_min, real_t& x_min_um, real_t& y_min_um, real_t& rf_max, real_t& x_max_um, real_t& y_max_um)
 {
 	rf_min = DBL_MAX;
 	x_min_um = 0.0;
@@ -1128,21 +1128,21 @@ void CWFExam::GetMinMaxRf(const CZernikeSurface& Surface,
 	x_max_um = 0.0;
 	y_max_um = 0.0;
 
-	real d_um = 50.0;
+	real_t d_um = 50.0;
 	int n = (int)(Surface.m_r_max_um / d_um);
 	int k = 0;
 
 	for (int j = -n; j <= n; j++)
 	{
-		real y_um = j * d_um;
+		real_t y_um = j * d_um;
 		for (int i = -n; i <= n; i++)
 		{
-			real x_um = i * d_um;
-			real r_um = hyp(y_um, x_um);
+			real_t x_um = i * d_um;
+			real_t r_um = hyp(y_um, x_um);
 
 			if (r_um > Surface.m_r_max_um) continue;
 
-			real rf = CWFExam::GetRfAt(Surface, r_um, angle(y_um, x_um));
+			real_t rf = CWFExam::GetRfAt(Surface, r_um, angle(y_um, x_um));
 
 			if (rf == INVALID_VALUE) continue;
 
@@ -1176,7 +1176,7 @@ void CWFExam::CreatePsf(const CZernikeSurface& Surface, CPSF& Psf, const int EEF
 	for (n = n1; n <= n2; n <<= 1)
 	{
 		CreatePsfN(Surface, Psf, n);
-		real thr = 0.01;
+		real_t thr = 0.01;
 		NeedToIncreasePsfSize = FALSE;
 
 		for (int k = 0; k < n; k++)
@@ -1214,12 +1214,12 @@ void CWFExam::CreatePsf(const CZernikeSurface& Surface, CPSF& Psf, const int EEF
 
 	for (int y = 0; y < n; y++)
 	{
-		real y_mn = (y - Psf.m_yeef) * Psf.m_mn_px;
+		real_t y_mn = (y - Psf.m_yeef) * Psf.m_mn_px;
 
 		for (int x = 0; x < n; x++)
 		{
-			real x_mn = (x - Psf.m_xeef) * Psf.m_mn_px;
-			real r_mn = hyp(y_mn, x_mn);
+			real_t x_mn = (x - Psf.m_xeef) * Psf.m_mn_px;
+			real_t r_mn = hyp(y_mn, x_mn);
 
 			int r = (int)r_mn;
 
@@ -1236,7 +1236,7 @@ void CWFExam::CreatePsf(const CZernikeSurface& Surface, CPSF& Psf, const int EEF
 		Psf.m_EncircledEnergy[i] += Psf.m_EncircledEnergy[i - 1];
 	}
 
-	real k = 100.0 / Psf.m_EncircledEnergy[100];
+	real_t k = 100.0 / Psf.m_EncircledEnergy[100];
 
 	if (Psf.m_EncircledEnergy[100] != 0.0)
 	{
@@ -1261,8 +1261,8 @@ void CWFExam::CreatePsf(const CZernikeSurface& Surface, CPSF& Psf, const int EEF
 
 void CWFExam::CreatePsfN(const CZernikeSurface& Surface, CPSF& Psf, const int n)
 {
-	const real t_um = 8000.0;
-	const real l_um = 0.555;
+	const real_t t_um = 8000.0;
+	const real_t l_um = 0.555;
 
 	Psf.m_um_px = l_um * CWFExam::m_f_eye_um / t_um;
 	Psf.m_px_um = 1.0 / Psf.m_um_px;
@@ -1276,24 +1276,24 @@ void CWFExam::CreatePsfN(const CZernikeSurface& Surface, CPSF& Psf, const int n)
 	// FOURIER
 	Matrix<complex> Array(n, n);
 
-	real um_px = t_um / n;
+	real_t um_px = t_um / n;
 
 	for (int y = 0; y < n; y++)
 	{
-		real y_um = (y - o) * um_px;
+		real_t y_um = (y - o) * um_px;
 
 		for (int x = 0; x < n; x++)
 		{
-			real x_um = (x - o) * um_px;
-			real r_um = hyp(y_um, x_um);
+			real_t x_um = (x - o) * um_px;
+			real_t r_um = hyp(y_um, x_um);
 
 			if (r_um <= Surface.m_r_max_um)
 			{
-				real a_rd = angle(y_um, x_um);
-				real w_um = 0.0;
+				real_t a_rd = angle(y_um, x_um);
+				real_t w_um = 0.0;
 				Surface.GetAt(r_um, a_rd, &w_um, NULL, NULL, NULL, NULL, NULL);
-				real w = _2_Pi * w_um / l_um;
-				real a = exp(-0.120 * sqr(0.001 * r_um)); // 0.120 - Applegate & Lakshminarayanan, 0.105 - Schweigerling
+				real_t w = _2_Pi * w_um / l_um;
+				real_t a = exp(-0.120 * sqr(0.001 * r_um)); // 0.120 - Applegate & Lakshminarayanan, 0.105 - Schweigerling
 				Array(y, x) = complex(a * cos(w), -a * sin(w));
 			}
 		}
@@ -1320,9 +1320,9 @@ void CWFExam::CreatePsfN(const CZernikeSurface& Surface, CPSF& Psf, const int n)
 		}
 	}
 
-	real sx = 0.0;
-	real sy = 0.0;
-	real s = 0.0;
+	real_t sx = 0.0;
+	real_t sy = 0.0;
+	real_t s = 0.0;
 
 	Psf.m_vmax = -DBL_MAX;
 
@@ -1330,7 +1330,7 @@ void CWFExam::CreatePsfN(const CZernikeSurface& Surface, CPSF& Psf, const int n)
 	{
 		for (int x = 0; x < n; x++)
 		{
-			real v = Psf.m_Array(y, x);
+			real_t v = Psf.m_Array(y, x);
 
 			if (Psf.m_vmax < v)
 			{
@@ -1396,13 +1396,13 @@ void CWFExam::CreateMtf(const CZernikeSurface& Surface, CMTF& Mtf)
 	// = 30 cycles / N degrees = (30 / N) cycles per degree
 	Mtf.m_cd_px = (2 * 30.0 * Psf.m_px_mn) / n;
 	Mtf.m_px_cd = 1.0 / Mtf.m_cd_px;
-	real max = -DBL_MAX;
+	real_t max = -DBL_MAX;
 
 	for (int y = 0; y < n; y++)
 	{
 		for (int x = 0; x < n; x++)
 		{
-			real v = Mtf.m_Array(y, x) = mod(Array(y, x));
+			real_t v = Mtf.m_Array(y, x) = mod(Array(y, x));
 			if (max < v)
 			{
 				max = v;
@@ -1440,7 +1440,7 @@ void CWFExam::CreateLtr(const CZernikeSurface& Surface, CPSF& Ltr, const int Ltr
 	{
 		CreateLtrN(Surface, Ltr, LtrType, LtrLine, LtrOrientation, n);
 		BOOL b = FALSE;
-		real thr = 0.01;
+		real_t thr = 0.01;
 
 		for (int k = 0; k < n; k++)
 		{
@@ -1468,10 +1468,10 @@ void CWFExam::CreateLtrN(const CZernikeSurface& Surface, CPSF& Ltr, const int Lt
 	Ltr.m_um_px = Psf.m_um_px;
 	Ltr.m_px_um = Psf.m_px_um;
 
-	Matrix<real> ReArray1(n, n);
+	Matrix<real_t> ReArray1(n, n);
 	ReArray1.Fill(0.0);
 	int px_mn = 5;
-	real mn_px = 1.0 / px_mn;
+	real_t mn_px = 1.0 / px_mn;
 	int w1 = px_mn * LtrLine / 20;
 	int w5 = 5 * w1;
 
@@ -1507,12 +1507,12 @@ void CWFExam::CreateLtrN(const CZernikeSurface& Surface, CPSF& Ltr, const int Lt
 		{
 			for (int x = 0; x < n; x++)
 			{
-				ReArray1(y, x) = (real)GetRValue(DC.GetPixel(x, y));
+				ReArray1(y, x) = (real_t)GetRValue(DC.GetPixel(x, y));
 			}
 		}
 	}
 
-	Matrix<real> ReArray2(n, n);
+	Matrix<real_t> ReArray2(n, n);
 
 	if (LtrOrientation == 0)
 	{
@@ -1555,7 +1555,7 @@ void CWFExam::CreateLtrN(const CZernikeSurface& Surface, CPSF& Ltr, const int Lt
 		}
 	}
 
-	Zoom(ReArray2, ReArray1, Psf.m_px_mn / (real)px_mn);
+	Zoom(ReArray2, ReArray1, Psf.m_px_mn / (real_t)px_mn);
 
 	Matrix<complex> CoArray1(n, n);
 	Matrix<complex> CoArray2(n, n);
@@ -1584,12 +1584,12 @@ void CWFExam::CreateLtrN(const CZernikeSurface& Surface, CPSF& Ltr, const int Lt
 
 	Ltr.m_Array.Create(n, n);
 
-	real max = 0.0;
+	real_t max = 0.0;
 	for (int y = 0; y < n; y++)
 	{
 		for (int x = 0; x < n; x++)
 		{
-			real v = Ltr.m_Array(y, x) = CoArray1(y, x).re;
+			real_t v = Ltr.m_Array(y, x) = CoArray1(y, x).re;
 			if (max < v) max = v;
 		}
 	}
@@ -1620,15 +1620,15 @@ void CWFExam::CreateLtrN(const CZernikeSurface& Surface, CPSF& Ltr, const int Lt
 //***************************************************************************************
 
 void CWFExam::GetSpheqSphCylAxis(const CZernikeSurface& Surface, const int VertexDistanceUm, const BOOL PositiveCylinder,
-	real& sph_eq, real& sph, real& cyl, int& axis)
+	real_t& sph_eq, real_t& sph, real_t& cyl, int& axis)
 {
 	// Die Differenz zwischen dem neuen Hornhaut-Scheitelabstand und dem alten.
 	// Sie ist positiv bei Verlaengerung des Hornhaut-Scheitelabstandes und negativ bei Verkuerzung.
 
-	real VertexDistanceM = VertexDistanceUm * 0.000001;
+	real_t VertexDistanceM = VertexDistanceUm * 0.000001;
 
 	// SPHERICAL EQUIVALENT
-	real r_max_m = Surface.m_r_max_um * 0.000001;
+	real_t r_max_m = Surface.m_r_max_um * 0.000001;
 	sph_eq = -4.0 * Surface.m_c[4] / r_max_m;
 
 	// CYLINDER
@@ -1647,12 +1647,12 @@ void CWFExam::GetSpheqSphCylAxis(const CZernikeSurface& Surface, const int Verte
 	// veraendert, so ist jeder Hauptschnitt einzeln umzurechnen.
 
 	// the strongest and weakest meridional power at corneal plane
-	real mer1_cornea_dpt = sph;
-	real mer2_cornea_dpt = sph + cyl;
+	real_t mer1_cornea_dpt = sph;
+	real_t mer2_cornea_dpt = sph + cyl;
 
 	// the strongest and weakest meridional power at spectacles plane
-	real mer1_spects_dpt = mer1_cornea_dpt / (1.0 + VertexDistanceM * mer1_cornea_dpt);
-	real mer2_spects_dpt = mer2_cornea_dpt / (1.0 + VertexDistanceM * mer2_cornea_dpt);
+	real_t mer1_spects_dpt = mer1_cornea_dpt / (1.0 + VertexDistanceM * mer1_cornea_dpt);
+	real_t mer2_spects_dpt = mer2_cornea_dpt / (1.0 + VertexDistanceM * mer2_cornea_dpt);
 
 	sph = mer1_spects_dpt;
 	cyl = mer2_spects_dpt - mer1_spects_dpt;
@@ -1662,7 +1662,7 @@ void CWFExam::GetSpheqSphCylAxis(const CZernikeSurface& Surface, const int Verte
 //***************************************************************************************
 
 void CWFExam::GetSpheqSphCylAxis(const int VertexDistanceUm, const BOOL PositiveCylinder,
-	real& sph_eq, real& sph, real& cyl, int& axis) const
+	real_t& sph_eq, real_t& sph, real_t& cyl, int& axis) const
 {
 	CWFExam::GetSpheqSphCylAxis(m_WfSurface, VertexDistanceUm, PositiveCylinder, sph_eq, sph, cyl, axis);
 }
@@ -1726,7 +1726,7 @@ void CWFExam::Average(const Matrix<CWFExam*>& pWFExams)
 
 	while (pPoint)
 	{
-		real dw_dx, dw_dy;
+		real_t dw_dx, dw_dy;
 		m_WfSurface.GetAt(pPoint->m_r_um, pPoint->m_a_rd, NULL, &dw_dx, &dw_dy, NULL, NULL, NULL);
 		pPoint->m_dx_um = -dw_dx * m_Calibration.LADXFocalDistance;
 		pPoint->m_dy_um = dw_dy * m_Calibration.LADYFocalDistance;
@@ -1741,19 +1741,19 @@ void CWFExam::Average(const Matrix<CWFExam*>& pWFExams)
 
 void CWFExam::CreateComplaints()
 {
-	real SphEq1, Sph1, Cyl1;
+	real_t SphEq1, Sph1, Cyl1;
 	int Axis1;
 	CWFExam::GetSpheqSphCylAxis(m_WfSurface, 0, TRUE, SphEq1, Sph1, Cyl1, Axis1);
 
 	CZernikeSurface Surface2;
 	Surface2 = m_WfSurface;
 	Surface2.ChangeRMaxUm(1000.0);
-	real SphEq2, Sph2, Cyl2;
+	real_t SphEq2, Sph2, Cyl2;
 	int Axis2;
 	CWFExam::GetSpheqSphCylAxis(Surface2, 0, TRUE, SphEq2, Sph2, Cyl2, Axis2);
 
 	// Night miopia
-	real d = SphEq1 - SphEq2;
+	real_t d = SphEq1 - SphEq2;
 
 	if (d <= -1.75)
 	{
@@ -1791,7 +1791,7 @@ void CWFExam::CreateComplaints()
 	}
 
 	// Astigmatism
-	real Cyl;
+	real_t Cyl;
 	int Axis;
 	::CalculateCrossedAstigmatism(Cyl1, Axis1, -Cyl2, Axis2, Cyl, Axis);
 

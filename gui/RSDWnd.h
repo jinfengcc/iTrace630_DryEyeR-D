@@ -19,14 +19,14 @@ public:
 	CWFExam*        m_pWFExam;
 	CZernikeSurface m_Surface;
 	int             m_Zoom;
-	real            m_AddedSphEq;
+	real_t            m_AddedSphEq;
 
 	void CreateZoomButtons();
 
 private:
 
-	real m_cursor_r_um;
-	real m_cursor_a_rd;
+	real_t m_cursor_r_um;
+	real_t m_cursor_a_rd;
 
 	virtual void RepaintMemDC() override;
 	void Grid();

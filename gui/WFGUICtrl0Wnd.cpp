@@ -32,19 +32,19 @@ void CWFGUICtrl0Wnd::CreateThisWnd(RECT& Rect, CWnd* pWnd)
 	m_w = Rect.right - Rect.left;
 	m_h = Rect.bottom - Rect.top;
 
-	int Slider_w = intRound(real(m_w) / 10);
+	int Slider_w = intRound(real_t(m_w) / 10);
 
-	int Left_w = intRound(real(m_w) / 3);
+	int Left_w = intRound(real_t(m_w) / 3);
 	int Right_w = Left_w + Slider_w;
-	int top_h = intRound(real(m_h) / 10);
+	int top_h = intRound(real_t(m_h) / 10);
 	int btm_h = m_h - top_h;
 
 	int d = Slider_w / 2;
 	int y1 = top_h + d;
 	int y2 = btm_h - d;
 
-	m_FontSize = intRound(real(y2 - y1) / 20);
-	int h_fontSize = intRound(real(m_FontSize) / 2.0);
+	m_FontSize = intRound(real_t(y2 - y1) / 20);
+	int h_fontSize = intRound(real_t(m_FontSize) / 2.0);
 
 	RECT tmpRect;
 	CMFont Font(m_FontSize, 400, "Arial");
@@ -56,7 +56,7 @@ void CWFGUICtrl0Wnd::CreateThisWnd(RECT& Rect, CWnd* pWnd)
 		int xL = Right_w + 8;
 		int xR = xL + Label_w;
 
-		int  yPos = intRound(y1 + real(i) * real(y2 - y1) / 6);
+		int  yPos = intRound(y1 + real_t(i) * real_t(y2 - y1) / 6);
 		if (i == 6)  yPos = y2;
 
 		int yT = yPos - h_fontSize;
@@ -70,7 +70,7 @@ void CWFGUICtrl0Wnd::CreateThisWnd(RECT& Rect, CWnd* pWnd)
 		int xL = Right_w + 8;
 		int xR = xL + Label_w;
 
-		int  yPos = intRound(y1 + real(i) * real(y2 - y1) / 7);
+		int  yPos = intRound(y1 + real_t(i) * real_t(y2 - y1) / 7);
 		if (i == 7)  yPos = y2;
 
 		int yT = yPos - h_fontSize;
@@ -227,7 +227,7 @@ void CWFGUICtrl0Wnd::Label()
 
 //***************************************************************************************
 
-void CWFGUICtrl0Wnd::SetPos(real Pos_Val)
+void CWFGUICtrl0Wnd::SetPos(real_t Pos_Val)
 {
 	if (::Normal64Mode)
 	{
@@ -256,7 +256,7 @@ void CWFGUICtrl0Wnd::SetPos(real Pos_Val)
 
 LRESULT CWFGUICtrl0Wnd::OnSliderChangedPos(WPARAM wParam, LPARAM lParam)
 {
-	real TemPDiameter;
+	real_t TemPDiameter;
 
 	if (::Normal64Mode)
 	{
@@ -268,7 +268,7 @@ LRESULT CWFGUICtrl0Wnd::OnSliderChangedPos(WPARAM wParam, LPARAM lParam)
 		else  TemPDiameter = 1000 * (1 + 3 * m_Slider.m_Pos);//Presbia
 	}
 
-	TemPDiameter = real(intRound(TemPDiameter / 100)) + 0.0000000001;
+	TemPDiameter = real_t(intRound(TemPDiameter / 100)) + 0.0000000001;
 
 	if (::PresbiaMode == 3 && TemPDiameter < 13) TemPDiameter = 13;
 
@@ -296,7 +296,7 @@ LRESULT CWFGUICtrl0Wnd::OnSliderClick(WPARAM wParam, LPARAM lParam)
 	CPoint point;
 	GetCursorPos(&point);
 
-	real TemPDiameter;
+	real_t TemPDiameter;
 
 	if (::Normal64Mode)
 	{
@@ -308,7 +308,7 @@ LRESULT CWFGUICtrl0Wnd::OnSliderClick(WPARAM wParam, LPARAM lParam)
 		else TemPDiameter = 1000 * (1 + 3 * m_Slider.m_Pos);//Presbia
 	}
 
-	TemPDiameter = real(intRound(TemPDiameter / 1000)) + 0.0000000001;
+	TemPDiameter = real_t(intRound(TemPDiameter / 1000)) + 0.0000000001;
 
 	if (!::Normal64Mode)
 	{

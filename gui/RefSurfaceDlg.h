@@ -8,10 +8,10 @@ class CRefSurfaceDlg : public CDialog
 {
 public:
 
-	CRefSurfaceDlg(CWnd* pParentWnd, real ax0_um, real q);
+	CRefSurfaceDlg(CWnd* pParentWnd, real_t ax0_um, real_t q);
 
-	real m_ax0_um;
-	real m_q;
+	real_t m_ax0_um;
+	real_t m_q;
 
 private:
 

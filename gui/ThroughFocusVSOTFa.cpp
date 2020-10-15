@@ -9,23 +9,23 @@
 //***************************************************************************************
 //***************************************************************************************
 
-const real l_um = 0.555;
+const real_t l_um = 0.555;
 
 //***************************************************************************************
 
-void CreateNeuralCSF(Matrix<real>& CSF_Array, const int n, const real cd_px)
+void CreateNeuralCSF(Matrix<real_t>& CSF_Array, const int n, const real_t cd_px)
 {
 	static BOOL Init = FALSE;
 
 	const int p = 6;
 
-	static Matrix<real> C;
+	static Matrix<real_t> C;
 
 	if (!Init)
 	{
 		const int m = 53;
 
-		real x[m] =
+		real_t x[m] =
 		{
 			3.9355,  4.9677,  6.0000,  6.9677,  8.0000,  8.9677, 10.0000, 10.9032, 12.0000, 12.9677,
 			14.9677, 16.0000, 16.9677, 18.0000, 18.9677, 20.0000, 20.9677, 22.0000, 22.9677, 24.0000,
@@ -35,7 +35,7 @@ void CreateNeuralCSF(Matrix<real>& CSF_Array, const int n, const real cd_px)
 			57.9355, 58.9677, 60.0000
 		};
 
-		real f[m] =
+		real_t f[m] =
 		{
 			2.1999, 2.2476, 2.2988, 2.3261, 2.3431, 2.3431, 2.3261, 2.3090, 2.2885, 2.2544,
 			2.2101, 2.1658, 2.1282, 2.0907, 2.0566, 2.0123, 1.9645, 1.9304, 1.8929, 1.8588,
@@ -45,8 +45,8 @@ void CreateNeuralCSF(Matrix<real>& CSF_Array, const int n, const real cd_px)
 			0.3445, 0.2660, 0.1842
 		};
 
-		Matrix<real> A(m, p);
-		Matrix<real> F(m, 1);
+		Matrix<real_t> A(m, p);
+		Matrix<real_t> F(m, 1);
 
 		for (int j = 0; j < m; j++)
 		{
@@ -73,13 +73,13 @@ void CreateNeuralCSF(Matrix<real>& CSF_Array, const int n, const real cd_px)
 	{
 		for (int i = 0; i < o; i++)
 		{
-			real r_px = hyp(j, i);
-			real r_cd = r_px * cd_px;
+			real_t r_px = hyp(j, i);
+			real_t r_cd = r_px * cd_px;
 
 			if (r_cd <= 60.0)
 			{
-				real u = 1.0;
-				real v = C[0];
+				real_t u = 1.0;
+				real_t v = C[0];
 
 				for (int k = 1; k < p; k++)
 				{
@@ -116,25 +116,25 @@ void CreateOTF(const CZernikeSurface& Surface, Matrix<complex>& Array, const int
 	Array.Create(n, n);
 
 	// Pupil function
-	const real t_um = 4.0 * Surface.m_r_max_um;
-	const real pf_um_px = t_um / n;
+	const real_t t_um = 4.0 * Surface.m_r_max_um;
+	const real_t pf_um_px = t_um / n;
 	const int o = n >> 1;
 
 	for (int y = 0; y < n; y++)
 	{
-		real y_um = (y - o) * pf_um_px;
+		real_t y_um = (y - o) * pf_um_px;
 
 		for (int x = 0; x < n; x++)
 		{
-			real x_um = (x - o) * pf_um_px;
-			real r_um = hyp(y_um, x_um);
+			real_t x_um = (x - o) * pf_um_px;
+			real_t r_um = hyp(y_um, x_um);
 			if (r_um <= Surface.m_r_max_um)
 			{
-				real a_rd = angle(y_um, x_um);
-				real w_um = 0.0;
+				real_t a_rd = angle(y_um, x_um);
+				real_t w_um = 0.0;
 				Surface.GetAt(r_um, a_rd, &w_um, NULL, NULL, NULL, NULL, NULL);
-				real w = _2_Pi * w_um / l_um;
-				real a = exp(-0.120 * sqr(0.001 * r_um));
+				real_t w = _2_Pi * w_um / l_um;
+				real_t a = exp(-0.120 * sqr(0.001 * r_um));
 				Array(y, x) = complex(a * cos(w), -a * sin(w));
 			}
 		}
@@ -158,11 +158,11 @@ void CreateOTF(const CZernikeSurface& Surface, Matrix<complex>& Array, const int
 
 //***************************************************************************************
 
-real CalcVSOTFA(const CZernikeSurface& Surface, const int n)
+real_t CalcVSOTFA(const CZernikeSurface& Surface, const int n)
 {
-	const real t_um = 4.0 * Surface.m_r_max_um;
-	const real psf_px_mn = t_um / (60.0 * _180_Pi * l_um);
-	const real otf_cd_px = psf_px_mn * 60.0 / n;
+	const real_t t_um = 4.0 * Surface.m_r_max_um;
+	const real_t psf_px_mn = t_um / (60.0 * _180_Pi * l_um);
+	const real_t otf_cd_px = psf_px_mn * 60.0 / n;
 
 	// No aberrations OTF
 	CZernikeSurface Surface_DL;
@@ -175,12 +175,12 @@ real CalcVSOTFA(const CZernikeSurface& Surface, const int n)
 	CreateOTF(Surface, OTF_Array, n);
 
 	// Neural CSF
-	Matrix<real> CSF_Array;
+	Matrix<real_t> CSF_Array;
 	CreateNeuralCSF(CSF_Array, n, otf_cd_px);
 
 	// Integration
-	real S1 = 0.0;
-	real S2 = 0.0;
+	real_t S1 = 0.0;
+	real_t S2 = 0.0;
 	for (int y = 0; y < n; y++)
 	{
 		for (int x = 0; x < n; x++)
@@ -195,7 +195,7 @@ real CalcVSOTFA(const CZernikeSurface& Surface, const int n)
 
 //***************************************************************************************
 
-void CreateThroughFocusVSOTFA(const CZernikeSurface& Surface, Matrix<real>& X, Matrix<real>& F)
+void CreateThroughFocusVSOTFA(const CZernikeSurface& Surface, Matrix<real_t>& X, Matrix<real_t>& F)
 {
 	const int n = 512;
 
@@ -215,7 +215,7 @@ void CreateThroughFocusVSOTFA(const CZernikeSurface& Surface, Matrix<real>& X, M
 	F.Create(m + 1 + m, 1);
 	for (int i = -m; i <= m; i++)
 	{
-		real SphEqDpt = i * 0.25;
+		real_t SphEqDpt = i * 0.25;
 		Surface1.SetSphEq(SphEqDpt);
 		X[i + m] = SphEqDpt;
 		F[i + m] = CalcVSOTFA(Surface1, n);

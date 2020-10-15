@@ -34,9 +34,9 @@ void CExamCaptureWnd::CreateThisWnd(RECT& Rect, CWnd* pWnd)
 
 	m_Acquire = FALSE;
 
-	int Left_w = intRound(real(m_w) / 5);
+	int Left_w = intRound(real_t(m_w) / 5);
 	int BtnW = Left_w;
-	int top_h = intRound(real(m_h) / 10);
+	int top_h = intRound(real_t(m_h) / 10);
 
 	//530 New Remmber add into Presbia
 	int W = ::GetSystemMetrics(SM_CXSCREEN);

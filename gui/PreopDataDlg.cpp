@@ -277,7 +277,7 @@ void CPreopDataDlg::SetDlgData()
 	if (m_OpData.m_OpType == 0) {
 		int CurSel = -1;
 		for (int i = 0; i <= 40; i++) {
-			real IOLSph = 10.0 + 0.5 * i;
+			real_t IOLSph = 10.0 + 0.5 * i;
 			if (i & 1) s.Format(_T("%.1f"), IOLSph); else s.Format(_T("%i"), intRound(IOLSph));
 			m_IOLSphereComboBox.AddString(s);
 			if (m_OpData.m_IOLSph != INVALID_VALUE) {
@@ -447,7 +447,7 @@ void CPreopDataDlg::SetDlgData()
 		if ((m_OpData.m_EyePreopCyl != INVALID_VALUE) && (m_OpData.m_EyePostopCyl != INVALID_VALUE))
 		{
 			CString DisStr;
-			real disCylPower = (m_OpData.m_EyePreopCyl - m_OpData.m_EyePostopCyl);
+			real_t disCylPower = (m_OpData.m_EyePreopCyl - m_OpData.m_EyePostopCyl);
 			DisStr.Format(_T("%.2f"), disCylPower);
 
 			s2 = DisStr + " D change in cylinder power.";

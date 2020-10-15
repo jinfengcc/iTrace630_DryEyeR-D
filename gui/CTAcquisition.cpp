@@ -194,7 +194,7 @@ void CCTAcquisition::Main()
 			}
 		}
 
-		m_AverageCycleTime = (real)(clock() - StartTime) / (++m_NumFramesReceived);
+		m_AverageCycleTime = (real_t)(clock() - StartTime) / (++m_NumFramesReceived);
 
 		::Sleep(0);
 	}
@@ -298,8 +298,8 @@ void CCTAcquisition::Main()
 			TestImage.m_RGBData.Create(m_CTExam.m_ColorImage.m_h, LINE_SIZE(m_CTExam.m_ColorImage.m_w), m_pHW->GetRGBData());
 			TestImage.m_RGBData.Attach(m_CTExam.m_Image.m_h, LINE_SIZE(m_CTExam.m_Image.m_w), m_pHW->GetRGBData());
 
-			real Total = 0;
-			real count = (real)TestImage.m_w*TestImage.m_h;
+			real_t Total = 0;
+			real_t count = (real_t)TestImage.m_w*TestImage.m_h;
 			for (int i = 0; i < TestImage.m_w; i++)
 			{
 				for (int j = 0; j < TestImage.m_h; j++)
@@ -313,13 +313,13 @@ void CCTAcquisition::Main()
 				}
 			}
 
-			real Brightness = Total / count;
+			real_t Brightness = Total / count;
 
 			if (Brightness < 75 || Brightness > 130)
 			{
 				VIDEO_SETTINGS* pVideoSettings = m_pHW->m_pCurrentVideoSettings;
 
-				real ratio = 75 / Brightness;
+				real_t ratio = 75 / Brightness;
 				if (Brightness < 75)
 				{
 					int newBright = int(75 * ratio);

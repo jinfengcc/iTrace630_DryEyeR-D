@@ -71,7 +71,7 @@ BOOL CDicomMWLResDlg::OnInitDialog()
 	m_RecordList.SetFont(&Font);
 	m_RecordList.CreateWnd(0, Rect, this, IDC_PATIENTS_LIST);
 
-	real w1[7] = { 0.13 * W, 0.10*W, 0.15 * W, 0.15 * W, 0.15 * W, 0.16 * W, 0.06 * W};
+	real_t w1[7] = { 0.13 * W, 0.10*W, 0.15 * W, 0.15 * W, 0.15 * W, 0.16 * W, 0.06 * W};
 
 	m_RecordList.InsertColumn(0, _T("ID"), intRound(w1[0]));
 	m_RecordList.InsertColumn(1, _T("Modality"), intRound(w1[1]));

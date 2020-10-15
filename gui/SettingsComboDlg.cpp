@@ -745,7 +745,7 @@ BOOL CSettingsComboDlg::OnInitDialog()
 
 	m_PosCylCheck.SetCheck(::Settings.m_PositiveCylinder);
 
-	for (real v = 0.0; v < 20.001; v += 0.5)
+	for (real_t v = 0.0; v < 20.001; v += 0.5)
 	{
 		s.Format(_T("%.1f"), v);
 		m_VertexComboBox.AddString(s);
@@ -753,10 +753,10 @@ BOOL CSettingsComboDlg::OnInitDialog()
 	s.Format(_T("%.1f"), ::Settings.m_VertexDistanceUm * 0.001);
 	m_VertexComboBox.SelectString(-1, s);
 
-	real Zone1Val = 2.0;
+	real_t Zone1Val = 2.0;
 	if (m_isPresbia) Zone1Val = 1.3;
 
-	for (real d = Zone1Val; d < 8.001; d += 0.1)
+	for (real_t d = Zone1Val; d < 8.001; d += 0.1)
 	{
 		s.Format(_T("%.1f"), d);
 		m_ZonesComboBox[0].AddString(s);
@@ -1652,7 +1652,7 @@ BOOL CSettingsComboDlg::CheckSetting()
 	}
 
 	G_As = s_MSD;
-	real MSD = atof(G_As);
+	real_t MSD = atof(G_As);
 	if (MSD < 2 || MSD > 8) goto B2;
 	//Done
 
@@ -1667,7 +1667,7 @@ BOOL CSettingsComboDlg::CheckSetting()
 	}
 
 	G_As = s_ASD;
-	real ASD = atof(G_As);
+	real_t ASD = atof(G_As);
 	if (ASD < 2 || ASD > 8) goto C2;
 	//Done
 

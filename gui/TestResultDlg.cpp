@@ -18,7 +18,7 @@ END_MESSAGE_MAP()
 
 //***************************************************************************************
 
-CTestResultDlg::CTestResultDlg(CWnd* pParentWnd, BOOL Res, real SphEq, real Sph, real Cyl, int Axis) :
+CTestResultDlg::CTestResultDlg(CWnd* pParentWnd, BOOL Res, real_t SphEq, real_t Sph, real_t Cyl, int Axis) :
 	CDialog(IDD_TEST_RESULT_DLG, pParentWnd)
 {
 	m_Res = Res;

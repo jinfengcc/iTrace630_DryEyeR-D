@@ -12,9 +12,9 @@
 class CCircle
 {
 public:
-	real m_x_um;
-	real m_y_um;
-	real m_r_um;
+	real_t m_x_um;
+	real_t m_y_um;
+	real_t m_r_um;
 	COLORREF m_color;
 };
 
@@ -53,9 +53,9 @@ public:
 	BOOL            m_MapShowBLUEAstigmatismAxes;//
 	BOOL            m_MapShowREDAstigmatismAxes;//
 	BOOL            m_DonotShow90Degree;//
-	real            m_Cent;
-	real            m_Step;
-	real            m_Inc;
+	real_t            m_Cent;
+	real_t            m_Step;
+	real_t            m_Inc;
 	int             m_NumColors;
 	COLORREF        m_Colors[21];
 	CString         m_Unit;
@@ -67,20 +67,20 @@ public:
 
 	void ChangePoint();
 
-	real m_y_px_um;
+	real_t m_y_px_um;
 
 	int m_astigm_axis;
 
 private:
 
-	real m_w_um;
-	real m_h_um;
-	real m_x_px_um;
-	real m_cx;
-	real m_cy;
+	real_t m_w_um;
+	real_t m_h_um;
+	real_t m_x_px_um;
+	real_t m_cx;
+	real_t m_cy;
 
-	real m_cursor_r_um;
-	real m_cursor_a_rd;
+	real_t m_cursor_r_um;
+	real_t m_cursor_a_rd;
 
 	virtual void RepaintMemDC() override;
 	void Eye();

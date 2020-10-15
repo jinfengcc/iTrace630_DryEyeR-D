@@ -27,7 +27,7 @@ void CMTFWnd::CreateSlider()
 {
 	RECT Rect = { intRound(0.100 * m_w), intRound(0.950 * m_h), intRound(0.767 * m_w), intRound(0.990 * m_h) };
 	m_AngleSlider.Create(_T(""), _T(""), WS_CHILD | WS_VISIBLE, Rect, this, IDC_MTF_ANGLE_SLIDER);
-	m_AngleSlider.m_Pos = (real)m_Angle / 179.0;
+	m_AngleSlider.m_Pos = (real_t)m_Angle / 179.0;
 	CMRgn Rgn;
 	Rgn.SetRectRgn(&Rect);
 	m_Rgn.CombineRgn(&m_Rgn, &Rgn, RGN_DIFF);
@@ -71,15 +71,15 @@ void CMTFWnd::Mtf2D()
 	COLORREF white = m_Printing ? BLACK : WHITE;
 	COLORREF gray = m_Printing ? LIGHT_GRAY : DARK_GRAY;
 
-	real L = 0.100 * m_w;
-	real T = 0.180 * m_h;
-	real R = 0.900 * m_w;
-	real B = 0.860 * m_h;
-	real w_px = R - L;
-	real h_px = B - T;
+	real_t L = 0.100 * m_w;
+	real_t T = 0.180 * m_h;
+	real_t R = 0.900 * m_w;
+	real_t B = 0.860 * m_h;
+	real_t w_px = R - L;
+	real_t h_px = B - T;
 	int g_cd = 5;
 	int w_cd = 30;
-	real px_cd = w_px / w_cd;
+	real_t px_cd = w_px / w_cd;
 
 	CString s;
 	RECT Rect;
@@ -92,14 +92,14 @@ void CMTFWnd::Mtf2D()
 	if (!m_Average)
 	{
 		s.Format(_T("%i°"), m_Angle);
-		real b = 0.2 * m_h;
+		real_t b = 0.2 * m_h;
 		::SetRect(&Rect, intRound(0.012 * m_w), intRound(0.950 * m_h), m_w, intRound(0.990 * m_h));
 		m_MemDC.WriteText(s, Rect, Font, white, 0);
 	}
 
 	for (int i_cd = 0; i_cd <= w_cd; i_cd += g_cd)
 	{
-		real x = L + px_cd * i_cd;
+		real_t x = L + px_cd * i_cd;
 		m_MemDC.DrawLine(intRound(x), intRound(T), intRound(x), intRound(B + 1), 1, gray);
 
 		s.Format(_T("%i"), i_cd);
@@ -109,7 +109,7 @@ void CMTFWnd::Mtf2D()
 
 	for (int i = 0; i <= 10; i++)
 	{
-		real y = B - 0.1 * i * h_px;
+		real_t y = B - 0.1 * i * h_px;
 		m_MemDC.DrawLine(intRound(L), intRound(y), intRound(R + 1), intRound(y), 1, gray);
 
 		s.Format(_T("%i"), i * 10);
@@ -119,10 +119,10 @@ void CMTFWnd::Mtf2D()
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 
-	Matrix<real> x(w_cd + 1);
-	Matrix<real> y(w_cd + 1);
-	Matrix<real> f(w_cd + 1); f.Fill(INVALID_VALUE);
-	real avg = 0.0;
+	Matrix<real_t> x(w_cd + 1);
+	Matrix<real_t> y(w_cd + 1);
+	Matrix<real_t> f(w_cd + 1); f.Fill(INVALID_VALUE);
+	real_t avg = 0.0;
 	int k = 0;
 
 	for (int i_cd = 0; i_cd <= w_cd; i_cd++)
@@ -212,15 +212,15 @@ void CMTFWnd::Mtf2DDys()
 	COLORREF white = m_Printing ? BLACK : WHITE;
 	COLORREF gray = m_Printing ? LIGHT_GRAY : DARK_GRAY;
 
-	real L = 0.150 * m_w;//From 0.10 to 0.15
-	real T = 0.180 * m_h;
-	real R = 0.900 * m_w;
-	real B = 0.860 * m_h;
-	real w_px = R - L;
-	real h_px = B - T;
+	real_t L = 0.150 * m_w;//From 0.10 to 0.15
+	real_t T = 0.180 * m_h;
+	real_t R = 0.900 * m_w;
+	real_t B = 0.860 * m_h;
+	real_t w_px = R - L;
+	real_t h_px = B - T;
 	int g_cd = 5;
 	int w_cd = 30;
-	real px_cd = w_px / w_cd;
+	real_t px_cd = w_px / w_cd;
 
 	CString s;
 	RECT Rect;
@@ -232,14 +232,14 @@ void CMTFWnd::Mtf2DDys()
 	if (!m_Average)
 	{
 		s.Format(_T("%i°"), m_Angle);
-		real b = 0.2 * m_h;
+		real_t b = 0.2 * m_h;
 		::SetRect(&Rect, intRound(0.012 * m_w), intRound(0.950 * m_h), m_w, intRound(0.990 * m_h));
 		m_MemDC.WriteText(s, Rect, Font, white, 0);
 	}
 
 	for (int i_cd = 0; i_cd <= w_cd; i_cd += g_cd)
 	{
-		real x = L + px_cd * i_cd;
+		real_t x = L + px_cd * i_cd;
 		m_MemDC.DrawLine(intRound(x), intRound(T), intRound(x), intRound(B + 1), 1, gray);
 
 		s.Format(_T("%i"), i_cd);
@@ -249,7 +249,7 @@ void CMTFWnd::Mtf2DDys()
 
 	for (int i = 0; i <= 10; i++)
 	{
-		real y = B - 0.1 * i * h_px;
+		real_t y = B - 0.1 * i * h_px;
 		m_MemDC.DrawLine(intRound(L), intRound(y), intRound(R + 1), intRound(y), 1, gray);
 
 		s.Format(_T("%i"), i * 10);
@@ -258,10 +258,10 @@ void CMTFWnd::Mtf2DDys()
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 
-	Matrix<real> x(w_cd + 1);
-	Matrix<real> y(w_cd + 1);
-	Matrix<real> f(w_cd + 1); f.Fill(INVALID_VALUE);
-	real avg = 0.0;
+	Matrix<real_t> x(w_cd + 1);
+	Matrix<real_t> y(w_cd + 1);
+	Matrix<real_t> f(w_cd + 1); f.Fill(INVALID_VALUE);
+	real_t avg = 0.0;
 	int k = 0;
 
 	for (int i_cd = 0; i_cd <= w_cd; i_cd++)
@@ -289,7 +289,7 @@ void CMTFWnd::Mtf2DDys()
 	{
 		if (f[i_cd] == INVALID_VALUE) break;
 
-		real a = f[i_cd];
+		real_t a = f[i_cd];
 
 		m_MemDC.DrawLine(intRound(x[i_cd - 1]), intRound(y[i_cd - 1]), intRound(x[i_cd]), intRound(y[i_cd]), 3, m_Printing ? ORANGE : YELLOW);
 
@@ -425,18 +425,18 @@ void CMTFWnd::Re_Mtf2D()
 	COLORREF white = m_Printing ? BLACK : WHITE;
 	COLORREF gray = m_Printing ? LIGHT_GRAY : DARK_GRAY;
 
-	real  valNumX[6];//531
-	real  valNumY[6];//531
+	real_t  valNumX[6];//531
+	real_t  valNumY[6];//531
 
-	real L = 0.100 * m_w;
-	real T = 0.180 * m_h;
-	real R = 0.900 * m_w;
-	real B = 0.860 * m_h;
-	real w_px = R - L;
-	real h_px = B - T;
+	real_t L = 0.100 * m_w;
+	real_t T = 0.180 * m_h;
+	real_t R = 0.900 * m_w;
+	real_t B = 0.860 * m_h;
+	real_t w_px = R - L;
+	real_t h_px = B - T;
 	int g_cd = 5;
 	int w_cd = 30;
-	real px_cd = w_px / w_cd;
+	real_t px_cd = w_px / w_cd;
 
 	CString s;
 	RECT Rect;
@@ -455,14 +455,14 @@ void CMTFWnd::Re_Mtf2D()
 	// angle
 	if (!m_Average) {
 		s.Format(_T("%i°"), m_Angle);
-		real b = 0.2 * m_h;
+		real_t b = 0.2 * m_h;
 		::SetRect(&Rect, intRound(0.012 * m_w), intRound(0.950 * m_h), m_w, intRound(0.990 * m_h));
 		m_MemDC.WriteText(s, Rect, Font, white, 0);
 	}
 
 	// вертикальные линии
 	for (int i_cd = 0; i_cd <= w_cd; i_cd += g_cd) {
-		real x = L + px_cd * i_cd;
+		real_t x = L + px_cd * i_cd;
 		m_MemDC.DrawLine(intRound(x), intRound(T), intRound(x), intRound(B + 1), 1, gray);
 
 		s.Format(_T("%i"), i_cd);
@@ -472,7 +472,7 @@ void CMTFWnd::Re_Mtf2D()
 
 	// горизонтальные линии
 	for (int i = 0; i <= 10; i++) {
-		real y = B - 0.1 * i * h_px;
+		real_t y = B - 0.1 * i * h_px;
 		m_MemDC.DrawLine(intRound(L), intRound(y), intRound(R + 1), intRound(y), 1, gray);
 
 		s.Format(_T("%i"), i * 10);//610
@@ -481,10 +481,10 @@ void CMTFWnd::Re_Mtf2D()
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 
-	Matrix<real> x(w_cd + 1);
-	Matrix<real> y(w_cd + 1);
-	Matrix<real> f(w_cd + 1); f.Fill(INVALID_VALUE);
-	real avg = 0.0;
+	Matrix<real_t> x(w_cd + 1);
+	Matrix<real_t> y(w_cd + 1);
+	Matrix<real_t> f(w_cd + 1); f.Fill(INVALID_VALUE);
+	real_t avg = 0.0;
 	int k = 0;
 
 	for (int i_cd = 0; i_cd <= w_cd; i_cd++) {
@@ -515,19 +515,19 @@ void CMTFWnd::Re_Mtf2D()
 	valNumY[4] = valNumY[3];
 	valNumX[5] = L;
 
-	real fa;
-	real minpos = 1000;//531
-	for (real i = 0; i <= 30; i = i + 0.1) {
-		real xa = L + i * px_cd;
+	real_t fa;
+	real_t minpos = 1000;//531
+	for (real_t i = 0; i <= 30; i = i + 0.1) {
+		real_t xa = L + i * px_cd;
 		if (m_Average) {
 			if (!m_ReMtf.GetAtCdR(i, fa)) break;
 		}
 		else {
 			if (!m_ReMtf.GetAtCdRA(i, m_Angle, fa)) break;
 		}
-		real ya = B - fa * h_px;
+		real_t ya = B - fa * h_px;
 
-		real disPos = fabs(ya - valNumY[3]);
+		real_t disPos = fabs(ya - valNumY[3]);
 		if (disPos < minpos)
 		{
 			valNumX[5] = xa;
@@ -545,10 +545,10 @@ void CMTFWnd::Re_Mtf2D()
 	m_MemDC.WriteText("cycles / degree", Rect, Font, white, 1);
 
 	//531
-	real tx = L + px_cd * 10;
+	real_t tx = L + px_cd * 10;
 	m_MemDC.DrawLine(intRound(tx), intRound(T + h_px*0.6), intRound(tx), intRound(B + 1), 1, RED);
 
-	real ty = B - 0.1 * 4 * h_px;
+	real_t ty = B - 0.1 * 4 * h_px;
 	m_MemDC.DrawLine(intRound(L), intRound(ty), intRound(L + w_px / 3.0), intRound(ty), 1, RED);
 
 	valNumX[2] = tx;
@@ -580,11 +580,11 @@ void CMTFWnd::Re_Mtf2D()
 	//The DysFunctional scale
 
 	//calculate the value
-	real val = 0;
+	real_t val = 0;
 	if (valNumX[5] < valNumX[2])
 	{
-		real Dis = sqrt((valNumX[3] - valNumX[4])*(valNumX[3] - valNumX[4]) + (valNumY[3] - valNumY[4])*(valNumY[3] - valNumY[4]));
-		real Dis0 = sqrt((valNumX[5] - valNumX[3])*(valNumX[5] - valNumX[3]) + (valNumY[5] - valNumY[3])*(valNumY[5] - valNumY[3]));
+		real_t Dis = sqrt((valNumX[3] - valNumX[4])*(valNumX[3] - valNumX[4]) + (valNumY[3] - valNumY[4])*(valNumY[3] - valNumY[4]));
+		real_t Dis0 = sqrt((valNumX[5] - valNumX[3])*(valNumX[5] - valNumX[3]) + (valNumY[5] - valNumY[3])*(valNumY[5] - valNumY[3]));
 
 		val = 10.0 - ((Dis0*2.50) / Dis);
 	}
@@ -592,8 +592,8 @@ void CMTFWnd::Re_Mtf2D()
 	{
 		if (valNumX[5] < (L + 5 * (R - L) / 6))
 		{
-			real Dis = sqrt((valNumX[3] - valNumX[4])*(valNumX[3] - valNumX[4]) + (valNumY[3] - valNumY[4])*(valNumY[3] - valNumY[4]));
-			real Dis0 = sqrt((valNumX[5] - valNumX[2])*(valNumX[5] - valNumX[2]) + (valNumY[5] - valNumY[2])*(valNumY[5] - valNumY[2]));
+			real_t Dis = sqrt((valNumX[3] - valNumX[4])*(valNumX[3] - valNumX[4]) + (valNumY[3] - valNumY[4])*(valNumY[3] - valNumY[4]));
+			real_t Dis0 = sqrt((valNumX[5] - valNumX[2])*(valNumX[5] - valNumX[2]) + (valNumY[5] - valNumY[2])*(valNumY[5] - valNumY[2]));
 
 			val = 5 - ((Dis0*(5.0 / 3.0)) / Dis);
 		}
@@ -612,9 +612,9 @@ void CMTFWnd::Re_Mtf2D()
 	CLColor[1] = RGB(66, 207, 0);
 	CLColor[0] = RGB(17, 247, 100);
 
-	real Right = L + intRound(real(R - L) * 1 / 3);
+	real_t Right = L + intRound(real_t(R - L) * 1 / 3);
 	int sw = intRound((R - Right) / 10.0);
-	int sT = intRound(T) + intRound(real(B - T) / 10.0);
+	int sT = intRound(T) + intRound(real_t(B - T) / 10.0);
 
 	int SL = intRound(Right);
 	int Left = intRound(Right);
@@ -652,7 +652,7 @@ void CMTFWnd::Re_Mtf2D()
 	}
 
 	//Arrow and value
-	int x0 = intRound(SL + val*(real)sw);
+	int x0 = intRound(SL + val*(real_t)sw);
 
 	int cn = intRound(val);//color index
 
@@ -698,8 +698,8 @@ void CMTFWnd::Re_Mtf2D()
 
 void CMTFWnd::Mtf3D()
 {
-	real _0 = m_Printing ? 1.0 : 0.0;
-	real _1 = m_Printing ? 0.0 : 1.0;
+	real_t _0 = m_Printing ? 1.0 : 0.0;
+	real_t _1 = m_Printing ? 0.0 : 1.0;
 
 	HGLRC hRenderingContext = NULL;
 	int PixelFormat = ::ChoosePixelFormat(m_MemDC.m_hDC, &m_PixelFormatDescriptor);
@@ -714,7 +714,7 @@ void CMTFWnd::Mtf3D()
 
 	::glMatrixMode(GL_PROJECTION);
 	::glLoadIdentity();
-	real p = (real)m_w / m_h;
+	real_t p = (real_t)m_w / m_h;
 	::glOrtho(-p, p, -1.0, 1.0, -5.0, 5.0);
 
 	::glMatrixMode(GL_MODELVIEW);
@@ -735,20 +735,20 @@ void CMTFWnd::Mtf3D()
 	::glEnable(GL_BLEND);
 	::glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	real g_cd = 5.0;
-	real t_cd = 30.0;
-	real cd_un = t_cd / 1.0;
+	real_t g_cd = 5.0;
+	real_t t_cd = 30.0;
+	real_t cd_un = t_cd / 1.0;
 
 	::glEnable(GL_POLYGON_OFFSET_FILL);
 	::glPolygonOffset(0.0, 10000.0);
 
 	int n = 30;
-	real kc = 0.75;
+	real_t kc = 0.75;
 
-	Matrix<real> mtf(n + 1, 180);
+	Matrix<real_t> mtf(n + 1, 180);
 	for (int r = 0; r <= n; r++) {
 		for (int a = 0; a < 180; a++) {
-			real v;
+			real_t v;
 			if (m_Mtf.GetAtCdRA(cd_un * r / n, a, v)) mtf(r, a) = v;
 			else mtf(r, a) = INVALID_VALUE;
 		}
@@ -763,7 +763,7 @@ void CMTFWnd::Mtf3D()
 			int a1 = a == 359 ? 0 : a + 1;
 			int aa[4] = { a, a1, a1, a };
 
-			real x[4], y[4], z[4];
+			real_t x[4], y[4], z[4];
 
 			int k;
 			for (k = 0; k < 4; k++) {
@@ -776,7 +776,7 @@ void CMTFWnd::Mtf3D()
 
 			::glBegin(GL_POLYGON);
 			for (k = 0; k < 4; k++) {
-				real c = 0.25 + 0.75 * z[k];
+				real_t c = 0.25 + 0.75 * z[k];
 				::glColor3d(c, 0.8*c, 0.0);
 				::glVertex3d(x[k], y[k], z[k]);
 			}
@@ -787,20 +787,20 @@ void CMTFWnd::Mtf3D()
 				int o[2] = { 0, 3 };
 				for (int i = 0; i < 2; i++) {
 					int j = o[i];
-					real c = 0.15 + 0.75 * z[j];
+					real_t c = 0.15 + 0.75 * z[j];
 					::glColor3d(c, 0.8*c, 0.0);
 					::glVertex3d(x[j], y[j], z[j]);
 				}
 				::glEnd();
 			}
 
-			real r_cd = cd_un * rr[0] / n;
+			real_t r_cd = cd_un * rr[0] / n;
 			if (fabs(r_cd - g_cd * (int)(r_cd / g_cd)) < 0.001) { // азимутальные линии
 				::glBegin(GL_LINES);
 				int o[2] = { 0, 1 };
 				for (int i = 0; i < 2; i++) {
 					int j = o[i];
-					real c = 0.15 + 0.75 * z[j];
+					real_t c = 0.15 + 0.75 * z[j];
 					::glColor3d(c, 0.8*c, 0.0);
 					::glVertex3d(x[j], y[j], z[j]);
 				}
@@ -840,8 +840,8 @@ void CMTFWnd::Mtf3D()
 	::glLineWidth(2.0);
 	::glBegin(GL_LINES);
 	for (int a = 0; a < 360; a += 10) {
-		real x1 = 1.02 * COS[a]; real y1 = 1.02 * SIN[a];
-		real x2 = 1.03 * COS[a]; real y2 = 1.03 * SIN[a];
+		real_t x1 = 1.02 * COS[a]; real_t y1 = 1.02 * SIN[a];
+		real_t x2 = 1.03 * COS[a]; real_t y2 = 1.03 * SIN[a];
 		::glVertex3d(x1, y1, 0.0);
 		::glVertex3d(x2, y2, 0.0);
 	}
@@ -858,7 +858,7 @@ void CMTFWnd::Mtf3D()
 	wglUseFontOutlines(m_MemDC.m_hDC, 48, 10, 1, 0.0f, 0.0f, WGL_FONT_POLYGONS, gm);
 	::glListBase(1);
 
-	real f = m_SizeSmall ? 0.09 : 0.08;
+	real_t f = m_SizeSmall ? 0.09 : 0.08;
 	for (int i = 0; i < 360; i += 30) {
 		::glBlendFunc(GL_ONE, GL_ZERO);
 		::glColor3d(_1, _1, _1);

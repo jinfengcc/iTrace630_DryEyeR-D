@@ -88,7 +88,7 @@ BOOL CQuickWFDlg::OnInitDialog()
 	CString s;
 
 	//Vertex
-	for (real v = 0.0; v < 20.001; v += 0.5) {
+	for (real_t v = 0.0; v < 20.001; v += 0.5) {
 		s.Format(_T("%.1f"), v);
 		m_VertexComboBox.AddString(s);
 	}
@@ -97,7 +97,7 @@ BOOL CQuickWFDlg::OnInitDialog()
 	//Done
 
 	//Zone
-	for (real d = 2.0; d < 8.001; d += 0.1) {
+	for (real_t d = 2.0; d < 8.001; d += 0.1) {
 		s.Format(_T("%.1f"), d);
 		m_ZonesComboBox.AddString(s);
 	}
@@ -484,9 +484,9 @@ void CQuickWFDlg::OnQuickWFBtnClicked()
 		WFExam.Process();
 		CZernikeSurface Surface = WFExam.m_WfSurface;
 
-		real um3 = Surface.GetCUm(3);
-		real um4 = Surface.GetCUm(4);
-		real um5 = Surface.GetCUm(5);
+		real_t um3 = Surface.GetCUm(3);
+		real_t um4 = Surface.GetCUm(4);
+		real_t um5 = Surface.GetCUm(5);
 
 		CString sC3, sC4, sC5, sSph;
 		sC3.Format(_T("%6.10f"), um3);
@@ -499,7 +499,7 @@ void CQuickWFDlg::OnQuickWFBtnClicked()
 
 		m_res[m_count] = sC3 + "    " + sC4 + "    " + sC5 + "\n\n";
 
-		real SphEq, Sph, Cyl; int Axis;
+		real_t SphEq, Sph, Cyl; int Axis;
 		Surface.ChangeRMaxUm(2000);//????????
 
 		CWFExam::GetSpheqSphCylAxis(Surface, 0, ::Settings.m_PositiveCylinder,

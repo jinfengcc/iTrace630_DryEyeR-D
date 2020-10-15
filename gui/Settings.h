@@ -18,9 +18,9 @@ struct OnePoint
 
 struct HSI
 {
-	real H;
-	real S;
-	real I;
+	real_t H;
+	real_t S;
+	real_t I;
 };
 
 //***************************************************************************************
@@ -30,9 +30,9 @@ class CScale
 public:
 
 	BOOL     m_CentAuto;
-	real     m_Cent;
+	real_t     m_Cent;
 	BOOL     m_StepAuto;
-	real     m_Step;
+	real_t     m_Step;
 	int      m_NumColors;
 	COLORREF m_Colors[21];
 
@@ -75,8 +75,8 @@ public:
 	BOOL         m_RMSIndividual;
 
 	int          m_RefSurfaceType;
-	real         m_RefSurfaceAx0Um;
-	real         m_RefSurfaceQ;
+	real_t         m_RefSurfaceAx0Um;
+	real_t         m_RefSurfaceQ;
 
 	int          m_Ltr;
 	int          m_LtrOrientation;
@@ -98,11 +98,11 @@ public:
 	uchar        m_LtrDistanceType;
 	BOOL         m_SimplifiedRMS;// 4 bytes, show simplified RMS or not
 	BOOL         m_SimplifiedWFPanel;// 4 bytes, show simplified WF Info panel or not
-	BOOL         m_SimplifiedCTPanel;// 4 bytes, show simplified CT Info panel or not    
+	BOOL         m_SimplifiedCTPanel;// 4 bytes, show simplified CT Info panel or not
 
 	CScale* GetScale();
-	real GetIncrement();
-	real GetMaxStep();
+	real_t GetIncrement();
+	real_t GetMaxStep();
 	void SetDefaultScale();
 
 	void SetDefaultColors(int ColorsIndex);
@@ -186,29 +186,29 @@ public:
 	BOOL         m_OpenDBAsReadOnly;
 	uchar        m_Reserved1[88];
 
-	CWndSettings m_TSvrSettings[4];       //CWFSingleVrfWnd       
-	CWndSettings m_TSsmSettings[4][4];    //CWFSingleSumWnd       
-	CWndSettings m_TScmSettings;          //CWFSingleCmpWnd       
-	CWndSettings m_TDsmSettings[4];       //CWFDoubleSumWnd       
-	CWndSettings m_TMsmSettings;          //CWFMultiSumWnd        
+	CWndSettings m_TSvrSettings[4];       //CWFSingleVrfWnd
+	CWndSettings m_TSsmSettings[4][4];    //CWFSingleSumWnd
+	CWndSettings m_TScmSettings;          //CWFSingleCmpWnd
+	CWndSettings m_TDsmSettings[4];       //CWFDoubleSumWnd
+	CWndSettings m_TMsmSettings;          //CWFMultiSumWnd
 
-	CWndSettings m_CSvrSettings;          //CCTColorImgWnd        
-	CWndSettings m_CSsmSettings[4][4];    //CCTSingleSumWnd       
-	CWndSettings m_CScmSettings;          //                     
-	CWndSettings m_CDsmSettings[2];       //                      
+	CWndSettings m_CSvrSettings;          //CCTColorImgWnd
+	CWndSettings m_CSsmSettings[4][4];    //CCTSingleSumWnd
+	CWndSettings m_CScmSettings;          //
+	CWndSettings m_CDsmSettings[2];       //
 
-	CWndSettings m_IDsmSettings[4][4];    //                      
+	CWndSettings m_IDsmSettings[4][4];    //
 
-	CWndSettings m_WTsmSettings[3];       //                                 
+	CWndSettings m_WTsmSettings[3];       //
 
-	CWndSettings m_PlannerSettings;       //                          
+	CWndSettings m_PlannerSettings;       //
 
 										  // sizeof(CWndSettings) = 1304
 										  //uchar        m_Reserved2[760];
 										  //uchar        m_Reserved2[752];//, (760 - 8) for m_Cap_ColorImg and m_Cap_ColorAutoOrManu, Two BOOL Used 8 Bytes
 
 	int          m_AccommTargetLightTime;//  4 BYTES
-	BOOL         m_ShowSimK;// 4 BYTES 
+	BOOL         m_ShowSimK;// 4 BYTES
 	char         m_ButtonNames2[3][3][20];// 3*3*20 = 180
 	uchar        m_Reserved2[350];// (752 - 4 - 210 - 4 - 4) // new 530-180 = 350
 
@@ -224,7 +224,7 @@ public:
 
 	uchar        m_EXCEL_WF_SETS[53];
 	uchar        m_EXCEL_CT_SETS[68];
-	uchar        m_EXCEL_WFCT_SETS[89];//53 + 68 + 89 = 210 Bytes;  
+	uchar        m_EXCEL_WFCT_SETS[89];//53 + 68 + 89 = 210 Bytes;
 	BOOL         m_Export_Excel;//Export excel or not;
 
 	int          m_AutoScanDiameterUm;
@@ -247,8 +247,8 @@ public:
 class CTempSettings
 {
 public:
-	real Com_r_max_um;//used to check the increase and decrease range
-	CPlannerSettings NewPlannerSettings;//[cjf***05042012*005*],used to maintain the more planner setting 
+	real_t Com_r_max_um;//used to check the increase and decrease range
+	CPlannerSettings NewPlannerSettings;//[cjf***05042012*005*],used to maintain the more planner setting
 	BOOL Temp_m_Edit;//whether it is edit or new of group/clinic/physician/operator
 	BOOL Temp_Deleted;//whether the clinic/physician/operator are deleted
 	BOOL Temp_ScaleRang; // True means the toric planner scale range is from 0-180
@@ -258,8 +258,8 @@ public:
 
 	BOOL Temp_ColorImgCpted;// the color Image has been capture;
 
-	real Com_r_max_um1;//used to check the increase and decrease range for VFA screen
-	real Com_r_max_um2;//used to check the increase and decrease range for VFA screen  
+	real_t Com_r_max_um1;//used to check the increase and decrease range for VFA screen
+	real_t Com_r_max_um2;//used to check the increase and decrease range for VFA screen
 };
 
 //***************************************************************************************
@@ -273,14 +273,14 @@ public:
 
 	int          m_IncLoC_OD;
 	int          m_IncLoC_OS;
-	real         m_SurInAst_OD;
-	real         m_SurInAst_OS;
+	real_t         m_SurInAst_OD;
+	real_t         m_SurInAst_OS;
 	BOOL         m_Adjust_CT;
 	BOOL         m_Adjusting_CT;
-	real         WFOD_COL_Width[11];//the width of WFODLIST columns
-	real         WFOS_COL_Width[11];//the width of WFOSLIST columns
-	real         CTOD_COL_Width[11];//the width of CTODLIST columns
-	real         CTOS_COL_Width[11];//the width of CTOSLIST columns
+	real_t         WFOD_COL_Width[11];//the width of WFODLIST columns
+	real_t         WFOS_COL_Width[11];//the width of WFOSLIST columns
+	real_t         CTOD_COL_Width[11];//the width of CTODLIST columns
+	real_t         CTOS_COL_Width[11];//the width of CTOSLIST columns
 
 	int          m_OSHER_ALIG_CUS[4];//for the CT OSHER alignment custom
 
@@ -294,10 +294,10 @@ public:
 
 	CWndSettings m_IOLSelSettings[6];// IOL SELECTION wnd
 
-	real         m_IOLSel_Alpha[2];// IOL SELECTION threshold
-	real         m_IOLSel_CHOA;// IOL SELECTION Corneal hoa threshold
-	real         m_IOLSel_Astig;// IOL SELECTION threshold
-	real         m_IOLSel_Sph_Abbe[4];// IOL SELECTION threshold
+	real_t         m_IOLSel_Alpha[2];// IOL SELECTION threshold
+	real_t         m_IOLSel_CHOA;// IOL SELECTION Corneal hoa threshold
+	real_t         m_IOLSel_Astig;// IOL SELECTION threshold
+	real_t         m_IOLSel_Sph_Abbe[4];// IOL SELECTION threshold
 
 	CWndSettings m_InAstigSettings[4]; // Astigmatism Source Display
 
@@ -310,7 +310,7 @@ public:
 
 	BOOL         m_ShowTask;// for task settings
 
-	real         m_IOLSel_IHOA;// IOL SELECTION  Internal hoa threshold
+	real_t         m_IOLSel_IHOA;// IOL SELECTION  Internal hoa threshold
 
 	uchar        m_Reserved[10000];
 
@@ -331,14 +331,14 @@ public:
 
 	int          m_IncLoC_OD;
 	int          m_IncLoC_OS;
-	real         m_SurInAst_OD;
-	real         m_SurInAst_OS;
+	real_t         m_SurInAst_OD;
+	real_t         m_SurInAst_OS;
 	BOOL         m_Adjust_CT;
 	BOOL         m_Adjusting_CT;
-	real         WFOD_COL_Width[11];//the width of WFODLIST columns
-	real         WFOS_COL_Width[11];//the width of WFOSLIST columns
-	real         CTOD_COL_Width[11];//the width of CTODLIST columns
-	real         CTOS_COL_Width[11];//the width of CTOSLIST columns
+	real_t         WFOD_COL_Width[11];//the width of WFODLIST columns
+	real_t         WFOS_COL_Width[11];//the width of WFOSLIST columns
+	real_t         CTOD_COL_Width[11];//the width of CTODLIST columns
+	real_t         CTOS_COL_Width[11];//the width of CTOSLIST columns
 
 	int          m_OSHER_ALIG_CUS[4];//for the CT OSHER alignment custom
 
@@ -352,10 +352,10 @@ public:
 
 	CWndSettings m_IOLSelSettings[6];// IOL SELECTION wnd
 
-	real         m_IOLSel_Alpha[2];// IOL SELECTION threshold
-	real         m_IOLSel_CHOA;// IOL SELECTION Corneal hoa threshold
-	real         m_IOLSel_Astig;// IOL SELECTION threshold
-	real         m_IOLSel_Sph_Abbe[4];// IOL SELECTION threshold
+	real_t         m_IOLSel_Alpha[2];// IOL SELECTION threshold
+	real_t         m_IOLSel_CHOA;// IOL SELECTION Corneal hoa threshold
+	real_t         m_IOLSel_Astig;// IOL SELECTION threshold
+	real_t         m_IOLSel_Sph_Abbe[4];// IOL SELECTION threshold
 
 	CWndSettings m_InAstigSettings[4]; // Astigmatism Source Display
 
@@ -368,9 +368,9 @@ public:
 
 	BOOL         m_ShowTask;// for task settings
 
-	real         m_IOLSel_IHOA;// IOL SELECTION  Internal hoa threshold
+	real_t         m_IOLSel_IHOA;// IOL SELECTION  Internal hoa threshold
 
-	BOOL         m_Super_Exam;// 4 BYTES 
+	BOOL         m_Super_Exam;// 4 BYTES
 
 	CWndSettings m_DysfuncSettings[4]; // Dysfunctional Lens Analysis
 
@@ -403,14 +403,14 @@ public:
 
 	int          m_IncLoC_OD;
 	int          m_IncLoC_OS;
-	real         m_SurInAst_OD;
-	real         m_SurInAst_OS;
+	real_t         m_SurInAst_OD;
+	real_t         m_SurInAst_OS;
 	BOOL         m_Adjust_CT;
 	BOOL         m_Adjusting_CT;
-	real         WFOD_COL_Width[11];//the width of WFODLIST columns
-	real         WFOS_COL_Width[11];//the width of WFOSLIST columns
-	real         CTOD_COL_Width[11];//the width of CTODLIST columns
-	real         CTOS_COL_Width[11];//the width of CTOSLIST columns
+	real_t         WFOD_COL_Width[11];//the width of WFODLIST columns
+	real_t         WFOS_COL_Width[11];//the width of WFOSLIST columns
+	real_t         CTOD_COL_Width[11];//the width of CTODLIST columns
+	real_t         CTOS_COL_Width[11];//the width of CTOSLIST columns
 
 	int          m_OSHER_ALIG_CUS[4];//for the CT OSHER alignment custom
 
@@ -424,10 +424,10 @@ public:
 
 	CWndSettings m_IOLSelSettings[6];// IOL SELECTION wnd
 
-	real         m_IOLSel_Alpha[2];// IOL SELECTION threshold
-	real         m_IOLSel_CHOA;// IOL SELECTION Corneal hoa threshold
-	real         m_IOLSel_Astig;// IOL SELECTION threshold
-	real         m_IOLSel_Sph_Abbe[4];// IOL SELECTION threshold
+	real_t         m_IOLSel_Alpha[2];// IOL SELECTION threshold
+	real_t         m_IOLSel_CHOA;// IOL SELECTION Corneal hoa threshold
+	real_t         m_IOLSel_Astig;// IOL SELECTION threshold
+	real_t         m_IOLSel_Sph_Abbe[4];// IOL SELECTION threshold
 
 	CWndSettings m_InAstigSettings[4]; // Astigmatism Source Display
 
@@ -440,9 +440,9 @@ public:
 
 	BOOL         m_ShowTask;// for task settings
 
-	real         m_IOLSel_IHOA;// IOL SELECTION  Internal hoa threshold
+	real_t         m_IOLSel_IHOA;// IOL SELECTION  Internal hoa threshold
 
-	BOOL         m_Super_Exam;// 4 BYTES 
+	BOOL         m_Super_Exam;// 4 BYTES
 
 	CWndSettings m_DysfuncSettings[4]; // Dysfunctional Lens Analysis
 
@@ -531,7 +531,7 @@ public:
 class CAveExamInfo
 {
 public:
-	real  m_c[45];
+	real_t  m_c[45];
 
 	uchar m_resevered[490];  //The size must be greater than ? bytes for zip file works
 

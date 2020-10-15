@@ -39,9 +39,9 @@ private:
 
 	int      m_ExamOrder;
 
-	real     m_OriMc4;//Original mc[4]
+	real_t     m_OriMc4;//Original mc[4]
 
-	real     m_ShiftVal;
+	real_t     m_ShiftVal;
 
 	CWFExam *m_pWFExamFar;
 

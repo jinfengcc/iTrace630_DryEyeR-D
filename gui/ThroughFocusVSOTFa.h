@@ -9,6 +9,6 @@
 
 //***************************************************************************************
 
-void CreateThroughFocusVSOTFA(const CZernikeSurface& Surface, Matrix<real>& X, Matrix<real>& F);
+void CreateThroughFocusVSOTFA(const CZernikeSurface& Surface, Matrix<real_t>& X, Matrix<real_t>& F);
 
 //***************************************************************************************

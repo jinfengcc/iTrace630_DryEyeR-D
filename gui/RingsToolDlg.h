@@ -22,12 +22,12 @@ private:
 	BOOL m_Start;//[5.1.1]
 	int m_w;
 	int m_h;
-	real m_w_um;
-	real m_h_um;
-	real m_x_px_um;
-	real m_y_px_um;
-	real m_cx;
-	real m_cy;
+	real_t m_w_um;
+	real_t m_h_um;
+	real_t m_x_px_um;
+	real_t m_y_px_um;
+	real_t m_cx;
+	real_t m_cy;
 
 	int         m_b;
 	CCTExam     m_CTExam[4];

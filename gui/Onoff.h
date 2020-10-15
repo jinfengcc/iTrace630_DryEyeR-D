@@ -16,7 +16,7 @@ public:
 	COnOff();
 	~COnOff();
 
-	real m_Pos;
+	real_t m_Pos;
 
 	int  m_id;
 

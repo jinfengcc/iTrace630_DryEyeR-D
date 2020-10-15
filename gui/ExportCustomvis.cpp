@@ -230,7 +230,7 @@ void ExportCustomvis(const CString& FolderName, CExam* pExam)
 
 				for (int r = 0; r < pExam->m_Calibration.NumRings; r++)
 				{
-					real v = pCTExam->m_dh_dr[r][a];
+					real_t v = pCTExam->m_dh_dr[r][a];
 
 					if (v != INVALID_VALUE)
 					{
@@ -255,10 +255,10 @@ void ExportCustomvis(const CString& FolderName, CExam* pExam)
 				fprintf(pFile, "%3u:", a);
 				for (int r = 0; r < pExam->m_Calibration.NumRings; r++)
 				{
-					real r_um = pExam->m_Image.m_ri_r_um[r][a];
+					real_t r_um = pExam->m_Image.m_ri_r_um[r][a];
 					if (r_um != INVALID_VALUE && r_um <= CT_R_MAX_UM)
 					{
-						real ht_um;
+						real_t ht_um;
 						pCTExam->m_HtZrSurface.GetAt(r_um, a * _Pi_180, &ht_um, NULL, NULL, NULL, NULL, NULL);
 						if (ht_um != INVALID_VALUE)
 						{

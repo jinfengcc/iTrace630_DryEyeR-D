@@ -195,24 +195,24 @@ void CRMSWnd::RmsInd2D()
 		FontSize = intRound(0.055 * m_h);
 		CMFont Font(FontSize, 400, "Arial");
 
-		real L = m_w * 0.015;
-		real T = m_w * 0.050;
+		real_t L = m_w * 0.015;
+		real_t T = m_w * 0.050;
 		//real h = m_w * 0.0545;
-		real h = real(m_h) / 14.5; //0.0545;
-		real g = m_w * 0.008;
+		real_t h = real_t(m_h) / 14.5; //0.0545;
+		real_t g = m_w * 0.008;
 
-		real wz = m_w * 0.054;
-		real ws = m_w * 0.280;
-		real wu = m_w * 0.150;
-		real wb = m_w * 0.470;
+		real_t wz = m_w * 0.054;
+		real_t ws = m_w * 0.280;
+		real_t wu = m_w * 0.150;
+		real_t wb = m_w * 0.470;
 
-		real px_um = (real)wb / m_Max;
+		real_t px_um = (real_t)wb / m_Max;
 
 		// z
-		real l = L;
-		real r = l + wz + 1;
-		real t = T;
-		real b = t + h + 1;
+		real_t l = L;
+		real_t r = l + wz + 1;
+		real_t t = T;
+		real_t b = t + h + 1;
 		::SetRect(&Rect, intRound(l), intRound(t), intRound(r), intRound(b));
 		m_MemDC.DrawRectangle(Rect, gray, NOCOLOR);
 		m_MemDC.WriteText("z ", Rect, Font, white, 2);
@@ -237,7 +237,7 @@ void CRMSWnd::RmsInd2D()
 		for (int i = 1; i <= m_Max; i++)
 		{
 			if (i % k > 0) continue;
-			real x = l + i * px_um;
+			real_t x = l + i * px_um;
 			::SetRect(&Rect, intRound(l), intRound(t), intRound(x), intRound(b));
 			s.Format(_T("%i "), i);
 			m_MemDC.WriteText(s, Rect, Font, white, 2);
@@ -248,7 +248,7 @@ void CRMSWnd::RmsInd2D()
 		{
 			if (mode != 4)
 			{
-				real um = m_Surface.GetCUm(mode);
+				real_t um = m_Surface.GetCUm(mode);
 				COLORREF bar_color = um >= 0.0 ? RED : BLUE;
 				um = fabs(um);
 
@@ -312,7 +312,7 @@ void CRMSWnd::RmsInd2D()
 				//531
 				if (um > m_Max)
 				{
-					real midh = (b - t - 4) / 2.0;
+					real_t midh = (b - t - 4) / 2.0;
 					m_MemDC.DrawTriangle(intRound(r), intRound(t + 2), intRound(r), intRound(b - 2), intRound(r + 5), intRound(t + 2 + midh), 1, bar_color, bar_color);
 				}
 				//531 Done
@@ -322,7 +322,7 @@ void CRMSWnd::RmsInd2D()
 				// grid
 				for (int i = 0; i <= m_Max; i++)
 				{
-					real x = l + i * px_um;
+					real_t x = l + i * px_um;
 					if (0 < i && i < m_Max)
 					{
 						m_MemDC.DrawVertDottedLine(intRound(x), intRound(t + 3), intRound(b - 3), gray, NOCOLOR);
@@ -341,25 +341,25 @@ void CRMSWnd::RmsInd2D()
 		FontSize = intRound(0.040 * m_h);
 		CMFont Font(FontSize, 400, "Arial");
 
-		real L = m_w * 0.015;
-		real T = m_w * 0.050;
-		real h = m_w * 0.0245;
-		real g = m_w * 0.008;
+		real_t L = m_w * 0.015;
+		real_t T = m_w * 0.050;
+		real_t h = m_w * 0.0245;
+		real_t g = m_w * 0.008;
 
-		real wz = m_w * 0.044;
-		real wn = m_w * 0.039;
-		real wm = m_w * 0.039;
-		real ws = m_w * 0.175;
-		real wu = m_w * 0.097;
-		real wb = m_w * 0.570;
+		real_t wz = m_w * 0.044;
+		real_t wn = m_w * 0.039;
+		real_t wm = m_w * 0.039;
+		real_t ws = m_w * 0.175;
+		real_t wu = m_w * 0.097;
+		real_t wb = m_w * 0.570;
 
-		real px_um = (real)wb / m_Max;
+		real_t px_um = (real_t)wb / m_Max;
 
 		// z
-		real l = L;
-		real r = l + wz + 1;
-		real t = T;
-		real b = t + h + 1;
+		real_t l = L;
+		real_t r = l + wz + 1;
+		real_t t = T;
+		real_t b = t + h + 1;
 		::SetRect(&Rect, intRound(l), intRound(t), intRound(r), intRound(b));
 		m_MemDC.DrawRectangle(Rect, gray, NOCOLOR);
 		m_MemDC.WriteText("z ", Rect, Font, white, 2);
@@ -393,7 +393,7 @@ void CRMSWnd::RmsInd2D()
 		for (int i = 1; i <= m_Max; i++)
 		{
 			if (i % k > 0) continue;
-			real x = l + i * px_um;
+			real_t x = l + i * px_um;
 			::SetRect(&Rect, intRound(l), intRound(t), intRound(x), intRound(b));
 			s.Format(_T("%i "), i);
 			m_MemDC.WriteText(s, Rect, Font, white, 2);
@@ -403,7 +403,7 @@ void CRMSWnd::RmsInd2D()
 		for (int mode = 3; mode < 28; mode++)
 		{
 
-			real um = m_Surface.GetCUm(mode);
+			real_t um = m_Surface.GetCUm(mode);
 			COLORREF bar_color = um >= 0.0 ? RED : BLUE;
 			um = fabs(um);
 
@@ -486,7 +486,7 @@ void CRMSWnd::RmsInd2D()
 			//531
 			if (um > m_Max)
 			{
-				real midh = (b - t - 4) / 2.0;
+				real_t midh = (b - t - 4) / 2.0;
 				m_MemDC.DrawTriangle(intRound(r), intRound(t + 2), intRound(r), intRound(b - 2), intRound(r + 5), intRound(t + 2 + midh), 1, bar_color, bar_color);
 			}
 			//531 Done
@@ -495,7 +495,7 @@ void CRMSWnd::RmsInd2D()
 			m_MemDC.DrawRectangle(Rect, bar_color, bar_color);
 			// grid
 			for (int i = 0; i <= m_Max; i++) {
-				real x = l + i * px_um;
+				real_t x = l + i * px_um;
 				if (0 < i && i < m_Max) {
 					m_MemDC.DrawVertDottedLine(intRound(x), intRound(t + 3), intRound(b - 3), gray, NOCOLOR);
 				}
@@ -530,28 +530,28 @@ void CRMSWnd::RmsCmb2D()
 	Colors[2] = 0x00c8004b;
 	Colors[1] = 0x00c80082;
 	Colors[0] = 0x007d0052;
-	real step = 2.0 * m_Max / (15 - 1);
+	real_t step = 2.0 * m_Max / (15 - 1);
 	step = ((int)(step / 0.1) + 1) * 0.1;
-	real min = -step * (15 - 1) / 2;
+	real_t min = -step * (15 - 1) / 2;
 
 	int FontSize = intRound(0.036 * m_h);
 	CMFont Font(FontSize, 400, "Arial");
 
-	real L = m_w * 0.014;
-	real T = m_w * 0.050;
+	real_t L = m_w * 0.014;
+	real_t T = m_w * 0.050;
 
-	real wr = m_w * 0.235;
-	real hr = m_w * 0.225;
-	real g = m_w * 0.008;
+	real_t wr = m_w * 0.235;
+	real_t hr = m_w * 0.225;
+	real_t g = m_w * 0.008;
 
-	real wb = m_w * 0.028;
-	real hb = m_w * 0.169;
+	real_t wb = m_w * 0.028;
+	real_t hb = m_w * 0.169;
 
 	int r_max_px = intRound(m_w * 0.070);
-	real r_max_um = m_Surface.m_r_max_um;
-	real map_px_um = r_max_px / r_max_um;
+	real_t r_max_um = m_Surface.m_r_max_um;
+	real_t map_px_um = r_max_px / r_max_um;
 
-	real bar_px_um = (real)hb / m_Max;
+	real_t bar_px_um = (real_t)hb / m_Max;
 
 	int MaskType[3][4] =
 	{
@@ -565,8 +565,8 @@ void CRMSWnd::RmsCmb2D()
 	{
 		for (int i = 0; i < 4; i++) 
 		{
-			real l = L + i * (wr + g);
-			real t = T + j * (hr + g);
+			real_t l = L + i * (wr + g);
+			real_t t = T + j * (hr + g);
 			::SetRect(&Rect[j][i], intRound(l), intRound(t), intRound(l + wr + 1), intRound(t + hr + 1));
 		}
 	}
@@ -584,7 +584,7 @@ void CRMSWnd::RmsCmb2D()
 			CZernikeSurface Surface;
 			Surface = m_Surface;
 			Surface &= Mask;
-			real rms = Surface.ComputeRms();
+			real_t rms = Surface.ComputeRms();
 
 			int dg = -1;
 			switch (MaskType[j][i]) {
@@ -639,7 +639,7 @@ void CRMSWnd::RmsCmb2D()
 			//531
 			if (rms > m_Max)
 			{
-				real midW = real(rct.right - rct.left) / 2.0;
+				real_t midW = real_t(rct.right - rct.left) / 2.0;
 				m_MemDC.DrawTriangle(intRound(rct.left), intRound(rct.top), intRound(rct.right - 1), intRound(rct.top), intRound(rct.left + midW), intRound(rct.top - 5), 1, white, white);
 			}
 			//531 Done
@@ -663,15 +663,15 @@ void CRMSWnd::RmsCmb2D()
 			int b = oy + r_max_px;
 			for (int y = t; y <= b; y++) 
 			{
-				real y_um = (oy - y) / map_px_um;
+				real_t y_um = (oy - y) / map_px_um;
 				for (int x = l; x <= r; x++) 
 				{
-					real x_um = (x - ox) / map_px_um;
-					real r_um = hyp(x_um, y_um);
+					real_t x_um = (x - ox) / map_px_um;
+					real_t r_um = hyp(x_um, y_um);
 					if (r_um < r_max_um) 
 					{
-						real a_rd = angle(y_um, x_um);
-						real w_um = 0.0;
+						real_t a_rd = angle(y_um, x_um);
+						real_t w_um = 0.0;
 						if (Surface.GetAt(r_um, a_rd, &w_um, NULL, NULL, NULL, NULL, NULL)) 
 						{
 							int c = intRound((w_um - min) / step);
@@ -692,9 +692,9 @@ void CRMSWnd::RmsCmb2D()
 
 void CRMSWnd::RmsInd3D()
 {
-	real black = m_Printing ? 1.0 : 0.0;
-	real white = m_Printing ? 0.0 : 1.0;
-	real gray = m_Printing ? 0.75 : 0.25;
+	real_t black = m_Printing ? 1.0 : 0.0;
+	real_t white = m_Printing ? 0.0 : 1.0;
+	real_t gray = m_Printing ? 0.75 : 0.25;
 
 	HGLRC hRenderingContext = NULL;
 	int PixelFormat = ::ChoosePixelFormat(m_MemDC.m_hDC, &m_PixelFormatDescriptor);
@@ -709,7 +709,7 @@ void CRMSWnd::RmsInd3D()
 
 	::glMatrixMode(GL_PROJECTION);
 	::glLoadIdentity();
-	real p = (real)m_w / m_h;
+	real_t p = (real_t)m_w / m_h;
 	::glOrtho(-p, p, -1.0, 1.0, -5.0, 5.0);
 
 	::glMatrixMode(GL_MODELVIEW);
@@ -736,7 +736,7 @@ void CRMSWnd::RmsInd3D()
 	int a_bg = -m_ax + 45;
 	int a_fn = -m_ax + 225;
 	for (int i = 1; i <= m_Max; i++) {
-		real h = (real)i / m_Max;
+		real_t h = (real_t)i / m_Max;
 		::glBegin(GL_LINE_STRIP);
 		for (int a = a_bg; a <= a_fn; a++) {
 			int b = CheckAngle(a);
@@ -758,17 +758,17 @@ void CRMSWnd::RmsInd3D()
 	::glEnable(GL_POLYGON_OFFSET_FILL);
 	::glPolygonOffset(0.0, 10000.0);
 
-	real ymin = -0.4;
-	real ymax = 0.8;
-	real xmin = -0.7;
-	real xmax = 0.7;
+	real_t ymin = -0.4;
+	real_t ymax = 0.8;
+	real_t xmin = -0.7;
+	real_t xmax = 0.7;
 
-	real dy = (ymax - ymin) / (ZERNIKE_NUM_ORDERS - 3);
-	real dx = (xmax - xmin) / (ZERNIKE_NUM_ORDERS - 1);
-	real ay = 0.37 * dy;
-	real ax = 0.46 * dx;
-	real y = ymax + dy;
-	real x;
+	real_t dy = (ymax - ymin) / (ZERNIKE_NUM_ORDERS - 3);
+	real_t dx = (xmax - xmin) / (ZERNIKE_NUM_ORDERS - 1);
+	real_t ay = 0.37 * dy;
+	real_t ax = 0.46 * dx;
+	real_t y = ymax + dy;
+	real_t x;
 	for (int mode = 3; mode < ZERNIKE_NUM_MODES; mode++) {
 
 		if (CZernikeSurface::m_ord[mode] != CZernikeSurface::m_ord[mode - 1]) {
@@ -776,22 +776,22 @@ void CRMSWnd::RmsInd3D()
 			x = -dx * 0.5 * CZernikeSurface::m_ord[mode];
 		}
 
-		real um = m_Surface.GetCUm(mode);
+		real_t um = m_Surface.GetCUm(mode);
 
-		real r, g, b;
+		real_t r, g, b;
 		if (um < -0.001) { r = 0.0; g = 0.0; b = 1.0; }
 		else if (um > 0.001) { r = 1.0; g = 0.0; b = 0.0; }
 		else {
-			real c = m_Printing ? 0.8 : 0.2;
+			real_t c = m_Printing ? 0.8 : 0.2;
 			r = g = b = c;
 		}
 
-		real z = __min(fabs(um) / m_Max, 1.0);
+		real_t z = __min(fabs(um) / m_Max, 1.0);
 
 		// боковые четырёхугольники
-		real bx = ax * (1.0 - COS[60]);
-		real by = ay * (1.0 - COS[60]);
-		real s[6][4][3] = {
+		real_t bx = ax * (1.0 - COS[60]);
+		real_t by = ay * (1.0 - COS[60]);
+		real_t s[6][4][3] = {
 			{ { x - bx,y - ay,0 },{ x - ax,y   ,0 },{ x - ax,y   ,z },{ x - bx,y - ay,z } },
 			{ { x - ax,y   ,0 },{ x - bx,y + ay,0 },{ x - bx,y + ay,z },{ x - ax,y   ,z } },
 			{ { x - bx,y + ay,0 },{ x + bx,y + ay,0 },{ x + bx,y + ay,z },{ x - bx,y + ay,z } },
@@ -812,7 +812,7 @@ void CRMSWnd::RmsInd3D()
 		}
 
 		// нижний и верхний шестиугольники
-		real u[2][6][3] = {
+		real_t u[2][6][3] = {
 			{ { x - bx,y - ay,0 },{ x - ax,y,0 },{ x - bx,y + ay,0 },{ x + bx,y + ay,0 },{ x + ax,y,0 },{ x + bx,y - ay,0 } },
 			{ { x - bx,y - ay,z },{ x - ax,y,z },{ x - bx,y + ay,z },{ x + bx,y + ay,z },{ x + ax,y,z },{ x + bx,y - ay,z } }
 		};

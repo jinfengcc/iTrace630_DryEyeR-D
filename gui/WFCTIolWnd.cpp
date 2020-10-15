@@ -52,16 +52,16 @@ CWFCTIolWnd::CWFCTIolWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFExam*
 	//----------------------------------------------------
 	RECT Rect;
 	GetWindowRect(&Rect);
-	real t = 3.0 * (0.03 * m_h) + m_g;
-	real w2 = ((Rect.right - Rect.left) - 5.0 * m_g) / 6.0;
-	real h2 = ((Rect.bottom - Rect.top - t) - 4.0 * m_g) / 4.0;
-	real moveH = 3.0*m_g;
+	real_t t = 3.0 * (0.03 * m_h) + m_g;
+	real_t w2 = ((Rect.right - Rect.left) - 5.0 * m_g) / 6.0;
+	real_t h2 = ((Rect.bottom - Rect.top - t) - 4.0 * m_g) / 4.0;
+	real_t moveH = 3.0*m_g;
 
-	real t1 = t + moveH;
-	real w = w2 + w2;
-	real h = h2 + m_g + h2;
+	real_t t1 = t + moveH;
+	real_t w = w2 + w2;
+	real_t h = h2 + m_g + h2;
 
-	real h3 = 0.4 * h;
+	real_t h3 = 0.4 * h;
 
 	int  Btm = intRound(t1 + h + m_g + h - moveH);
 	int  mid_h = intRound((h - m_g) / 2);
@@ -121,7 +121,7 @@ CWFCTIolWnd::CWFCTIolWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFExam*
 
 	//*007*[cjf***05052012],record the increase and decrease range
 
-	real m_r;
+	real_t m_r;
 	m_r = m_pWFExam->m_WfSurface.m_r_max_um;
 
 	::TempSettings.Com_r_max_um = m_r;
@@ -192,7 +192,7 @@ CWFCTIolWnd::CWFCTIolWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFExam*
 	CZernikeMask Mask;
 	Mask.SetType(MASK_HO_TOTAL);
 
-	real r_um = 4000;
+	real_t r_um = 4000;
 
 	CZernikeSurface Ct_WfSurface = m_pCTExam->m_WfSurface;//corneal
 	r_um = __min(4000, Ct_WfSurface.m_r_max_um);
@@ -209,7 +209,7 @@ CWFCTIolWnd::CWFCTIolWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFExam*
 
 	//Corneal HOA  
 	Ct_WfSurface &= Mask;
-	real rms = Ct_WfSurface.ComputeRms();
+	real_t rms = Ct_WfSurface.ComputeRms();
 	m_vals[1] = rms;
 
 	m_CorHoa = (rms >= ::NewSettings.m_IOLSel_CHOA ? TRUE : FALSE);//??
@@ -260,7 +260,7 @@ CWFCTIolWnd::CWFCTIolWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFExam*
 	//Done
 
 	//
-	real AlphaRum = m_pWFExam->m_Header.m_AngleAlphaRUm*0.001;
+	real_t AlphaRum = m_pWFExam->m_Header.m_AngleAlphaRUm*0.001;
 	// 0: < 0.5; 1: 0.5~0.65; 2 >0.65.
 	m_Alpha_Dec = (AlphaRum >= ::NewSettings.m_IOLSel_Alpha[0] ? 0 : AlphaRum >= ::NewSettings.m_IOLSel_Alpha[1] ? 1 : 2);
 	m_vals[0] = AlphaRum;
@@ -275,7 +275,7 @@ CWFCTIolWnd::CWFCTIolWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFExam*
 
 	CZernikeSurface Surface = m_pCTExam->m_WfSurface;//corneal
 	Surface.ChangeRMaxUm(3000);
-	real csa = Surface.GetCUm(12);
+	real_t csa = Surface.GetCUm(12);
 
 	// 0.14 ~ 0.20 ~ 0.25 ~0.30
 	m_Cor_SphAb_Dec = (csa <= ::NewSettings.m_IOLSel_Sph_Abbe[0] ? 0 : csa <= ::NewSettings.m_IOLSel_Sph_Abbe[1] ? 1 : csa <= ::NewSettings.m_IOLSel_Sph_Abbe[2] ? 2 : csa <= ::NewSettings.m_IOLSel_Sph_Abbe[3] ? 3 : 4);
@@ -304,7 +304,7 @@ void CWFCTIolWnd::RepaintMemDC()
 	CString s = (m_pWFExam->m_Header.IsOD() ? "OD" : "OS");
 	m_MemDC.WriteText(s, m_TitleRect[0], Font, white, 1);
 
-	real psSize = m_pWFExam->m_ScanDiameter * 0.001;
+	real_t psSize = m_pWFExam->m_ScanDiameter * 0.001;
 
 	if (m_pWFExam->m_Image.m_pu_ok)
 		psSize = m_pWFExam->m_Image.m_pu_r_mean_um * 0.002;
@@ -387,7 +387,7 @@ void CWFCTIolWnd::CreateChildWnd()
 	}
 	//Done
 
-	real ar_max_um = 5000;
+	real_t ar_max_um = 5000;
 
 	if (m_pWFExam) ar_max_um = m_pWFExam->m_WfSurface.m_r_max_um;
 	ar_max_um = __min(ar_max_um, m_pWndSettings[1].m_ZoneRadiusUm);
@@ -512,7 +512,7 @@ void CWFCTIolWnd::CreateChildWnd()
 	}
 
 	//Show the m_pDispWnd[0] and m_pDispWnd[3]  
-	real r_max_um = 5000;
+	real_t r_max_um = 5000;
 
 	m_Surfaces[0] = m_pCTExam->m_WfSurface;
 	CZernikeSurface WFSurface = m_pWFExam->m_WfSurface;
@@ -593,9 +593,9 @@ void CWFCTIolWnd::CreateChildWnd()
 	{
 		CWndSettings* pWndSettings = m_pWndSettings;
 		CScale* pScale = pWndSettings->GetScale();
-		real Inc = pWndSettings->GetIncrement();
-		real Cent = 0.0;
-		real Step;
+		real_t Inc = pWndSettings->GetIncrement();
+		real_t Cent = 0.0;
+		real_t Step;
 
 		// middle value
 		if (m_pWndSettings[0].m_Type == TYPE_CAXM || m_pWndSettings[0].m_Type == TYPE_CTNM || m_pWndSettings[0].m_Type == TYPE_CRFM)
@@ -626,19 +626,19 @@ void CWFCTIolWnd::CreateChildWnd()
 		// step value
 		if (pScale->m_StepAuto)
 		{
-			real Span = 0.0;
+			real_t Span = 0.0;
 			for (int e = 0; e < 1; e++)
 			{
 				CEyeWnd* pEyeWnd = (CEyeWnd*)m_pDispWnd[e * 3];
 
 				if (pEyeWnd)
 				{
-					real Min = m_pWndSettings[0].m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
-					real Max = m_pWndSettings[0].m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
-					real Span = 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent));
+					real_t Min = m_pWndSettings[0].m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
+					real_t Max = m_pWndSettings[0].m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
+					real_t Span = 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent));
 				}
 			}
-			real t = Span / pScale->m_NumColors;
+			real_t t = Span / pScale->m_NumColors;
 			Step = (int)(t / Inc) * Inc;
 			if (t > Step + 0.001) Step += Inc;
 		}
@@ -647,7 +647,7 @@ void CWFCTIolWnd::CreateChildWnd()
 			Step = RealRound(pScale->m_Step, Inc);
 		}
 		if (Step < Inc) Step = Inc;
-		real StepMax = m_pWndSettings[0].GetMaxStep();
+		real_t StepMax = m_pWndSettings[0].GetMaxStep();
 		if (Step > StepMax) Step = StepMax;
 
 		for (int e = 0; e < 1; e++)
@@ -890,22 +890,22 @@ void CWFCTIolWnd::CreateChildWnd()
 	{
 		CWndSettings* pWndSettings = m_pWndSettings + 1;
 		CScale* pScale = pWndSettings->GetScale();
-		real Inc = pWndSettings->GetIncrement();
-		real Cent = 0.0;
-		real Step;
+		real_t Inc = pWndSettings->GetIncrement();
+		real_t Cent = 0.0;
+		real_t Step;
 		if (pScale->m_StepAuto)
 		{
-			real Span = 0.0;
+			real_t Span = 0.0;
 			for (int e = 0; e < 1; e++)
 			{
 				CNewEyeWnd* pEyeWnd = (CNewEyeWnd*)m_pDispWnd[e * 3 + 1];
 				if (pEyeWnd) {
-					real Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
-					real Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
+					real_t Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
+					real_t Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
 					Span = __max(Span, 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent)));
 				}
 			}
-			real t = Span / pScale->m_NumColors;
+			real_t t = Span / pScale->m_NumColors;
 			Step = (int)(t / Inc) * Inc;
 			if (t > Step + 0.001) Step += Inc;
 		}
@@ -913,7 +913,7 @@ void CWFCTIolWnd::CreateChildWnd()
 			Step = RealRound(pScale->m_Step, Inc);
 		}
 		if (Step < Inc) Step = Inc;
-		real StepMax = pWndSettings->GetMaxStep();
+		real_t StepMax = pWndSettings->GetMaxStep();
 		if (Step > StepMax) Step = StepMax;
 		//
 		for (int e = 0; e < 1; e++) {
@@ -959,7 +959,7 @@ void CWFCTIolWnd::CreateChildWnd()
 
 
 	 //521 Let the zoom in/out button to be gray if minimum or maximum scan size
-	real maxR = TempSettings.Com_r_max_um;
+	real_t maxR = TempSettings.Com_r_max_um;
 	for (int i = 1; i < 6; i++)
 	{
 		BOOL Check = TRUE;
@@ -1147,7 +1147,7 @@ LRESULT CWFCTIolWnd::OnChangeStepMsg(WPARAM wParam, LPARAM lParam)
 //***************************************************************************************
 
 //521
-int CWFCTIolWnd::GetGridScale(real r_um)
+int CWFCTIolWnd::GetGridScale(real_t r_um)
 {
 	r_um = r_um + 1000;
 
@@ -1554,7 +1554,7 @@ void CWFCTIolWnd::GetVals()
 	CZernikeMask Mask;
 	Mask.SetType(MASK_HO_TOTAL);
 
-	real r_um = 4000;
+	real_t r_um = 4000;
 
 	CZernikeSurface Ct_WfSurface = m_pCTExam->m_WfSurface;//corneal
 	r_um = __min(4000, Ct_WfSurface.m_r_max_um);
@@ -1570,7 +1570,7 @@ void CWFCTIolWnd::GetVals()
 	//Done
 
 	Ct_WfSurface &= Mask;
-	real rms = Ct_WfSurface.ComputeRms();
+	real_t rms = Ct_WfSurface.ComputeRms();
 	m_vals[1] = rms;
 
 	m_CorHoa = (rms >= ::NewSettings.m_IOLSel_CHOA ? TRUE : FALSE);//??
@@ -1581,7 +1581,7 @@ void CWFCTIolWnd::GetVals()
 	m_Inter = (rms >= ::NewSettings.m_IOLSel_IHOA ? TRUE : FALSE);
 	//
 
-	real AlphaRum = m_pWFExam->m_Header.m_AngleAlphaRUm*0.001;
+	real_t AlphaRum = m_pWFExam->m_Header.m_AngleAlphaRUm*0.001;
 	// 0: < 0.5; 1: 0.5~0.65; 2 >0.65.
 	m_Alpha_Dec = (AlphaRum >= ::NewSettings.m_IOLSel_Alpha[0] ? 0 : AlphaRum >= ::NewSettings.m_IOLSel_Alpha[1] ? 1 : 2);
 	m_vals[0] = AlphaRum;
@@ -1596,7 +1596,7 @@ void CWFCTIolWnd::GetVals()
 
 	CZernikeSurface Surface = m_pCTExam->m_WfSurface;//corneal
 	Surface.ChangeRMaxUm(3000);
-	real csa = Surface.GetCUm(12);
+	real_t csa = Surface.GetCUm(12);
 
 	// 0.14 ~ 0.20 ~ 0.25 ~0.30
 	m_Cor_SphAb_Dec = (csa <= ::NewSettings.m_IOLSel_Sph_Abbe[0] ? 0 : csa <= ::NewSettings.m_IOLSel_Sph_Abbe[1] ? 1 : csa <= ::NewSettings.m_IOLSel_Sph_Abbe[2] ? 2 : csa <= ::NewSettings.m_IOLSel_Sph_Abbe[3] ? 3 : 4);

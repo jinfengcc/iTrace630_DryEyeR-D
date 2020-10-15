@@ -196,7 +196,7 @@ BOOL CSelectExamDlg::OnInitDialog()
 
 			BOOL FellowExamExist = FALSE;
 			GUID FellowExamID = GUID_NULL;
-			real scanSize = 0;
+			real_t scanSize = 0;
 			int  NumImages = 1;//[5.2]
 
 			if (pExamHeader->m_Type == EXAM_TYPE_WF)
@@ -434,7 +434,7 @@ void CSelectExamDlg::OnExamsListHOVER(NMHDR* pNotifyStruct, LRESULT* pRes)
 				return;
 			}
 
-			real ratioW = real(pWFExam->m_Image.m_w) / real(m_ExamImgInfo.m_w);
+			real_t ratioW = real_t(pWFExam->m_Image.m_w) / real_t(m_ExamImgInfo.m_w);
 
 			for (int y = 0; y < m_ExamImgInfo.m_h; y++)
 			{
@@ -481,7 +481,7 @@ void CSelectExamDlg::OnExamsListHOVER(NMHDR* pNotifyStruct, LRESULT* pRes)
 			}
 
 			//m_ExamImgInfo.ClearMemDC();
-			real ratioW = real(pCTExam->m_Image.m_w) / real(m_ExamImgInfo.m_w);
+			real_t ratioW = real_t(pCTExam->m_Image.m_w) / real_t(m_ExamImgInfo.m_w);
 
 			for (int y = 0; y < m_ExamImgInfo.m_h; y++)
 			{

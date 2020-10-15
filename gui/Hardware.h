@@ -173,23 +173,23 @@ public:
 	int CheckLaserSafetyStatus();//6.2.0 Change from void to int
 
 	void InitializeOptometer();
-	void MoveOptometerTargetToPositionD(real PositionD, BOOL Wait);
-	real GetOptometerTargetPositionD() { return m_OptometerTargetPositionD; }
-	real GetOptometerTargetPositionUm() { return m_OptometerTargetPositionUm; }
+	void MoveOptometerTargetToPositionD(real_t PositionD, BOOL Wait);
+	real_t GetOptometerTargetPositionD() { return m_OptometerTargetPositionD; }
+	real_t GetOptometerTargetPositionUm() { return m_OptometerTargetPositionUm; }
 
 	int GetEye();
 	BOOL IsButtonPressed();
 	int GetTriangulationSensorReading();
 
-	BOOL DoWFExam(const int NumPoints, const real* pXUm, const real* pYUm);
+	BOOL DoWFExam(const int NumPoints, const real_t* pXUm, const real_t* pYUm);
 	BOOL GetLADsData(const int NumPoints, ushort* pLADXData, ushort* pLADYData);
 
 	int m_XHz;
 	int m_YHz;
-	void SetAODsFrequencies(const real XUm, const real YUm);
+	void SetAODsFrequencies(const real_t XUm, const real_t YUm);
 	BOOL ReadLADs(ushort* pLADXData, ushort* pLADYData);
 
-	void StartContinuousScanning(const int NumPoints, const real* pXUm, const real* pYUm);
+	void StartContinuousScanning(const int NumPoints, const real_t* pXUm, const real_t* pYUm);
 	void StopContinuousScanning();
 
 	void TurnAccommodationMotorOn() { SetPowerState(HW_ACCOMMODATION_MOTOR, TRUE); }
@@ -227,8 +227,8 @@ public:
 
 private:
 
-	int UmToHzX(const real XUm);
-	int UmToHzY(const real YUm);
+	int UmToHzX(const real_t XUm);
+	int UmToHzY(const real_t YUm);
 
 	ulong m_FlashDataStartAddress;
 	CALIBRATION m_LCalibration;
@@ -244,11 +244,11 @@ private:
 	static ulong __stdcall FrameTransferThreadFunction(void* pParam) { ((CHW*)pParam)->FrameTransferMain(); return 0; }
 
 	BOOL m_OptometerInitialized;
-	real m_OptometerTargetRangeUm;
-	real m_OptometerTargetMoveToPositionUm;
-	real m_OptometerTargetMoveToPositionD;
-	real m_OptometerTargetPositionUm;
-	real m_OptometerTargetPositionD;
+	real_t m_OptometerTargetRangeUm;
+	real_t m_OptometerTargetMoveToPositionUm;
+	real_t m_OptometerTargetMoveToPositionD;
+	real_t m_OptometerTargetPositionUm;
+	real_t m_OptometerTargetPositionD;
 	void* m_OptometerThread;
 	BOOL OptometerStartThread();
 	void OptometerMain();

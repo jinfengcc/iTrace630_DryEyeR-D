@@ -466,14 +466,14 @@ private:
 
 //***************************************************************************************
 
-void Transpose(const Matrix<real>& M, Matrix<real>& MT);
-BOOL Multiply(const Matrix<real>& M1, const Matrix<real>& M2, Matrix<real>& M);
-BOOL Invert(const Matrix<real>& M, Matrix<real>& MI);
-BOOL LSM(const Matrix<real>& A, Matrix<real>& X, const Matrix<real>& F);
-BOOL LES(const Matrix<real>& A, Matrix<real>& X, const Matrix<real>& F);
-void Angles(const Matrix<real>& A, Matrix<real>& B);
+void Transpose(const Matrix<real_t>& M, Matrix<real_t>& MT);
+BOOL Multiply(const Matrix<real_t>& M1, const Matrix<real_t>& M2, Matrix<real_t>& M);
+BOOL Invert(const Matrix<real_t>& M, Matrix<real_t>& MI);
+BOOL LSM(const Matrix<real_t>& A, Matrix<real_t>& X, const Matrix<real_t>& F);
+BOOL LES(const Matrix<real_t>& A, Matrix<real_t>& X, const Matrix<real_t>& F);
+void Angles(const Matrix<real_t>& A, Matrix<real_t>& B);
 
-void Zoom(const Matrix<real>& A, Matrix<real>& B, const real k);
-void Normalize(Matrix<real>& A, const real Min, const real Max);
+void Zoom(const Matrix<real_t>& A, Matrix<real_t>& B, const real_t k);
+void Normalize(Matrix<real_t>& A, const real_t Min, const real_t Max);
 
 //***************************************************************************************

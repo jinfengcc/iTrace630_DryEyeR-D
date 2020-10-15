@@ -502,10 +502,10 @@ void CEyeImage::Destroy()
 
 //***************************************************************************************
 
-BOOL CEyeImage::GetRGBAtUm(real x_um, real y_um, real* pR, real* pG, real* pB)
+BOOL CEyeImage::GetRGBAtUm(real_t x_um, real_t y_um, real_t* pR, real_t* pG, real_t* pB)
 {
-	real xr = m_w * (0.5 + x_um / m_w_um);
-	real yr = m_h * (0.5 + y_um / m_h_um);
+	real_t xr = m_w * (0.5 + x_um / m_w_um);
+	real_t yr = m_h * (0.5 + y_um / m_h_um);
 
 	int xi = (int)xr; if (xi < 0 || xi > m_w - 2) return FALSE;
 	int yi = (int)yr; if (yi < 0 || yi > m_h - 2) return FALSE;
@@ -516,8 +516,8 @@ BOOL CEyeImage::GetRGBAtUm(real x_um, real y_um, real* pR, real* pG, real* pB)
 		int R1 = GetRAt(xi + 1, yi);
 		int R2 = GetRAt(xi + 1, yi + 1);
 		int R3 = GetRAt(xi, yi + 1);
-		real Rl = R0 + (R3 - R0) * (yr - yi);
-		real Rr = R1 + (R2 - R1) * (yr - yi);
+		real_t Rl = R0 + (R3 - R0) * (yr - yi);
+		real_t Rr = R1 + (R2 - R1) * (yr - yi);
 		*pR = Rl + (Rr - Rl) * (xr - xi);
 	}
 
@@ -527,8 +527,8 @@ BOOL CEyeImage::GetRGBAtUm(real x_um, real y_um, real* pR, real* pG, real* pB)
 		int G1 = GetGAt(xi + 1, yi);
 		int G2 = GetGAt(xi + 1, yi + 1);
 		int G3 = GetGAt(xi, yi + 1);
-		real Gl = G0 + (G3 - G0) * (yr - yi);
-		real Gr = G1 + (G2 - G1) * (yr - yi);
+		real_t Gl = G0 + (G3 - G0) * (yr - yi);
+		real_t Gr = G1 + (G2 - G1) * (yr - yi);
 		*pG = Gl + (Gr - Gl) * (xr - xi);
 	}
 
@@ -538,8 +538,8 @@ BOOL CEyeImage::GetRGBAtUm(real x_um, real y_um, real* pR, real* pG, real* pB)
 		int B1 = GetBAt(xi + 1, yi);
 		int B2 = GetBAt(xi + 1, yi + 1);
 		int B3 = GetBAt(xi, yi + 1);
-		real Bl = B0 + (B3 - B0) * (yr - yi);
-		real Br = B1 + (B2 - B1) * (yr - yi);
+		real_t Bl = B0 + (B3 - B0) * (yr - yi);
+		real_t Br = B1 + (B2 - B1) * (yr - yi);
 		*pB = Bl + (Br - Bl) * (xr - xi);
 	}
 
@@ -659,8 +659,8 @@ void CEyeImage::CheckClear(int timeLeft)
 	int all = 0;
 	int cx = intRound(0.5 * m_w);
 	int cy = intRound(0.5 * m_h);
-	real x_px_um = m_w / m_w_um;
-	real y_px_um = m_h / m_h_um;
+	real_t x_px_um = m_w / m_w_um;
+	real_t y_px_um = m_h / m_h_um;
 
 	for (int i = (cx - 50); i < (cx + 50); i++)
 	{
@@ -689,12 +689,12 @@ void CEyeImage::FindPupil()
 
 	if (m_RGBData.GetMem() == NULL) return;
 
-	real cx = 0.5 * m_w;
-	real cy = 0.5 * m_h;
+	real_t cx = 0.5 * m_w;
+	real_t cy = 0.5 * m_h;
 	int icx = intRound(cx);
 	int icy = intRound(cy);
-	real x_px_um = m_w / m_w_um;
-	real y_px_um = m_h / m_h_um;
+	real_t x_px_um = m_w / m_w_um;
+	real_t y_px_um = m_h / m_h_um;
 
 	int dx = intRound(1000.0 * x_px_um);
 	int dy = intRound(1000.0 * y_px_um);
@@ -708,7 +708,7 @@ void CEyeImage::FindPupil()
 		int n = 0;
 		int k = 0;
 
-		real Dif = 0.0;
+		real_t Dif = 0.0;
 
 		for (int j = -2; j <= 1; j++)
 		{
@@ -767,7 +767,7 @@ void CEyeImage::FindPupil()
 				}
 			}
 
-			real v = n == 0 ? 0.0 : (real)s / n;
+			real_t v = n == 0 ? 0.0 : (real_t)s / n;
 			m_hist[i] = v;
 			if (m_hist_max < v) m_hist_max = v;
 		}
@@ -843,33 +843,33 @@ void CEyeImage::FindPupil()
 	}
 
 	int n = hull.GetSize();
-	real x0 = (xmin + xmax) * 0.5;
-	real y0 = (ymin + ymax) * 0.5;
+	real_t x0 = (xmin + xmax) * 0.5;
+	real_t y0 = (ymin + ymax) * 0.5;
 	m_pu_x0_um = (x0 - X2) * m_pu_d_um;
 	m_pu_y0_um = (y0 - Y2) * m_pu_d_um;
 
 	n = hull.GetSize();
-	Matrix<real> R_um(n);
-	Matrix<real> A_rd(n);
-	Matrix<real> Cos(n);
-	Matrix<real> Sin(n);
+	Matrix<real_t> R_um(n);
+	Matrix<real_t> A_rd(n);
+	Matrix<real_t> Cos(n);
+	Matrix<real_t> Sin(n);
 	int n2 = 0;
 	int pu_thr = m_pu_thr * 25;
 
 	pNode = hull.MoveFirst();
 	while (pNode)
 	{
-		real x0_um = (pNode->m_x - X2) * m_pu_d_um - m_pu_x0_um;
-		real y0_um = (pNode->m_y - Y2) * m_pu_d_um - m_pu_y0_um;
-		real r0_um = hyp(x0_um, y0_um) - 20.0;
-		real a_rd = angle(y0_um, x0_um);
-		real C = cos(a_rd);
-		real S = sin(a_rd);
-		real p[12];
+		real_t x0_um = (pNode->m_x - X2) * m_pu_d_um - m_pu_x0_um;
+		real_t y0_um = (pNode->m_y - Y2) * m_pu_d_um - m_pu_y0_um;
+		real_t r0_um = hyp(x0_um, y0_um) - 20.0;
+		real_t a_rd = angle(y0_um, x0_um);
+		real_t C = cos(a_rd);
+		real_t S = sin(a_rd);
+		real_t p[12];
 
 		for (int r = 0; r < 12; r++)
 		{
-			real r_um = r0_um + r * 20.0;
+			real_t r_um = r0_um + r * 20.0;
 			int x = intRound(cx + (m_pu_x0_um + r_um * C) * x_px_um);
 			int y = intRound(cy + (m_pu_y0_um + r_um * S) * y_px_um);
 			int s = 0;
@@ -906,9 +906,9 @@ void CEyeImage::FindPupil()
 
 		while (pNode)
 		{
-			real nxt_x0_um = (pNode->m_x - X2) * m_pu_d_um - m_pu_x0_um;
-			real nxt_y0_um = (pNode->m_y - Y2) * m_pu_d_um - m_pu_y0_um;
-			real nxt_a_rd = angle(nxt_y0_um, nxt_x0_um);
+			real_t nxt_x0_um = (pNode->m_x - X2) * m_pu_d_um - m_pu_x0_um;
+			real_t nxt_y0_um = (pNode->m_y - Y2) * m_pu_d_um - m_pu_y0_um;
+			real_t nxt_a_rd = angle(nxt_y0_um, nxt_x0_um);
 			if (a_rd < nxt_a_rd) break;
 			if (a_rd > nxt_a_rd && (3.0 * _Pi_2 < a_rd && a_rd <= _2_Pi) && (0.0 <= nxt_a_rd && nxt_a_rd < _Pi_2)) break;
 			pNode = hull.MoveNext();
@@ -921,7 +921,7 @@ void CEyeImage::FindPupil()
 		return;
 	}
 
-	Matrix<real> t(n2);
+	Matrix<real_t> t(n2);
 	t.Fill(0.0);
 
 	for (int i = 0; i < n2; i++)
@@ -937,30 +937,30 @@ void CEyeImage::FindPupil()
 
 	R_um = t;
 
-	real x_um_min = 10000.0;
-	real x_um_max = -10000.0;
-	real y_um_min = 10000.0;
-	real y_um_max = -10000.0;
+	real_t x_um_min = 10000.0;
+	real_t x_um_max = -10000.0;
+	real_t y_um_min = 10000.0;
+	real_t y_um_max = -10000.0;
 
 	for (int i = 0; i < n2; i++)
 	{
-		real x_um = R_um[i] * Cos[i];
-		real y_um = R_um[i] * Sin[i];
+		real_t x_um = R_um[i] * Cos[i];
+		real_t y_um = R_um[i] * Sin[i];
 		if (x_um < x_um_min) x_um_min = x_um;
 		if (x_um > x_um_max) x_um_max = x_um;
 		if (y_um < y_um_min) y_um_min = y_um;
 		if (y_um > y_um_max) y_um_max = y_um;
 	}
 
-	real dx_um = (x_um_min + x_um_max) * 0.5;
-	real dy_um = (y_um_min + y_um_max) * 0.5;
+	real_t dx_um = (x_um_min + x_um_max) * 0.5;
+	real_t dy_um = (y_um_min + y_um_max) * 0.5;
 
 	for (int i = 0; i < n2; i++)
 	{
-		real old_x_um = R_um[i] * Cos[i];
-		real old_y_um = R_um[i] * Sin[i];
-		real new_x_um = old_x_um - dx_um;
-		real new_y_um = old_y_um - dy_um;
+		real_t old_x_um = R_um[i] * Cos[i];
+		real_t old_y_um = R_um[i] * Sin[i];
+		real_t new_x_um = old_x_um - dx_um;
+		real_t new_y_um = old_y_um - dy_um;
 		R_um[i] = hyp(new_y_um, new_x_um);
 		A_rd[i] = angle(new_y_um, new_x_um);
 	}
@@ -968,7 +968,7 @@ void CEyeImage::FindPupil()
 	m_pu_x0_um += dx_um;
 	m_pu_y0_um += dy_um;
 
-	real amin = _2_Pi;
+	real_t amin = _2_Pi;
 	int imin;
 
 	for (int i = 0; i < n2; i++)
@@ -980,8 +980,8 @@ void CEyeImage::FindPupil()
 		}
 	}
 
-	Matrix<real> A(n2 + 2);
-	Matrix<real> R(n2 + 2);
+	Matrix<real_t> A(n2 + 2);
+	Matrix<real_t> R(n2 + 2);
 	int k = 1;
 
 	for (int i = imin; i < n2; i++)
@@ -1007,7 +1007,7 @@ void CEyeImage::FindPupil()
 
 	for (int a = 0; a < 360; a++)
 	{
-		real a_rd = a * _Pi_180;
+		real_t a_rd = a * _Pi_180;
 		while (!(A[k] <= a_rd && a_rd <= A[k + 1])) k++;
 		m_pu_r_um[a] = R[k] + (R[k + 1] - R[k]) * (a_rd - A[k]) / (A[k + 1] - A[k]);
 	}
@@ -1038,15 +1038,15 @@ void CEyeImage::FindLensDots()
 
 	if (!m_pu_ok) return;
 
-	real x_px_um = m_w / m_w_um;
-	real y_px_um = m_h / m_h_um;
-	real cx = m_w * 0.5;
-	real cy = m_h * 0.5;
+	real_t x_px_um = m_w / m_w_um;
+	real_t y_px_um = m_h / m_h_um;
+	real_t cx = m_w * 0.5;
+	real_t cy = m_h * 0.5;
 
-	real le_r_um[360];
+	real_t le_r_um[360];
 	int BestIntensity[360];
 	int AverageBestIntensity = 255;
-	real dr_um = 100.0;
+	real_t dr_um = 100.0;
 	int k = 0;
 
 	for (int b = 135; b <= 405; b++)
@@ -1057,9 +1057,9 @@ void CEyeImage::FindLensDots()
 
 		for (int r = (int)ceil(m_pu_r_um[a] / dr_um) + 3; r <= 65; r++)
 		{
-			real r_um = r * dr_um;
-			real y_um = m_pu_y0_um + r_um * SIN[a];
-			real x_um = m_pu_x0_um + r_um * COS[a];
+			real_t r_um = r * dr_um;
+			real_t y_um = m_pu_y0_um + r_um * SIN[a];
+			real_t x_um = m_pu_x0_um + r_um * COS[a];
 			int y = intRound(cy + y_um * y_px_um);
 			int x = intRound(cx + x_um * x_px_um);
 			int y1 = y - 2, y2 = y + 2, x1 = x - 2, x2 = x + 2;
@@ -1167,8 +1167,8 @@ void CEyeImage::FindLensDots()
 
 		if (pixs > 0)
 		{
-			m_le_y_um[k] = ((real)cols / pixs - cy) / y_px_um;
-			m_le_x_um[k] = ((real)rows / pixs - cx) / x_px_um;
+			m_le_y_um[k] = ((real_t)cols / pixs - cy) / y_px_um;
+			m_le_x_um[k] = ((real_t)rows / pixs - cx) / x_px_um;
 		}
 	}
 
@@ -1191,22 +1191,22 @@ void CEyeImage::ValidateLensDots()
 		}
 	}
 
-	real x0_um = 0.5 * (m_le_x_um[0] + m_le_x_um[2]);
-	real y0_um = 0.5 * (m_le_y_um[0] + m_le_y_um[2]);
+	real_t x0_um = 0.5 * (m_le_x_um[0] + m_le_x_um[2]);
+	real_t y0_um = 0.5 * (m_le_y_um[0] + m_le_y_um[2]);
 	if (hyp(x0_um, y0_um) > 2000.0) goto _ERROR_;
 
-	real dx_um = m_le_x_um[2] - m_le_x_um[0];
-	real dy_um = m_le_y_um[2] - m_le_y_um[0];
+	real_t dx_um = m_le_x_um[2] - m_le_x_um[0];
+	real_t dy_um = m_le_y_um[2] - m_le_y_um[0];
 	if (dx_um < 5000.0 || dx_um > 10000.0) goto _ERROR_;
 
-	real Angle1 = _180_Pi * angle(dy_um, dx_um);
+	real_t Angle1 = _180_Pi * angle(dy_um, dx_um);
 	if (!((0.0 <= Angle1 && Angle1 <= 45.0) || (315.0 <= Angle1 && Angle1 < 360.0))) goto _ERROR_;
 
 	dy_um = y0_um - m_le_y_um[1];
 	dx_um = x0_um - m_le_x_um[1];
 	if (dy_um < 2500.0) goto _ERROR_;
 
-	real Angle2 = _180_Pi * angle(dy_um, dx_um);
+	real_t Angle2 = _180_Pi * angle(dy_um, dx_um);
 	if (!(45.0 <= Angle2 && Angle2 <= 135.0)) goto _ERROR_;
 
 	m_le_ok = TRUE;
@@ -1220,19 +1220,19 @@ _ERROR_:
 
 //***************************************************************************************
 
-real CEyeImage::GetLensX0Um()
+real_t CEyeImage::GetLensX0Um()
 {
 	if (!m_le_ok) return 0.0;
 	return 0.5 * (m_le_x_um[0] + m_le_x_um[2]);
 }
 
-real CEyeImage::GetLensY0Um()
+real_t CEyeImage::GetLensY0Um()
 {
 	if (!m_le_ok) return 0.0;
 	return 0.5 * (m_le_y_um[0] + m_le_y_um[2]);
 }
 
-real CEyeImage::GetLensRotationAngle()
+real_t CEyeImage::GetLensRotationAngle()
 {
 	if (!m_le_ok) return 0.0;
 	return _180_Pi * atan((m_le_y_um[2] - m_le_y_um[0]) / (m_le_x_um[2] - m_le_x_um[0]));
@@ -1303,7 +1303,7 @@ void CEyeImage::FindVertex0(BOOL TriLaserOn, int LaserIntensityThreshold)
 					n++;
 				}
 			}
-			real v = n == 0 ? 0.0 : (real)s / n;
+			real_t v = n == 0 ? 0.0 : (real_t)s / n;
 			m_hist[i] = v;
 			if (m_hist_max < v) m_hist_max = v;
 		}
@@ -1743,15 +1743,15 @@ void CEyeImage::FindVertexAndRings()
 
 	if (m_RGBData.GetMem() == NULL) return;
 
-	real cx = 0.5 * m_w;
-	real cy = 0.5 * m_h;
-	real x_px_um = m_w / m_w_um;
-	real y_px_um = m_h / m_h_um;
+	real_t cx = 0.5 * m_w;
+	real_t cy = 0.5 * m_h;
+	real_t x_px_um = m_w / m_w_um;
+	real_t y_px_um = m_h / m_h_um;
 
 	BOOL ve_ok;
-	real ve_x_um;
-	real ve_y_um;
-	real ri0_um[360];
+	real_t ve_x_um;
+	real_t ve_y_um;
+	real_t ri0_um[360];
 
 	int kl1[5] = { 30, 25, 20, 15, 10 };
 	for (int l1 = 0; l1 < 5; l1++) {
@@ -1766,22 +1766,22 @@ void CEyeImage::FindVertexAndRings()
 			memset(edge, 0, sizeof(edge));
 			for (int a = 0; a < 360; a++) {
 				// построить профиль в 101 шаг через 10 микрон, начиная с 200 микрон и заканчивая 1000 микрон
-				real t[101];
+				real_t t[101];
 				for (int r = 0; r <= 100; r++) {
-					real r_um = 200.0 + r * 10.0;
-					real x_um = ve_x_um + r_um * COS[a];
-					real y_um = ve_y_um + r_um * SIN[a];
+					real_t r_um = 200.0 + r * 10.0;
+					real_t x_um = ve_x_um + r_um * COS[a];
+					real_t y_um = ve_y_um + r_um * SIN[a];
 					int x = intRound(cx + x_um * x_px_um);
 					int y = intRound(cy + y_um * y_px_um);
 					t[r] = GetRAt(x, y);
 				}
 				// фильтрация вдоль угла и поиск минимума и максимума
-				real p[101];
-				real min = DBL_MAX;
-				real max = -DBL_MAX;
+				real_t p[101];
+				real_t min = DBL_MAX;
+				real_t max = -DBL_MAX;
 				int k = kl1[l1];
 				for (int r = 10; r <= 90; r++) {
-					real s = 0.0;
+					real_t s = 0.0;
 					for (int i = -10; i <= 10; i++) {
 						int q = k - abs(i);
 						s += q * t[r + i];
@@ -1806,9 +1806,9 @@ void CEyeImage::FindVertexAndRings()
 					}
 				}
 				// поиск границы назад от экстремума внутрь - первого перехода от белого к чёрному
-				real dmax = -DBL_MAX;
+				real_t dmax = -DBL_MAX;
 				for (int r = rmax - 1; r >= 11; r--) {
-					real d = p[r] - p[r - 1];
+					real_t d = p[r] - p[r - 1];
 					if (dmax < d) {
 						dmax = d;
 						edge[a] = r;
@@ -1838,18 +1838,18 @@ void CEyeImage::FindVertexAndRings()
 						k += q;
 					}
 				}
-				ri0_um[a] = k != 0 ? (200.0 + ((real)s / (real)k) * 10.0 - 5.0) : INVALID_VALUE;
+				ri0_um[a] = k != 0 ? (200.0 + ((real_t)s / (real_t)k) * 10.0 - 5.0) : INVALID_VALUE;
 			}
 			// уточнение положения вёртекса
 			if (l2 < nl2 - 1) {
-				real x_min_um = DBL_MAX;
-				real x_max_um = -DBL_MAX;
-				real y_min_um = DBL_MAX;
-				real y_max_um = -DBL_MAX;
+				real_t x_min_um = DBL_MAX;
+				real_t x_max_um = -DBL_MAX;
+				real_t y_min_um = DBL_MAX;
+				real_t y_max_um = -DBL_MAX;
 				for (int a = 0; a < 360; a++) {
 					if (ri0_um[a] != INVALID_VALUE) {
-						real x_um = ve_x_um + ri0_um[a] * COS[a];
-						real y_um = ve_y_um + ri0_um[a] * SIN[a];
+						real_t x_um = ve_x_um + ri0_um[a] * COS[a];
+						real_t y_um = ve_y_um + ri0_um[a] * SIN[a];
 						if (x_min_um > x_um) x_min_um = x_um;
 						if (x_max_um < x_um) x_max_um = x_um;
 						if (y_min_um > y_um) y_min_um = y_um;
@@ -1863,8 +1863,8 @@ void CEyeImage::FindVertexAndRings()
 
 		// на первом кольце не должно быть ни одного разрыва
 		BOOL Broken = FALSE;
-		real min = DBL_MAX;
-		real max = -DBL_MAX;
+		real_t min = DBL_MAX;
+		real_t max = -DBL_MAX;
 		for (int a = 0; a < 360; a++) {
 			if (ri0_um[a] == INVALID_VALUE) {
 				Broken = TRUE;
@@ -1906,17 +1906,17 @@ void CEyeImage::FindVertexAndRings()
 	// ==================================================================
 
 	int NumSteps = 512;
-	real UmStep = 5200.0 / (NumSteps - 1);
-	Matrix<real> P(360, NumSteps);
+	real_t UmStep = 5200.0 / (NumSteps - 1);
+	Matrix<real_t> P(360, NumSteps);
 	P.Fill(INVALID_VALUE);
 	for (int a = 0; a < 360; a++)
 	{
 		for (int s = 0; s < NumSteps; s++) 
 		{
-			real r_um = s * UmStep;
-			real x_um = m_ve_x_um + r_um * COS[a];
-			real y_um = m_ve_y_um + r_um * SIN[a];
-			real p;
+			real_t r_um = s * UmStep;
+			real_t x_um = m_ve_x_um + r_um * COS[a];
+			real_t y_um = m_ve_y_um + r_um * SIN[a];
+			real_t p;
 			if (!GetRGBAtUm(x_um, y_um, &p, NULL, NULL)) break;
 			P(a, s) = p;
 		}
@@ -1925,18 +1925,18 @@ void CEyeImage::FindVertexAndRings()
 	// ==================================================================
 
 	{
-		real t[360];
+		real_t t[360];
 		const int m = 10;
 		for (int p = 0; p < NumSteps; p++)
 		{
 			for (int a = 0; a < 360; a++) 
 			{
-				real s = 0.0;
+				real_t s = 0.0;
 				int k = 0;
 
 				for (int i = -m; i <= m; i++)
 				{
-					real v = P(CheckAngle(a + i), p);
+					real_t v = P(CheckAngle(a + i), p);
 					if (v != INVALID_VALUE)
 					{
 						int q = m + 1 - abs(i);
@@ -1958,7 +1958,7 @@ void CEyeImage::FindVertexAndRings()
 	// ==================================================================
 
 	{
-		Matrix<real> t(2, NumSteps);
+		Matrix<real_t> t(2, NumSteps);
 		for (int a = 0; a < 360; a++) 
 		{
 			for (int j = 0; j < 2; j++)
@@ -1967,14 +1967,14 @@ void CEyeImage::FindVertexAndRings()
 
 				for (int p = 0; p < NumSteps; p++) 
 				{
-					real s = 0.0;
+					real_t s = 0.0;
 					int k = 0;
 
 					for (int i = -m; i <= m; i++)
 					{
 						if (p + i >= 0 && p + i < NumSteps) 
 						{
-							real v = P(a, p + i);
+							real_t v = P(a, p + i);
 							if (v != INVALID_VALUE)
 							{
 								int q = m + 1 - abs(i);
@@ -1990,8 +1990,8 @@ void CEyeImage::FindVertexAndRings()
 
 			for (int p = 0; p < NumSteps; p++) 
 			{
-				real v0 = t(0, p);
-				real v1 = t(1, p);
+				real_t v0 = t(0, p);
+				real_t v1 = t(1, p);
 
 				if (v0 != INVALID_VALUE && v1 != INVALID_VALUE) 
 				{
@@ -2013,9 +2013,9 @@ void CEyeImage::FindVertexAndRings()
 		int NumExtrema = 0;
 		for (int p = f; p < NumSteps - 1 && NumExtrema < m_NumRings - 1; p++) 
 		{
-			real p1 = P(a, p - 1);
-			real p2 = P(a, p);
-			real p3 = P(a, p + 1);
+			real_t p1 = P(a, p - 1);
+			real_t p2 = P(a, p);
+			real_t p3 = P(a, p + 1);
 
 			if (p3 == INVALID_VALUE || p2 == INVALID_VALUE || p1 == INVALID_VALUE) break;
 
@@ -2049,9 +2049,9 @@ void CEyeImage::FindVertexAndRings()
 		// last edge
 		for (int p = Extrema[NumExtrema - 1] + 1; p < NumSteps - 1; p++)
 		{
-			real p1 = P(a, p - 1);
-			real p2 = P(a, p);
-			real p3 = P(a, p + 1);
+			real_t p1 = P(a, p - 1);
+			real_t p2 = P(a, p);
+			real_t p3 = P(a, p + 1);
 
 			if (p3 == INVALID_VALUE || p2 == INVALID_VALUE || p1 == INVALID_VALUE) break;
 
@@ -2087,8 +2087,8 @@ void CEyeImage::FindVertexAndRings()
 
 		int a1 = -da - 1;
 		int a2 = da + 1;
-		real t1 = m_ri_r_um[r][a1 + 360];
-		real t2 = m_ri_r_um[r][a2];
+		real_t t1 = m_ri_r_um[r][a1 + 360];
+		real_t t2 = m_ri_r_um[r][a2];
 
 		if (t1 != INVALID_VALUE && t2 != INVALID_VALUE && fabs(t2 - t1) <= 100.0)
 		{
@@ -2174,7 +2174,7 @@ void CEyeImage::FindVertexAndRings()
 	// ==================================================================
 
 	{
-		real t[360];
+		real_t t[360];
 		int m = 3;
 		for (int r = 0; r < m_NumRings; r++) 
 		{
@@ -2182,11 +2182,11 @@ void CEyeImage::FindVertexAndRings()
 			{
 				if (m_ri_r_um[r][a] != INVALID_VALUE)
 				{
-					real s = 0.0;
+					real_t s = 0.0;
 					int k = 0;
 					for (int i = -m; i <= m; i++) 
 					{
-						real v = m_ri_r_um[r][CheckAngle(a + i)];
+						real_t v = m_ri_r_um[r][CheckAngle(a + i)];
 						if (v != INVALID_VALUE) 
 						{
 							int q = m + 1 - abs(i);
@@ -2237,10 +2237,10 @@ void CEyeImage::FindWFVertex()
 
 	if (m_RGBData.GetMem() == NULL) return;
 
-	real cx = 0.5 * m_w;
-	real cy = 0.5 * m_h;
-	real x_px_um = m_w / m_w_um;
-	real y_px_um = m_h / m_h_um;
+	real_t cx = 0.5 * m_w;
+	real_t cy = 0.5 * m_h;
+	real_t x_px_um = m_w / m_w_um;
+	real_t y_px_um = m_h / m_h_um;
 
 	int x0 = intRound(cx);
 	int y0 = intRound(cy);
@@ -2412,10 +2412,10 @@ void CEyeImage::FindLimbus()
 
 	if (m_RGBData.GetMem() == NULL) return;
 
-	real cx = m_w * 0.5;
-	real cy = m_h * 0.5;
-	real x_px_um = m_w / m_w_um;
-	real y_px_um = m_h / m_h_um;
+	real_t cx = m_w * 0.5;
+	real_t cy = m_h * 0.5;
+	real_t x_px_um = m_w / m_w_um;
+	real_t y_px_um = m_h / m_h_um;
 
 	m_li_x0_um = 0.0;
 	m_li_y0_um = 0.0;
@@ -2424,16 +2424,16 @@ void CEyeImage::FindLimbus()
 	{
 
 		//--------------------------------------------------------------
-		Matrix<real> li_r_um_1(3600);
+		Matrix<real_t> li_r_um_1(3600);
 		for (int a = 0; a < 3600; a++)
 		{
-			Matrix<real> p1(301);
-			Matrix<real> p2(301);
+			Matrix<real_t> p1(301);
+			Matrix<real_t> p2(301);
 
 			for (int r = 0; r <= 300; r++)
 			{
-				real r_um = 4500.0 + (r - 25) * 10.0;
-				real a_rd = 0.1 * a * _Pi_180;
+				real_t r_um = 4500.0 + (r - 25) * 10.0;
+				real_t a_rd = 0.1 * a * _Pi_180;
 				if (!GetRGBAtUm(m_li_x0_um + r_um * cos(a_rd), m_li_y0_um + r_um * sin(a_rd), &p1[r], NULL, NULL)) {
 					p1[r] = INVALID_VALUE;
 				}
@@ -2464,12 +2464,12 @@ void CEyeImage::FindLimbus()
 				}
 			}
 
-			real dmax = -1000000.0;
+			real_t dmax = -1000000.0;
 			int rmax = 0;
 			for (int r = 25; r < 275; r++)
 			{
 				if (p2[r] == INVALID_VALUE || p2[r + 1] == INVALID_VALUE) continue;
-				real d = p2[r + 1] - p2[r];
+				real_t d = p2[r + 1] - p2[r];
 				if (dmax < d)
 				{
 					dmax = d;
@@ -2481,10 +2481,10 @@ void CEyeImage::FindLimbus()
 		}
 
 		//--------------------------------------------------------------
-		Matrix<real> li_r_um_2(360);
+		Matrix<real_t> li_r_um_2(360);
 		for (int a = 0; a < 360; a++)
 		{
-			real q[21];
+			real_t q[21];
 
 			for (int b = 0; b <= 20; b++)
 			{
@@ -2500,7 +2500,7 @@ void CEyeImage::FindLimbus()
 		//--------------------------------------------------------------
 		for (int a = 0; a < 360; a++) 
 		{
-			real q[41];
+			real_t q[41];
 			for (int b = 0; b <= 40; b++)
 			{
 				int c = a + (b - 20);
@@ -2514,25 +2514,25 @@ void CEyeImage::FindLimbus()
 		//--------------------------------------------------------------
 		if (l == 0)
 		{
-			real x_min_um = 1000000.0;
+			real_t x_min_um = 1000000.0;
 
 			for (int a = 160; a <= 200; a++) 
 			{
-				real x_um = m_li_x0_um + m_li_r_um[a] * COS[a];
+				real_t x_um = m_li_x0_um + m_li_r_um[a] * COS[a];
 				if (x_um < x_min_um) x_min_um = x_um;
 			}
 
-			real x_max_um = -1000000.0;
+			real_t x_max_um = -1000000.0;
 
 			for (int a = -20; a <= 20; a++)
 			{
 				int b = a < 0 ? a + 360 : a;
-				real x_um = m_li_x0_um + m_li_r_um[b] * COS[b];
+				real_t x_um = m_li_x0_um + m_li_r_um[b] * COS[b];
 				if (x_um > x_max_um) x_max_um = x_um;
 			}
-			real new_li_x0_um = 0.5 * (x_min_um + x_max_um);
+			real_t new_li_x0_um = 0.5 * (x_min_um + x_max_um);
 
-			real y0_um[80]; 
+			real_t y0_um[80]; 
 			int k = 0;
 			for (int m = 0; m < 2; m++)
 			{
@@ -2543,15 +2543,15 @@ void CEyeImage::FindLimbus()
 				{
 					int a1 = a; if (a1 < 0) a1 += 360;
 					int a2 = a + 1; if (a2 < 0) a2 += 360;
-					real y1_um = m_li_y0_um + m_li_r_um[a1] * SIN[a1];
-					real y2_um = m_li_y0_um + m_li_r_um[a2] * SIN[a2];
+					real_t y1_um = m_li_y0_um + m_li_r_um[a1] * SIN[a1];
+					real_t y2_um = m_li_y0_um + m_li_r_um[a2] * SIN[a2];
 					if (y1_um != y2_um) 
 					{
-						real x1_um = m_li_x0_um + m_li_r_um[a1] * COS[a1];
-						real x2_um = m_li_x0_um + m_li_r_um[a2] * COS[a2];
-						real x3_um = 0.5 * (x1_um + x2_um);
-						real y3_um = 0.5 * (y1_um + y2_um);
-						real tana = (x1_um - x2_um) / (y1_um - y2_um);
+						real_t x1_um = m_li_x0_um + m_li_r_um[a1] * COS[a1];
+						real_t x2_um = m_li_x0_um + m_li_r_um[a2] * COS[a2];
+						real_t x3_um = 0.5 * (x1_um + x2_um);
+						real_t y3_um = 0.5 * (y1_um + y2_um);
+						real_t tana = (x1_um - x2_um) / (y1_um - y2_um);
 						y0_um[k++] = y3_um - (new_li_x0_um - x3_um) * tana;
 					}
 				}
@@ -2566,7 +2566,7 @@ void CEyeImage::FindLimbus()
 
 	//--------------------------------------------------------------
 	{
-		real r_um[82];
+		real_t r_um[82];
 		int k = 0;
 		for (int m = 0; m < 2; m++) 
 		{
@@ -2608,30 +2608,30 @@ void CEyeImage::FindLimbus()
 //***************************************************************************************
 
 // the correct limbus searching for color image
-void CEyeImage::FindLimbus2(real LastCenX, real LastCenY, real LastR)
+void CEyeImage::FindLimbus2(real_t LastCenX, real_t LastCenY, real_t LastR)
 {
 	ClearLimbus();
 
 	if (m_RGBData.GetMem() == NULL) return;
 
-	real x_px_um = m_w / m_w_um;
-	real y_px_um = m_h / m_h_um;
+	real_t x_px_um = m_w / m_w_um;
+	real_t y_px_um = m_h / m_h_um;
 
 	m_li_x0_um = LastCenX;
 	m_li_y0_um = LastCenY;
 
 	//--------------------------------------------------------------
-	real li_r_um_1[3600];
-	real startR = LastR - 250;
+	real_t li_r_um_1[3600];
+	real_t startR = LastR - 250;
 	for (int a = 0; a < 900; a++)
 	{
 
-		Matrix<real> p1(101);
-		Matrix<real> p2(101);
+		Matrix<real_t> p1(101);
+		Matrix<real_t> p2(101);
 		for (int r = 0; r <= 100; r++)
 		{
-			real r_um = startR + (r - 25) * 10.0;
-			real a_rd = 0.4 * a * _Pi_180;
+			real_t r_um = startR + (r - 25) * 10.0;
+			real_t a_rd = 0.4 * a * _Pi_180;
 			if (!GetRGBAtUm(m_li_x0_um + r_um * cos(a_rd), m_li_y0_um + r_um * sin(a_rd), &p1[r], NULL, NULL))
 			{
 				p1[r] = INVALID_VALUE;
@@ -2655,13 +2655,13 @@ void CEyeImage::FindLimbus2(real LastCenX, real LastCenY, real LastR)
 			else p2[r] = INVALID_VALUE;
 		}
 
-		real dmax = -1000000.0;
+		real_t dmax = -1000000.0;
 		int rmax = 0;
 
 		for (int r = 25; r < 75; r++)
 		{
 			if (p2[r] == INVALID_VALUE || p2[r + 1] == INVALID_VALUE) continue;
-			real d = p2[r + 1] - p2[r];
+			real_t d = p2[r + 1] - p2[r];
 			if (dmax < d)
 			{
 				dmax = d;
@@ -2678,10 +2678,10 @@ void CEyeImage::FindLimbus2(real LastCenX, real LastCenY, real LastR)
 	{
 		//--------------------------------------------------------------
 
-		Matrix<real> li_r_um_2(360);
+		Matrix<real_t> li_r_um_2(360);
 		for (int a = 0; a < 360; a++)
 		{
-			real q[21];
+			real_t q[21];
 			for (int b = 0; b <= 20; b++)
 			{
 				int c = 10 * a + (b - 10);
@@ -2696,7 +2696,7 @@ void CEyeImage::FindLimbus2(real LastCenX, real LastCenY, real LastR)
 
 		for (int a = 0; a < 360; a++)
 		{
-			real q[41];
+			real_t q[41];
 			for (int b = 0; b <= 40; b++)
 			{
 				int c = a + (b - 20);
@@ -2709,26 +2709,26 @@ void CEyeImage::FindLimbus2(real LastCenX, real LastCenY, real LastR)
 
 		//--------------------------------------------------------------
 
-		real x_min_um = 1000000.0;
+		real_t x_min_um = 1000000.0;
 
 		for (int a = 160; a <= 200; a++)
 		{
-			real x_um = m_li_x0_um + m_li_r_um[a] * COS[a];
+			real_t x_um = m_li_x0_um + m_li_r_um[a] * COS[a];
 			if (x_um < x_min_um) x_min_um = x_um;
 		}
 
-		real x_max_um = -1000000.0;
+		real_t x_max_um = -1000000.0;
 
 		for (int a = -20; a <= 20; a++)
 		{
 			int b = a < 0 ? a + 360 : a;
-			real x_um = m_li_x0_um + m_li_r_um[b] * COS[b];
+			real_t x_um = m_li_x0_um + m_li_r_um[b] * COS[b];
 			if (x_um > x_max_um) x_max_um = x_um;
 		}
 
-		real new_li_x0_um = 0.5 * (x_min_um + x_max_um);
+		real_t new_li_x0_um = 0.5 * (x_min_um + x_max_um);
 
-		real y0_um[80]; 
+		real_t y0_um[80]; 
 		int k = 0;
 
 		for (int m = 0; m < 2; m++)
@@ -2739,16 +2739,16 @@ void CEyeImage::FindLimbus2(real LastCenX, real LastCenY, real LastR)
 			{
 				int a1 = a; if (a1 < 0) a1 += 360;
 				int a2 = a + 1; if (a2 < 0) a2 += 360;
-				real y1_um = m_li_y0_um + m_li_r_um[a1] * SIN[a1];
-				real y2_um = m_li_y0_um + m_li_r_um[a2] * SIN[a2];
+				real_t y1_um = m_li_y0_um + m_li_r_um[a1] * SIN[a1];
+				real_t y2_um = m_li_y0_um + m_li_r_um[a2] * SIN[a2];
 
 				if (y1_um != y2_um)
 				{
-					real x1_um = m_li_x0_um + m_li_r_um[a1] * COS[a1];
-					real x2_um = m_li_x0_um + m_li_r_um[a2] * COS[a2];
-					real x3_um = 0.5 * (x1_um + x2_um);
-					real y3_um = 0.5 * (y1_um + y2_um);
-					real tana = (x1_um - x2_um) / (y1_um - y2_um);
+					real_t x1_um = m_li_x0_um + m_li_r_um[a1] * COS[a1];
+					real_t x2_um = m_li_x0_um + m_li_r_um[a2] * COS[a2];
+					real_t x3_um = 0.5 * (x1_um + x2_um);
+					real_t y3_um = 0.5 * (y1_um + y2_um);
+					real_t tana = (x1_um - x2_um) / (y1_um - y2_um);
 					y0_um[k++] = y3_um - (new_li_x0_um - x3_um) * tana;
 				}
 			}
@@ -2763,7 +2763,7 @@ void CEyeImage::FindLimbus2(real LastCenX, real LastCenY, real LastR)
 
 	//--------------------------------------------------------------
 
-	real r_um[82];
+	real_t r_um[82];
 	int k = 0;
 	for (int m = 0; m < 2; m++)
 	{

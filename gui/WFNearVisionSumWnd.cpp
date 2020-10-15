@@ -45,9 +45,9 @@ CWFNearVisionSumWnd::CWFNearVisionSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pP
 	//----------------------------------------------------
 	RECT Rect;
 	GetWindowRect(&Rect);
-	real t = 3.0 * (0.03 * m_h) + m_g;
-	real w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
-	real h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
+	real_t t = 3.0 * (0.03 * m_h) + m_g;
+	real_t w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
+	real_t h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
 	::SetRect(&m_Rect[0], intRound(m_g), intRound(t), intRound(m_g + w), intRound(t + h)); // internal	wavefront Map
 	::SetRect(&m_Rect[1], intRound(m_g + w + m_g), intRound(t), intRound(m_g + w + m_g + w), intRound(t + h)); // Cornea wavefront map	
 	::SetRect(&m_Rect[2], intRound(m_g + w + m_g + w + m_g), intRound(t), intRound(m_g + w + m_g + w + m_g + w), intRound(t + h)); // Cornea axial map	
@@ -57,7 +57,7 @@ CWFNearVisionSumWnd::CWFNearVisionSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pP
 	::SetRect(&m_OutlineRect[0], m_Rect[0].left, m_Rect[0].top, m_Rect[3].right, m_Rect[3].bottom); // internal	wavefront Map
 	::SetRect(&m_OutlineRect[1], m_Rect[1].left, m_Rect[0].top, m_Rect[2].right, m_Rect[3].bottom); // internal	wavefront Map
 
-	int h1 = intRound((real)(m_Rect[3].bottom - m_Rect[3].top) / 6.0);
+	int h1 = intRound((real_t)(m_Rect[3].bottom - m_Rect[3].top) / 6.0);
 	int sTop = m_Rect[3].top + h1 + m_g;
 
 	int h2 = h - h1 - m_g;
@@ -130,8 +130,8 @@ CWFNearVisionSumWnd::CWFNearVisionSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pP
 	m_pWFExamFar = pWFExamFar;
 	m_pWFExamNear = pWFExamNear;
 
-	real r_max_umFar = m_pWFExamFar->m_WfSurface.m_r_max_um;
-	real r_max_umNear = m_pWFExamNear->m_WfSurface.m_r_max_um;
+	real_t r_max_umFar = m_pWFExamFar->m_WfSurface.m_r_max_um;
+	real_t r_max_umNear = m_pWFExamNear->m_WfSurface.m_r_max_um;
 	m_ThisWndSetting.m_ZoneRadiusUm = r_max_umFar < r_max_umNear ? r_max_umFar : r_max_umNear;
 
 	::TempSettings.Com_r_max_um = m_ThisWndSetting.m_ZoneRadiusUm;
@@ -140,7 +140,7 @@ CWFNearVisionSumWnd::CWFNearVisionSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pP
 	m_Surfaces[0] = m_pWFExamFar->m_WfSurface;
 	m_Surfaces[1] = m_pWFExamNear->m_WfSurface;
 
-	real r_max_um = 5000.0;
+	real_t r_max_um = 5000.0;
 	r_max_um = __min(r_max_um, m_Surfaces[0].m_r_max_um);
 	r_max_um = __min(r_max_um, m_ThisWndSetting.m_ZoneRadiusUm);
 
@@ -280,7 +280,7 @@ void CWFNearVisionSumWnd::PaintSlider()
 		int ScaleFontSize = 1;
 		for (int i = 0; i <= m_Slider->m_Pars.scaleNum; i++)
 		{
-			int  xPos = intRound(m_Left + real(i) * real(m_Right - m_Left) / m_Slider->m_Pars.scaleNum);
+			int  xPos = intRound(m_Left + real_t(i) * real_t(m_Right - m_Left) / m_Slider->m_Pars.scaleNum);
 
 			if (i == m_Slider->m_Pars.scaleNum)
 			{
@@ -405,7 +405,7 @@ void CWFNearVisionSumWnd::CreateChildWnd()
 	m_Surfaces[0] = m_pWFExamFar->m_WfSurface;
 	m_Surfaces[1] = m_pWFExamNear->m_WfSurface;
 
-	real r_max_um = m_ThisWndSetting.m_ZoneRadiusUm;
+	real_t r_max_um = m_ThisWndSetting.m_ZoneRadiusUm;
 
 	m_Surfaces[0].ChangeRMaxUm(r_max_um);
 	m_Surfaces[0] &= m_ThisWndSetting.m_Mask;
@@ -601,9 +601,9 @@ void CWFNearVisionSumWnd::OnComBtnClicked()
 		::DB.LoadWFExam(pDlg->m_ExamID, m_pWFExamFar);
 		m_pWFExamFar->Process();
 
-		real r_max_umFar = m_pWFExamFar->m_WfSurface.m_r_max_um;
+		real_t r_max_umFar = m_pWFExamFar->m_WfSurface.m_r_max_um;
 
-		real r_max_umNear = m_pWFExamNear->m_WfSurface.m_r_max_um;
+		real_t r_max_umNear = m_pWFExamNear->m_WfSurface.m_r_max_um;
 
 		m_ThisWndSetting.m_ZoneRadiusUm = r_max_umFar < r_max_umNear ? r_max_umFar : r_max_umNear;
 
@@ -613,7 +613,7 @@ void CWFNearVisionSumWnd::OnComBtnClicked()
 		m_Surfaces[0] = m_pWFExamFar->m_WfSurface;
 		m_Surfaces[1] = m_pWFExamNear->m_WfSurface;
 
-		real r_max_um = 5000.0;
+		real_t r_max_um = 5000.0;
 		r_max_um = __min(r_max_um, m_Surfaces[0].m_r_max_um);
 		r_max_um = __min(r_max_um, m_ThisWndSetting.m_ZoneRadiusUm);
 
@@ -630,9 +630,9 @@ void CWFNearVisionSumWnd::OnComBtnClicked()
 
 LRESULT CWFNearVisionSumWnd::OnSliderChangedPos(WPARAM wParam, LPARAM lParam)
 {
-	real D = 3 - 3 * m_Slider->m_Pars.Pos;
+	real_t D = 3 - 3 * m_Slider->m_Pars.Pos;
 
-	real dis = fabs(m_ShiftVal - D);
+	real_t dis = fabs(m_ShiftVal - D);
 
 	if (dis < 0.1) return 0;
 
@@ -649,7 +649,7 @@ LRESULT CWFNearVisionSumWnd::OnSliderChangedPos(WPARAM wParam, LPARAM lParam)
 
 LRESULT CWFNearVisionSumWnd::OnSliderClick(WPARAM wParam, LPARAM lParam)
 {
-	real D = 3 - 3 * m_Slider->m_Pars.Pos;
+	real_t D = 3 - 3 * m_Slider->m_Pars.Pos;
 	
 	m_ShiftVal = D;
 

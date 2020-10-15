@@ -49,7 +49,7 @@ void CHorSliderCtrl::SetParameters(HSliderParameters Pars)
 	m_Pars.WideRatio = Pars.WideRatio;
 	m_Pars.ScaleType = Pars.ScaleType;
 
-	m_halfScale = 0.5 / (real)m_Pars.scaleNum;
+	m_halfScale = 0.5 / (real_t)m_Pars.scaleNum;
 
 	for (int i = 0; i <= m_Pars.scaleNum; i++)
 	{
@@ -152,7 +152,7 @@ void CHorSliderCtrl::OnPaint()
 		int ScaleFontSize = 1;
 		for (int i = 0; i <= m_Pars.scaleNum; i++)
 		{
-			int  xPos = intRound(m_Left + real(i) * real(m_Right - m_Left) / m_Pars.scaleNum);
+			int  xPos = intRound(m_Left + real_t(i) * real_t(m_Right - m_Left) / m_Pars.scaleNum);
 
 			if (i == m_Pars.scaleNum)
 			{
@@ -305,9 +305,9 @@ void CHorSliderCtrl::OnLButtonUp(uint nFlags, CPoint Point)
 
 	if (m_Mousemove)
 	{
-		m_Pars.Pos = 1 - (real)(Point.x - m_Pars.SliderRect.left) / m_SliderWidth;
+		m_Pars.Pos = 1 - (real_t)(Point.x - m_Pars.SliderRect.left) / m_SliderWidth;
 
-		real D = m_Pars.Pos*0.25;
+		real_t D = m_Pars.Pos*0.25;
 
 		m_Pars.Title.Format(_T("NEAR POINT   %.2fD"), (1 - m_Pars.Pos) * 3);
 
@@ -321,12 +321,12 @@ void CHorSliderCtrl::OnLButtonUp(uint nFlags, CPoint Point)
 	}
 
 	//Following is the mouse click
-	real xPower = (real)Point.x - (real)m_DownX;
+	real_t xPower = (real_t)Point.x - (real_t)m_DownX;
 	xPower *= xPower;
 
-	real yPower = (real)Point.y - (real)m_DownY;
+	real_t yPower = (real_t)Point.y - (real_t)m_DownY;
 	yPower *= yPower;
-	real dis = sqrt(xPower + yPower);
+	real_t dis = sqrt(xPower + yPower);
 
 	if (dis >= 0.001) return;
 
@@ -347,11 +347,11 @@ void CHorSliderCtrl::OnLButtonUp(uint nFlags, CPoint Point)
 		(m_Pars.SliderRect.top <= Point.y && Point.y <= m_Pars.SliderRect.bottom)
 		)
 	{
-		real SelxPos = 1 - (real)(Point.x - m_Pars.SliderRect.left) / m_SliderWidth;
+		real_t SelxPos = 1 - (real_t)(Point.x - m_Pars.SliderRect.left) / m_SliderWidth;
 				
 		for (int i = 0; i <= m_Pars.scaleNum; i++)
 		{
-			real  ScalePos = (real)(i) / (real)m_Pars.scaleNum;
+			real_t  ScalePos = (real_t)(i) / (real_t)m_Pars.scaleNum;
 
 			if (SelxPos - ScalePos <= m_halfScale)
 			{
@@ -402,10 +402,10 @@ void CHorSliderCtrl::OnMouseMove(uint nFlags, CPoint Point)
 		{
 			m_Mousemove = TRUE;
 
-			m_Pars.Pos = 1 - (real)(Point.x - m_Pars.SliderRect.left) / w;
+			m_Pars.Pos = 1 - (real_t)(Point.x - m_Pars.SliderRect.left) / w;
 					
 
-			real D = m_Pars.Pos*0.25;
+			real_t D = m_Pars.Pos*0.25;
 
 			m_Pars.Title.Format(_T("NEAR POINT   %.2fD"), (1 - m_Pars.Pos) * 3);
 

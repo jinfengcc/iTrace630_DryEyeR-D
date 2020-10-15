@@ -16,9 +16,9 @@ Description:   Generate a new Horizontal slider control component which used for
 
 typedef struct _HSliderParameters
 {
-	real            Pos;
+	real_t            Pos;
 	int             scaleNum;//Max scaleNum is 100
-	real            WideRatio;//The wide of outline rectengle
+	real_t            WideRatio;//The wide of outline rectengle
 	int             ScaleType;//0: Scale in the up of splider line  1: Scale in the down of line 2: Scale in the up and down of line
 	int             ScaleLength[100];//Max scaleNum is 100
 
@@ -63,8 +63,8 @@ private:
 	int     m_Left;
 	int     m_Right;
 
-	real    m_SliderWidth;
-	real    m_halfScale;
+	real_t    m_SliderWidth;
+	real_t    m_halfScale;
 	int     m_HalfWidth;
 
 	long    m_RGBSize;

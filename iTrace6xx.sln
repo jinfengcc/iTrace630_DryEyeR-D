@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "iTrace", "gui\iTrace.vcxproj", "{BC005822-93A9-43D5-B3B9-B728CE8FE20E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0B0DF2BE-7DB2-462E-907F-9E673690115E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SolutionItems", "_SolutionItems", "{0B0DF2BE-7DB2-462E-907F-9E673690115E}"
 	ProjectSection(SolutionItems) = preProject
 		.clang-format = .clang-format
 		.gitignore = .gitignore
@@ -21,6 +21,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TraceyHardware", "dlls\TraceyHardware\TraceyHardware.vcxproj", "{C7034B3F-11A5-4F1B-BF5D-A7DA69431855}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LoggingLib", "libs\LoggingLib\LoggingLib.vcxproj", "{136CC8C9-D852-494E-8036-46B22062B2C4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{4B2E1044-2F63-40D6-A660-2B31664ED146}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -69,6 +71,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FB2BBF5A-C4A0-4FD8-9966-53F2A3EE90CC} = {4B2E1044-2F63-40D6-A660-2B31664ED146}
+		{C7034B3F-11A5-4F1B-BF5D-A7DA69431855} = {4B2E1044-2F63-40D6-A660-2B31664ED146}
+		{136CC8C9-D852-494E-8036-46B22062B2C4} = {4B2E1044-2F63-40D6-A660-2B31664ED146}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {96C5B899-B67E-4E96-8D57-A4A6518A61A2}

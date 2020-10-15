@@ -16,8 +16,8 @@ public:
 
 	CChartDlg(CWnd* pParentWnd);
 
-	Matrix<real> m_x;
-	Matrix<real> m_f;
+	Matrix<real_t> m_x;
+	Matrix<real_t> m_f;
 
 private:
 
@@ -59,11 +59,11 @@ void CChartDlg::OnPaint()
 
 	CString s;
 
-	real min;
+	real_t min;
 	m_f.GetMin(min);
 	min = floor(min);
 
-	real max;
+	real_t max;
 	m_f.GetMax(max);
 	max = ceil(max);
 
@@ -77,8 +77,8 @@ void CChartDlg::OnPaint()
 	int w = Rect.right - Rect.left;
 	int h = Rect.bottom - Rect.top;
 
-	real dw_px = 0.8 * w / (nx - 1.0);
-	real dh_px = 0.8 * h / (ny - 1.0);
+	real_t dw_px = 0.8 * w / (nx - 1.0);
+	real_t dh_px = 0.8 * h / (ny - 1.0);
 
 	int l_px = intRound(0.1 * w);
 	int r_px = intRound(0.9 * w);
@@ -89,9 +89,9 @@ void CChartDlg::OnPaint()
 	if (n == 0) n = 11;
 
 	// vertical lines
-	real d = (nx - 1.0) / (n - 1.0);
+	real_t d = (nx - 1.0) / (n - 1.0);
 	for (int k = 0; k < n; k++) {
-		real i = 0 + k * d;
+		real_t i = 0 + k * d;
 		int x_px = l_px + intRound(i * dw_px);
 		DC.DrawLine(x_px, b_px, x_px, t_px, 1, DARK_GRAY);
 		::SetRect(&Rect, x_px - 100, b_px + 3, x_px + 100, b_px + 3 + fs);
@@ -102,7 +102,7 @@ void CChartDlg::OnPaint()
 	// horizontal lines
 	d = (ny - 1.0) / 10.0;
 	for (int k = 0; k <= 10; k++) {
-		real i = min + k * d;
+		real_t i = min + k * d;
 		int y_px = b_px - intRound((i - min) * dh_px);
 		DC.DrawLine(l_px, y_px, r_px, y_px, 1, DARK_GRAY);
 		::SetRect(&Rect, 0, y_px - 100, l_px - 5, y_px + 100);
@@ -125,11 +125,11 @@ void CChartDlg::OnPaint()
 
 //***************************************************************************************
 
-void ShowFunction(const real* x, const real* f, const int n)
+void ShowFunction(const real_t* x, const real_t* f, const int n)
 {
 	CChartDlg* pDlg = new CChartDlg(NULL);
-	pDlg->m_x.Create(n, 1, (real*)x);
-	pDlg->m_f.Create(n, 1, (real*)f);
+	pDlg->m_x.Create(n, 1, (real_t*)x);
+	pDlg->m_f.Create(n, 1, (real_t*)f);
 	pDlg->DoModal();
 	delete pDlg;
 }

@@ -19,19 +19,19 @@ private:
 
 	CEyeImage* m_pImage;
 
-	real m_le_x_um[3];
-	real m_le_y_um[3];
+	real_t m_le_x_um[3];
+	real_t m_le_y_um[3];
 
 	int m_w;
 	int m_h;
 	int m_l;
 	int m_t;
-	real m_w_um;
-	real m_h_um;
-	real m_x_px_um;
-	real m_y_px_um;
-	real m_cx;
-	real m_cy;
+	real_t m_w_um;
+	real_t m_h_um;
+	real_t m_x_px_um;
+	real_t m_y_px_um;
+	real_t m_cx;
+	real_t m_cy;
 
 	CMDC m_MemDC;
 	CRgn m_Rgn;

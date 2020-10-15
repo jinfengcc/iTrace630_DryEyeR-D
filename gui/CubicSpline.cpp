@@ -8,7 +8,7 @@
 //***************************************************************************************
 //***************************************************************************************
 
-BOOL CCubicSpline::Create(Matrix<real>& x, Matrix<real>& f)
+BOOL CCubicSpline::Create(Matrix<real_t>& x, Matrix<real_t>& f)
 {
 	m_n = x.GetSize();
 
@@ -43,7 +43,7 @@ BOOL CCubicSpline::Create(Matrix<real>& x, Matrix<real>& f)
 	m_f = f;
 	m_k.Create(m_n);
 
-	Matrix<real> a(m_n, m_n);
+	Matrix<real_t> a(m_n, m_n);
 	a.Fill(0.0);
 	a(0, 0) = 1.0;
 
@@ -56,7 +56,7 @@ BOOL CCubicSpline::Create(Matrix<real>& x, Matrix<real>& f)
 
 	a(m_n - 1, m_n - 1) = 1.0;
 
-	Matrix<real> h(m_n);
+	Matrix<real_t> h(m_n);
 
 	h[0] = (-11 * m_f[0] + 18 * m_f[1] - 9 * m_f[2] + 2 * m_f[3]) /
 		(2 * (m_x[3] - m_x[0]));
@@ -81,7 +81,7 @@ BOOL CCubicSpline::Create(Matrix<real>& x, Matrix<real>& f)
 
 //***************************************************************************************
 
-BOOL CCubicSpline::GetAt(real x, real& f, BOOL CanExtrapolate)
+BOOL CCubicSpline::GetAt(real_t x, real_t& f, BOOL CanExtrapolate)
 {
 	if (m_n < 4) return FALSE;
 
@@ -105,11 +105,11 @@ BOOL CCubicSpline::GetAt(real x, real& f, BOOL CanExtrapolate)
 		}
 	}
 
-	real h = m_x[i + 1] - m_x[i];
-	real h2 = h * h;
-	real h3 = h2 * h;
-	real d1 = m_x[i + 1] - x;
-	real d2 = x - m_x[i];
+	real_t h = m_x[i + 1] - m_x[i];
+	real_t h2 = h * h;
+	real_t h3 = h2 * h;
+	real_t d1 = m_x[i + 1] - x;
+	real_t d2 = x - m_x[i];
 
 	f = (d1 * d1 * (2.0 * d2 + h) * m_f[i] + d2 * d2 * (2.0 * d1 + h) * m_f[i + 1]) / h3 +
 		(d1 * d1 * d2 * m_k[i] - d2 * d2 * d1 * m_k[i + 1]) / h2;

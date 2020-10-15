@@ -20,16 +20,16 @@ void CGridWnd::RepaintMemDC()
 {
 	ClearMemDC();
 
-	const real w_um = 8500.0;
-	const real h_um = 8500.0;
-	real x_px_um = m_w / w_um;
-	real y_px_um = m_h / h_um;
-	real cx = m_w * 0.5;
-	real cy = m_h * 0.5;
+	const real_t w_um = 8500.0;
+	const real_t h_um = 8500.0;
+	real_t x_px_um = m_w / w_um;
+	real_t y_px_um = m_h / h_um;
+	real_t cx = m_w * 0.5;
+	real_t cy = m_h * 0.5;
 
 	// Grid
 	for (int i = -4; i <= 4; i++) {
-		real um = i * 1000.0;
+		real_t um = i * 1000.0;
 		int x = intRound(cx + um * x_px_um);
 		int y = intRound(cy - um * y_px_um);
 		m_MemDC.DrawHorzDottedLine(0, m_w, y, 0x00606060, NOCOLOR);
@@ -60,18 +60,18 @@ void CGridWnd::RepaintMemDC()
 
 //***************************************************************************************
 
-void CGridWnd::CreateScanPattern(real RMax)
+void CGridWnd::CreateScanPattern(real_t RMax)
 {
 	m_XUm.Create(1 + 6 + 12 + 18 + 24 + 30 + 37);
 	m_YUm.Create(1 + 6 + 12 + 18 + 24 + 30 + 37);
 	int n[7] = { 1, 6, 12, 18, 24, 30, 37 };
-	real dR = RMax / 6.0;
+	real_t dR = RMax / 6.0;
 	int i = 0;
 	for (int c = 0; c < 7; c++) {
-		real R = c * dR;
-		real dA = _2_Pi / n[c];
+		real_t R = c * dR;
+		real_t dA = _2_Pi / n[c];
 		for (int p = 0; p < n[c]; p++) {
-			real A = p * dA;
+			real_t A = p * dA;
 			m_XUm[i] = R * cos(A);
 			m_YUm[i] = R * sin(A);
 			i++;
@@ -81,18 +81,18 @@ void CGridWnd::CreateScanPattern(real RMax)
 
 //***************************************************************************************
 
-void CGridWnd::CreateProbePattern(real RMax)
+void CGridWnd::CreateProbePattern(real_t RMax)
 {
 	m_XUm.Create(1 + 6 + 10);
 	m_YUm.Create(1 + 6 + 10);
 	int n[3] = { 1, 6, 10 };
-	real dR = RMax / 2.0;
+	real_t dR = RMax / 2.0;
 	int i = 0;
 	for (int c = 0; c < 3; c++) {
-		real R = c * dR;
-		real dA = _2_Pi / n[c];
+		real_t R = c * dR;
+		real_t dA = _2_Pi / n[c];
 		for (int p = 0; p < n[c]; p++) {
-			real A = p * dA;
+			real_t A = p * dA;
 			m_XUm[i] = R * cos(A);
 			m_YUm[i] = R * sin(A);
 			i++;
@@ -102,16 +102,16 @@ void CGridWnd::CreateProbePattern(real RMax)
 
 //***************************************************************************************
 
-void CGridWnd::CreateCirclePattern(real RMax)
+void CGridWnd::CreateCirclePattern(real_t RMax)
 {
 	m_XUm.Create(1 + 40);
 	m_YUm.Create(1 + 40);
 	m_XUm[0] = 0.0;
 	m_YUm[0] = 0.0;
 	int n = 40;
-	real dA = _2_Pi / n;
+	real_t dA = _2_Pi / n;
 	for (int p = 0; p < n; p++) {
-		real A = p * dA;
+		real_t A = p * dA;
 		m_XUm[1 + p] = RMax * cos(A);
 		m_YUm[1 + p] = RMax * sin(A);
 	}
@@ -119,12 +119,12 @@ void CGridWnd::CreateCirclePattern(real RMax)
 
 //***************************************************************************************
 
-void CGridWnd::CreateCrossPattern(real RMax)
+void CGridWnd::CreateCrossPattern(real_t RMax)
 {
 	int n = 6;
 	m_XUm.Create((n + 1 + n) + (n + 1 + n));
 	m_YUm.Create((n + 1 + n) + (n + 1 + n));
-	real D = RMax / n;
+	real_t D = RMax / n;
 	int i = 0;
 	for (int k = -n; k <= n; k++) {
 		m_XUm[i] = k * D;
@@ -140,7 +140,7 @@ void CGridWnd::CreateCrossPattern(real RMax)
 
 //***************************************************************************************
 
-void CGridWnd::CreateLetterPattern(real RMax)
+void CGridWnd::CreateLetterPattern(real_t RMax)
 {
 	int n = 6;
 
@@ -155,11 +155,11 @@ void CGridWnd::CreateLetterPattern(real RMax)
 	m_XUm.Create(np);
 	m_YUm.Create(np);
 
-	real D = RMax / n;
+	real_t D = RMax / n;
 	int i = 0;
-	real Y = RMax;
+	real_t Y = RMax;
 	for (int y = n; y >= -n; y--) {
-		real X = -RMax;
+		real_t X = -RMax;
 		for (int x = -n; x <= n; x++) {
 			if (abs(y) == n || abs(x) == n || abs(x) == abs(y)) {
 				m_XUm[i] = X;
@@ -174,16 +174,16 @@ void CGridWnd::CreateLetterPattern(real RMax)
 
 //***************************************************************************************
 
-void CGridWnd::CreateSquarePattern(real RMax)
+void CGridWnd::CreateSquarePattern(real_t RMax)
 {
 	int n = 6;
 	m_XUm.Create((n + 1 + n) * (n + 1 + n));
 	m_YUm.Create((n + 1 + n) * (n + 1 + n));
-	real D = RMax / n;
+	real_t D = RMax / n;
 	int i = 0;
-	real Y = RMax;
+	real_t Y = RMax;
 	for (int y = n; y >= -n; y--) {
-		real X = -RMax;
+		real_t X = -RMax;
 		for (int x = -n; x <= n; x++) {
 			m_XUm[i] = X;
 			m_YUm[i] = Y;
@@ -196,12 +196,12 @@ void CGridWnd::CreateSquarePattern(real RMax)
 
 //***************************************************************************************
 
-void CGridWnd::CreateVLinePattern(real RMax)
+void CGridWnd::CreateVLinePattern(real_t RMax)
 {
 	int n = 6;
 	m_XUm.Create(n + 1 + n);
 	m_YUm.Create(n + 1 + n);
-	real D = RMax / n;
+	real_t D = RMax / n;
 	int i = 0;
 	for (int k = -n; k <= n; k++) {
 		m_XUm[i] = 0.0;
@@ -212,12 +212,12 @@ void CGridWnd::CreateVLinePattern(real RMax)
 
 //***************************************************************************************
 
-void CGridWnd::CreateHLinePattern(real RMax)
+void CGridWnd::CreateHLinePattern(real_t RMax)
 {
 	int n = 6;
 	m_XUm.Create(n + 1 + n);
 	m_YUm.Create(n + 1 + n);
-	real D = RMax / n;
+	real_t D = RMax / n;
 	int i = 0;
 	for (int k = -n; k <= n; k++) {
 		m_XUm[i] = k * D;
@@ -228,12 +228,12 @@ void CGridWnd::CreateHLinePattern(real RMax)
 
 //***************************************************************************************
 
-void CGridWnd::CreateLTRBLinePattern(real RMax)
+void CGridWnd::CreateLTRBLinePattern(real_t RMax)
 {
 	int n = 6;
 	m_XUm.Create(n + 1 + n);
 	m_YUm.Create(n + 1 + n);
-	real D = RMax / n;
+	real_t D = RMax / n;
 	int i = 0;
 	for (int k = -n; k <= n; k++) {
 		m_XUm[i] = k * D;
@@ -244,12 +244,12 @@ void CGridWnd::CreateLTRBLinePattern(real RMax)
 
 //***************************************************************************************
 
-void CGridWnd::CreateLBRTLinePattern(real RMax)
+void CGridWnd::CreateLBRTLinePattern(real_t RMax)
 {
 	int n = 6;
 	m_XUm.Create(n + 1 + n);
 	m_YUm.Create(n + 1 + n);
-	real D = RMax / n;
+	real_t D = RMax / n;
 	int i = 0;
 	for (int k = -n; k <= n; k++) {
 		m_XUm[i] = k * D;

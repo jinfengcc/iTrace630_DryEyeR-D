@@ -110,9 +110,9 @@ CPlannerWnd::CPlannerWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CCTExam*
 
 	RECT Rect;
 	GetWindowRect(&Rect);
-	real t = 3.0 * (0.03 * m_h) + m_g;
-	real w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
-	real h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
+	real_t t = 3.0 * (0.03 * m_h) + m_g;
+	real_t w = ((Rect.right - Rect.left) - 4.0 * m_g) / 3.0;
+	real_t h = ((Rect.bottom - Rect.top - t) - 2.0 * m_g) / 2.0;
 	::SetRect(&m_Rect[0], intRound(m_g + w + m_g + w + m_g), intRound(t), intRound(m_g + w + m_g + w + m_g + w), intRound(t + h));
 	::SetRect(&m_Rect[1], intRound(m_g + w + m_g + w + m_g), intRound(t + h + m_g), intRound(m_g + w + m_g + w + m_g + w), intRound(t + h + m_g + h));
 	::SetRect(&m_LargeRect, intRound(m_g), intRound(t), intRound(m_g + w + m_g + w), intRound(t + h + m_g + h));
@@ -280,7 +280,7 @@ void CPlannerWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	int num = NumRows;
 
 	if (m_isCombo) num = num + 4;
-	real h = (Rect.bottom - Rect.top) / (real)num;
+	real_t h = (Rect.bottom - Rect.top) / (real_t)num;
 
 	CMFont Font(intRound(1.1 * h), 400, "Arial");
 
@@ -303,7 +303,7 @@ void CPlannerWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	int R2 = R3 - w1;
 	int R1 = R3 - w3;
 
-	real t = T;
+	real_t t = T;
 	::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
 	if (m_pCTExam->m_OpData.m_CorneaCycliderAdj)//6.2.0 asdfa
 	{

@@ -320,7 +320,7 @@ void COpData::Reset_Pri_CalculatedStuff()
 //6.2.0 For cyclinderadjustment
 void COpData::CalNewCorneaPreop()
 {
-	real PostopCyl;
+	real_t PostopCyl;
 
 	if (
 		(m_CorneaPreopAxis >= 60 && m_CorneaPreopAxis <= 120)
@@ -345,14 +345,14 @@ void COpData::CalNewCorneaPreop()
 		return;
 	}
 
-	real Cyl1X = PostopCyl * ::COS[0];
-	real Cyl1Y = PostopCyl * ::SIN[0];
+	real_t Cyl1X = PostopCyl * ::COS[0];
+	real_t Cyl1Y = PostopCyl * ::SIN[0];
 
-	real Cyl2X = m_CorneaPreopCyl * ::COS[2 * m_CorneaPreopAxis];
-	real Cyl2Y = m_CorneaPreopCyl * ::SIN[2 * m_CorneaPreopAxis];
+	real_t Cyl2X = m_CorneaPreopCyl * ::COS[2 * m_CorneaPreopAxis];
+	real_t Cyl2Y = m_CorneaPreopCyl * ::SIN[2 * m_CorneaPreopAxis];
 
-	real CylX = Cyl1X + Cyl2X;
-	real CylY = Cyl1Y + Cyl2Y;
+	real_t CylX = Cyl1X + Cyl2X;
+	real_t CylY = Cyl1Y + Cyl2Y;
 
 	m_Pri_CorneaPreopCyl = hyp(CylX, CylY);
 	m_Pri_CorneaPreopAxis = intRound(_180_Pi * 0.5 * angle(CylY, CylX)) % 180;
@@ -416,7 +416,7 @@ void COpData::Recalculate()
 			if (m_IOLPlacementAxis < 0 || m_IOLPlacementAxis >= 180) return;
 		}
 
-		real BestCyl = DBL_MAX;
+		real_t BestCyl = DBL_MAX;
 
 		for (int i = 0; i < 12; i++)
 		{
@@ -551,7 +551,7 @@ void COpData::Pri_Recalculate()
 			if (m_Pri_IOLPlacementAxis < 0 || m_Pri_IOLPlacementAxis >= 180) return;
 		}
 
-		real Pri_BestCyl = DBL_MAX;
+		real_t Pri_BestCyl = DBL_MAX;
 
 		for (int i = 0; i < 12; i++)
 		{
@@ -616,16 +616,16 @@ void COpData::Pri_Recalculate()
 
 //***************************************************************************************
 
-void CalculateCrossedAstigmatism(const real Cyl1, const int Axis1, const real Cyl2, const int Axis2, real& Cyl, int& Axis)
+void CalculateCrossedAstigmatism(const real_t Cyl1, const int Axis1, const real_t Cyl2, const int Axis2, real_t& Cyl, int& Axis)
 {	
-	real Cyl1X = Cyl1 * ::COS[2 * Axis1];
-	real Cyl1Y = Cyl1 * ::SIN[2 * Axis1];
+	real_t Cyl1X = Cyl1 * ::COS[2 * Axis1];
+	real_t Cyl1Y = Cyl1 * ::SIN[2 * Axis1];
 
-	real Cyl2X = Cyl2 * ::COS[2 * Axis2];
-	real Cyl2Y = Cyl2 * ::SIN[2 * Axis2];
+	real_t Cyl2X = Cyl2 * ::COS[2 * Axis2];
+	real_t Cyl2Y = Cyl2 * ::SIN[2 * Axis2];
 
-	real CylX = Cyl1X + Cyl2X;
-	real CylY = Cyl1Y + Cyl2Y;
+	real_t CylX = Cyl1X + Cyl2X;
+	real_t CylY = Cyl1Y + Cyl2Y;
 
 	Cyl = hyp(CylX, CylY);
 	Axis = intRound(_180_Pi * 0.5 * angle(CylY, CylX)) % 180;

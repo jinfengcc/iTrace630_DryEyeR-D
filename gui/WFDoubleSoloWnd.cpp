@@ -54,14 +54,14 @@ CWFDoubleSoloWnd::CWFDoubleSoloWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient
 	CBusyCursor Cursor;
 
 	//----------------------------------------------------
-	real Top = 0.1*m_h;
-	real MapTop = 0.16*m_h;
+	real_t Top = 0.1*m_h;
+	real_t MapTop = 0.16*m_h;
 	m_MideLine = m_w / 2.0;
 
 	m_w1 = 0.5*m_MideLine;
-	real w2 = 0.08*m_MideLine;
+	real_t w2 = 0.08*m_MideLine;
 
-	real h1 = 0.43*m_h - m_g;
+	real_t h1 = 0.43*m_h - m_g;
 
 	if (h1 < 0.8*m_w1)  m_w1 = h1 / 0.8;
 
@@ -77,7 +77,7 @@ CWFDoubleSoloWnd::CWFDoubleSoloWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient
 	int h3 = intRound(0.6*(MapTop - Top));
 	int w3 = intRound(0.8*m_MideLine);
 
-	int h4 = intRound((m_h - m_g - MapTop) / (real)3);
+	int h4 = intRound((m_h - m_g - MapTop) / (real_t)3);
 
 	int t = intRound(MapTop + h4);
 	::SetRect(&m_Rect[4], intRound(m_MideLine - w3), intRound(Top), intRound(m_MideLine - m_g), intRound(Top + h3));
@@ -110,7 +110,7 @@ CWFDoubleSoloWnd::CWFDoubleSoloWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient
 	}
 
 	m_invalidValue = 0;
-	real m_r1, m_r2;
+	real_t m_r1, m_r2;
 	if (m_pWFExam1 == NULL)
 	{
 		m_invalidValue = 1;
@@ -160,7 +160,7 @@ CWFDoubleSoloWnd::CWFDoubleSoloWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient
 	int  Slider_Left2 = intRound(m_g + m_MideLine + m_w1 + 0.25*w2);
 	int  Slider_Right2 = intRound(m_g + m_MideLine + m_w1 + 0.75*w2);
 
-	real Info_Total_H = m_h - m_g - MapTop;
+	real_t Info_Total_H = m_h - m_g - MapTop;
 
 	m_Slider_Top = intRound(MapTop + 0.25*Info_Total_H);
 	int  Slider_Bot = intRound(MapTop + 0.75*Info_Total_H);
@@ -279,8 +279,8 @@ CWFDoubleSoloWnd::CWFDoubleSoloWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient
 	}
 
 	int  SNum = (int)(m_maxRum*0.002);
-	real rest = m_maxRum - intRound(m_maxRum) % 500;
-	real pos = 1 - (m_maxRum - rest) / (m_maxRum - 500);
+	real_t rest = m_maxRum - intRound(m_maxRum) % 500;
+	real_t pos = 1 - (m_maxRum - rest) / (m_maxRum - 500);
 	if (m_pWFExam1)
 	{
 		m_ODSlider.m_scaleNum = SNum;
@@ -406,7 +406,7 @@ void CWFDoubleSoloWnd::CreateChildWnd()
 	}
 
 	//
-	real r_max_um = 5000.0;
+	real_t r_max_um = 5000.0;
 	r_max_um = __min(r_max_um, m_Surfaces[m_d].m_r_max_um);
 
 	r_max_um = __min(r_max_um, pWndSettings->m_ZoneRadiusUm);
@@ -542,17 +542,17 @@ void CWFDoubleSoloWnd::CreateChildWnd()
 		CEyeWnd* pEyeWnd = (CEyeWnd*)m_pDispWnd[m_d];
 		CScale* pScale = pWndSettings->GetScale();
 
-		real Inc = pWndSettings->GetIncrement();
+		real_t Inc = pWndSettings->GetIncrement();
 
-		real Cent = 0.0;
+		real_t Cent = 0.0;
 
-		real Step;
+		real_t Step;
 		if (pScale->m_StepAuto)
 		{
-			real Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
-			real Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
-			real Span = 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent));
-			real t = Span / pScale->m_NumColors;
+			real_t Min = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_min : pEyeWnd->m_Map2D.m_min;
+			real_t Max = pWndSettings->m_Method3D ? pEyeWnd->m_Map3D.m_max : pEyeWnd->m_Map2D.m_max;
+			real_t Span = 2.0 * __max(fabs(Min - Cent), fabs(Max - Cent));
+			real_t t = Span / pScale->m_NumColors;
 			Step = (int)(t / Inc) * Inc;
 			if (t > Step + 0.001) Step += Inc;
 		}
@@ -561,7 +561,7 @@ void CWFDoubleSoloWnd::CreateChildWnd()
 			Step = RealRound(pScale->m_Step, Inc);
 		}
 		if (Step < Inc) Step = Inc;
-		real StepMax = pWndSettings->GetMaxStep();
+		real_t StepMax = pWndSettings->GetMaxStep();
 		if (Step > StepMax) Step = StepMax;
 
 		pEyeWnd->m_Cent = Cent;

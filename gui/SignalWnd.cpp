@@ -143,16 +143,16 @@ void CSignalWnd::Signal()
 	CString s;
 	RECT Rect;
 
-	real L = 0.10 * m_w;
-	real R = 0.90 * m_w;
-	real T = 0.10 * m_h;
-	real B = 0.90 * m_h;
+	real_t L = 0.10 * m_w;
+	real_t R = 0.90 * m_w;
+	real_t T = 0.10 * m_h;
+	real_t B = 0.90 * m_h;
 
 	// horizontal lines
 	int max = 1 << (16 - m_Zoom);
 	int d = max >> 4;
 	for (int j = 0; j <= max; j += d) {
-		real y = B - (j * (B - T) / max);
+		real_t y = B - (j * (B - T) / max);
 		m_MemDC.DrawLine(intRound(L), intRound(y), intRound(R + 1), intRound(y), 1, gray);
 		::SetRect(&Rect, 0, intRound(y - 100.0), intRound(L), intRound(y + 100.0));
 		s.Format(_T("%i "), j);
@@ -162,7 +162,7 @@ void CSignalWnd::Signal()
 	// vertical lines
 	for (int i = 0; i <= 512; i += 32)
 	{
-		real x = L + (i * (R - L) / 512.0);
+		real_t x = L + (i * (R - L) / 512.0);
 		m_MemDC.DrawLine(intRound(x), intRound(T), intRound(x), intRound(B + 1), 1, gray);
 	}
 
@@ -185,7 +185,7 @@ void CSignalWnd::Signal()
 	m_MemDC.SelectObject(pPen);
 
 	// max signal
-	real y = B - (pData->m_Max * (B - T) / max);
+	real_t y = B - (pData->m_Max * (B - T) / max);
 	m_MemDC.DrawHorzDottedLine(intRound(L), intRound(R + 1.0), intRound(y), BLUE, NOCOLOR);
 	::SetRect(&Rect, intRound(R), intRound(y - 100.0), intRound(R + 1000.0), intRound(y + 100.0));
 	s.Format(_T(" %i"), pData->m_Max);
@@ -193,7 +193,7 @@ void CSignalWnd::Signal()
 
 	// centroid
 	if (!pData->m_Bad) {
-		real x = L + (pData->m_CentroidPos * (R - L) / 512.0);
+		real_t x = L + (pData->m_CentroidPos * (R - L) / 512.0);
 		m_MemDC.DrawLine(intRound(x), intRound(T), intRound(x), intRound(B + 1), 1, RED);
 		::SetRect(&Rect, intRound(x - 1000.0), intRound(B + 3.0), intRound(x + 1000.0), intRound(B + 3.0 + FontSize));
 		s.Format(_T("%i"), intRound(pData->m_CentroidPos));

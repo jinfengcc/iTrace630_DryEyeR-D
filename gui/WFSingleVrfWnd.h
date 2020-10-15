@@ -64,7 +64,7 @@ public:
 	virtual void RepaintMemDC() override;
 	virtual void CreateChildWnd() override;
 
-	void AddDefocus(real SphEq);
+	void AddDefocus(real_t SphEq);
 	afx_msg void OnF1();
 	afx_msg void OnF2();
 	afx_msg void OnF3();
