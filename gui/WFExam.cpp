@@ -6,6 +6,7 @@
 #include "MGdi.h"
 #include "Hardware.h"
 #include "Settings.h"
+#include "AppVersion.h"
 
 //***************************************************************************************
 //***************************************************************************************
@@ -216,7 +217,7 @@ real_t CWFExam::GetClosestPointOpacity(const real_t r_um, const real_t a_rd, con
 	real_t dmin = DBL_MAX;
 
 	CScanPoint* pPoint = m_Points.MoveFirst();
-	
+
 	while (pPoint)
 	{
 		if (pPoint->m_shot == shot)
@@ -226,7 +227,7 @@ real_t CWFExam::GetClosestPointOpacity(const real_t r_um, const real_t a_rd, con
 			{
 				dmin = d;
 				pClosestPoint = pPoint;
-			}			
+			}
 		}
 
 		pPoint = m_Points.MoveNext();
@@ -526,7 +527,7 @@ BOOL CWFExam::Presbia24Process()
 		if (!m_Image.m_li_ok)
 		{
 			//improve the comprison and then find limbus( improve the accuracy)
-			//Create the array for the IOL eye image info	
+			//Create the array for the IOL eye image info
 
 			//calculate the new limbus position
 			CEyeImage* TestImage = new CEyeImage();
@@ -668,7 +669,7 @@ BOOL CWFExam::Process()
 		if (!m_Image.m_li_ok)
 		{
 			//improve the comprison and then find limbus( improve the accuracy)
-			//Create the array for the IOL eye image info	
+			//Create the array for the IOL eye image info
 
 			//calculate the new limbus position
 			CEyeImage* TestImage = new CEyeImage();

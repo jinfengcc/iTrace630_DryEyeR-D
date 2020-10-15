@@ -7,7 +7,6 @@ namespace {
   struct AppLocalClassFactory : public ClassFactoryImpl
   {
     AppLocalClassFactory()
-      : ClassFactoryImpl({{__uuidof(ISettings), &AppLocalClassFactory::CreateObj}})
     {
       AddCreator(__uuidof(ISettings), &AppLocalClassFactory::CreateObj);
     }

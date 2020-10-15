@@ -14,8 +14,8 @@ const unsigned SOFTWARE_VERSION   = GetVVVVYMDD(); // V V V V Y M D D
 CString FullSoftwareVersion()
 {
   uint v1 = VERSION_MAJOR;
-  uint v2 = HIBYTE(VERSION_MINOR);
-  uint v3 = HIBYTE(VERSION_MINOR);
+  uint v2 = VERSION_MINOR / 10;
+  uint v3 = VERSION_MINOR % 10;
   uint y  = VERSION_YEAR;
   uint m  = VERSION_DAY / 100;
   uint d  = VERSION_DAY % 100;

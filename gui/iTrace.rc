@@ -3615,7 +3615,7 @@ END
 
 3 TEXTINCLUDE 
 BEGIN
-    "\r\n"
+    "#include ""Res\\iTrace.rc2""\r\n"
     "\0"
 END
 
@@ -3687,6 +3687,7 @@ BEGIN
     VK_UP,          IDK_UP,                 VIRTKEY, NOINVERT
     VK_NUMPAD9,     IDK_N9,                 VIRTKEY, NOINVERT
 END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -4305,7 +4306,7 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-
+#include "Res\iTrace.rc2"
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED

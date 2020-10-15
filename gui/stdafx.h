@@ -236,7 +236,7 @@ typedef enum { SAMP_TRUE = 1, SAMP_FALSE = 0 } SAMP_BOOLEAN;
 
 //***************************************************************************************
 
-#include "AppVersion.h"
+//**** Moved to AppVersion.h
 // extern const uint SOFTWARE_VERSION_3;
 // extern const uint SOFTWARE_VERSION_4;
 // extern const uint SOFTWARE_VERSION;
