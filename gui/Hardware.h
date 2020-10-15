@@ -5,6 +5,8 @@
 //***************************************************************************************
 
 #include "Data.h"
+#include <memory>
+#include "HardwareHiresCamera.h"
 #include <libs/CommonLib/Singleton.h>
 
 //***************************************************************************************
@@ -230,6 +232,7 @@ public:
 	BOOL UpdateFirmware(const CString& FileName);
 
 private:
+	std::unique_ptr<HardwareHiresCamera> m_hiresCamera;
 
 	int UmToHzX(const real_t XUm);
 	int UmToHzY(const real_t YUm);

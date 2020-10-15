@@ -126,6 +126,15 @@ void ResetCalibration(CALIBRATION* pCalibration)
 
 CHW::CHW()
 {
+  m_hiresCamera = std::make_unique<HardwareHiresCamera>();
+  //if (m_hiresCamera->Connected())
+  //{
+  //  m_VideoWidth     = m_hiresCamera->GetWidth();
+  //  m_VideoHeight    = m_hiresCamera->GetHeight();
+  //  m_VideoLineWidth = 3 * m_VideoWidth;
+  //  m_VideoSize      = m_VideoHeight * m_VideoLineWidth;
+  //}
+
 	LoadDLL();
 
 	m_FlashDataStartAddress = 0x00000000;
@@ -829,6 +838,11 @@ int CHW::CheckLaserSafetyStatus()
 
 void CHW::ApplyCurrentVideoBrightness()
 {
+  if (m_hiresCamera->Connected()) {
+    int hdCam = m_pCurrentVideoSettings->Brightness;
+    m_hiresCamera->SetBrightness(hdCam);
+  }
+
 	if (m_hDLL == NULL) return;
 
 	DllSetVideoBrightness(m_pCurrentVideoSettings->Brightness);
@@ -838,6 +852,11 @@ void CHW::ApplyCurrentVideoBrightness()
 
 void CHW::ApplyCurrentVideoContrast()
 {
+  if (m_hiresCamera->Connected()) {
+    int hdCam = m_pCurrentVideoSettings->Contrast;
+    m_hiresCamera->SetContrast(hdCam);
+  }
+
 	if (m_hDLL == NULL) return;
 
 	DllSetVideoContrast(m_pCurrentVideoSettings->Contrast);
@@ -847,7 +866,13 @@ void CHW::ApplyCurrentVideoContrast()
 
 void CHW::ApplyCurrentVideoHue()
 {
-	if (m_hDLL == NULL) return;
+  if (m_hiresCamera->Connected()) {
+    int hdCam = m_pCurrentVideoSettings->Hue;
+    m_hiresCamera->SetHue(hdCam);
+  }
+
+  if (m_hDLL == NULL)
+    return;
 
 	DllSetVideoHue(m_pCurrentVideoSettings->Hue);
 }
@@ -856,7 +881,14 @@ void CHW::ApplyCurrentVideoHue()
 
 void CHW::ApplyCurrentVideoSaturation()
 {
-	if (m_hDLL == NULL) return;
+  if (m_hiresCamera->Connected()) {
+    int hdCam = m_pCurrentVideoSettings->Saturation;
+    m_hiresCamera->SetSaturation(hdCam);
+  }
+
+  if (m_hDLL == NULL)
+    return;
+
 
 	DllSetVideoSaturation(m_pCurrentVideoSettings->Saturation);
 }
@@ -934,10 +966,14 @@ void CHW::FrameTransferMain()
 
 void CHW::StartTransferringVideoFrame()
 {
+  if (m_hiresCamera->Connected())
+    return;
+
 	ulong id;
 	m_FrameTransferThread = ::CreateThread(NULL, 0, FrameTransferThreadFunction, this, CREATE_SUSPENDED, &id);
 
-	if (m_FrameTransferThread == NULL) return;
+  if (m_FrameTransferThread == NULL)
+    return;
 
 	::SetThreadPriority(m_FrameTransferThread, THREAD_PRIORITY_BELOW_NORMAL);
 	::ResumeThread(m_FrameTransferThread);
@@ -948,7 +984,8 @@ void CHW::StartTransferringVideoFrame()
 
 void CHW::FinishTransferringVideoFrame()
 {
-	if (m_FrameTransferThread == NULL) return;
+  if (m_FrameTransferThread == NULL)
+    return;
 
 	::WaitForSingleObject(m_FrameTransferThread, INFINITE);
 
@@ -963,6 +1000,10 @@ void CHW::FinishTransferringVideoFrame()
 
 uchar* CHW::GetRGBData()
 {
+  if (auto u = m_hiresCamera->GetRGBData(m_pCurrentVideoSettings->Color != FALSE)) {
+    return u;
+  }
+
 	static uchar Data1[3 * 468 * 624];
 	static uchar Data2[3 * 468 * 624];
 
@@ -971,7 +1012,7 @@ uchar* CHW::GetRGBData()
 	uchar* pSrcData = m_pDVideoFrame->Data;
 	uchar* pDstData = Data1;
 
-	//Control the image position in calibration 
+	//Control the image position in calibration
 	int moveUpDown = ::HW.m_Calibration.StepDown;
 	int moveLeftRight = ::HW.m_Calibration.StepRight;
 
