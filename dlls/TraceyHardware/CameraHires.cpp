@@ -16,6 +16,7 @@ CameraHires::CameraHires()
   std::lock_guard lock(mutex);
   if (m_pimpl = camImpl.lock(); !m_pimpl) {
     m_pimpl = std::make_shared<CameraHiResImpl>();
+    m_pimpl->Open(defCameraName);
     camImpl = m_pimpl;
   }
 }

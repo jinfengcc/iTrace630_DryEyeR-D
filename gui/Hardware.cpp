@@ -966,8 +966,10 @@ void CHW::FrameTransferMain()
 
 void CHW::StartTransferringVideoFrame()
 {
-  if (m_hiresCamera->Connected())
+  if (m_hiresCamera->Connected()) {
+    m_hiresCamera->StartTransferringVideoFrame();
     return;
+  }
 
 	ulong id;
 	m_FrameTransferThread = ::CreateThread(NULL, 0, FrameTransferThreadFunction, this, CREATE_SUSPENDED, &id);
@@ -984,6 +986,11 @@ void CHW::StartTransferringVideoFrame()
 
 void CHW::FinishTransferringVideoFrame()
 {
+  if (m_hiresCamera->Connected()) {
+    m_hiresCamera->FinishTransferringVideoFrame();
+    return;
+  }
+
   if (m_FrameTransferThread == NULL)
     return;
 

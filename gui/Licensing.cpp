@@ -147,7 +147,7 @@ BOOL CLicensing::DetermineLicenseType(const CString& SoftwareAK)
 	int LicenseType[9] =
 	{ LT_PRESBIA, LT_DEMO, LT_SOLO, LT_COMBO, LT_WORKSTATION, LT_HOYA, LT_HOYAVIEWER, LT_COMBOVIEWER, LT_COMBODICOM };
 
-#if defined(_DEBUG) && 1
+#if defined(_DEBUG) && 0
   m_LicenseType = LT_SOLO;
   return TRUE;
 #endif
