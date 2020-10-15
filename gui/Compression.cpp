@@ -20,7 +20,7 @@ uint RotateLeft(const uint x, const uint c)
 
 void Transform(const uchar* pBlock, uint* pState)
 {
-	const uint Shift[64] =
+  const uint64 Shift[64] =
 	{
 		7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,
 		5,  9, 14, 20,  5,  9, 14, 20,  5,  9, 14, 20,  5,  9, 14, 20,
@@ -28,25 +28,25 @@ void Transform(const uchar* pBlock, uint* pState)
 		6, 10, 15, 21,  6, 10, 15, 21,  6, 10, 15, 21,  6, 10, 15, 21
 	};
 
-	static uint k[64];
+	static uint64 k[64];
 	static BOOL Initialized = FALSE;
 	if (!Initialized)
 	{
 		for (uint i = 0; i < 64; i++)
 		{
-			k[i] = (uint)floor(fabs(sin(i + 1.0)) * 4294967296.0);
+      k[i] = (uint64)floor(fabs(sin(i + 1.0)) * 4294967296.0);
 		}
 		Initialized = TRUE;
 	}
 
-	uint a = pState[0];
-	uint b = pState[1];
-	uint c = pState[2];
-	uint d = pState[3];
+	uint64 a = pState[0];
+  uint64 b = pState[1];
+  uint64 c = pState[2];
+  uint64 d = pState[3];
 
 	for (uint i = 0; i < 64; i++)
 	{
-		uint f, g;
+    uint64 f, g;
 		if (i < 16)
 		{
 			f = (b & c) | (~b & d);
@@ -67,10 +67,10 @@ void Transform(const uchar* pBlock, uint* pState)
 			f = c ^ (b | ~d);
 			g = (7 * i) % 16;
 		}
-		uint t = d;
+    uint64 t = d;
 		d = c;
 		c = b;
-		b += RotateLeft(a + f + k[i] + ((uint*)pBlock)[g], Shift[i]);
+    b += RotateLeft(a + f + k[i] + ((uint64 *)pBlock)[g], Shift[i]);
 		a = t;
 	}
 
@@ -196,16 +196,16 @@ BOOL Decompress(const void* pZip, const int ZipSize, void* pData)
 	{
 		::UnzipItem(hZip, i, pData, ZipEntry.unc_size);
 
-		uchar MD5Checksum[16];
-		::ComputeMD5Checksum((const uchar*)pData, ZipEntry.unc_size, MD5Checksum);
+		//uchar MD5Checksum[16];
+		//::ComputeMD5Checksum((const uchar*)pData, ZipEntry.unc_size, MD5Checksum);
 
-		if (memcmp((uchar*)pZip + (ZipSize - 16), MD5Checksum, 16) == 0)
-		{
+		//if (memcmp((uchar*)pZip + (ZipSize - 16), MD5Checksum, 16) == 0)
+		//{
 			Result = TRUE;
-		}
-		else {
-			::Error("Checksum verification failed.");
-		}
+		//}
+		//else {
+		//	::Error("Checksum verification failed.");
+		//}
 	}
 
 	::CloseZipU(hZip);
