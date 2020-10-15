@@ -273,6 +273,9 @@
     <Filter Include="Windows\TypeWindows\BasicWindows">
       <UniqueIdentifier>{f80a87ea-40f2-4e12-9f44-4a97624fd9cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bin">
+      <UniqueIdentifier>{4f49eccd-59b1-47aa-b654-431d0ad48e5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PatientDlg.cpp">
@@ -811,6 +814,9 @@
     </ClCompile>
     <ClCompile Include="DicomMWLResDlg.cpp">
       <Filter>Dialog Boxes\DicomMWLResDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="LinkLibs.cpp">
+      <Filter>Others</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2073,6 +2079,12 @@
     </None>
     <None Include="Res\settings">
       <Filter>Resources</Filter>
+    </None>
+    <None Include="Bin\tdbmsjet62.dll">
+      <Filter>Bin</Filter>
+    </None>
+    <None Include="Bin\thw.dll">
+      <Filter>Bin</Filter>
     </None>
   </ItemGroup>
 </Project>

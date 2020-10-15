@@ -2,7 +2,7 @@
 Autor:         Jinfeng Chen
 E-mail:        jinfengcc@gmail.com
 Date:          04-27-2016
-Version:       
+Version:
 Description:   Generated this class for global functions
 *****************************************************************************************/
 
@@ -14,6 +14,9 @@ Description:   Generated this class for global functions
 
 #include "Image.h"
 #include "Data.h"
+
+class CWFExam;
+class CCTExam;
 
 void LimbusAdjust(CWFExam* pWFExam, CCTExam* pCTExam);
 
@@ -28,7 +31,7 @@ CString  G_ConvertChineseStr(CString Str);//6.2.0 Chinese
 CString  G_ReadChinese(CString Str);//6.2.0 Chinese
 
 BOOL     G_Is64BitOS();//6.2.0
- 
+
 CString  G_TransformEurope(CString Input);
 
 //void  G_MatirxTest(int col, int row, int COLVAL, int ROWVAL, CString InfoS);//Matrix error test

@@ -91,7 +91,7 @@ CPlanWnd::CPlanWnd(RECT& Rect, CWnd* pWnd) :
 	Rgn.SetRectRgn(&Rect1);
 	m_Rgn.CombineRgn(&m_Rgn, &Rgn, RGN_DIFF);
 
-	// [520]  
+	// [520]
 	::SetRect(&Rect1, m_w - 2 - w, m_h - 2 - h, m_w - 2, m_h - 2);
 	m_OSAlignmentButton.SetBkColor(NOCOLOR);
 	m_OSAlignmentButton.SetText("Osher Alignment");
@@ -170,7 +170,7 @@ void CPlanWnd::RepaintMemDC()
 	case 2: m_LTLabel[0] = "ICL"; break;
 	}
 
-	//[//[cjf***05012012*005*]  
+	//[//[cjf***05012012*005*]
 	if (::TempSettings.NewPlannerSettings.m_NewPlaner == 1) {
 
 		if (!m_isCombo)
@@ -200,12 +200,12 @@ void CPlanWnd::RepaintMemDC()
 			m_PostopEntireEye = 0;
 		}
 
-		//[cjf***05022012*004*]     
+		//[cjf***05022012*004*]
 		if (!m_isCombo) m_ShowCaliper = FALSE;
 		m_MoveCalipar = FALSE;//[cjf***05022012*004*]
 	}
 	::TempSettings.NewPlannerSettings.m_NewPlaner = 0;
-	//[cjf***05012012*004*]  
+	//[cjf***05012012*004*]
 
 	if (m_pCTExam->m_OpData.m_OpType != 1)//IOL and ICL
 	{
@@ -267,14 +267,14 @@ void CPlanWnd::RepaintMemDC()
 	Grid();
 
 	if (m_ShowIncision)       Incision();//[cjf***05012012*004*]
-	else  m_RecalLenButton.ShowWindow(SW_HIDE); //[cjf***05052012*008*] 
+	else  m_RecalLenButton.ShowWindow(SW_HIDE); //[cjf***05052012*008*]
 
-	if (m_ShowPreopCorneal)   CorneaPreopAxes();//[cjf***05012012*004*]  
-	if (m_ShowPreopInternal)  InternalPreopAxes();//[cjf***05012012*004*]  
-	if (m_ShowPreopEntireEye) EyePreopAxes();//[cjf***05012012*004*]  
+	if (m_ShowPreopCorneal)   CorneaPreopAxes();//[cjf***05012012*004*]
+	if (m_ShowPreopInternal)  InternalPreopAxes();//[cjf***05012012*004*]
+	if (m_ShowPreopEntireEye) EyePreopAxes();//[cjf***05012012*004*]
 	if (m_PostopCorneal)      CorneaPostopAxes();//[cjf***05012012*004*]
 	if (m_PostopInternal)     InternalPostopAxes();//[cjf***05012012*004*]
-	if (m_PostopEntireEye)    EyePostopAxes();//[cjf***05012012*004*]   
+	if (m_PostopEntireEye)    EyePostopAxes();//[cjf***05012012*004*]
 
 	ICLPostopAxes();
 
@@ -464,7 +464,7 @@ void CPlanWnd::Grid()
 
 	// numbers
 	int IncreaseDeg = 5;
-	if (m_wheel_n >= 10) IncreaseDeg = 1;//[cjf***04202012]  
+	if (m_wheel_n >= 10) IncreaseDeg = 1;//[cjf***04202012]
 
 
 	for (int a = 0; a < 360; a += IncreaseDeg)
@@ -482,7 +482,7 @@ void CPlanWnd::Grid()
 		if (IncreaseDeg == 1) r2_um = r_um + ((a % 15) == 0 ? 400.0 : 150.0);//[cjf***04202012]
 		else r2_um = r_um + ((a % 15) == 0 ? 400.0 : 250.0);//[cjf***04202012]
 
-		if (IncreaseDeg == 1 && (a % 5) == 0 && (a % 15) != 0)	r2_um = r_um + 250;//[cjf***04202012] 
+		if (IncreaseDeg == 1 && (a % 5) == 0 && (a % 15) != 0)	r2_um = r_um + 250;//[cjf***04202012]
 
 		int x2 = intRound(m_cx + x_px_um * r2_um * COS[a]);
 		int y2 = intRound(m_cy - y_px_um * r2_um * SIN[a]);
@@ -1008,7 +1008,7 @@ void CPlanWnd::Lens2()
 			if (b == INVALID_VALUE) continue;
 			if (m_pCTExam->m_OpData.m_OpType == 1)
 			{
-				if (j == 1) 
+				if (j == 1)
 				{
 					COLORREF Color = m_Printing ? ORANGE : YELLOW;
 					real r1_um = 1500.0;
@@ -1046,7 +1046,7 @@ void CPlanWnd::Lens2()
 
 				if (j == 0)
 				{
-					for (int k = 0; k < 10; k++) 
+					for (int k = 0; k < 10; k++)
 					{
 						int e = CheckAngle(o);
 						int x = intRound(m_cx + (x0_um + r_um * COS[e]) * x_px_um);
@@ -1079,14 +1079,14 @@ void CPlanWnd::Lens2()
 			a2 = a[1][i];
 			m_Clock_wise = 1;
 		}
-		else 
+		else
 		{
 			a1 = a[1][i];
 			a2 = a[0][i];
 			m_Clock_wise = 0;
 		}
 
-		if (m_SurgeonView) 
+		if (m_SurgeonView)
 		{
 			a1 += 180;
 			a2 += 180;
@@ -1114,8 +1114,8 @@ void CPlanWnd::Lens2()
 		}
 
 		// текст
-		int amin = min(a[0][i], a[1][i]);
-		int amax = max(a[0][i], a[1][i]);
+		int amin = std::min(a[0][i], a[1][i]);
+		int amax = std::max(a[0][i], a[1][i]);
 		int a0 = (amin + amax) / 2;
 
 		if (amax - amin > 180) { // лежат по разные стороны нуля
@@ -1277,8 +1277,8 @@ void CPlanWnd::Protractor()
 		CString s;
 		s.Format(_T("%i°"), ADis);
 
-		int amin = min(a01, a02);
-		int amax = max(a01, a02);
+		int amin = std::min(a01, a02);
+		int amax = std::max(a01, a02);
 		a03 = (amin + amax) / 2;
 
 		if (amax - amin > 180) { // лежат по разные стороны нуля
@@ -1342,8 +1342,8 @@ void CPlanWnd::Protractor()
 			CString s;
 			s.Format(_T("%i°"), ADis);
 
-			int amin = min(a01, a02);
-			int amax = max(a01, a02);
+			int amin = std::min(a01, a02);
+			int amax = std::max(a01, a02);
 			a03 = (amin + amax) / 2;
 
 			if (amax - amin > 180) { // лежат по разные стороны нуля
@@ -1482,8 +1482,8 @@ void CPlanWnd::Caliper()
 		int w = intRound(0.01 * m_h);
 		m_MemDC.DrawArc(x, y, r, w, a1, a2, m_CaliperColor);
 
-		int amin = min(aw[i], ar[i]);
-		int amax = max(aw[i], ar[i]);
+		int amin = std::min(aw[i], ar[i]);
+		int amax = std::max(aw[i], ar[i]);
 		int a0 = (amin + amax) / 2;
 
 		if (amax - amin > 180)
@@ -1709,7 +1709,7 @@ void CPlanWnd::Labels2()
 
 		m_MemDC.WriteText(s, Rect, Font3, white, 0);
 
-		//draw a arrow circle in the 
+		//draw a arrow circle in the
 		int x = intRound(m_cx);
 		int y = intRound(m_cy);
 		int w = intRound(0.002 * m_w);
@@ -1755,7 +1755,7 @@ void CPlanWnd::OnMouseMove(uint nFlags, CPoint Point)
 		}*/
 
 		if (sqr(5100.0) <= d2 && d2 <= sqr(6400.0))
-		{ //else 
+		{ //else
 			if (m_MousePos == 0 || m_MousePos == 3) {
 				if (m_ShowCaliper && !m_isCombo) {
 					m_MousePos = 3;
@@ -1767,7 +1767,7 @@ void CPlanWnd::OnMouseMove(uint nFlags, CPoint Point)
 						int disA2 = SmallAng(a, m_pCTExam->m_OpData.m_RefAxis[1]);
 						int disA = disA1 - disA2;
 						m_MoveCalipar = (disA < 0 ? 1 : 2);
-						//m_MoveCalipar = ( abs(a - m_pCTExam->m_OpData.m_RefAxis[0]) < abs(a - m_pCTExam->m_OpData.m_RefAxis[1]) ? 1 : 2 );			  
+						//m_MoveCalipar = ( abs(a - m_pCTExam->m_OpData.m_RefAxis[0]) < abs(a - m_pCTExam->m_OpData.m_RefAxis[1]) ? 1 : 2 );
 					}
 
 					int ar[2];
@@ -1784,7 +1784,7 @@ void CPlanWnd::OnMouseMove(uint nFlags, CPoint Point)
 					ar[0] %= 180; if (ar[0] < 0) ar[0] += 180;
 					ar[1] = ar[0] + 180;
 
-					//judge there is overlap or not		 
+					//judge there is overlap or not
 					int br[2];
 					if (m_MoveCalipar == 1)
 					{
@@ -1799,7 +1799,7 @@ void CPlanWnd::OnMouseMove(uint nFlags, CPoint Point)
 
 					m_OverLap = OverLapFun(ar[0], ar[1], br[0], br[1]);
 
-					if (m_OverLap)// If it is overlap 
+					if (m_OverLap)// If it is overlap
 					{
 						if (m_MoveCalipar == 1) m_pCTExam->m_OpData.m_RefAxis[1] = a;
 						else m_pCTExam->m_OpData.m_RefAxis[0] = a;
@@ -1820,19 +1820,19 @@ void CPlanWnd::OnMouseMove(uint nFlags, CPoint Point)
 					m_MousePos = 2;
 					m_pCTExam->m_OpData.m_CorneaIncisionAxis = a;
 
-					//[cjf***05052012*008*] 
+					//[cjf***05052012*008*]
 					if (m_Recal_Lens)
 					{
 						m_pCTExam->m_OpData.m_IOLPlacementAxis = INVALID_VALUE;
 					}
-					//[cjf***05052012*008*] 		  
+					//[cjf***05052012*008*]
 
 					m_pCTExam->m_OpData.Recalculate();
 
 					//[cjf***05082012], check the overlap of caliper
 					if (m_ShowCaliper && m_Recal_Lens)
 					{
-						////[cjf***05032012*005*]			 
+						////[cjf***05032012*005*]
 						int ar[2];
 						if (m_pCTExam->m_OpData.m_OpType == 0) {
 							ar[0] = m_pCTExam->m_OpData.m_IOLPlacementAxis;
@@ -1847,7 +1847,7 @@ void CPlanWnd::OnMouseMove(uint nFlags, CPoint Point)
 						ar[0] %= 180; if (ar[0] < 0) ar[0] += 180;
 						ar[1] = ar[0] + 180;
 
-						//judge there is overlap or not		 
+						//judge there is overlap or not
 						int br[2];
 						if (m_MoveCalipar == 1)
 						{
@@ -1862,14 +1862,14 @@ void CPlanWnd::OnMouseMove(uint nFlags, CPoint Point)
 
 						m_OverLap = OverLapFun(ar[0], ar[1], br[0], br[1]);
 
-						if (m_OverLap)// If it is overlap 
+						if (m_OverLap)// If it is overlap
 						{
 							if (m_MoveCalipar == 1) m_pCTExam->m_OpData.m_RefAxis[1] = a;
 							else m_pCTExam->m_OpData.m_RefAxis[0] = a;
 						}
 						//[cjf***05032012*005*]
 					}
-					//[cjf***05082012] 
+					//[cjf***05082012]
 
 					GetParent()->PostMessage(WM_UPDATE_INFO, (WPARAM)0, (LPARAM)0);
 					Redraw = TRUE;
@@ -1892,7 +1892,7 @@ void CPlanWnd::OnMouseMove(uint nFlags, CPoint Point)
 					//[cjf***05082012], check the overlap of caliper
 					if (m_ShowCaliper)
 					{
-						////[cjf***05032012*005*]			 
+						////[cjf***05032012*005*]
 						if (m_MoveCalipar == 0) m_MoveCalipar = (abs(a - m_pCTExam->m_OpData.m_RefAxis[0]) < abs(a - m_pCTExam->m_OpData.m_RefAxis[1]) ? 1 : 2);
 
 						int ar[2];
@@ -1909,7 +1909,7 @@ void CPlanWnd::OnMouseMove(uint nFlags, CPoint Point)
 						ar[0] %= 180; if (ar[0] < 0) ar[0] += 180;
 						ar[1] = ar[0] + 180;
 
-						//judge there is overlap or not		 
+						//judge there is overlap or not
 						int br[2];
 						if (m_MoveCalipar == 1)
 						{
@@ -1924,14 +1924,14 @@ void CPlanWnd::OnMouseMove(uint nFlags, CPoint Point)
 
 						m_OverLap = OverLapFun(ar[0], ar[1], br[0], br[1]);
 
-						if (m_OverLap)// If it is overlap 
+						if (m_OverLap)// If it is overlap
 						{
 							if (m_MoveCalipar == 1) m_pCTExam->m_OpData.m_RefAxis[1] = a;
 							else m_pCTExam->m_OpData.m_RefAxis[0] = a;
 						}
 						//[cjf***05032012*005*]
 					}
-					//[cjf***05082012] 
+					//[cjf***05082012]
 
 					GetParent()->PostMessage(WM_UPDATE_INFO, (WPARAM)0, (LPARAM)0);
 					Redraw = TRUE;
@@ -1945,14 +1945,14 @@ void CPlanWnd::OnMouseMove(uint nFlags, CPoint Point)
 
 			Grid();
 			if (m_ShowIncision)       Incision();//[cjf***05012012*004*]
-			else  m_RecalLenButton.ShowWindow(SW_HIDE); //[cjf***05052012*008*] 
+			else  m_RecalLenButton.ShowWindow(SW_HIDE); //[cjf***05052012*008*]
 
-			if (m_ShowPreopCorneal)   CorneaPreopAxes();//[cjf***05012012*004*]  
-			if (m_ShowPreopInternal)  InternalPreopAxes();//[cjf***05012012*004*]  
-			if (m_ShowPreopEntireEye) EyePreopAxes();//[cjf***05012012*004*]  
+			if (m_ShowPreopCorneal)   CorneaPreopAxes();//[cjf***05012012*004*]
+			if (m_ShowPreopInternal)  InternalPreopAxes();//[cjf***05012012*004*]
+			if (m_ShowPreopEntireEye) EyePreopAxes();//[cjf***05012012*004*]
 			if (m_PostopCorneal)      CorneaPostopAxes();//[cjf***05012012*004*]
 			if (m_PostopInternal)     InternalPostopAxes();//[cjf***05012012*004*]
-			if (m_PostopEntireEye)    EyePostopAxes();//[cjf***05012012*004*]   
+			if (m_PostopEntireEye)    EyePostopAxes();//[cjf***05012012*004*]
 
 			Lens2();
 			ICLPostopAxes();
@@ -2009,7 +2009,7 @@ int  CPlanWnd::SmallAng(int a0, int a1)
 ////[520]
 //void CPlanWnd::OnLButtonDblClk(uint nFlags, CPoint Point)
 //{
-//  GetParent()->PostMessage(WM_NOTIFY_LBTN_DBCLK, (WPARAM)0, (LPARAM)0);    
+//  GetParent()->PostMessage(WM_NOTIFY_LBTN_DBCLK, (WPARAM)0, (LPARAM)0);
 //}
 ////[520]
 
@@ -2111,14 +2111,14 @@ void CPlanWnd::OnMouseWheel(uint nFlags, short zDelta, CPoint Point)
 
 	Grid();
 	if (m_ShowIncision)       Incision();//[cjf***05012012*004*]
-	else  m_RecalLenButton.ShowWindow(SW_HIDE); //[cjf***05052012*008*] 
+	else  m_RecalLenButton.ShowWindow(SW_HIDE); //[cjf***05052012*008*]
 
-	if (m_ShowPreopCorneal)   CorneaPreopAxes();//[cjf***05012012*004*]  
-	if (m_ShowPreopInternal)  InternalPreopAxes();//[cjf***05012012*004*]  
-	if (m_ShowPreopEntireEye) EyePreopAxes();//[cjf***05012012*004*]  
+	if (m_ShowPreopCorneal)   CorneaPreopAxes();//[cjf***05012012*004*]
+	if (m_ShowPreopInternal)  InternalPreopAxes();//[cjf***05012012*004*]
+	if (m_ShowPreopEntireEye) EyePreopAxes();//[cjf***05012012*004*]
 	if (m_PostopCorneal)      CorneaPostopAxes();//[cjf***05012012*004*]
 	if (m_PostopInternal)     InternalPostopAxes();//[cjf***05012012*004*]
-	if (m_PostopEntireEye)    EyePostopAxes();//[cjf***05012012*004*]   
+	if (m_PostopEntireEye)    EyePostopAxes();//[cjf***05012012*004*]
 
 	Lens2();
 	ICLPostopAxes();
@@ -2178,7 +2178,7 @@ void CPlanWnd::OnNextButtonClicked()
 	GetParent()->PostMessage(WM_UPDATE_INFO, (WPARAM)0, (LPARAM)0);
 	Repaint();
 }
-//[cjf***05072012] 
+//[cjf***05072012]
 
 //**********************************************************************************
 void CPlanWnd::FindClearLimbus(CEyeImage* OriImage, real LastLimbuX, real LastLimbuY, real LastLimbuR)

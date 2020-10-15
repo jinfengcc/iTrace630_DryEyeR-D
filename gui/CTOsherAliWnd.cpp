@@ -671,8 +671,8 @@ void CCTOsherAliWnd::AlignLineDeg(int a1, int a2, real Ali_Rum1, real Ali_Rum2)
 	CString s;
 	s.Format(_T("%i°"), ADis);
 
-	int amin = min(a01, a02);
-	int amax = max(a01, a02);
+	int amin = std::min(a01, a02);
+	int amax = std::max(a01, a02);
 	int a03 = (amin + amax) / 2;
 
 	if (amax - amin > 180) { // лежат по разные стороны нуля

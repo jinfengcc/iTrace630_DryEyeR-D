@@ -8,8 +8,9 @@ Description:   Create a  Dicom class (use DCMTK) for no combo activation (save s
 #include "StdAfx.h"
 #include "DcmtkDicom.h"
 
-#include "DCMTK\dcmdata\dctk.h"  
-#include "DCMTK\dcmimgle\dcmimage.h"  
+#undef UNICODE
+#include <dcmtk\dcmdata\dctk.h>
+#include <DCMTK\dcmimgle\dcmimage.h>
 
 //***************************************************************************************
 
@@ -50,6 +51,8 @@ BOOL CDcmtkDicom::SaveDcmtkDicomFile(CString fileName, CDicomInfo DicomInfo, BYT
 //	dataset->putAndInsertString(DCM_SOPClassUID, UID_HardcopyColorImageStorage);
 	dataset->putAndInsertString(DCM_SOPInstanceUID, dcmGenerateUniqueIdentifier(uid, SITE_INSTANCE_UID_ROOT));
 	// Done
+
+	auto DCM_OtherPatientIDs = DCM_RETIRED_OtherPatientIDs;
 
 	// Patient
 	G_As = DicomInfo.m_Patient_Name;
@@ -143,7 +146,7 @@ BOOL CDcmtkDicom::SaveDcmtkDicomFile(CString fileName, CDicomInfo DicomInfo, BYT
 	//Done
 
 	G_As = fileName;
-	OFCondition status = fileformat.saveFile(G_As, EXS_LittleEndianImplicit, EET_UndefinedLength, EGL_withoutGL);
+	OFCondition status = fileformat.saveFile(G_As.GetString(), EXS_LittleEndianImplicit, EET_UndefinedLength, EGL_withoutGL);
 	if (status.bad())
 	{
 		::Error("Sorry, the saveing of  the DICOM format is failed");

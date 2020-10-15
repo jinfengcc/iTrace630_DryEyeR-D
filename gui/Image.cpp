@@ -1534,7 +1534,7 @@ int CEyeImage::FindLargestGroup(Matrix<int>& table, int index_to_look, int index
 	Matrix<int> table2;
 	table2 = table;
 
-	int index_bad = min(index_to_look, index_to_set) - 1;
+	int index_bad = std::min(index_to_look, index_to_set) - 1;
 
 	int rem = 1;
 	while (rem) {

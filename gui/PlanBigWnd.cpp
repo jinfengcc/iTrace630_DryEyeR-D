@@ -733,8 +733,8 @@ void CPlanBigWnd::Caliper()
 		m_MemDC.DrawArc(x, y, r, w, a1, a2, m_CaliperColor);
 
 		// текст
-		int amin = min(aw[i], ar[i]);
-		int amax = max(aw[i], ar[i]);
+		int amin = std::min(aw[i], ar[i]);
+		int amax = std::max(aw[i], ar[i]);
 		int a0 = (amin + amax) / 2;
 		if (amax - amin > 180) { // лежат по разные стороны нуля
 			a0 = (a0 + 180) % 360;
@@ -836,8 +836,8 @@ void CPlanBigWnd::AlignLineDeg(int a1, int a2, real Ali_Rum1, real Ali_Rum2, rea
 	CString s;
 	s.Format(_T("%i°"), ADis);
 
-	int amin = min(a01, a02);
-	int amax = max(a01, a02);
+	int amin = std::min(a01, a02);
+	int amax = std::max(a01, a02);
 	int a03 = (amin + amax) / 2;
 
 	if (amax - amin > 180) { // лежат по разные стороны нуля
@@ -895,8 +895,8 @@ void CPlanBigWnd::AlignLineDeg(int a1, int a2, real Ali_Rum1, real Ali_Rum2, rea
 		ADis = SmallAng(oria1, oria2);
 		s.Format(_T("%i°"), ADis);
 
-		amin = min(a01, a02);
-		amax = max(a01, a02);
+		amin = std::min(a01, a02);
+		amax = std::max(a01, a02);
 		a03 = (amin + amax) / 2;
 
 		if (amax - amin > 180) { // лежат по разные стороны нуля

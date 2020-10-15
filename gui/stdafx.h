@@ -4,70 +4,6 @@
 
 //***************************************************************************************
 
-#if defined _M_IX86  
-#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.1.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")  
-#elif defined _M_X64  
-#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.1.0' processorArchitecture='amd64' publicKeyToken='6595b64144ccf1df' language='*'\"")  
-#else  
-#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.1.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")  
-#endif  
-
-
-////DCMTK 
-#pragma comment(lib,"netapi32.lib")
-
-#pragma comment(lib,"wsock32.lib")
-
-#pragma comment(lib,"ofstd.lib")
-
-#pragma comment(lib,"oflog.lib")
-
-#pragma comment(lib,"dcmdata.lib")
-
-#pragma comment(lib,"dcmimgle.lib")
-
-#pragma comment(lib,"dcmimage.lib")
-
-#pragma comment(lib,"ijg8.lib")
-
-#pragma comment(lib,"ijg12.lib")
-
-#pragma comment(lib,"ijg16.lib")
-
-#pragma comment(lib,"dcmjpeg.lib")
-
-#pragma comment(lib,"dcmnet.lib")
-
-#pragma comment(lib,"dcmdsig.lib")
-
-#pragma comment(lib,"dcmsr.lib")
-
-#pragma comment(lib,"dcmtls.lib")
-
-#pragma comment(lib,"dcmpstat.lib")
-
-#pragma comment(lib,"dcmwlm.lib")
-
-#pragma comment(lib,"dcmqrdb.lib")
-
-#pragma comment(lib,"dcmtkeay.lib")
-
-#pragma comment(lib,"dcmtkssl.lib")
-
-#pragma comment(lib,"iconv.lib")
-
-#pragma comment(lib,"libtiff.lib")
-
-#pragma comment(lib,"libpng.lib")
-
-#pragma comment(lib,"libxml2.lib")
-
-#pragma comment(lib,"zlib.lib")    
- 
-//DCMTK  
-
-//***************************************************************************************
-
 //6.2.0
 #ifndef UNICODE
 #define UNICODE
@@ -79,12 +15,12 @@
 //6.2.0
 //***************************************************************************************
 
-#define _CRT_SECURE_NO_WARNINGS
 #define VC_EXTRALEAN
-#define WINVER           0x0501
-#define _WIN32_WINNT     0x0501
-#define _WIN32_WINDOWS   0x0410
-#define _WIN32_IE        0x0600
+// #define _CRT_SECURE_NO_WARNINGS
+// #define WINVER           0x0501
+// #define _WIN32_WINNT     0x0501
+// #define _WIN32_WINDOWS   0x0410
+// #define _WIN32_IE        0x0600
 
 //***************************************************************************************
 
@@ -96,11 +32,18 @@
 #include <Math.h>
 #include <Float.h>
 #include <Gl\Gl.h>     // OpenGL
-#include <Gl\GlAux.h>  // OpenGL
+//#include <Gl\GlAux.h>  // OpenGL
 #include <Dbt.h>       // device arrival/removal
-#include <Gdiplus.h>   // GDI+
 #include <Shlwapi.h>   // PathFileExists
 #include <htmlhelp.h>  // 530 for help system
+
+#include <algorithm>
+namespace Gdiplus {
+  using std::min;
+  using std::max;
+}
+
+#include <Gdiplus.h>   // GDI+
 
 //***************************************************************************************
 
@@ -174,12 +117,12 @@ typedef double           real;
 #define WM_SOLO_HYPELINK       0x8204
 #define WM_SLIDER_LCLICK       0x8205
 #define WM_OKULIX_LCLICK       0x8206
-#define WM_SHOW_SIMPRMS        0x8207// Show Simplified Rms GUI 
+#define WM_SHOW_SIMPRMS        0x8207// Show Simplified Rms GUI
 #define WM_ONOFF_POS_CHANGED   0x8208// Move OnOff Btn
 #define WM_SELBTN_POS_CHANGED   0x8209// Move OnOff Btn
 
 //T: Entire eye   C:Corneal   I:internal
-#define TYPE_TEYE  1//CWFSingleSumWnd(Angle K/A) default 
+#define TYPE_TEYE  1//CWFSingleSumWnd(Angle K/A) default
 #define TYPE_TEYC  2
 #define TYPE_TSGN  3
 #define TYPE_TRSD  4
@@ -261,11 +204,11 @@ typedef double           real;
 
 #define TYPE_DEPF  31   //WF Depth of focus 531
 
-#define TYPE_TOAL  32   //WF/CT Toric alignment 
+#define TYPE_TOAL  32   //WF/CT Toric alignment
 
-#define TYPE_NEVI  33  //6.2.0 WF Near Vision 
+#define TYPE_NEVI  33  //6.2.0 WF Near Vision
 
-#define DIOPTERS    0 
+#define DIOPTERS    0
 #define MILLIMETERS 1
 
 //6.2.0 For laser safty detection
@@ -320,7 +263,7 @@ extern GUID  OS_SelectExamsID[1024];// if it is averaged exam, maintain the GUID
 extern int   OS_AverageExam2;//For compare display
 extern GUID  OS_SelectExamsID2[1024];//For compare display
 
-extern int   PresbiaMode;//Presbia 1:Normal; 2: Presbia64; 3:Presbia256; 
+extern int   PresbiaMode;//Presbia 1:Normal; 2: Presbia64; 3:Presbia256;
 extern int   PresbiaModeOrder;//Presbia Order  12 : Normal - Presbia64; 13: Normal - Presbia256 etc.
 
 extern BOOL  Normal64Mode;
@@ -353,7 +296,7 @@ BOOL  NotRealNum(CString inputStr);// check the str is real number or not
 
 BOOL  NotIntNum(CString inputStr);// check the str is int number or not
 
-int   GetDegree(real x, real y);// for DLI 
+int   GetDegree(real x, real y);// for DLI
 
 void  CopyFolder(CString OriFolder, CString DestFolder);// For folders copy
 

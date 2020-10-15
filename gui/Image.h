@@ -4,7 +4,7 @@
 
 //***************************************************************************************
 
-#include "GlobalFunctions.h"
+// #include "GlobalFunctions.h"
 
 class CBasicImage
 {
@@ -39,23 +39,23 @@ public:
 		m_RGBData(y, 3 * x + 2) = r;
 	}
 
-	void SetGAt(int x, int y, int g) 
-	{ 
+	void SetGAt(int x, int y, int g)
+	{
 		//MatirxTest(x, y, m_w, m_h, "1");
-		ASSERT(x >= 0 && x < m_w && y >= 0 && y < m_h); 
-		m_RGBData(y, 3 * x + 1) = g; 
+		ASSERT(x >= 0 && x < m_w && y >= 0 && y < m_h);
+		m_RGBData(y, 3 * x + 1) = g;
 	}
-	void SetBAt(int x, int y, int b) 
-	{ 
+	void SetBAt(int x, int y, int b)
+	{
 		//MatirxTest(x, y, m_w, m_h, "2");
-		ASSERT(x >= 0 && x < m_w && y >= 0 && y < m_h); 
-		m_RGBData(y, 3 * x) = b; 
+		ASSERT(x >= 0 && x < m_w && y >= 0 && y < m_h);
+		m_RGBData(y, 3 * x) = b;
 	}
 	void SetAAt(int x, int y, int a)
-	{ 
+	{
 		//MatirxTest(x, y, m_w, m_h, "3");
-		ASSERT(x >= 0 && x < m_w && y >= 0 && y < m_h); 
-		m_AData(y, x) = a; 
+		ASSERT(x >= 0 && x < m_w && y >= 0 && y < m_h);
+		m_AData(y, x) = a;
 	}
 };
 
@@ -144,8 +144,8 @@ public:
 	real m_BlurryValue; //[cjf***03302012], the boundary rms to judge wether the pupil image is blurry
 	BOOL m_Find_BL_Val; //[cjf***03302012], Find the Blurry value;
 	int m_Loop_Time;    //[cjf***03302012], The loop times used to find the BlurryValue;
-	void CheckClear(int timeLeft);//[cjf***04042012], 
-	BOOL m_pu_clear; //[cjf***04042012], 
+	void CheckClear(int timeLeft);//[cjf***04042012],
+	BOOL m_pu_clear; //[cjf***04042012],
 
 	BOOL GetRGBAtUm(real x_um, real y_um, real* pR, real* pG, real* pB);
 
@@ -178,8 +178,8 @@ public:
 	int  m_ve0_y;
 	BOOL m_la_ok;
 	int  m_la_x;
-	int  m_la_Prior_x[30];//[record the last 50 laser x places of first laser reflection 
-	int  m_la_Ok_Times;//How many times the first laser spot been found 
+	int  m_la_Prior_x[30];//[record the last 50 laser x places of first laser reflection
+	int  m_la_Ok_Times;//How many times the first laser spot been found
 	BOOL m_la_RtoC_OK;//Is the laser reflection are from right to the center;
 	BOOL m_Target_ok;
 
