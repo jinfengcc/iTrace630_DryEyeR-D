@@ -5,6 +5,7 @@
 //***************************************************************************************
 
 #include "Data.h"
+#include <libs/CommonLib/Singleton.h>
 
 //***************************************************************************************
 
@@ -129,11 +130,14 @@ void ResetCalibration(CALIBRATION* pCalibration);
 
 //***************************************************************************************
 
-class CHW
+class CHW : public Singleton<CHW>
 {
-public:
+  friend class Singleton<CHW>;
 
 	CHW();
+
+public:
+
 	~CHW();
 
 	const static int m_VideoWidth;
@@ -301,10 +305,18 @@ private:
 	TDllSetAOD                                     DllSetAOD;
 	TDllReadLAD                                    DllReadLAD;
 	TDllIsLaserSafetyEnabled                       DllIsLaserSafetyEnabled;
+
+public:
+  static CHW &TheOneAndOnly()
+  {
+    return *Instance();
+  }
 };
 
 //***************************************************************************************
 
-extern CHW HW;
+// extern CHW HW;
+
+#define HW CHW::TheOneAndOnly()
 
 //***************************************************************************************

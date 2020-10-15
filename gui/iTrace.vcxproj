@@ -282,6 +282,8 @@
     <ClCompile Include="ActivationDlg.cpp" />
     <ClCompile Include="AlignmentDlg.cpp" />
     <ClCompile Include="AODToolDlg.cpp" />
+    <ClCompile Include="AppLocalClassFactory.cpp" />
+    <ClCompile Include="AppVersion.cpp" />
     <ClCompile Include="Btn.cpp" />
     <ClCompile Include="CalDlg.cpp" />
     <ClCompile Include="ChartDlg.cpp" />
@@ -470,6 +472,7 @@
     <ClInclude Include="ActivationDlg.h" />
     <ClInclude Include="AlignmentDlg.h" />
     <ClInclude Include="AODToolDlg.h" />
+    <ClInclude Include="AppVersion.h" />
     <ClInclude Include="Btn.h" />
     <ClInclude Include="BusyCursor.h" />
     <ClInclude Include="CalDlg.h" />

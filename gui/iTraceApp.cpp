@@ -64,8 +64,8 @@ CTempSettings    TempSettings;
 CNewSettings     NewSettings;
 C531NewSettings  OldNewSettings;
 C601NewSettings  Old601NewSettings;
-CDB              DB;
-CHW              HW;
+//CDB              DB;
+//CHW              HW;
 CiTraceApp       App;
 CBugTest         BugTest;
 
@@ -82,6 +82,7 @@ BOOL CiTraceApp::InitInstance()
 
 	ControlSettings();
 
+  CHW::Create();
 	BOOL IsHardwareOK = ::HW.IsConnected();
 
 	//Open camera
@@ -102,6 +103,7 @@ BOOL CiTraceApp::InitInstance()
 	//COM library is initialized with COINIT_APARTMENTTHREADED after the following call
 
 	//Database connection
+  CDB::Create();
 	::DB.LocalConnect(::Settings.m_OpenDBAsReadOnly); //6.2.0  create "dicom" filed in patienset table
 	::DB.Disconnect();
 	::DB.Connect(::Settings.m_OpenDBAsReadOnly);
@@ -212,7 +214,7 @@ void CiTraceApp::Registration()
 	CINIParser IniPar;
 	BOOL IniFileExist = TRUE;
 
-	//Get System folders 	
+	//Get System folders
 	CTraceyRegKey Key_Read(HKEY_LOCAL_MACHINE, MAIN_REG_KEY);
 	CTraceyRegKey Key_Read1(HKEY_CURRENT_USER, MAIN_REG_KEY);
 
@@ -264,7 +266,7 @@ void CiTraceApp::Registration()
 		CString WaveTouchFolder = "";
 		CString SettingsFolder = "";
 		CString ImportFormat = "";
-		CString ScreenshotFolder = "";		
+		CString ScreenshotFolder = "";
 
 		CString keyStr[22];
 		keyStr[0] = "Export Excel Folder";
@@ -305,7 +307,7 @@ void CiTraceApp::Registration()
 		{
 			CString IniSec = "Tracey ";
 
-			//Read from 610 ini				
+			//Read from 610 ini
 			ExcelFolderName = IniPar.GetStrKey(IniSec, keyStr[0], Ini610);
 
 			//6.2.0 New Bug
@@ -313,7 +315,7 @@ void CiTraceApp::Registration()
 			{
 				IniSec = "Tracey 6.1.0";
 
-				//Read from 610 ini				
+				//Read from 610 ini
 				ExcelFolderName = IniPar.GetStrKey(IniSec, keyStr[0], Ini610);//6.2.0 New Bug
 
 				CString Type = IniPar.GetStrKey(IniSec, keyStr[1], Ini610);
@@ -354,7 +356,7 @@ void CiTraceApp::Registration()
 			{
 				CString IniSec = "Tracey ";
 
-				//Read from 610 ini				
+				//Read from 610 ini
 				ExcelFolderName = IniPar.GetStrKey(IniSec, keyStr[0], Ini610);
 
 				//6.2.0 New Bug
@@ -362,7 +364,7 @@ void CiTraceApp::Registration()
 				{
 					IniSec = "Tracey 6.1.0";
 
-					//Read from 610 ini				
+					//Read from 610 ini
 					ExcelFolderName = IniPar.GetStrKey(IniSec, keyStr[0], Ini610);//6.2.0 New Bug
 
 					CString Type = IniPar.GetStrKey(IniSec, keyStr[1], Ini610);
@@ -533,7 +535,7 @@ void CiTraceApp::Registration()
 			::GetLocalTime(&CurTime);
 			CString Def_FileName;
 			InstDate.Format(_T("%02i%02i%04i"), CurTime.wMonth, CurTime.wDay, CurTime.wYear);
-		}		
+		}
 		//Check registration values Done
 
 		//Write registration values to 611 ini
@@ -563,7 +565,7 @@ void CiTraceApp::Registration()
 		IniPar.SetStrKey(IniSection, keyStr[19], "OPM � Ophthalmic Mapping", IniPath);
 
 		IniPar.SetStrKey(IniSection, keyStr[21], InstDate, IniPath);
-		//Write registration values to 611 ini Done		
+		//Write registration values to 611 ini Done
 	}
 	else
 	{
@@ -575,7 +577,7 @@ void CiTraceApp::Registration()
 		}
 
 
-		CString InstDate = IniPar.GetStrKey(IniSection, "Inst Data", IniPath);	
+		CString InstDate = IniPar.GetStrKey(IniSection, "Inst Data", IniPath);
 		if (InstDate == "")
 		{
 			SYSTEMTIME CurTime;
@@ -774,14 +776,14 @@ void CiTraceApp::ControlSettings()
 	}
 
 	if (!::PathFileExists(MAIN_DIR + "\\newsettings620")) // New
-	{		
+	{
 
 		SetDef_DysFun();
 	}
 
 	if (!::PathFileExists(MAIN_DIR + "\\settings620")) //6.2.0
 	{
-		SetNew620GUI();		
+		SetNew620GUI();
 	}
 
 	if (::NewSettings.m_DysfuncSettings[0].m_Type <= 0 || ::NewSettings.m_DysfuncSettings[0].m_Type > 52)//First m_OWFCTSettings setting loading
@@ -881,7 +883,7 @@ void  CiTraceApp::ControlSettings2()
 
 		::Settings.m_DefaultCTSum = 11;
 	}
-	
+
 	//WFCT
 	BOOL SetWFCTShow = FALSE;
 	for (int i = 0; i < 9; i++)
@@ -904,7 +906,7 @@ void  CiTraceApp::ControlSettings2()
 
 		if (m_isCombo)
 		{
-			::NewSettings.m_WFCTNewSumShow[0] = TRUE;//	transformed 'Angle K/A'			
+			::NewSettings.m_WFCTNewSumShow[0] = TRUE;//	transformed 'Angle K/A'
 			::NewSettings.m_WFCTNewSumShow[1] = TRUE;//	Toric Alignment
 
 			::NewSettings.m_WFCTSumShow[3] = FALSE;//
@@ -1025,7 +1027,7 @@ void  CiTraceApp::SetDef_IOLSEL()
 //Set the default IOL Selection setting
 void  CiTraceApp::SetDef_AstigSou()
 {
-	//Astiagmatism source 530 
+	//Astiagmatism source 530
 	::NewSettings.m_InAstigSettings[0] = ::Settings.m_IDsmSettings[2][0];
 	::NewSettings.m_InAstigSettings[1] = ::Settings.m_IDsmSettings[2][1];
 	::NewSettings.m_InAstigSettings[2] = ::Settings.m_IDsmSettings[2][2];
@@ -1091,7 +1093,7 @@ void  CiTraceApp::SetDef_DysFun()
 			::NewSettings.m_DysfuncSettings[i].SetDefaultScale();
 			CScale* pScale = ::NewSettings.m_DysfuncSettings[i].GetScale();
 			pScale->m_Step = 0.5;
-			::NewSettings.m_DysfuncSettings[i].SetDefaultColors(1);			
+			::NewSettings.m_DysfuncSettings[i].SetDefaultColors(1);
 		}
 
 		::NewSettings.m_DysfuncSettings[i].m_Ltr = 0;
@@ -1105,7 +1107,7 @@ void  CiTraceApp::SetDef_DysFun()
 	::NewSettings.m_DysfuncSettings[3].m_MapShowSimKAxes = 1;
 
 	//Dysfunctional lens patient
-	::NewSettings.m_DysPtSettings[0] = ::NewSettings.m_DysfuncSettings[1];	
+	::NewSettings.m_DysPtSettings[0] = ::NewSettings.m_DysfuncSettings[1];
 	::NewSettings.m_DysPtSettings[0].m_SimplifiedWFPanel = 1;
 	::NewSettings.m_DysPtSettings[0].m_Type = TYPE_CLTR;
 
@@ -1144,7 +1146,7 @@ void  CiTraceApp::SetDef_DysFun()
 //6.2.0 Set the default Dysfunctional Lens Analysis
 void  CiTraceApp::SetNew620GUI()
 {
-	//6.2.0  from WF&CT Visual acuity Display to MTF		
+	//6.2.0  from WF&CT Visual acuity Display to MTF
 	::Settings.m_IDsmSettings[2][0].m_Method3D = FALSE;
 	::Settings.m_IDsmSettings[2][0].m_MapShowSolidSurface = TRUE;
 	::Settings.m_IDsmSettings[2][0].m_MapShowWireMesh = TRUE;
@@ -1152,7 +1154,7 @@ void  CiTraceApp::SetNew620GUI()
 	::Settings.m_IDsmSettings[2][0].m_ZoneRadiusUm = 5000;
 	::Settings.m_IDsmSettings[2][0].m_Piston = TRUE;
 	::Settings.m_IDsmSettings[2][0].m_Tilt = TRUE;
-	
+
 	::Settings.m_IDsmSettings[2][0].m_Type = TYPE_IMTF;
 	::Settings.m_IDsmSettings[2][1].m_Type = TYPE_CMTF;
 	::Settings.m_IDsmSettings[2][2].m_Type = TYPE_TMTF;
@@ -1329,7 +1331,7 @@ void  CiTraceApp::SetDef_SoloSettings()
 	//Done
 
 	//Aberration Analysis Settings
-	::NewSettings.m_WFSoloSettings[1][0].m_Type = 10;//Wavefront map 
+	::NewSettings.m_WFSoloSettings[1][0].m_Type = 10;//Wavefront map
 	::NewSettings.m_WFSoloSettings[1][0].m_Mask.SetType(MASK_TOTAL);
 	::NewSettings.m_WFSoloSettings[1][0].m_SizeSmall = TRUE;
 	::NewSettings.m_WFSoloSettings[1][0].m_Piston = FALSE;
@@ -1356,7 +1358,7 @@ void  CiTraceApp::SetDef_SoloSettings()
 	::NewSettings.m_WFSoloSettings[1][0].m_LtrLine = 70;
 	::NewSettings.m_WFSoloSettings[1][0].m_LtrOrientation = 0;
 
-	::NewSettings.m_WFSoloSettings[1][1].m_Type = 10;//Wavefront map 
+	::NewSettings.m_WFSoloSettings[1][1].m_Type = 10;//Wavefront map
 	::NewSettings.m_WFSoloSettings[1][1].m_Mask.SetType(MASK_HO_TOTAL);
 	::NewSettings.m_WFSoloSettings[1][1].m_SizeSmall = TRUE;
 	::NewSettings.m_WFSoloSettings[1][1].m_Piston = FALSE;
@@ -1385,7 +1387,7 @@ void  CiTraceApp::SetDef_SoloSettings()
 
 	::NewSettings.m_WFSoloSettings[1][2].m_Type = TYPE_TRMS;//TYPE_TMTF;
 	::NewSettings.m_WFSoloSettings[1][2].m_Mask.SetType(MASK_TOTAL);
-	::NewSettings.m_WFSoloSettings[1][2].m_RMSIndividual = FALSE;//Combined 
+	::NewSettings.m_WFSoloSettings[1][2].m_RMSIndividual = FALSE;//Combined
 	::NewSettings.m_WFSoloSettings[1][2].m_SizeSmall = TRUE;
 	::NewSettings.m_WFSoloSettings[1][2].m_Piston = FALSE;
 	::NewSettings.m_WFSoloSettings[1][2].m_Tilt = FALSE;
@@ -1438,7 +1440,7 @@ void  CiTraceApp::addNewSetting(int type)
 
 	if (type <= 1)
 	{
-		//Excel Export	 
+		//Excel Export
 		for (int i = 0; i < 89; i++)
 		{
 			if (i < 53) ::Settings.m_EXCEL_WF_SETS[i] = '0';
@@ -1603,7 +1605,7 @@ void  CiTraceApp::SetDef_TaskSettings()
 				//Check WF/CT Visual Acuity Done
 			}
 
-			//Still need set the TYPE_DYSF Setting?			
+			//Still need set the TYPE_DYSF Setting?
 		}
 		else  if (i == 1)
 		{
@@ -1791,7 +1793,7 @@ void CiTraceApp::SetDefTask_CTSU(CWndSettings InWndSetting[4])
 	InWndSetting[3] = ::Settings.m_CSsmSettings[0][3];
 
 	InWndSetting[0].m_Type = 31; //Axial map       TYPE_CAXM
-	InWndSetting[1].m_Type = 34; //z elevation     TYPE_CELM 
+	InWndSetting[1].m_Type = 34; //z elevation     TYPE_CELM
 	InWndSetting[2].m_Type = 32; //local Roc  map  TYPE_CTNM
 	InWndSetting[3].m_Type = 33; //refrective map  TYPE_CRFM
 
@@ -1830,7 +1832,7 @@ void CiTraceApp::SetDefTask_CTKE(CWndSettings InWndSetting[4])
 	InWndSetting[3] = ::Settings.m_CSsmSettings[1][3];
 
 	InWndSetting[0].m_Type = 51; //Axial map       TYPE_CAXM
-	InWndSetting[1].m_Type = 34; //z elevation     TYPE_CELM 
+	InWndSetting[1].m_Type = 34; //z elevation     TYPE_CELM
 	InWndSetting[2].m_Type = 32; //local Roc  map  TYPE_CTNM
 	InWndSetting[3].m_Type = 33; //refrective map  TYPE_CRFM
 
@@ -2085,8 +2087,8 @@ void  CiTraceApp::RzdcxActivation()
 	CINIParser IniPar;
 
 	CString RzdcxAct = IniPar.GetStrKey(IniSection, "RZDCX ACT", IniPath);	//6.2.0 ini registration
-	
-	if (RzdcxAct == "0")	
+
+	if (RzdcxAct == "0")
 	{
 A:		::Info("The Dicom Toolkit needs to be activated for COMBO DICOM Version.");
 
@@ -2119,7 +2121,7 @@ A:		::Info("The Dicom Toolkit needs to be activated for COMBO DICOM Version.");
 		ShExecInfo.hInstApp = NULL;
 
 		ShellExecuteEx(&ShExecInfo);
-		
+
 		WaitForSingleObject(ShExecInfo.hProcess, INFINITE);
 
 		//Check the RZDXC.License file and copy it
@@ -2131,7 +2133,7 @@ A:		::Info("The Dicom Toolkit needs to be activated for COMBO DICOM Version.");
 			{
 				CString DesFileName = "C:\\RZDCX\\RZDCX.license";
 
-				CopyFile(File64Name, DesFileName, TRUE);				
+				CopyFile(File64Name, DesFileName, TRUE);
 			}
 		}
 		else
