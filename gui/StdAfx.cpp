@@ -22,12 +22,10 @@
 //***************************************************************************************
 //***************************************************************************************
 
-const   uint SOFTWARE_VERSION_3 = 0x03000000;
-const   uint SOFTWARE_VERSION_4 = 0x04000000;
-// <summary>
-// The software version
-// </summary>
-const   uint SOFTWARE_VERSION = 0x06214116;// V V V V Y M D D
+//*** Moved to AppVersion.cpp
+//const   uint SOFTWARE_VERSION_3 = 0x03000000;
+//const   uint SOFTWARE_VERSION_4 = 0x04000000;
+//const   uint SOFTWARE_VERSION = 0x06214116;// V V V V Y M D D
 
 real_t    COS[360];
 real_t    SIN[360];

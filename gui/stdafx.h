@@ -236,9 +236,10 @@ typedef enum
 
 //***************************************************************************************
 
-extern const uint SOFTWARE_VERSION_3;
-extern const uint SOFTWARE_VERSION_4;
-extern const uint SOFTWARE_VERSION;
+#include "AppVersion.h"
+//extern const uint SOFTWARE_VERSION_3;
+//extern const uint SOFTWARE_VERSION_4;
+//extern const uint SOFTWARE_VERSION;
 
 extern real_t COS[360];
 extern real_t SIN[360];
