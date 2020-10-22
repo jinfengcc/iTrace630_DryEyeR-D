@@ -95,6 +95,23 @@ void CCTAcquisition::Main()
 		::HW.ISVideoCameraOn = true;
 	}
 
+	// cjf 10212020 test for slow gain
+	int St     = (int)clock();
+	int FrameTimes = 0;
+	while (TRUE) {
+		m_pHW->StartTransferringVideoFrame();
+		 m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 1, 0);
+
+		// m_pHW->FinishTransferringVideoFrame();
+
+		 FrameTimes++;
+
+		 if ((FrameTimes >= 40)) {
+		break;
+		}
+	 }
+	 // cjf 10212020 test for slow gain
+
 	m_TriLaserOn = FALSE;
 	m_AlignmentStatus = 0;
 	m_ve0_ok = FALSE;
@@ -212,6 +229,7 @@ void CCTAcquisition::Main()
 		for (int i = 0; i < 4; i++)
 		{
 			m_pHW->StartTransferringVideoFrame();
+			m_pHW->GetRGBData();//cjf10202020 test for laser is still on when capture
 			m_pHW->FinishTransferringVideoFrame();
 		}
 	}
@@ -253,8 +271,12 @@ void CCTAcquisition::Main()
 
 	m_CTExam.m_Image.m_RGBData.Create(m_CTExam.m_Image.m_h, LINE_SIZE(m_CTExam.m_Image.m_w), m_pHW->GetRGBData());
 
+
+
+
 	//color image
 	::TempSettings.Temp_ColorImgCpted = FALSE;
+
 	//::NewSettings.m_Adjust_CT is used to rings tool setting   
 	if (::Settings.m_Cap_ColorImg && !::NewSettings.m_Adjust_CT)
 	{
@@ -289,6 +311,7 @@ void CCTAcquisition::Main()
 			m_BackupBrightness = m_pHW->m_Calibration.WFVideo2Settings.Brightness;
 
 			m_pHW->StartTransferringVideoFrame();
+			m_pHW->GetRGBData();//cjf10212020
 			m_pHW->FinishTransferringVideoFrame();
 
 			CEyeImage TestImage;
@@ -393,7 +416,7 @@ void CCTAcquisition::Main()
 			m_pHW->TurnWhiteLEDsOn();
 
 			//530
-			while (1)
+			while (TRUE)
 			{
 				m_pHW->StartTransferringVideoFrame();
 				if (m_NumFramesReceived > 20)
@@ -434,13 +457,15 @@ void CCTAcquisition::Main()
 
 				if ((m_ToDo == ACQUIRE || m_pHW->IsButtonPressed()))
 				{
-					ulong StartTime = clock();
-					while (clock() - StartTime < (ulong)m_pHW->m_Calibration.ColorImageDelay)
-					{
-						m_pHW->StartTransferringVideoFrame();
-						m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 0, 1);//Transform the lParam = 1
-						m_pHW->FinishTransferringVideoFrame();
-					}
+					//cjf 10222020 do not allow movement after acquire? why we need this in 6.2.1
+					//ulong StartTime = clock();
+					//while (clock() - StartTime < (ulong)m_pHW->m_Calibration.ColorImageDelay)
+					//{
+					//	m_pHW->StartTransferringVideoFrame();
+					//	m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 0, 1);//Transform the lParam = 1
+					//	m_pHW->FinishTransferringVideoFrame();
+					//}
+					// cjf 10222020 do not allow movement after acquire? why we need this in 6.2.1
 
 					m_pHW->TurnWhiteLEDsOff();
 					m_pHW->TurnInfraredLEDsOff();

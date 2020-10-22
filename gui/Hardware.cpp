@@ -6,6 +6,7 @@
 #include "CubicSpline.h"
 
 #include "WinUser.h"
+	#include <libs\LoggingLib\TkTraceWin.h>
 //***************************************************************************************
 //***************************************************************************************
 //***************************************************************************************
@@ -841,6 +842,7 @@ void CHW::ApplyCurrentVideoBrightness()
   if (m_hiresCamera->Connected()) {
     int hdCam = m_pCurrentVideoSettings->Brightness;
     m_hiresCamera->SetBrightness(hdCam);
+   // m_hiresCamera->SetBrightness(100);
   }
 
 	if (m_hDLL == NULL) return;
@@ -1002,6 +1004,37 @@ void CHW::FinishTransferringVideoFrame()
 	Swap(m_pTVideoFrame, m_pDVideoFrame);
 	m_DFrameProcessed = FALSE;
 }
+
+//***************************************************************************************
+
+//// cjf10212020 test
+//void CHW::AdjustHirCamer(int Type)
+//{
+//  if (m_hiresCamera->Connected())
+//  {
+//    switch (Type) 
+//	{
+//    case WFEXAM:
+//      m_pCurrentVideoSettings = &m_Calibration.WFVideoSettings;
+//      ApplyCurrentVideoBrightness();
+//      ApplyCurrentVideoContrast();
+//      ApplyCurrentVideoHue();
+//      ApplyCurrentVideoSaturation();
+//      TurnInfraredLEDsOn();
+//      TurnAccommodationTargetOn();
+//      for (int i = 0; i < 300; i++) {
+//
+//        ::HW.StartTransferringVideoFrame();
+//        ::HW.GetRGBData();
+//        ::HW.FinishTransferringVideoFrame();
+//      }
+//      break;
+//
+//    case CTEXAM:
+//      break;    
+//	}
+//  }
+//}
 
 //***************************************************************************************
 
@@ -1681,6 +1714,8 @@ void CHW::SetPowerState(const int PowerUser, BOOL On)
 {
 	if (m_hDLL == NULL) return;
 	ulong BitMask;
+
+  DILASCIA_TRACE_EX("LIGHTS", "Light {}: {}\n", PowerUser, On);
 
 	switch (PowerUser)
 	{

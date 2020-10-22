@@ -176,6 +176,8 @@ public:
 	void ClearFrames();
 	uchar* GetRGBData();
 
+	//void AdjustHirCamer(int Type); // cjf10212020 test
+
 	int CheckLaserSafetyStatus();//6.2.0 Change from void to int
 
 	void InitializeOptometer();

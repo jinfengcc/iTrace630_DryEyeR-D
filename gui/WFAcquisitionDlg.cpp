@@ -65,6 +65,8 @@ BOOL CWFAcquisitionDlg::OnInitDialog()
 
 	m_pWFAcquisition->Start();
 
+	//m_t = 0;//test
+
 	return TRUE;
 }
 
@@ -149,445 +151,437 @@ LRESULT CWFAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 	}
 	//530
 
-	memcpy(m_VideoWnd.m_MemDC.m_RGBData, m_pWFAcquisition->m_pHW->GetRGBData(), CHW::m_VideoSize);
+	//int St = (int) clock();
 
-	CEyeImage* pImage = &m_pWFAcquisition->m_WFExam.m_Image;
+    // cjf 10222020 test for slow gain
+	if (wParam != 0) 
+	{    
+        memcpy(m_VideoWnd.m_MemDC.m_RGBData, m_pWFAcquisition->m_pHW->GetRGBData(), CHW::m_VideoSize);
+        m_VideoWnd.Invalidate(FALSE);
+        m_VideoWnd.UpdateWindow();
 
-	//
-	if (!m_ScanRing)
-	{
-		m_WFGUICtrlWnd.SetScanRing(FALSE);
-		m_ScanRing = TRUE;
-	}
-	//
+        return 0;
+    }
+  // cjf 10222020 test for slow gain
 
-	//530 
-	if (m_pWFAcquisition->m_WFAutoMode == 1)//
-	{
-		if (m_WFGUICtrlWnd.m_ShowAcqBtn)
-		{
-			m_WFGUICtrlWnd.m_ShowAcqBtn = FALSE;
-			m_WFGUICtrlWnd.HideAcqBtnGUI();
-		}
-	}
-	else
-	{
-		if (!m_WFGUICtrlWnd.m_ShowAcqBtn)
-		{
-			m_WFGUICtrlWnd.m_ShowAcqBtn = TRUE;
-			m_WFGUICtrlWnd.ShowAcqBtnGUI();
-		}
-	}
+    memcpy(m_VideoWnd.m_MemDC.m_RGBData, m_pWFAcquisition->m_pHW->GetRGBData(), CHW::m_VideoSize);
 
-	////
-	if (::PresbiaMode == 1 && m_WFGUICtrl0Wnd.m_ShowWindow && ::WFScanModeChanged)
-	{
-		m_WFGUICtrl0Wnd.CrSliderInfo();
+    // int        Ut     = (int)clock() - St;
+    // St                = (int)clock();
+    CEyeImage *pImage = &m_pWFAcquisition->m_WFExam.m_Image;
 
-		m_WFGUICtrl0Wnd.SetPos(m_pWFAcquisition->m_WFExam.m_ScanDiameter*0.001);
-		m_WFGUICtrl0Wnd.ShowGUI();
+    // CString str;
+    // str.Format(_T("c:\\1\\GainTest\\%i.jpg"), m_t);
+    // pImage->SaveIntoFile(str);
+    // m_t++;
 
-		::WFScanModeChanged = FALSE;
-	}
-	//
+    // Ut = (int)clock() - St;
+    //
+    if (!m_ScanRing) {
+      m_WFGUICtrlWnd.SetScanRing(FALSE);
+      m_ScanRing = TRUE;
+    }
+    //
 
-	//Presbia
-	if (::PresbiaMode == 2)
-	{
-		m_WFGUICtrl0Wnd.HideGUI();
-	}
-	else
-	{      //Presbia
-		if (m_pWFAcquisition->m_WFAutoMode != 1 && !m_pWFAcquisition->m_Probing && m_pWFAcquisition->m_WFExam.m_ScanDiameter != 0)
-		{
-			if (m_pWFAcquisition->m_ChangeToPresbia256)
-				m_WFGUICtrl0Wnd.m_ShowWindow = FALSE;
+    // 530
+    if (m_pWFAcquisition->m_WFAutoMode == 1) //
+    {
+      if (m_WFGUICtrlWnd.m_ShowAcqBtn) {
+        m_WFGUICtrlWnd.m_ShowAcqBtn = FALSE;
+        m_WFGUICtrlWnd.HideAcqBtnGUI();
+      }
+    }
+    else {
+      if (!m_WFGUICtrlWnd.m_ShowAcqBtn) {
+        m_WFGUICtrlWnd.m_ShowAcqBtn = TRUE;
+        m_WFGUICtrlWnd.ShowAcqBtnGUI();
+      }
+    }
 
-			if (m_WFGUICtrl0Wnd.m_ShowWindow)
-			{
-				if (m_pWFAcquisition->m_ChangeScanSize)
-				{
-					m_WFGUICtrl0Wnd.SetPos(m_pWFAcquisition->m_WFExam.m_ScanDiameter*0.001);
-				}
-				else
-				{
-					if (m_pWFAcquisition->m_WFExam.m_ScanDiameter != m_WFGUICtrl0Wnd.GetDiameter())
-					{
-						m_pWFAcquisition->m_WFExam.m_ScanDiameter = m_WFGUICtrl0Wnd.GetDiameter();
+    ////
+    if (::PresbiaMode == 1 && m_WFGUICtrl0Wnd.m_ShowWindow && ::WFScanModeChanged) {
+      m_WFGUICtrl0Wnd.CrSliderInfo();
 
-						if (::Normal64Mode) //
-						{
-							m_pWFAcquisition->m_user_r_max_um2 = 0.5 * m_pWFAcquisition->m_WFExam.m_ScanDiameter;
-							m_pWFAcquisition->m_WFExam.CreateScanPattern(m_pWFAcquisition->m_user_r_max_um2);
-						}
-						else
-						{
-							m_pWFAcquisition->m_user_r_max_um = 0.5 * m_pWFAcquisition->m_WFExam.m_ScanDiameter;
-							m_pWFAcquisition->m_WFExam.CreateScanPattern(m_pWFAcquisition->m_user_r_max_um);
-						}
-					}
-				}
-			}
-			else
-			{
-				m_WFGUICtrl0Wnd.m_ShowWindow = TRUE;
-				m_WFGUICtrl0Wnd.Clear();
+      m_WFGUICtrl0Wnd.SetPos(m_pWFAcquisition->m_WFExam.m_ScanDiameter * 0.001);
+      m_WFGUICtrl0Wnd.ShowGUI();
 
-				//Presbia
-				m_WFGUICtrl0Wnd.CrSliderInfo();
-				//Presbia
+      ::WFScanModeChanged = FALSE;
+    }
+    //
 
-				m_WFGUICtrl0Wnd.SetPos(m_pWFAcquisition->m_WFExam.m_ScanDiameter*0.001);
-				m_WFGUICtrl0Wnd.ShowGUI();
-			}
-		}
-		else
-		{
-			if (m_WFGUICtrl0Wnd.m_ShowWindow)
-			{
-				m_WFGUICtrl0Wnd.HideGUI();
-			}
-		}
-	}
+    // Presbia
+    if (::PresbiaMode == 2) {
+      m_WFGUICtrl0Wnd.HideGUI();
+    }
+    else { // Presbia
+      if (m_pWFAcquisition->m_WFAutoMode != 1 && !m_pWFAcquisition->m_Probing && m_pWFAcquisition->m_WFExam.m_ScanDiameter != 0) {
+        if (m_pWFAcquisition->m_ChangeToPresbia256)
+          m_WFGUICtrl0Wnd.m_ShowWindow = FALSE;
 
+        if (m_WFGUICtrl0Wnd.m_ShowWindow) {
+          if (m_pWFAcquisition->m_ChangeScanSize) {
+            m_WFGUICtrl0Wnd.SetPos(m_pWFAcquisition->m_WFExam.m_ScanDiameter * 0.001);
+          }
+          else {
+            if (m_pWFAcquisition->m_WFExam.m_ScanDiameter != m_WFGUICtrl0Wnd.GetDiameter()) {
+              m_pWFAcquisition->m_WFExam.m_ScanDiameter = m_WFGUICtrl0Wnd.GetDiameter();
 
-	if (m_pWFAcquisition->m_ChangeAlMode)
-	{
-		m_WFGUICtrlWnd.m_AutoMode = m_pWFAcquisition->m_WFAutoMode;
-		m_WFGUICtrlWnd.RepaintAuto();
-	}
-	else  m_pWFAcquisition->m_WFAutoMode = m_WFGUICtrlWnd.m_AutoMode;
+              if (::Normal64Mode) //
+              {
+                m_pWFAcquisition->m_user_r_max_um2 = 0.5 * m_pWFAcquisition->m_WFExam.m_ScanDiameter;
+                m_pWFAcquisition->m_WFExam.CreateScanPattern(m_pWFAcquisition->m_user_r_max_um2);
+              }
+              else {
+                m_pWFAcquisition->m_user_r_max_um = 0.5 * m_pWFAcquisition->m_WFExam.m_ScanDiameter;
+                m_pWFAcquisition->m_WFExam.CreateScanPattern(m_pWFAcquisition->m_user_r_max_um);
+              }
+            }
+          }
+        }
+        else {
+          m_WFGUICtrl0Wnd.m_ShowWindow = TRUE;
+          m_WFGUICtrl0Wnd.Clear();
 
-	if (!m_pWFAcquisition->m_Combo)
-	{
-		if (m_pWFAcquisition->m_ChangeAlMethod)
-		{
-			m_WFGUICtrlWnd.m_PupilCen = (m_pWFAcquisition->m_WFExam.m_AlignmentMethod == ALIGNMENT_PUPIL_CENTER ? 1 : 0);
-			m_WFGUICtrlWnd.RepaintPupilCen();
-		}
-		else  m_pWFAcquisition->m_WFExam.m_AlignmentMethod = m_WFGUICtrlWnd.m_PupilCen ? ALIGNMENT_PUPIL_CENTER : ALIGNMENT_4_IR_DOTS;
-	}
-	else
-	{
-		m_WFGUICtrlWnd.m_PupilCen = FALSE;
-		m_pWFAcquisition->m_WFExam.m_AlignmentMethod = ALIGNMENT_4_IR_DOTS;
-	}
+          // Presbia
+          m_WFGUICtrl0Wnd.CrSliderInfo();
+          // Presbia
 
-	if (m_pWFAcquisition->m_ChangeIllumi)
-	{
-		m_WFGUICtrlWnd.m_TargetOn = m_pWFAcquisition->m_TargetLightOn;
-		m_WFGUICtrlWnd.RepaintTarget();
-	}
-	else
-	{
-		if (m_pWFAcquisition->m_TargetLightOn != m_WFGUICtrlWnd.m_TargetOn)
-		{
-			m_pWFAcquisition->m_TargetLightOn = !m_pWFAcquisition->m_TargetLightOn;
+          m_WFGUICtrl0Wnd.SetPos(m_pWFAcquisition->m_WFExam.m_ScanDiameter * 0.001);
+          m_WFGUICtrl0Wnd.ShowGUI();
+        }
+      }
+      else {
+        if (m_WFGUICtrl0Wnd.m_ShowWindow) {
+          m_WFGUICtrl0Wnd.HideGUI();
+        }
+      }
+    }
 
-			if (m_pWFAcquisition->m_TargetLightOn) {
-				m_pWFAcquisition->m_pHW->TurnAccommodationTargetOn();
-			}
-			else {
-				m_pWFAcquisition->m_pHW->TurnAccommodationTargetOff();
-			}
-		}
+    if (m_pWFAcquisition->m_ChangeAlMode) {
+      m_WFGUICtrlWnd.m_AutoMode = m_pWFAcquisition->m_WFAutoMode;
+      m_WFGUICtrlWnd.RepaintAuto();
+    }
+    else
+      m_pWFAcquisition->m_WFAutoMode = m_WFGUICtrlWnd.m_AutoMode;
 
-		if (m_pWFAcquisition->m_TargetLightOn == FALSE)
-		{
-			m_pWFAcquisition->m_TargetTime = -1;
-		}
-	}
+    if (!m_pWFAcquisition->m_Combo) {
+      if (m_pWFAcquisition->m_ChangeAlMethod) {
+        m_WFGUICtrlWnd.m_PupilCen = (m_pWFAcquisition->m_WFExam.m_AlignmentMethod == ALIGNMENT_PUPIL_CENTER ? 1 : 0);
+        m_WFGUICtrlWnd.RepaintPupilCen();
+      }
+      else
+        m_pWFAcquisition->m_WFExam.m_AlignmentMethod = m_WFGUICtrlWnd.m_PupilCen ? ALIGNMENT_PUPIL_CENTER : ALIGNMENT_4_IR_DOTS;
+    }
+    else {
+      m_WFGUICtrlWnd.m_PupilCen                    = FALSE;
+      m_pWFAcquisition->m_WFExam.m_AlignmentMethod = ALIGNMENT_4_IR_DOTS;
+    }
 
-	//CT Exam or color image Capture
-	if (m_WFGUICtrlWnd.m_Acquire)
-	{
-		m_pWFAcquisition->Acquire();
-		m_WFGUICtrlWnd.m_Acquire = FALSE;
-	}
-	//Done
+    if (m_pWFAcquisition->m_ChangeIllumi) {
+      m_WFGUICtrlWnd.m_TargetOn = m_pWFAcquisition->m_TargetLightOn;
+      m_WFGUICtrlWnd.RepaintTarget();
+    }
+    else {
+      if (m_pWFAcquisition->m_TargetLightOn != m_WFGUICtrlWnd.m_TargetOn) {
+        m_pWFAcquisition->m_TargetLightOn = !m_pWFAcquisition->m_TargetLightOn;
 
-	//530 Done
+        if (m_pWFAcquisition->m_TargetLightOn) {
+          m_pWFAcquisition->m_pHW->TurnAccommodationTargetOn();
+        }
+        else {
+          m_pWFAcquisition->m_pHW->TurnAccommodationTargetOff();
+        }
+      }
 
-	int fs = 16;
-	CMFont Font(fs, 600, "Arial");
-	RECT Rect;
-	CString s;
+      if (m_pWFAcquisition->m_TargetLightOn == FALSE) {
+        m_pWFAcquisition->m_TargetTime = -1;
+      }
+    }
 
-	int icx = intRound(m_cx);
-	int icy = intRound(m_cy);
+    // CT Exam or color image Capture
+    if (m_WFGUICtrlWnd.m_Acquire) {
+      m_pWFAcquisition->Acquire();
+      m_WFGUICtrlWnd.m_Acquire = FALSE;
+    }
+    // Done
 
-	// EYE
-	int t = 5;
-	::SetRect(&Rect, 10, t, 200, t + fs);
-	m_VideoWnd.m_MemDC.WriteText("Eye", Rect, Font, YELLOW, 0);
-	s = ISOD(m_pWFAcquisition->m_Eye) ? "OD" : "OS";
-	m_VideoWnd.m_MemDC.WriteText(s, Rect, Font, YELLOW, 2);
+    // 530 Done
 
-	// SPHERE
-	t += fs;
-	::SetRect(&Rect, 10, t, 200, t + fs);
-	m_VideoWnd.m_MemDC.WriteText("Sphere", Rect, Font, YELLOW, 0);
-	real_t D = m_pWFAcquisition->m_WFExam.m_PrecalcSphere;
-	s.Format(_T("%.2f D"), fabs(D));
-	if (D < -0.01) s = "- " + s; else if (D > 0.01) s = "+ " + s;
-	m_VideoWnd.m_MemDC.WriteText(s, Rect, Font, YELLOW, 2);
+    int     fs = 16;
+    CMFont  Font(fs, 600, "Arial");
+    RECT    Rect;
+    CString s;
 
-	// CYL
-	t += fs;
-	::SetRect(&Rect, 10, t, 200, t + fs);
-	m_VideoWnd.m_MemDC.WriteText("Cylinder", Rect, Font, YELLOW, 0);
-	D = m_pWFAcquisition->m_WFExam.m_PrecalcCylinder;
-	s.Format(_T("%.2f D"), fabs(D));
-	if (D < 0.01) s = "  " + s; else s = "+ " + s;
-	m_VideoWnd.m_MemDC.WriteText(s, Rect, Font, YELLOW, 2);
+    int icx = intRound(m_cx);
+    int icy = intRound(m_cy);
 
-	// TARGET
-	t += fs;
-	::SetRect(&Rect, 10, t, 200, t + fs);
-	m_VideoWnd.m_MemDC.WriteText("Fixation target", Rect, Font, YELLOW, 0);
-	D = m_pWFAcquisition->m_pHW->GetOptometerTargetPositionD();
-	s.Format(_T("%.2f D"), fabs(D));
-	if (D < -0.01) s = "- " + s; else if (D > 0.01) s = "+ " + s;
-	m_VideoWnd.m_MemDC.WriteText(s, Rect, Font, YELLOW, 2);
+    // EYE
+    int t = 5;
+    ::SetRect(&Rect, 10, t, 200, t + fs);
+    m_VideoWnd.m_MemDC.WriteText("Eye", Rect, Font, YELLOW, 0);
+    s = ISOD(m_pWFAcquisition->m_Eye) ? "OD" : "OS";
+    m_VideoWnd.m_MemDC.WriteText(s, Rect, Font, YELLOW, 2);
 
-	// FIXATION LIGHT
-	t += fs;
-	::SetRect(&Rect, 10, t, 200, t + fs);
-	m_VideoWnd.m_MemDC.WriteText("Fixation light", Rect, Font, YELLOW, 0);
+    // SPHERE
+    t += fs;
+    ::SetRect(&Rect, 10, t, 200, t + fs);
+    m_VideoWnd.m_MemDC.WriteText("Sphere", Rect, Font, YELLOW, 0);
+    real_t D = m_pWFAcquisition->m_WFExam.m_PrecalcSphere;
+    s.Format(_T("%.2f D"), fabs(D));
+    if (D < -0.01)
+      s = "- " + s;
+    else if (D > 0.01)
+      s = "+ " + s;
+    m_VideoWnd.m_MemDC.WriteText(s, Rect, Font, YELLOW, 2);
 
-	//530
-	if (m_WFGUICtrlWnd.m_TargetOn && ::Settings.m_AccommTargetLightTime != 60 && m_pWFAcquisition->m_TargetTime > 0)
-	{
-		RECT tmpRect;
-		::SetRect(&tmpRect, 10, t, 180, t + fs);
-		m_VideoWnd.m_MemDC.WriteText("On", tmpRect, Font, GREEN, 2);
+    // CYL
+    t += fs;
+    ::SetRect(&Rect, 10, t, 200, t + fs);
+    m_VideoWnd.m_MemDC.WriteText("Cylinder", Rect, Font, YELLOW, 0);
+    D = m_pWFAcquisition->m_WFExam.m_PrecalcCylinder;
+    s.Format(_T("%.2f D"), fabs(D));
+    if (D < 0.01)
+      s = "  " + s;
+    else
+      s = "+ " + s;
+    m_VideoWnd.m_MemDC.WriteText(s, Rect, Font, YELLOW, 2);
 
-		::SetRect(&tmpRect, 180, t, 200, t + fs);
+    // TARGET
+    t += fs;
+    ::SetRect(&Rect, 10, t, 200, t + fs);
+    m_VideoWnd.m_MemDC.WriteText("Fixation target", Rect, Font, YELLOW, 0);
+    D = m_pWFAcquisition->m_pHW->GetOptometerTargetPositionD();
+    s.Format(_T("%.2f D"), fabs(D));
+    if (D < -0.01)
+      s = "- " + s;
+    else if (D > 0.01)
+      s = "+ " + s;
+    m_VideoWnd.m_MemDC.WriteText(s, Rect, Font, YELLOW, 2);
 
-		m_pWFAcquisition->m_TargetTime = intRound(m_pWFAcquisition->m_TimeLeft / 1000 - (60 - ::Settings.m_AccommTargetLightTime));
-		s.Format(_T("%i"), m_pWFAcquisition->m_TargetTime);
+    // FIXATION LIGHT
+    t += fs;
+    ::SetRect(&Rect, 10, t, 200, t + fs);
+    m_VideoWnd.m_MemDC.WriteText("Fixation light", Rect, Font, YELLOW, 0);
 
-		m_VideoWnd.m_MemDC.WriteText(s, tmpRect, Font, GREEN, 2);
-	}
-	else //530
-	{
-		m_VideoWnd.m_MemDC.WriteText(m_pWFAcquisition->m_TargetLightOn ? "On" : "Off", Rect, Font,
-			m_pWFAcquisition->m_TargetLightOn ? GREEN : YELLOW, 2);
-	}
+    // 530
+    if (m_WFGUICtrlWnd.m_TargetOn && ::Settings.m_AccommTargetLightTime != 60 && m_pWFAcquisition->m_TargetTime > 0) {
+      RECT tmpRect;
+      ::SetRect(&tmpRect, 10, t, 180, t + fs);
+      m_VideoWnd.m_MemDC.WriteText("On", tmpRect, Font, GREEN, 2);
 
-	// PUPIL
-	//Presbia
-	if (::PresbiaMode == 2 || ::PresbiaMode == 3)
-	{
-	}
-	else
-	{   //Presbia
-		t += fs;
-		::SetRect(&Rect, 10, t, 200, t + fs);
-		m_VideoWnd.m_MemDC.WriteText("Pupil", Rect, Font, GREEN, 0);
-		if (pImage->m_pu_ok) {
-			s.Format(_T("%.2f mm"), pImage->m_pu_r_mean_um * 0.002);
-		}
-		else {
-			s = "-.-- mm";
-		}
-		m_VideoWnd.m_MemDC.WriteText(s, Rect, Font, GREEN, 2);
-	}
+      ::SetRect(&tmpRect, 180, t, 200, t + fs);
 
-	// SCAN SIZE
-	t += fs;
-	if (m_pWFAcquisition->m_WFAutoMode != 1) {
-		::SetRect(&Rect, 10, t, 200, t + fs);
-		m_VideoWnd.m_MemDC.WriteText("Scan", Rect, Font, RED, 0);
-		if (m_pWFAcquisition->m_WFExam.m_ScanDiameter<0) m_pWFAcquisition->m_WFExam.m_ScanDiameter = 0;
-		s.Format(_T("%.2f mm"), m_pWFAcquisition->m_WFExam.m_ScanDiameter * 0.001);
-		m_VideoWnd.m_MemDC.WriteText(s, Rect, Font, RED, 2);
-	}
+      m_pWFAcquisition->m_TargetTime = intRound(m_pWFAcquisition->m_TimeLeft / 1000 - (60 - ::Settings.m_AccommTargetLightTime));
+      s.Format(_T("%i"), m_pWFAcquisition->m_TargetTime);
 
-	// MODE
-	t = 5;
-	::SetRect(&Rect, 0, t, m_w - 10, t + fs);
-	m_VideoWnd.m_MemDC.WriteText(m_pWFAcquisition->m_Probing ? "Autofixation" : "Acquisition", Rect, Font, YELLOW, 2);
+      m_VideoWnd.m_MemDC.WriteText(s, tmpRect, Font, GREEN, 2);
+    }
+    else // 530
+    {
+      m_VideoWnd.m_MemDC.WriteText(m_pWFAcquisition->m_TargetLightOn ? "On" : "Off", Rect, Font,
+                                   m_pWFAcquisition->m_TargetLightOn ? GREEN : YELLOW, 2);
+    }
 
-	t += fs;
-	::SetRect(&Rect, 0, t, m_w - 10, t + fs);
-	m_VideoWnd.m_MemDC.WriteText(m_pWFAcquisition->m_WFAutoMode == 1 ? "Auto" : "Manual", Rect, Font, YELLOW, 2);//
+    // PUPIL
+    // Presbia
+    if (::PresbiaMode == 2 || ::PresbiaMode == 3) {
+    }
+    else { // Presbia
+      t += fs;
+      ::SetRect(&Rect, 10, t, 200, t + fs);
+      m_VideoWnd.m_MemDC.WriteText("Pupil", Rect, Font, GREEN, 0);
+      if (pImage->m_pu_ok) {
+        s.Format(_T("%.2f mm"), pImage->m_pu_r_mean_um * 0.002);
+      }
+      else {
+        s = "-.-- mm";
+      }
+      m_VideoWnd.m_MemDC.WriteText(s, Rect, Font, GREEN, 2);
+    }
 
-																												 // ALIGNMENT MODE
-																												 //Presbia
-	if (::PresbiaMode == 2 || ::PresbiaMode == 3)
-	{
-		int rx = intRound(1600.0 * m_x_px_um);
-		int ry = intRound(1600.0 * m_y_px_um);
-		m_VideoWnd.m_MemDC.DrawEllipse(icx, icy, rx, ry, 1, GREEN, NOCOLOR);
+    // SCAN SIZE
+    t += fs;
+    if (m_pWFAcquisition->m_WFAutoMode != 1) {
+      ::SetRect(&Rect, 10, t, 200, t + fs);
+      m_VideoWnd.m_MemDC.WriteText("Scan", Rect, Font, RED, 0);
+      if (m_pWFAcquisition->m_WFExam.m_ScanDiameter < 0)
+        m_pWFAcquisition->m_WFExam.m_ScanDiameter = 0;
+      s.Format(_T("%.2f mm"), m_pWFAcquisition->m_WFExam.m_ScanDiameter * 0.001);
+      m_VideoWnd.m_MemDC.WriteText(s, Rect, Font, RED, 2);
+    }
 
-		rx = intRound(255.0 * m_x_px_um);
-		ry = intRound(255.0 * m_y_px_um);
-		m_VideoWnd.m_MemDC.DrawEllipse(icx, icy, rx, ry, 1, GREEN, NOCOLOR);
-	}
-	else//Presbia
-	{
-		t += fs;
-		::SetRect(&Rect, 0, t, m_w - 10, t + fs);
-		m_VideoWnd.m_MemDC.WriteText(m_pWFAcquisition->m_WFExam.m_AlignmentMethod == ALIGNMENT_PUPIL_CENTER ? "Pupil" : "4 IR Dots", Rect, Font, YELLOW, 2);
-	}
+    // MODE
+    t = 5;
+    ::SetRect(&Rect, 0, t, m_w - 10, t + fs);
+    m_VideoWnd.m_MemDC.WriteText(m_pWFAcquisition->m_Probing ? "Autofixation" : "Acquisition", Rect, Font, YELLOW, 2);
 
-	// TIME LEFT
-	t += fs;
-	::SetRect(&Rect, 0, t, m_w - 10, t + fs);
-	s.Format(_T("%i"), m_pWFAcquisition->m_TimeLeft / 1000);
-	m_VideoWnd.m_MemDC.WriteText(s, Rect, Font, CYAN, 2);
+    t += fs;
+    ::SetRect(&Rect, 0, t, m_w - 10, t + fs);
+    m_VideoWnd.m_MemDC.WriteText(m_pWFAcquisition->m_WFAutoMode == 1 ? "Auto" : "Manual", Rect, Font, YELLOW, 2); //
 
-	//Presbia
-	if (::PresbiaMode == 2)
-	{
-	}
-	else if (::PresbiaMode == 3)
-	{
-		int rx = intRound(m_pWFAcquisition->m_WFExam.m_ScanDiameter * m_x_px_um * 0.5);
+    // ALIGNMENT MODE
+    // Presbia
+    if (::PresbiaMode == 2 || ::PresbiaMode == 3) {
+      int rx = intRound(1600.0 * m_x_px_um);
+      int ry = intRound(1600.0 * m_y_px_um);
+      m_VideoWnd.m_MemDC.DrawEllipse(icx, icy, rx, ry, 1, GREEN, NOCOLOR);
 
-		for (int a = 0; a < 360; a++)
-		{
-			int d = intRound((real_t)a / 5.0);
+      rx = intRound(255.0 * m_x_px_um);
+      ry = intRound(255.0 * m_y_px_um);
+      m_VideoWnd.m_MemDC.DrawEllipse(icx, icy, rx, ry, 1, GREEN, NOCOLOR);
+    }
+    else // Presbia
+    {
+      t += fs;
+      ::SetRect(&Rect, 0, t, m_w - 10, t + fs);
+      m_VideoWnd.m_MemDC.WriteText(m_pWFAcquisition->m_WFExam.m_AlignmentMethod == ALIGNMENT_PUPIL_CENTER ? "Pupil" : "4 IR Dots", Rect,
+                                   Font, YELLOW, 2);
+    }
 
-			if (d % 2 == 0)
-			{
-				int b = a == 359 ? 0 : a + 1;
+    // TIME LEFT
+    t += fs;
+    ::SetRect(&Rect, 0, t, m_w - 10, t + fs);
+    s.Format(_T("%i"), m_pWFAcquisition->m_TimeLeft / 1000);
+    m_VideoWnd.m_MemDC.WriteText(s, Rect, Font, CYAN, 2);
 
-				int xa = icx + intRound(m_pWFAcquisition->m_WFExam.m_ScanDiameter * 0.5 *  COS[a] * m_x_px_um);
-				int ya = icy - intRound(m_pWFAcquisition->m_WFExam.m_ScanDiameter * 0.5 *  SIN[a] * m_y_px_um);
-				int xb = icx + intRound(m_pWFAcquisition->m_WFExam.m_ScanDiameter * 0.5 *  COS[b] * m_x_px_um);
-				int yb = icy - intRound(m_pWFAcquisition->m_WFExam.m_ScanDiameter * 0.5 *  SIN[b] * m_y_px_um);
+    // Presbia
+    if (::PresbiaMode == 2) {
+    }
+    else if (::PresbiaMode == 3) {
+      int rx = intRound(m_pWFAcquisition->m_WFExam.m_ScanDiameter * m_x_px_um * 0.5);
 
-				m_VideoWnd.m_MemDC.DrawLine(xa, ya, xb, yb, 1, 0x009f9f9f);
-			}
-		}
-	}
-	else
-	{   //Presbia
-		// GRID
-		for (int i = 1; i <= 4; i++) {
-			int rx = intRound(i * 1000.0 * m_x_px_um);
-			int ry = intRound(i * 1000.0 * m_y_px_um);
-			m_VideoWnd.m_MemDC.DrawEllipse(icx, icy, rx, ry, 1, 0x009f9f9f, NOCOLOR);
-		}
-		{
-			int dx = intRound(4000.0 * m_x_px_um);
-			int dy = intRound(4000.0 * m_y_px_um);
-			m_VideoWnd.m_MemDC.DrawLine(icx - dx, icy, icx + dx + 1, icy, 1, 0x009f9f9f);
-			m_VideoWnd.m_MemDC.DrawLine(icx, icy - dy, icx, icy + dy + 1, 1, 0x009f9f9f);
-		}
+      for (int a = 0; a < 360; a++) {
+        int d = intRound((real_t)a / 5.0);
 
-		// POINTS
-		//530 If user click 'show scan ring
-		//Point or Rings
-		if (m_pWFAcquisition->m_WFAutoMode != 1)
-		{
-			if (!m_pWFAcquisition->m_Probing)
-			{
-				if (m_WFGUICtrlWnd.m_ShowScanRing)
-				{
-					CScanPoint* pPoint = m_pWFAcquisition->m_WFExam.m_Points.MoveFirst();
-					if (pPoint && pPoint->m_shot == 0)
-					{
-						int x = intRound(m_cx + pPoint->x_um() * m_x_px_um);
-						int y = intRound(m_cy - pPoint->y_um() * m_y_px_um);
+        if (d % 2 == 0) {
+          int b = a == 359 ? 0 : a + 1;
 
-						int r = intRound(0.5 * m_pWFAcquisition->m_WFExam.m_ScanDiameter * m_x_px_um);
-						m_VideoWnd.m_MemDC.DrawCircle(x, y, r, 1, RED, NOCOLOR);
+          int xa = icx + intRound(m_pWFAcquisition->m_WFExam.m_ScanDiameter * 0.5 * COS[a] * m_x_px_um);
+          int ya = icy - intRound(m_pWFAcquisition->m_WFExam.m_ScanDiameter * 0.5 * SIN[a] * m_y_px_um);
+          int xb = icx + intRound(m_pWFAcquisition->m_WFExam.m_ScanDiameter * 0.5 * COS[b] * m_x_px_um);
+          int yb = icy - intRound(m_pWFAcquisition->m_WFExam.m_ScanDiameter * 0.5 * SIN[b] * m_y_px_um);
 
-						m_VideoWnd.m_MemDC.DrawCircle(x, y, 4, 1, RED, RED);
-					}
-				}
-				else
-				{
-					CScanPoint* pPoint = m_pWFAcquisition->m_WFExam.m_Points.MoveFirst();
-					while (pPoint)
-					{
-						if (pPoint->m_shot == 0)
-						{
-							int x = intRound(m_cx + pPoint->x_um() * m_x_px_um);
-							int y = intRound(m_cy - pPoint->y_um() * m_y_px_um);
-							m_VideoWnd.m_MemDC.DrawCircle(x, y, 4, 1, RED, RED);
-						}
-						pPoint = m_pWFAcquisition->m_WFExam.m_Points.MoveNext();
-					}
-				}
-			}
-		}
-		//530 Done
+          m_VideoWnd.m_MemDC.DrawLine(xa, ya, xb, yb, 1, 0x009f9f9f);
+        }
+      }
+    }
+    else { // Presbia
+      // GRID
+      for (int i = 1; i <= 4; i++) {
+        int rx = intRound(i * 1000.0 * m_x_px_um);
+        int ry = intRound(i * 1000.0 * m_y_px_um);
+        m_VideoWnd.m_MemDC.DrawEllipse(icx, icy, rx, ry, 1, 0x009f9f9f, NOCOLOR);
+      }
+      {
+        int dx = intRound(4000.0 * m_x_px_um);
+        int dy = intRound(4000.0 * m_y_px_um);
+        m_VideoWnd.m_MemDC.DrawLine(icx - dx, icy, icx + dx + 1, icy, 1, 0x009f9f9f);
+        m_VideoWnd.m_MemDC.DrawLine(icx, icy - dy, icx, icy + dy + 1, 1, 0x009f9f9f);
+      }
 
-		// PUPIL
-		if (pImage->m_pu_ok) {
-			CPen Pen(PS_SOLID, 3, GREEN);
-			CPen* pPen = m_VideoWnd.m_MemDC.SelectObject(&Pen);
-			int x = intRound(m_cx + (pImage->m_pu_x0_um + pImage->m_pu_r_um[0] * COS[0]) * m_x_px_um);
-			int y = intRound(m_cy - (pImage->m_pu_y0_um + pImage->m_pu_r_um[0] * SIN[0]) * m_y_px_um);
-			m_VideoWnd.m_MemDC.MoveTo(x, y);
-			for (int i = 1; i < 360; i++) {
-				x = intRound(m_cx + (pImage->m_pu_x0_um + pImage->m_pu_r_um[i] * COS[i]) * m_x_px_um);
-				y = intRound(m_cy - (pImage->m_pu_y0_um + pImage->m_pu_r_um[i] * SIN[i]) * m_y_px_um);
-				m_VideoWnd.m_MemDC.LineTo(x, y);
-			}
-			x = intRound(m_cx + (pImage->m_pu_x0_um + pImage->m_pu_r_um[0] * COS[0]) * m_x_px_um);
-			y = intRound(m_cy - (pImage->m_pu_y0_um + pImage->m_pu_r_um[0] * SIN[0]) * m_y_px_um);
-			m_VideoWnd.m_MemDC.LineTo(x, y);
-			m_VideoWnd.m_MemDC.SelectObject(pPen);
+      // POINTS
+      // 530 If user click 'show scan ring
+      // Point or Rings
+      if (m_pWFAcquisition->m_WFAutoMode != 1) {
+        if (!m_pWFAcquisition->m_Probing) {
+          if (m_WFGUICtrlWnd.m_ShowScanRing) {
+            CScanPoint *pPoint = m_pWFAcquisition->m_WFExam.m_Points.MoveFirst();
+            if (pPoint && pPoint->m_shot == 0) {
+              int x = intRound(m_cx + pPoint->x_um() * m_x_px_um);
+              int y = intRound(m_cy - pPoint->y_um() * m_y_px_um);
 
-			if (m_pWFAcquisition->m_WFExam.m_AlignmentMethod == ALIGNMENT_PUPIL_CENTER) {
-				x = intRound(m_cx + pImage->m_pu_x0_um * m_x_px_um);
-				y = intRound(m_cy - pImage->m_pu_y0_um * m_y_px_um);
-				m_VideoWnd.m_MemDC.DrawLine(icx, icy, x, y, 3, GREEN);
-			}
-		}
+              int r = intRound(0.5 * m_pWFAcquisition->m_WFExam.m_ScanDiameter * m_x_px_um);
+              m_VideoWnd.m_MemDC.DrawCircle(x, y, r, 1, RED, NOCOLOR);
 
-		// VERTEX
-		if (m_pWFAcquisition->m_WFExam.m_AlignmentMethod == ALIGNMENT_4_IR_DOTS && pImage->m_ve_ok) {
+              m_VideoWnd.m_MemDC.DrawCircle(x, y, 4, 1, RED, RED);
+            }
+          }
+          else {
+            CScanPoint *pPoint = m_pWFAcquisition->m_WFExam.m_Points.MoveFirst();
+            while (pPoint) {
+              if (pPoint->m_shot == 0) {
+                int x = intRound(m_cx + pPoint->x_um() * m_x_px_um);
+                int y = intRound(m_cy - pPoint->y_um() * m_y_px_um);
+                m_VideoWnd.m_MemDC.DrawCircle(x, y, 4, 1, RED, RED);
+              }
+              pPoint = m_pWFAcquisition->m_WFExam.m_Points.MoveNext();
+            }
+          }
+        }
+      }
+      // 530 Done
 
-			int x = intRound(m_cx + pImage->m_ve_x_um * m_x_px_um);
-			int y = intRound(m_cy - pImage->m_ve_y_um * m_y_px_um);
-			//m_VideoWnd.m_MemDC.DrawLine(x - 10, y, x + 11, y, 3, RED);
-			//m_VideoWnd.m_MemDC.DrawLine(x, y - 10, x, y + 11, 3, RED);
-			m_VideoWnd.m_MemDC.DrawCircle(x, y, 2, 1, RED, RED);
+      // PUPIL
+      if (pImage->m_pu_ok) {
+        CPen  Pen(PS_SOLID, 3, GREEN);
+        CPen *pPen = m_VideoWnd.m_MemDC.SelectObject(&Pen);
+        int   x    = intRound(m_cx + (pImage->m_pu_x0_um + pImage->m_pu_r_um[0] * COS[0]) * m_x_px_um);
+        int   y    = intRound(m_cy - (pImage->m_pu_y0_um + pImage->m_pu_r_um[0] * SIN[0]) * m_y_px_um);
+        m_VideoWnd.m_MemDC.MoveTo(x, y);
+        for (int i = 1; i < 360; i++) {
+          x = intRound(m_cx + (pImage->m_pu_x0_um + pImage->m_pu_r_um[i] * COS[i]) * m_x_px_um);
+          y = intRound(m_cy - (pImage->m_pu_y0_um + pImage->m_pu_r_um[i] * SIN[i]) * m_y_px_um);
+          m_VideoWnd.m_MemDC.LineTo(x, y);
+        }
+        x = intRound(m_cx + (pImage->m_pu_x0_um + pImage->m_pu_r_um[0] * COS[0]) * m_x_px_um);
+        y = intRound(m_cy - (pImage->m_pu_y0_um + pImage->m_pu_r_um[0] * SIN[0]) * m_y_px_um);
+        m_VideoWnd.m_MemDC.LineTo(x, y);
+        m_VideoWnd.m_MemDC.SelectObject(pPen);
 
-			m_VideoWnd.m_MemDC.DrawLine(icx, icy, x, y, 3, RED);
-		}
-	}
+        if (m_pWFAcquisition->m_WFExam.m_AlignmentMethod == ALIGNMENT_PUPIL_CENTER) {
+          x = intRound(m_cx + pImage->m_pu_x0_um * m_x_px_um);
+          y = intRound(m_cy - pImage->m_pu_y0_um * m_y_px_um);
+          m_VideoWnd.m_MemDC.DrawLine(icx, icy, x, y, 3, GREEN);
+        }
+      }
 
-	//531
-	if (m_pWFAcquisition->m_ss != "-1")
-	{
-		RECT RectCo;
-		::SetRect(&RectCo, icx - 25, icy - 25, icx + 25, icy + 25);
+      // VERTEX
+      if (m_pWFAcquisition->m_WFExam.m_AlignmentMethod == ALIGNMENT_4_IR_DOTS && pImage->m_ve_ok) {
 
-		CMFont FontCo(50, 600, "Arial");
-		m_VideoWnd.m_MemDC.WriteText(m_pWFAcquisition->m_ss, RectCo, FontCo, BLUE, 1, -1);
-	}
-	//531
+        int x = intRound(m_cx + pImage->m_ve_x_um * m_x_px_um);
+        int y = intRound(m_cy - pImage->m_ve_y_um * m_y_px_um);
+        // m_VideoWnd.m_MemDC.DrawLine(x - 10, y, x + 11, y, 3, RED);
+        // m_VideoWnd.m_MemDC.DrawLine(x, y - 10, x, y + 11, 3, RED);
+        m_VideoWnd.m_MemDC.DrawCircle(x, y, 2, 1, RED, RED);
 
-	if (m_ShowTechInfo) {
+        m_VideoWnd.m_MemDC.DrawLine(icx, icy, x, y, 3, RED);
+      }
+    }
 
-		real_t hmax = -1000000000.0;
-		for (int i = 0; i < 256; i++) {
-			if (hmax < pImage->m_hist[i]) hmax = pImage->m_hist[i];
-		}
-		if (hmax != 0) {
-			for (int i = 0; i < 255; i++) {
-				int h1 = intRound(400 * pImage->m_hist[i] / hmax);
-				int h2 = intRound(400 * pImage->m_hist[i + 1] / hmax);
-				m_VideoWnd.m_MemDC.DrawLine(i, m_h - 10 - h1, i + 1, m_h - 10 - h2, 1, RED);
-			}
-			m_VideoWnd.m_MemDC.DrawLine(pImage->m_pu_thr, m_h - 10, pImage->m_pu_thr, m_h - 410, 1, YELLOW);
-		}
+    // 531
+    if (m_pWFAcquisition->m_ss != "-1") {
+      RECT RectCo;
+      ::SetRect(&RectCo, icx - 25, icy - 25, icx + 25, icy + 25);
 
-		::SetRect(&Rect, 0, m_h - fs - fs, m_w - 10, m_h - fs);
-		s.Format(_T("%u"), m_pWFAcquisition->m_NumFramesReceived);
-		m_VideoWnd.m_MemDC.WriteText(s, Rect, Font, YELLOW, 2);
+      CMFont FontCo(50, 600, "Arial");
+      m_VideoWnd.m_MemDC.WriteText(m_pWFAcquisition->m_ss, RectCo, FontCo, BLUE, 1, -1);
+    }
+    // 531
 
-		::SetRect(&Rect, 0, m_h - fs, m_w - 10, m_h);
-		s.Format(_T("%.1f ms"), m_pWFAcquisition->m_AverageCycleTime);
-		m_VideoWnd.m_MemDC.WriteText(s, Rect, Font, YELLOW, 2);
-	}
+    if (m_ShowTechInfo) {
+
+      real_t hmax = -1000000000.0;
+      for (int i = 0; i < 256; i++) {
+        if (hmax < pImage->m_hist[i])
+          hmax = pImage->m_hist[i];
+      }
+      if (hmax != 0) {
+        for (int i = 0; i < 255; i++) {
+          int h1 = intRound(400 * pImage->m_hist[i] / hmax);
+          int h2 = intRound(400 * pImage->m_hist[i + 1] / hmax);
+          m_VideoWnd.m_MemDC.DrawLine(i, m_h - 10 - h1, i + 1, m_h - 10 - h2, 1, RED);
+        }
+        m_VideoWnd.m_MemDC.DrawLine(pImage->m_pu_thr, m_h - 10, pImage->m_pu_thr, m_h - 410, 1, YELLOW);
+      }
+
+      ::SetRect(&Rect, 0, m_h - fs - fs, m_w - 10, m_h - fs);
+      s.Format(_T("%u"), m_pWFAcquisition->m_NumFramesReceived);
+      m_VideoWnd.m_MemDC.WriteText(s, Rect, Font, YELLOW, 2);
+
+      ::SetRect(&Rect, 0, m_h - fs, m_w - 10, m_h);
+      s.Format(_T("%.1f ms"), m_pWFAcquisition->m_AverageCycleTime);
+      m_VideoWnd.m_MemDC.WriteText(s, Rect, Font, YELLOW, 2);
+    }
 
 	m_VideoWnd.Invalidate(FALSE);
 	m_VideoWnd.UpdateWindow();

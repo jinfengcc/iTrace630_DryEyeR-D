@@ -382,6 +382,30 @@ void CWFAcquisition::Main()
 	m_pHW->InitializeOptometer();
 	m_pHW->MoveOptometerTargetToPositionD(10.0, TRUE);
 
+
+
+
+	//cjf 10212020 test for slow gain
+	int St   = (int)clock();
+	int FrameTimes = 0;
+	while (TRUE) 
+	{    
+		m_pHW->StartTransferringVideoFrame();  
+		m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 1, 0);
+
+		//m_pHW->FinishTransferringVideoFrame();
+    
+		FrameTimes++;
+
+		 if ((FrameTimes >= 40)) {
+			break;
+		}
+	}
+    // cjf 10212020 test for slow gain
+
+
+	 int Ut = (int)clock() - St;
+
 	m_Eye = m_pHW->GetEye();
 
 	int  Delay = 1000;//1 second delay between 1st and 2nd capture
@@ -871,12 +895,12 @@ A:
 			::Sleep(0);
 		}
 
-		if (!::NewSettings.m_Super_Exam) //531
-		{
-			m_pHW->TurnInfraredLEDsOff();
-			m_pHW->TurnAccommodationTargetOff();
-		}
-
+		//if (!::NewSettings.m_Super_Exam) //531//cjf1020
+		//{
+		//	m_pHW->TurnInfraredLEDsOff();
+		//	m_pHW->TurnAccommodationTargetOff();
+		//}
+    
 		if (Done == 1)
 		{
 			if (::NewSettings.m_Super_Exam)
@@ -956,11 +980,15 @@ A:
 		m_WFExam.m_Image.Destroy();
 		m_WFExam.m_ColorImage.Destroy();
 
-		Result = FALSE;
+		
 
+		Result = FALSE;
+		//int St = (int)clock();
 		if (m_pHW->IsConnected())
 		{
-			if (Result = SetupScanPointsAndScan())
+			Result = SetupScanPointsAndScan();
+
+			if (Result)
 			{
 				m_WFExam.m_Image.m_w = m_WFExam.m_Calibration.VideoWidth;
 				m_WFExam.m_Image.m_h = m_WFExam.m_Calibration.VideoHeight;
@@ -970,6 +998,8 @@ A:
 
 				Result = DownloadScanResults();
 			}
+
+			//int Ut = (int)clock() - St;  
 		}
 		else
 		{
@@ -1029,7 +1059,7 @@ A:
 	}
 	//Alert user when the scan size is <2.5mm at the time of acquisition Done
 
-	if (::NewSettings.m_Super_Exam)
+	//if (::NewSettings.m_Super_Exam)//cjf1020
 	{
 		m_pHW->TurnInfraredLEDsOff();
 		m_pHW->TurnAccommodationTargetOff();

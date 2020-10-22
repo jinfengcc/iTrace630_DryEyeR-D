@@ -20,6 +20,7 @@ public:
 
 private:
 
+	//int             m_t;//test
 	CWFAcquisition* m_pWFAcquisition;
 
 	afx_msg void OnUp();

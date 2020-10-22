@@ -224,6 +224,12 @@ typedef double           real_t;
 #define LASERFAIL 1 // Laser safty detection failed
 #define LASERSAFE 2 // Laser safty detection sucessful
 // 6.2.0 For laser safty detection
+
+//cjf 10212020
+#define WFEXAM      0
+#define CTEXAM      1
+//cjf 10212020
+
 //***************************************************************************************
 
 // For merge dicom
