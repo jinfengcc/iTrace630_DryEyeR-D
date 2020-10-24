@@ -52,17 +52,24 @@ void CameraHires::StopCapture()
 
 bool CameraHires::GetImage(cv::Mat &img, Mode mode) const
 {
-  if (!m_pimpl->GetImage(img))
+  DILASCIA_TRACE_EX("HRCAM", "Getting Image\n");
+  if (!m_pimpl->GetImage(img)) {
+    DILASCIA_TRACE_EX("HRCAM", "Unable to get image\n");
     return false;
+  }
 
-#ifdef _DEBUG
+//#ifdef _DEBUG
   if (fs::exists(R"(C:\1\thanos)"))
     cv::imwrite(R"(C:\1\thanos\hires_ct.png)", img);
-#endif
+//#endif
+
+  DILASCIA_TRACE_EX("HRCAM", "Got image ({}x{})\n", img.cols, img.rows);
 
   if (mode == ICameraHires::Mode::LORES) {
     enum { IMG_ROWS = 468, IMG_COLS = 624 };
     cv::resize(img, img, {IMG_COLS, IMG_ROWS}, cv::INTER_AREA);
+
+    DILASCIA_TRACE_EX("HRCAM", "Resized image ({}x{})\n", img.cols, img.rows);
   }
 
   return true;
@@ -70,6 +77,7 @@ bool CameraHires::GetImage(cv::Mat &img, Mode mode) const
 
 bool CameraHires::Connected() const
 {
+  DILASCIA_TRACE_EX("HRCAM", "Camera connected: {}\n", m_pimpl->Connected());
   return m_pimpl->Connected();
 }
 
