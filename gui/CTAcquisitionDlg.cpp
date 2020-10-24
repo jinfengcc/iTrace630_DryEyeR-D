@@ -33,15 +33,15 @@ BOOL CCTAcquisitionDlg::OnInitDialog()
 
 LRESULT CCTAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 {
-	//cjf 10222020 test for slow gain
-  if (wParam != 0) {
-    memcpy(m_VideoWnd.m_MemDC.m_RGBData, m_pCTAcquisition->m_pHW->GetRGBData(), CHW::m_VideoSize);
-    m_VideoWnd.Invalidate(FALSE);
-    m_VideoWnd.UpdateWindow();
+	////cjf 10222020 test for slow gain
+ // if (wParam != 0) {
+ //   memcpy(m_VideoWnd.m_MemDC.m_RGBData, m_pCTAcquisition->m_pHW->GetRGBData(), CHW::m_VideoSize);
+ //   m_VideoWnd.Invalidate(FALSE);
+ //   m_VideoWnd.UpdateWindow();
 
-    return 0;
-  }
-  //cjf 10222020 test for slow gain
+ //   return 0;
+ // }
+ // //cjf 10222020 test for slow gain
 
 	memcpy(m_VideoWnd.m_MemDC.m_RGBData, m_pCTAcquisition->m_pHW->GetRGBData(), CHW::m_VideoSize);
 

@@ -385,26 +385,26 @@ void CWFAcquisition::Main()
 
 
 
-	//cjf 10212020 test for slow gain
-	int St   = (int)clock();
-	int FrameTimes = 0;
-	while (TRUE) 
-	{    
-		m_pHW->StartTransferringVideoFrame();  
-		m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 1, 0);
+	////cjf 10212020 test for slow gain
+	//int St   = (int)clock();
+	//int FrameTimes = 0;
+	//while (TRUE) 
+	//{    
+	//	m_pHW->StartTransferringVideoFrame();  
+	//	m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 1, 0);
 
-		//m_pHW->FinishTransferringVideoFrame();
-    
-		FrameTimes++;
+	//	//m_pHW->FinishTransferringVideoFrame();
+ //   
+	//	FrameTimes++;
 
-		 if ((FrameTimes >= 40)) {
-			break;
-		}
-	}
-    // cjf 10212020 test for slow gain
+	//	 if ((FrameTimes >= 40)) {
+	//		break;
+	//	}
+	//}
+ //   // cjf 10212020 test for slow gain
 
 
-	 int Ut = (int)clock() - St;
+	//int Ut = (int)clock() - St;
 
 	m_Eye = m_pHW->GetEye();
 

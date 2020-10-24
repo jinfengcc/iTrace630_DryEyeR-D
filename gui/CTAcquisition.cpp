@@ -95,22 +95,22 @@ void CCTAcquisition::Main()
 		::HW.ISVideoCameraOn = true;
 	}
 
-	// cjf 10212020 test for slow gain
-	int St     = (int)clock();
-	int FrameTimes = 0;
-	while (TRUE) {
-		m_pHW->StartTransferringVideoFrame();
-		 m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 1, 0);
+	//// cjf 10212020 test for slow gain
+	//int St     = (int)clock();
+	//int FrameTimes = 0;
+	//while (TRUE) {
+	//	m_pHW->StartTransferringVideoFrame();
+	//	 m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 1, 0);
 
-		// m_pHW->FinishTransferringVideoFrame();
+	//	// m_pHW->FinishTransferringVideoFrame();
 
-		 FrameTimes++;
+	//	 FrameTimes++;
 
-		 if ((FrameTimes >= 40)) {
-		break;
-		}
-	 }
-	 // cjf 10212020 test for slow gain
+	//	 if ((FrameTimes >= 40)) {
+	//	break;
+	//	}
+	// }
+	// // cjf 10212020 test for slow gain
 
 	m_TriLaserOn = FALSE;
 	m_AlignmentStatus = 0;
@@ -458,13 +458,13 @@ void CCTAcquisition::Main()
 				if ((m_ToDo == ACQUIRE || m_pHW->IsButtonPressed()))
 				{
 					//cjf 10222020 do not allow movement after acquire? why we need this in 6.2.1
-					//ulong StartTime = clock();
-					//while (clock() - StartTime < (ulong)m_pHW->m_Calibration.ColorImageDelay)
-					//{
-					//	m_pHW->StartTransferringVideoFrame();
-					//	m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 0, 1);//Transform the lParam = 1
-					//	m_pHW->FinishTransferringVideoFrame();
-					//}
+					ulong StartTime = clock();
+					while (clock() - StartTime < (ulong)m_pHW->m_Calibration.ColorImageDelay)
+					{
+						m_pHW->StartTransferringVideoFrame();
+						m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 0, 1);//Transform the lParam = 1
+						m_pHW->FinishTransferringVideoFrame();
+					}
 					// cjf 10222020 do not allow movement after acquire? why we need this in 6.2.1
 
 					m_pHW->TurnWhiteLEDsOff();
