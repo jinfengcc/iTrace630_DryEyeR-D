@@ -37,7 +37,9 @@
 #include <Shlwapi.h>  // PathFileExists
 #include <htmlhelp.h> // 530 for help system
 
+#include <functional>
 #include <algorithm>
+
 namespace Gdiplus {
   using std::max;
   using std::min;
