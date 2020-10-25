@@ -4,6 +4,23 @@
 
 using namespace std::literals;
 
+/*****************
+
+Control                             Reg.            Current         Min.          Max.
+Control Undefined                   0x00               0             0             0
+Back light Compensation             0x01               3             0             3
+Brightness                          0x02              64           -64            64
+Contrast                            0x03              95             0            95
+Gain                                0x04             100             0           100
+Power Line Frequency                0x05               2             0             2
+Hue                                 0x06            2000         -2000          2000
+Saturation                          0x07             128             0           128
+Gamma                               0x08               7             1             7
+White Balance Temperature           0x09             300           100           300
+White Balance Temperature (Auto)    0x0a            6500          2800          6500
+                                    0x0b               0             0             0
+******************/
+
 namespace {
   const char defCameraName[] = "HD USB Camera";
 
@@ -16,11 +33,11 @@ namespace {
 
   static PropRange propRange[] = {
     // clang-format off
-    { ICameraHires::BRIGHTNESS,   -64,   64},
-    { ICameraHires::CONTRAST  ,     0,   95},
-    { ICameraHires::HUE       ,  -128,  128},
-    { ICameraHires::SATURATION,     0,  128},
-    { ICameraHires::GAIN      ,     0,  100},
+    { ICameraHires::BRIGHTNESS,   -64,   64},  // Range [  -64,   64]
+    { ICameraHires::CONTRAST  ,     0,   95},  // Range [    0,   95]
+    { ICameraHires::HUE       ,  -128,  128},  // Range [-2000, 2000]
+    { ICameraHires::SATURATION,     0,  128},  // Range [    0,  128]
+    { ICameraHires::GAIN      ,     0,  100},  // Range [    0,  100]
     // clang-format on
   };
 
@@ -72,13 +89,19 @@ bool CameraHiResImpl::Settings(ITraceyConfig *pc)
     std::make_pair(ICameraHires::HUE       , cv::CAP_PROP_HUE       ),
     std::make_pair(ICameraHires::SATURATION, cv::CAP_PROP_SATURATION),
     std::make_pair(ICameraHires::GAIN      , cv::CAP_PROP_GAIN      ),
+    std::make_pair(ICameraHires::EXPOSURE  , cv::CAP_PROP_EXPOSURE  ),
     // clang-format on
   };
 
   TraceyConfig c(pc);
   for (auto &p : ps) {
-    if (auto v = c.Get<int>(p.first); v.has_value())
+    if (auto v = c.Get<int>(p.first); v.has_value()) {
       m_videoCap.set(p.second, TranslateProp(p.first, v.value()));
+      if (p.first == ICameraHires::EXPOSURE) {
+        if (v.value() == 0)
+          m_videoCap.set(cv::CAP_PROP_AUTO_EXPOSURE, 1);
+      }
+    }
   }
 
   return true;
@@ -129,16 +152,17 @@ void CameraHiResImpl::DefaultSettings()
     //auto fourcc = cv::VideoWriter::fourcc('Y', 'U', 'Y', '2');
 
     // clang-format off
-    //m_videoCap.set(cv::CAP_PROP_FPS          , 30.0);
     m_videoCap.set(cv::CAP_PROP_FOURCC       , fourcc);
     m_videoCap.set(cv::CAP_PROP_FRAME_WIDTH  , 1280);
     m_videoCap.set(cv::CAP_PROP_FRAME_HEIGHT , 960);
-    m_videoCap.set(cv::CAP_PROP_AUTO_EXPOSURE, -1);          //
+    m_videoCap.set(cv::CAP_PROP_AUTO_EXPOSURE, 1);          //
     //m_videoCap.set(cv::CAP_PROP_ISO_SPEED    , 50);         // -1
-    //m_videoCap.set(cv::CAP_PROP_GAIN         , 20);         // 0
     // clang-format on
 
-    m_videoCap.set(cv::CAP_PROP_BUFFERSIZE, 2);
+    //m_videoCap.set(cv::CAP_PROP_ISO_SPEED , 400);
+    //m_videoCap.set(cv::CAP_PROP_GAIN      , 255);
+    //m_videoCap.set(cv::CAP_PROP_BACKLIGHT , 0);
+    //m_videoCap.set(cv::CAP_PROP_BUFFERSIZE, 2);
 
     hrc::DumpSettings("after setup", m_videoCap);
   }
@@ -167,7 +191,6 @@ void CameraHiResImpl::ThreadFunc(std::stop_token token)
 
       now   = t;
       n     = 0;
-
     }
   }
 }

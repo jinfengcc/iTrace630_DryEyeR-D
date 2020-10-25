@@ -16,7 +16,6 @@ CameraHires::CameraHires()
   std::lock_guard lock(mutex);
   if (m_pimpl = camImpl.lock(); !m_pimpl) {
     m_pimpl = std::make_shared<CameraHiResImpl>();
-    m_pimpl->Open(defCameraName);
     camImpl = m_pimpl;
   }
 }
@@ -58,10 +57,10 @@ bool CameraHires::GetImage(cv::Mat &img, Mode mode) const
     return false;
   }
 
-//#ifdef _DEBUG
+#ifdef _DEBUG
   if (fs::exists(R"(C:\1\thanos)"))
     cv::imwrite(R"(C:\1\thanos\hires_ct.png)", img);
-//#endif
+#endif
 
   DILASCIA_TRACE_EX("HRCAM", "Got image ({}x{})\n", img.cols, img.rows);
 
@@ -75,10 +74,15 @@ bool CameraHires::GetImage(cv::Mat &img, Mode mode) const
   return true;
 }
 
-bool CameraHires::Connected() const
+bool CameraHires::Connected(double *fps) const
 {
-  DILASCIA_TRACE_EX("HRCAM", "Camera connected: {}\n", m_pimpl->Connected());
-  return m_pimpl->Connected();
+  auto f = 0.0;
+  auto c = m_pimpl->Connected(&f);
+  if (fps)
+    *fps = f;
+
+  DILASCIA_TRACE_EX("HRCAM", "Camera connected: {} (FPS: {})\n", c, f);
+  return c;
 }
 
 std::string CameraHires::GetCameraName()

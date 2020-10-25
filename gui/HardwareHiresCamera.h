@@ -51,6 +51,8 @@ public:
   void SetContrast  (int value)  { m_config.Set(Camera::CONTRAST  , value); }
   void SetHue       (int value)  { m_config.Set(Camera::HUE       , value); }
   void SetSaturation(int value)  { m_config.Set(Camera::SATURATION, value); }
+  void SetGain      (int value)  { m_config.Set(Camera::GAIN      , value); }
+  void SetExposure  (int value)  { m_config.Set(Camera::EXPOSURE  , value); }   // 0 = Auto, -1..-13
   // clang-format on
 };
 

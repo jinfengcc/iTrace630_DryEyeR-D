@@ -20,8 +20,10 @@ private:
   bool Open(std::string_view devName);
   void Close();
 
-  bool Connected() const
+  bool Connected(double *fps = nullptr) const
   {
+    if (fps)
+      *fps = m_fps;
     return m_videoCap.isOpened();
   }
 

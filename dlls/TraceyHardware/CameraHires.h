@@ -18,7 +18,7 @@ public:
   bool StartCapture(std::function<void(cv::Mat)> notify) override;
   void StopCapture() override;
   bool GetImage(cv::Mat &mat, Mode mode) const override;
-  bool Connected() const override;
+  bool Connected(double *fps) const override;
 
 private:
   std::shared_ptr<CameraHiResImpl> m_pimpl;
