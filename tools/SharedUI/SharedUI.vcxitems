@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{448e43e4-7c07-408f-8d61-ae1a69ea9dfd}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AnimationHelper.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AppInitializer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)dpi.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)DpiHelper.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Globals.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ListCtrlColumns.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SimpleTabCtrl.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SimpleTabCtrlVert.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ViewContainer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)WindowAnimate.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)WinHelpers.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AnimationHelper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AppInitializer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CheckCombo.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DialogColor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DialogWithColor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)dpi.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DpiHelper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DialogFont.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Globals.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IView.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ListCtrlColumns.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)WindowPaintImpl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SimpleTabCtrl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SimpleTabCtrlVert.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Slot.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ViewContainer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)WindowAnimate.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)WinHelpers.h" />
+  </ItemGroup>
+</Project>

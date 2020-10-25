@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Views">
+      <UniqueIdentifier>{2d3d28b5-be3c-467b-914a-c6cc654028ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Views\Flash">
+      <UniqueIdentifier>{c6bbe9c8-1d08-4b55-826e-f9ef8bf9eda8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Views\Camera">
+      <UniqueIdentifier>{488c1714-8d33-4a49-b037-d73989142526}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HalTester.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraView.h">
+      <Filter>Views\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraWindow.h">
+      <Filter>Views\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="LightsWindow.h">
+      <Filter>Views\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="FlashView.h">
+      <Filter>Views\Flash</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraHiresView.h">
+      <Filter>Views\Camera</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="HalTester.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraView.cpp">
+      <Filter>Views\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="LightsWindow.cpp">
+      <Filter>Views\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraWindow.cpp">
+      <Filter>Views\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="FlashView.cpp">
+      <Filter>Views\Flash</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraHiresView.cpp">
+      <Filter>Views\Camera</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="HalTester.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="HalTester.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\HalTester.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\RedX.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\file.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
