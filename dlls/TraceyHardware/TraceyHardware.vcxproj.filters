@@ -13,10 +13,40 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="3rdParty">
+      <UniqueIdentifier>{38e4dee4-1ed3-4c35-8a42-b6901ba77dd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thw">
+      <UniqueIdentifier>{ab6b8da7-cc96-4375-8474-0dacc1b4a79d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thw\bin">
+      <UniqueIdentifier>{24d74394-3f8a-4ab0-940a-439e2ada2141}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Flash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Device.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="thw\thw.h">
+      <Filter>thw</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="thw\thw_data.h">
+      <Filter>thw</Filter>
+    </ClInclude>
+    <ClInclude Include="thw\thw_defines.h">
+      <Filter>thw</Filter>
     </ClInclude>
     <ClInclude Include="CameraHiresImpl.h">
       <Filter>Header Files</Filter>
@@ -35,7 +65,22 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Flash.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="LocalClassFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Device.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="thw\thw.cpp">
+      <Filter>thw</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CameraHiresImpl.cpp">
@@ -47,5 +92,10 @@
     <ClCompile Include="CameraHiresUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="thw\thw.dll">
+      <Filter>thw\bin</Filter>
+    </None>
   </ItemGroup>
 </Project>

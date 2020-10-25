@@ -46,6 +46,7 @@ namespace hal {
     inline static auto HUE        = Guid("272378a6-ad4b-432b-844f-a4ca868b734b");
     inline static auto SATURATION = Guid("b0c0c843-4b1b-41fd-909d-e933082ac1ac");
     inline static auto GAIN       = Guid("1de0f978-4880-4351-ada6-61b41137316d");
+    inline static auto EXPOSURE   = Guid("4f87a3ef-e690-484d-aa41-414048924ac7");
 
     enum class Mode {HIRES, LORES};
 
@@ -60,6 +61,6 @@ namespace hal {
     virtual bool GetImage(cv::Mat & mat, Mode mode = Mode::HIRES) const = 0;
 
     //! Returns true, if the device is connected
-    virtual bool Connected() const = 0;
+    virtual bool Connected(double *fps = nullptr) const = 0;
   };
 } // namespace hal

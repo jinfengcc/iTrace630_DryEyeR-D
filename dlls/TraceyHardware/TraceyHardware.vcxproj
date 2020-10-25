@@ -55,7 +55,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="Shared" />
+  <ImportGroup Label="Shared">
+    <Import Project="..\..\interfaces\interfaces.vcxitems" Label="Shared" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\..\ProjProps.props" />
@@ -170,16 +172,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraHires.h" />
     <ClInclude Include="CameraHiresImpl.h" />
     <ClInclude Include="CameraHiresUtil.h" />
+    <ClInclude Include="CameraImpl.h" />
+    <ClInclude Include="Device.h" />
+    <ClInclude Include="Flash.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="thw\thw.h" />
+    <ClInclude Include="thw\thw_data.h" />
+    <ClInclude Include="thw\thw_defines.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraHires.cpp" />
     <ClCompile Include="CameraHiresImpl.cpp" />
     <ClCompile Include="CameraHiresUtil.cpp" />
+    <ClCompile Include="CameraImpl.cpp" />
+    <ClCompile Include="Device.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Flash.cpp" />
     <ClCompile Include="LocalClassFactory.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -187,10 +200,17 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="thw\thw.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="thw\thw.dll" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\libs\CommonLib\CommonLib.vcxproj">
       <Project>{fb2bbf5a-c4a0-4fd8-9966-53f2a3ee90cc}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\libs\LegacyLib\LegacyLib.vcxproj">
+      <Project>{903470eb-776f-48d6-b163-0cc6c1c560d5}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\libs\LoggingLib\LoggingLib.vcxproj">
       <Project>{136cc8c9-d852-494e-8036-46b22062b2c4}</Project>

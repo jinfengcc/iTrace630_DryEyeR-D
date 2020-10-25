@@ -17,9 +17,18 @@
 
 #include <wil/result_macros.h>
 
+#include <interfaces/hal/IDevice.h>
+#include <interfaces/hal/IFlash.h>
 #include <interfaces/hal/ICamera.h>
 
 using namespace hal;
+
+#include "thw/thw_defines.h"
+#include "thw/thw_data.h"
+#include "thw/thw.h"
+
+#include <libs/LegacyLib/Structures.h>
+#include <libs/LegacyLib/Utils.h>
 
 extern sig::Signal<> ShutdownSignal;
 
