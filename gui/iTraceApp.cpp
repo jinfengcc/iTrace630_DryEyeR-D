@@ -2,6 +2,7 @@
 
 #include "StdAfx.h"
 #include "Resource.h"
+#include "SplashScreen.h"
 #include "MainWnd.h"
 #include "Hardware.h"
 #include "Registry.h"
@@ -11,6 +12,7 @@
 #include "TraceyDicom.h" //6.2.0 For Dicom Toolkit
 
 #include "INIParser.h" //6.2.0 ini registration
+#include "libs/CommonLib/GdiplusInitializer.h"
 
 //***************************************************************************************
 //***************************************************************************************
@@ -72,7 +74,10 @@ CBugTest   BugTest;
 BOOL CiTraceApp::InitInstance()
 {
   CWinApp::InitInstance();
+  GdiplusInitializer gdipi;
   CoInitialize(nullptr);
+
+  CSplashScreen::CreateInstance(IDB_SPLASH_SCREEN);
 
   INITCOMMONCONTROLSEX InitCtrls;
   InitCtrls.dwSize = sizeof(INITCOMMONCONTROLSEX);
@@ -82,7 +87,7 @@ BOOL CiTraceApp::InitInstance()
 
   ControlSettings();
 
-  CHW::Create();
+  CHW::CreateInstance();
   BOOL IsHardwareOK = ::HW.IsConnected();
 
   // Open camera
@@ -100,7 +105,7 @@ BOOL CiTraceApp::InitInstance()
   // COM library is initialized with COINIT_APARTMENTTHREADED after the following call
 
   // Database connection
-  CDB::Create();
+  CDB::CreateInstance();
   ::DB.LocalConnect(::Settings.m_OpenDBAsReadOnly); // 6.2.0  create "dicom" filed in patienset table
   ::DB.Disconnect();
   ::DB.Connect(::Settings.m_OpenDBAsReadOnly);
@@ -153,6 +158,8 @@ BOOL CiTraceApp::InitInstance()
   m_pMainWnd = new CMainWnd;
 
   ::HW.SetNotificationWindow(m_pMainWnd);
+
+  CSplashScreen::Instance()->ShowSplash(false);
 
   return TRUE;
 }

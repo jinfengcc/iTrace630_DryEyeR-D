@@ -3602,18 +3602,18 @@ END
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE 
+1 TEXTINCLUDE
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE 
+2 TEXTINCLUDE
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE 
+3 TEXTINCLUDE
 BEGIN
     "#include ""Res\\iTrace.rc2""\r\n"
     "\0"
@@ -4295,6 +4295,14 @@ IDD_IMAGE_DLG3 AFX_DIALOG_LAYOUT
 BEGIN
     0
 END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_SPLASH_SCREEN BITMAP "Res\\Splash-About.jpg"
 
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////

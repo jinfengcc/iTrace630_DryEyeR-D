@@ -458,6 +458,8 @@
 #define IDD_DICOMMWLRECDLG              480
 #define IDD_DIALOG6                     482
 #define IDD_DICOMMWLRESDLG              482
+#define IDB_BITMAP1                     486
+#define IDB_SPLASH_SCREEN               486
 #define IDC_NEW_PATIENT_BUTTON          1000
 #define IDC_SELECT_PATIENT_BUTTON       1001
 #define IDC_EDIT_PATIENT_BUTTON         1002
@@ -2005,7 +2007,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        485
+#define _APS_NEXT_RESOURCE_VALUE        487
 #define _APS_NEXT_COMMAND_VALUE         32965
 #define _APS_NEXT_CONTROL_VALUE         8485
 #define _APS_NEXT_SYMED_VALUE           422

@@ -46,6 +46,8 @@ namespace Gdiplus {
 } // namespace Gdiplus
 
 #include <Gdiplus.h> // GDI+
+#include <fmt/format.h>
+#include <gsl/gsl>
 
 //***************************************************************************************
 

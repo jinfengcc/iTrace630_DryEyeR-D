@@ -316,6 +316,7 @@
     <ClCompile Include="INIParser.cpp" />
     <ClCompile Include="LinkLibs.cpp" />
     <ClCompile Include="SameDicomPatientDlg.cpp" />
+    <ClCompile Include="SplashScreen.cpp" />
     <ClCompile Include="TraceyDicom.cpp" />
     <ClCompile Include="DispWnd.cpp" />
     <ClCompile Include="DofChartDlg.cpp" />
@@ -505,6 +506,7 @@
     <ClInclude Include="HorSliderCtrl.h" />
     <ClInclude Include="INIParser.h" />
     <ClInclude Include="SameDicomPatientDlg.h" />
+    <ClInclude Include="SplashScreen.h" />
     <ClInclude Include="TraceyDicom.h" />
     <ClInclude Include="DispWnd.h" />
     <ClInclude Include="DofChartDlg.h" />
@@ -657,6 +659,7 @@
     <Image Include="Res\AcquireButton37.png" />
     <Image Include="Res\AcquireButton44.png" />
     <Image Include="Res\AcquireButton53.png" />
+    <Image Include="res\bitmap1.bmp" />
     <Image Include="Res\Cancel1.png" />
     <Image Include="Res\Cancel2.png" />
     <Image Include="Res\Cancel3.png" />

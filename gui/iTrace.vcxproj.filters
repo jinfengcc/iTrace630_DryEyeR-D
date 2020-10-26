@@ -830,6 +830,9 @@
     <ClCompile Include="HardwareHiresCamera.cpp">
       <Filter>Hardware</Filter>
     </ClCompile>
+    <ClCompile Include="SplashScreen.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PatientDlg.h">
@@ -1359,6 +1362,9 @@
     </ClInclude>
     <ClInclude Include="HardwareHiresCamera.h">
       <Filter>Hardware</Filter>
+    </ClInclude>
+    <ClInclude Include="SplashScreen.h">
+      <Filter>Windows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2068,6 +2074,9 @@
       <Filter>Resources</Filter>
     </Image>
     <Image Include="Res\RefreshPatients20.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="res\bitmap1.bmp">
       <Filter>Resources</Filter>
     </Image>
   </ItemGroup>

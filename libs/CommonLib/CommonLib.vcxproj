@@ -182,6 +182,7 @@
     <ClInclude Include="SignalUI.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Slot.h" />
+    <ClInclude Include="SplashScreenImpl.h" />
     <ClInclude Include="TempFile.h" />
     <ClInclude Include="thread\jthread.hpp" />
     <ClInclude Include="thread\stop_token.hpp" />
@@ -220,6 +221,7 @@
     </ClCompile>
     <ClCompile Include="ResourceData.cpp" />
     <ClCompile Include="SignalUI.cpp" />
+    <ClCompile Include="SplashScreenImpl.cpp" />
     <ClCompile Include="TempFile.cpp" />
     <ClCompile Include="thread\ThreadPool.cpp" />
     <ClCompile Include="thread\ThreadPoolTimer.cpp" />

@@ -33,7 +33,7 @@ protected:
 
 public:
   template <typename... Args>
-  static T *Create(Args &&... args)
+  static T *CreateInstance(Args &&... args)
   {
     static std::mutex s_lock;
     std::scoped_lock  lock(s_lock);
@@ -47,7 +47,7 @@ public:
   static T *Instance() noexcept
   {
     if constexpr (std::is_default_constructible_v<T>) {
-      return m_instance ? m_instance.get() : Create();
+      return m_instance ? m_instance.get() : CreateInstance();
     }
     else {
       Expects(m_instance);

@@ -159,6 +159,9 @@
     <ClInclude Include="Random.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SplashScreenImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -231,6 +234,9 @@
       <Filter>Compression</Filter>
     </ClCompile>
     <ClCompile Include="TempFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SplashScreenImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
