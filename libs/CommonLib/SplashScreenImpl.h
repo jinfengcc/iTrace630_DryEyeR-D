@@ -7,7 +7,11 @@
 //#include <wtl/atlmisc.h>
 #include <wtl/atlcrack.h>
 
-class CSplashScreenImpl : public CWindowImpl<CSplashScreenImpl, ATL::CWindow, CNullTraits>
+#include "atlgdix.h"
+
+class CSplashScreenImpl
+  : public CWindowImpl<CSplashScreenImpl, ATL::CWindow, CNullTraits>
+  , public COffscreenDraw<CSplashScreenImpl>
 {
 public:
   using Callback = std::function<void(Gdiplus::Graphics &, Gdiplus::RectF)>;
@@ -24,21 +28,17 @@ public:
     return m_size.cy;
   }
 
+  void DoPaint(CDCHandle dc);
 private:
   Gdiplus::Bitmap     m_bitmap;
   Callback            m_callback;
   SIZE                m_size{};
 
-  BOOL OnEraseBkgnd(CDCHandle dc);
-  void OnPaint(CDCHandle);
-
   void Initialize();
-  void DoPaint(CDCHandle dc, RECT &rcClip);
   void PumpMessages();
 
   BEGIN_MSG_MAP_EX(CSplashScreen)
-    MSG_WM_ERASEBKGND(OnEraseBkgnd)
-    MSG_WM_PAINT(OnPaint)
+    CHAIN_MSG_MAP(COffscreenDraw<CSplashScreenImpl>)
   END_MSG_MAP()
 };
 

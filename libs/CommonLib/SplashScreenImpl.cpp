@@ -2,6 +2,7 @@
 #include "SplashScreenImpl.h"
 #include <wtl/atlmisc.h>
 
+
 CSplashScreenImpl::CSplashScreenImpl(int resId, Callback cb)
   : m_bitmap(GetModuleHandle(nullptr), MAKEINTRESOURCE(resId))
   , m_callback(cb)
@@ -16,21 +17,6 @@ CSplashScreenImpl::CSplashScreenImpl(int resId, Callback cb)
 CSplashScreenImpl::~CSplashScreenImpl()
 {
   DestroyWindow();
-}
-
-BOOL CSplashScreenImpl::OnEraseBkgnd(CDCHandle dc)
-{
-  return TRUE;
-}
-
-void CSplashScreenImpl::OnPaint(CDCHandle)
-{
-  RECT rc;
-  GetClientRect(&rc);
-
-  WTL::CPaintDC dc(m_hWnd);
-  CMemoryDC     memdc(dc, dc.m_ps.rcPaint);
-  DoPaint(memdc.m_hDC, rc);
 }
 
 void CSplashScreenImpl::Initialize()
@@ -50,7 +36,7 @@ void CSplashScreenImpl::Initialize()
   CenterWindow();
 }
 
-void CSplashScreenImpl::DoPaint(CDCHandle dc, RECT &rcClip)
+void CSplashScreenImpl::DoPaint(CDCHandle dc)
 {
   CRect rc;
   GetClientRect(&rc);
