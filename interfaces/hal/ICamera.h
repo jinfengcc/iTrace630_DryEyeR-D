@@ -48,7 +48,8 @@ namespace hal {
     inline static auto GAIN       = Guid("1de0f978-4880-4351-ada6-61b41137316d");
     inline static auto EXPOSURE   = Guid("4f87a3ef-e690-484d-aa41-414048924ac7");
 
-    enum class Mode {HIRES, LORES};
+    enum class Mode { HIRES, LORES };
+    enum class Exposure { _auto, _640ms = -1, _320ms = -2, _160ms = -3, _80ms = -4, _40ms = -5, _20ms = -6, _10ms = -6, _5ms = -7 };
 
     //! Initialization
     virtual void Initialize(IUnknown * unk) = 0;
