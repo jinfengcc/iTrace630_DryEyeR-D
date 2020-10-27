@@ -415,6 +415,8 @@ void CCTAcquisition::Main()
 			m_pHW->TurnInfraredLEDsOn();
 			m_pHW->TurnWhiteLEDsOn();
 
+			int LastWhiteLEDsPower = m_pHW->m_pCurrentVideoSettings->WhiteLEDsPowerLevel; // 10262020 Can not adjust the led power
+
 			//530
 			while (TRUE)
 			{
@@ -430,6 +432,13 @@ void CCTAcquisition::Main()
 				m_pHW->m_pCurrentVideoSettings->Contrast = m_Contrast;
 				m_pHW->m_pCurrentVideoSettings->Hue = m_Hue;
 				m_pHW->m_pCurrentVideoSettings->Saturation = m_Saturation;
+
+				// 10262020 Can not adjust the led power
+				if (LastWhiteLEDsPower != m_WhiteLEDsPower) {
+					 m_pHW->TurnWhiteLEDsOn();
+					 LastWhiteLEDsPower = m_WhiteLEDsPower;
+				}
+				// 10262020 Can not adjust the led power
 
 				m_pHW->ApplyCurrentVideoBrightness();
 				m_pHW->ApplyCurrentVideoContrast();
