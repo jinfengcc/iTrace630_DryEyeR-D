@@ -515,9 +515,6 @@
     <ClCompile Include="WFTest.cpp">
       <Filter>Acquisition</Filter>
     </ClCompile>
-    <ClCompile Include="Compression.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
     <ClCompile Include="CTExam.cpp">
       <Filter>Math</Filter>
     </ClCompile>
@@ -1077,9 +1074,6 @@
     </ClInclude>
     <ClInclude Include="WFTest.h">
       <Filter>Acquisition</Filter>
-    </ClInclude>
-    <ClInclude Include="Compression.h">
-      <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="CubicSpline.h">
       <Filter>Math</Filter>

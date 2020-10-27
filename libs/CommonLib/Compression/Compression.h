@@ -25,21 +25,3 @@ inline std::vector<std::uint8_t> Decompress(gsl::span<std::uint8_t> data)
 {
   return Decompress(data.data(), data.size());
 }
-
-//template<class T>
-//class CompressedBlob
-//{
-//public:
-//  CompressedBlob(const T &data)
-//    : m_data(std::make_unique<T>(data))
-//  {
-//  }
-//  CompressedBlob(const void *data, unsigned size)
-//  {
-//    if (GetDecompressedSize(data, size) < sizeof(T))
-//      return;
-//  }
-//
-//private:
-//  std::unique_ptr<T> m_data;
-//};

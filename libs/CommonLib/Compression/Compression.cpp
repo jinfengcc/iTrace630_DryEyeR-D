@@ -158,6 +158,11 @@ BOOL Compress(const void *pData, const int DataSize, void *pZip, int *pZipSize)
 
   ::CloseZipZ(hZip);
 
+#ifdef _DEBUG
+  auto dct = Decompress(pZip, *pZipSize);
+  ATLASSERT(dct.size() == DataSize);
+#endif
+
   return TRUE;
 }
 
@@ -178,6 +183,11 @@ std::vector<std::uint8_t> Compress(const void *pData, unsigned DataSize)
   ::ComputeMD5Checksum(pData, DataSize, &cd[zipSize], 16);
 
   ::CloseZipZ(hZip);
+
+#ifdef _DEBUG
+  auto dct = Decompress(&cd[0], cd.size());
+  ATLASSERT(dct.size() == DataSize);
+#endif
 
   return cd;
 }

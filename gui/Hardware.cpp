@@ -2,11 +2,11 @@
 
 #include "StdAfx.h"
 #include "Hardware.h"
-#include "Compression.h"
 #include "CubicSpline.h"
-
 #include "WinUser.h"
-	#include <libs\LoggingLib\TkTraceWin.h>
+#include <libs\LoggingLib\TkTraceWin.h>
+#include <libs/CommonLib/Compression/Compression.h>
+
 //***************************************************************************************
 //***************************************************************************************
 //***************************************************************************************

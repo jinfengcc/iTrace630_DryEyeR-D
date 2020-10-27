@@ -1,7 +1,7 @@
 //***************************************************************************************
 
 #include "StdAfx.h"
-#include "Compression.h"
+#include <libs/CommonLib/Compression/Compression.h>
 #include "Registry.h"
 #include "zip.h"
 #include "unzip.h"

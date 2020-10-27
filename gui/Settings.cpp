@@ -1,8 +1,8 @@
 ﻿//***************************************************************************************
 
 #include "StdAfx.h"
+#include <libs/CommonLib/Compression/Compression.h>
 #include "Resource.h"
-#include "Compression.h"
 #include "GlobalFunctions.h"//6.2.0 Chinese
 
 #include "Settings.h"
