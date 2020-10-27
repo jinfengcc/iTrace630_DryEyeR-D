@@ -828,8 +828,8 @@ LRESULT CImgCptCtrlWnd::OnSliderChangedPos(WPARAM wParam, LPARAM lParam)
 	if (y >= m_sRect[5].top && y <= m_sRect[5].bottom)
 	{
 		if (m_WhiteLEDsPowerLevelSlider.m_Pos > 0.99) m_WhiteLEDsPowerLevelSlider.m_Pos = 1;
-		int val = intRound(m_WhiteLEDsPowerLevelSlider.m_Pos * 100.0);
-		s.Format(_T("%i/100"), val);
+		int val = intRound(m_WhiteLEDsPowerLevelSlider.m_Pos * 50.0);
+		s.Format(_T("%i/50"), val);
 
 		m_MemDC.FillSolidRect(m_rRect[0].left, m_rRect[0].top, m_rRect[0].right - m_rRect[0].left, m_rRect[0].bottom - m_rRect[0].top, BLACK);
 		m_MemDC.WriteText(s, m_rRect[0], Font, WHITE, 2, BLACK);

@@ -651,7 +651,7 @@ A:
 	// The loop of 'if (m_pSettings->m_ProbingEnabled)' Done
 
 
-	int t = 0;
+ 	int t = 0;
 	if (::NewSettings.m_Super_Exam) t = 2; //Setting of the super Exams code(3 times)
 
 	BOOL Result;
