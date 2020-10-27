@@ -18,9 +18,10 @@ uint RotateLeft(const uint x, const uint c)
 
 //***************************************************************************************
 
+//10262020 change all unit to unsigned int by cjf for MD5 bug
 void Transform(const uchar* pBlock, uint* pState)
 {
-  const uint64 Shift[64] =
+  const unsigned int Shift[64] =
 	{
 		7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,
 		5,  9, 14, 20,  5,  9, 14, 20,  5,  9, 14, 20,  5,  9, 14, 20,
@@ -28,25 +29,26 @@ void Transform(const uchar* pBlock, uint* pState)
 		6, 10, 15, 21,  6, 10, 15, 21,  6, 10, 15, 21,  6, 10, 15, 21
 	};
 
-	static uint64 k[64];
+	static unsigned int k[64];
 	static BOOL Initialized = FALSE;
 	if (!Initialized)
 	{
 		for (uint i = 0; i < 64; i++)
 		{
-      k[i] = (uint64)floor(fabs(sin(i + 1.0)) * 4294967296.0);
+			k[i] = (unsigned int)floor(fabs(sin(i + 1.0)) * 4294967296.0);
+			int a = 0;
 		}
 		Initialized = TRUE;
 	}
 
-	uint64 a = pState[0];
-  uint64 b = pState[1];
-  uint64 c = pState[2];
-  uint64 d = pState[3];
+	unsigned int a = pState[0];
+  unsigned int b = pState[1];
+  unsigned int c = pState[2];
+  unsigned int d = pState[3];
 
 	for (uint i = 0; i < 64; i++)
 	{
-    uint64 f, g;
+    unsigned int f, g;
 		if (i < 16)
 		{
 			f = (b & c) | (~b & d);
@@ -67,10 +69,10 @@ void Transform(const uchar* pBlock, uint* pState)
 			f = c ^ (b | ~d);
 			g = (7 * i) % 16;
 		}
-    uint64 t = d;
+    unsigned int t = d;
 		d = c;
 		c = b;
-    b += RotateLeft(a + f + k[i] + ((uint64 *)pBlock)[g], Shift[i]);
+    b += RotateLeft(a + f + k[i] + ((unsigned int *)pBlock)[g], Shift[i]);
 		a = t;
 	}
 
@@ -151,7 +153,7 @@ BOOL Compress(const void* pData, const int DataSize, void* pZip, int* pZipSize)
 
 	memcpy(pZip, pZip1, *pZipSize);
 
-	::ComputeMD5Checksum((const uchar*)pData, DataSize, (uchar*)pZip + *pZipSize);
+	::ComputeMD5Checksum((const uchar*)pData, DataSize, (uchar*)pZip + *pZipSize);//1026 cjf for md5 bug test
 
 	*pZipSize += 16;
 
@@ -196,16 +198,16 @@ BOOL Decompress(const void* pZip, const int ZipSize, void* pData)
 	{
 		::UnzipItem(hZip, i, pData, ZipEntry.unc_size);
 
-		//uchar MD5Checksum[16];
-		//::ComputeMD5Checksum((const uchar*)pData, ZipEntry.unc_size, MD5Checksum);
+		uchar MD5Checksum[16];
+		::ComputeMD5Checksum((const uchar*)pData, ZipEntry.unc_size, MD5Checksum);
 
-		//if (memcmp((uchar*)pZip + (ZipSize - 16), MD5Checksum, 16) == 0)
-		//{
+		if (memcmp((uchar*)pZip + (ZipSize - 16), MD5Checksum, 16) == 0)
+		{
 			Result = TRUE;
-		//}
-		//else {
-		//	::Error("Checksum verification failed.");
-		//}
+		}
+		else {
+			::Error("Checksum verification failed.");
+		}
 	}
 
 	::CloseZipU(hZip);
