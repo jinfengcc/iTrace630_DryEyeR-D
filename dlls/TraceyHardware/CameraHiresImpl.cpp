@@ -86,6 +86,11 @@ bool CameraHiResImpl::Connected(double *fps) const
 
 bool CameraHiResImpl::Connect(bool yes)
 {
+  if (!yes) {
+    m_videoCap.release();
+    return true;
+  }
+
   if (m_devName.empty())
     return false;
 
@@ -97,8 +102,6 @@ bool CameraHiResImpl::Connect(bool yes)
   if (yes != prev) {
     if (yes)
       m_videoCap.open(devid);
-    else
-      m_videoCap.release();
   }
 
   return prev;
