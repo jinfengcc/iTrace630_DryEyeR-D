@@ -4302,7 +4302,7 @@ END
 // Bitmap
 //
 
-IDB_SPLASH_SCREEN BITMAP "Res\\Splash-About.jpg"
+IDB_SPLASH_SCREEN BITMAP "Res\\iTrace6_3_Splash-About.bmp"
 
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
