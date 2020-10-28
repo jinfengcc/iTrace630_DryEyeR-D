@@ -2,6 +2,8 @@
 
 #include <random>
 
+// from: https://probablydance.com/2016/12/29/random_seed_seq-a-small-utility-to-properly-seed-random-number-generators-in-c/
+
 struct random_seed_seq
 {
   template <typename It>
@@ -25,14 +27,15 @@ private:
 inline double random_double(double _low = 0.0, double _hi = 1.0)
 {
   static thread_local std::mt19937_64 randomness(random_seed_seq::get_instance());
-  static thread_local std::uniform_real_distribution<double> distribution(0.0, 1.0);
-  return _low + _hi * distribution(randomness);
+
+  std::uniform_real_distribution<double> distribution(_low, _hi);
+  return distribution(randomness);
 }
 
-template <int _low, int _hi>
-int random_int()
+inline int random_int(int _low, int _hi)
 {
   static thread_local std::mt19937_64 randomness(random_seed_seq::get_instance());
-  static thread_local std::uniform_int_distribution<int> distribution(_low, _hi);
+
+  std::uniform_int_distribution<int> distribution(_low, _hi);
   return distribution(randomness);
 }

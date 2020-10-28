@@ -19,6 +19,9 @@
     <Filter Include="Compression">
       <UniqueIdentifier>{c06c7d08-532c-4b83-9f87-89f5b07d5542}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TestSupport">
+      <UniqueIdentifier>{1434298c-b3e1-4c6f-9b89-a7bbc60f1d38}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -165,6 +168,9 @@
     <ClInclude Include="atlgdix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TestSupport\TestDataFolder.h">
+      <Filter>TestSupport</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -241,6 +247,9 @@
     </ClCompile>
     <ClCompile Include="SplashScreenImpl.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestSupport\TestDataFolder.cpp">
+      <Filter>TestSupport</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

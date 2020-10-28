@@ -6,8 +6,12 @@ namespace {
   {
     TempCleanup()
     {
-      std::lock_guard lock(_mutex);
-      fs::remove_all(util::GetTempFolder());
+      try {
+        std::lock_guard lock(_mutex);
+        fs::remove_all(util::GetTempFolder());
+      }
+      catch (...) {
+      }
     }
     std::mutex _mutex;
   };
@@ -37,5 +41,3 @@ namespace util {
     return path;
   }
 } // namespace util
-
-

@@ -1,0 +1,18 @@
+{
+  "FileVersion": 2,
+  "Id": "7a7033ce-4050-445a-bd81-64eaa08693a0",
+  "Items": [
+    {
+      "Id": "f37ae17b-5f80-4f73-bd23-1640e3af337e",
+      "Command": "--gtest_filter=Compression.Compress"
+    },
+    {
+      "Id": "3bbfa37b-e17a-4334-9239-ce0dcede6656",
+      "Command": "--gtest_filter=Compressor.CompressRandomFile"
+    },
+    {
+      "Id": "7901aa69-d8bc-4c92-bdbb-d8b7bc0a8bbe",
+      "Command": "--gtest_filter=Compressor.DecompressDbFiles"
+    }
+  ]
+}

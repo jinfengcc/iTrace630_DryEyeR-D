@@ -185,8 +185,8 @@ std::vector<std::uint8_t> Compress(const void *pData, unsigned DataSize)
   ::CloseZipZ(hZip);
 
 #ifdef _DEBUG
-  auto dct = Decompress(&cd[0], cd.size());
-  ATLASSERT(dct.size() == DataSize);
+  //auto dct = Decompress(&cd[0], cd.size());
+  //ATLASSERT(dct.size() == DataSize);
 #endif
 
   return cd;
