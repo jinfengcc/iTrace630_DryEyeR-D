@@ -365,13 +365,15 @@ int CHW::DeviceChange(uint EventType, DWORD_PTR Data)
 					m_OptometerInitialized = FALSE;
 					if (DllIsConnected())
 					{
+            m_hiresCamera->Connect();
 						LoadCalibrationFromFlash();
 						return DEVICE_ARRIVED;
 					}
 				}
 				else if (EventType == DBT_DEVICEREMOVECOMPLETE)
 				{
-					m_OptometerInitialized = FALSE;
+          m_hiresCamera->Disconnect();
+          m_OptometerInitialized = FALSE;
 					return DEVICE_REMOVED;
 				}
 			}

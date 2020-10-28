@@ -77,6 +77,33 @@ void CameraHiResImpl::Close()
   m_videoCap.release();
 }
 
+bool CameraHiResImpl::Connected(double *fps) const
+{
+  if (fps)
+    *fps = m_fps;
+  return m_videoCap.isOpened();
+}
+
+bool CameraHiResImpl::Connect(bool yes)
+{
+  if (m_devName.empty())
+    return false;
+
+  auto devid = hrc::GetDeviceId(m_devName);
+  if (devid < 0)
+    return false;
+
+  auto prev = m_videoCap.isOpened();
+  if (yes != prev) {
+    if (yes)
+      m_videoCap.open(devid);
+    else
+      m_videoCap.release();
+  }
+
+  return prev;
+}
+
 bool CameraHiResImpl::Settings(ITraceyConfig *pc)
 {
   if (!Connected())
@@ -178,6 +205,11 @@ void CameraHiResImpl::ThreadFunc(std::stop_token token)
 
   auto now = std::chrono::steady_clock::now();
   for (unsigned n = 0; !token.stop_requested(); ++n) {
+    if (!m_videoCap.isOpened()) {
+      std::this_thread::sleep_for(std::chrono::milliseconds(100));
+      continue;
+    }
+
     auto &img = m_threadImgs[ndx()];
     m_videoCap.read(img);
     m_signal(img);

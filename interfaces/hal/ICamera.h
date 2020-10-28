@@ -54,11 +54,14 @@ namespace hal {
     //! Initialization
     virtual void Initialize(IUnknown * unk) = 0;
 
+    //! Connect/Disconnect (returns the previous state
+    virtual bool Connect(bool yes) = 0;
+
     //! Starts Capture
     virtual bool StartCapture(std::function<void(cv::Mat)> notify) = 0;
     virtual void StopCapture()                                     = 0;
 
-    //! Returns the most recent captured image, or reads an image from the camera
+    //! Returns the most recent captured image
     virtual bool GetImage(cv::Mat & mat, Mode mode = Mode::HIRES) const = 0;
 
     //! Returns true, if the device is connected

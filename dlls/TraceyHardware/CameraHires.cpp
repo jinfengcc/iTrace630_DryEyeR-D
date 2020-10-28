@@ -37,6 +37,11 @@ void CameraHires::Initialize(IUnknown *unk)
     GetImage(img, Mode::HIRES);
 }
 
+bool CameraHires::Connect(bool yes)
+{
+  return m_pimpl->Connect(yes);
+}
+
 bool CameraHires::StartCapture(std::function<void(cv::Mat)> notify)
 {
   m_configSignalId = m_pimpl->StartCapture(std::move(notify));

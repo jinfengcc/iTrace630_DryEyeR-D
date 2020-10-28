@@ -28,9 +28,23 @@ public:
     }
     catch(...)
     {
-      return FALSE;
+      return false;
     }
   }
+  bool Connect(bool yes = true)
+  {
+    try {
+      return m_cameraImpl->Connect(yes);
+    }
+    catch (...) {
+      return false;
+    }
+  }
+  bool Disconnect()
+  {
+    return Connect(false);
+  }
+
 
   int GetWidth() const;
   int GetHeight() const;

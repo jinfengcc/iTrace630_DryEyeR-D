@@ -15,6 +15,7 @@ public:
 
   // Inherited via ICameraHires
   void Initialize(IUnknown *unk) override;
+  bool Connect(bool yes) override;
   bool StartCapture(std::function<void(cv::Mat)> notify) override;
   void StopCapture() override;
   bool GetImage(cv::Mat &mat, Mode mode) const override;

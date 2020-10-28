@@ -7,14 +7,14 @@ using hal::ICameraHires;
 bool CCameraHiresView::OnHide(bool)
 {
   if (m_camera)
-  m_camera->StopCapture();
+    m_camera->StopCapture();
   return true;
 }
 
 void CCameraHiresView::OnShow()
 {
   if (m_camera)
-  m_camera->StartCapture([this](cv::Mat) { m_cameraWnd.Invalidate(); });
+    m_camera->StartCapture([this](cv::Mat) { m_cameraWnd.Invalidate(); });
 }
 
 void CCameraHiresView::OnTerminating()
@@ -38,6 +38,27 @@ BOOL CCameraHiresView::OnInitDialog(CWindow wndFocus, LPARAM lInitParam)
   CreateObjects();
   InitDynamicLayout(false, false);
   return TRUE;
+}
+
+void CCameraHiresView::OnPopupMore(UINT uNotifyCode, int nID, CWindow wndCtl)
+{
+  RECT rc;
+
+  ::GetWindowRect(wndCtl, &rc);
+
+  CMenu menu  = LoadMenu(_Module.m_hInst, MAKEINTRESOURCE(IDR_POPUP_MENU));
+  auto  popup = menu.GetSubMenu(0);
+
+  auto connected = m_camera->Connected();
+  auto id        = MF_BYCOMMAND | (connected ? MF_CHECKED : MF_UNCHECKED);
+
+  popup.CheckMenuItem(ID_HIRESCAMEARA_CONNECT, id);
+
+  auto flags = TPM_RIGHTBUTTON | TPM_RETURNCMD;
+  auto cmd   = TrackPopupMenuEx(popup, flags, rc.left, rc.bottom, m_hWnd, nullptr);
+
+  if (cmd == ID_HIRESCAMEARA_CONNECT)
+    m_camera->Connect(!connected);
 }
 
 void CCameraHiresView::OnEditChanged(UINT uNotifyCode, int nID, CWindow wndCtl)

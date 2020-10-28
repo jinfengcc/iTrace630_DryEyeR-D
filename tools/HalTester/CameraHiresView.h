@@ -38,6 +38,7 @@ private:
   std::unique_ptr<CLightsWindow>    m_lightsWindow;
 
   BOOL OnInitDialog(CWindow wndFocus, LPARAM lInitParam);
+  void OnPopupMore(UINT uNotifyCode, int nID, CWindow wndCtl);
   void OnEditChanged(UINT uNotifyCode, int nID, CWindow wndCtl);
   void OnExposureChanged(UINT uNotifyCode, int nID, CWindow wndCtl);
 
@@ -48,6 +49,7 @@ private:
 
   BEGIN_MSG_MAP_EX(CCameraHiresView)
     MSG_WM_INITDIALOG(OnInitDialog)
+    COMMAND_ID_HANDLER_EX(IDC_MORE, OnPopupMore)
     COMMAND_CODE_HANDLER_EX(EN_CHANGE, OnEditChanged)
     COMMAND_HANDLER_EX(IDC_EXPOSURE, CBN_SELCHANGE, OnExposureChanged)
     CHAIN_MSG_MAP(CDialogWithColor<CCameraHiresView>)

@@ -17,16 +17,10 @@ public:
   }
 
 private:
-  bool Open(std::string_view devName);
-  void Close();
-
-  bool Connected(double *fps = nullptr) const
-  {
-    if (fps)
-      *fps = m_fps;
-    return m_videoCap.isOpened();
-  }
-
+  bool          Open(std::string_view devName);
+  void          Close();
+  bool          Connected(double *fps = nullptr) const;
+  bool          Connect(bool yes);
   bool          Settings(ITraceyConfig *tc);
   sig::SignalId StartCapture(std::function<void(cv::Mat)> notify);
   void          StopCapture(sig::SignalId sigId);
