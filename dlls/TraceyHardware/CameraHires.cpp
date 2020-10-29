@@ -32,9 +32,9 @@ void CameraHires::Initialize(IUnknown *unk)
   m_pimpl->Settings(m_config.get());
 
   // Prime the camera
-  cv::Mat img;
-  for (int i = 0; i < 5; ++i)
-    GetImage(img, Mode::HIRES);
+  //cv::Mat img;
+  //for (int i = 0; i < 5; ++i)
+  //  GetImage(img, Mode::HIRES);
 }
 
 bool CameraHires::Connect(bool yes)
@@ -56,9 +56,8 @@ void CameraHires::StopCapture()
 
 bool CameraHires::GetImage(cv::Mat &img, Mode mode) const
 {
-  DILASCIA_TRACE_EX("HRCAM", "Getting Image\n");
   if (!m_pimpl->GetImage(img)) {
-    DILASCIA_TRACE_EX("HRCAM", "Unable to get image\n");
+    CAMERA_DILASCIA( "Unable to get image\n");
     return false;
   }
 
@@ -67,13 +66,9 @@ bool CameraHires::GetImage(cv::Mat &img, Mode mode) const
     cv::imwrite(R"(C:\1\thanos\hires_ct.png)", img);
 #endif
 
-  DILASCIA_TRACE_EX("HRCAM", "Got image ({}x{})\n", img.cols, img.rows);
-
   if (mode == ICameraHires::Mode::LORES) {
     enum { IMG_ROWS = 468, IMG_COLS = 624 };
     cv::resize(img, img, {IMG_COLS, IMG_ROWS}, cv::INTER_AREA);
-
-    DILASCIA_TRACE_EX("HRCAM", "Resized image ({}x{})\n", img.cols, img.rows);
   }
 
   return true;
@@ -86,7 +81,6 @@ bool CameraHires::Connected(double *fps) const
   if (fps)
     *fps = f;
 
-  DILASCIA_TRACE_EX("HRCAM", "Camera connected: {} (FPS: {})\n", c, f);
   return c;
 }
 
