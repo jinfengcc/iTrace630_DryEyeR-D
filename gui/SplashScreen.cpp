@@ -23,9 +23,14 @@ CSplashScreen::~CSplashScreen()
   m_pimpl.release();
 }
 
-void CSplashScreen::ShowSplash(bool show)
+void CSplashScreen::ShowSplash()
 {
-  m_pimpl->ShowWindow(show ? SW_SHOW : SW_HIDE);
+  m_pimpl->ShowWindow(SW_SHOW);
+}
+
+void CSplashScreen::HideSplash()
+{
+  m_pimpl->ShowWindow(SW_HIDE);
 }
 
 void CSplashScreen::SetTextMessage(const TCHAR *pszMessage)

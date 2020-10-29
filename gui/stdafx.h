@@ -39,6 +39,9 @@
 
 #include <functional>
 #include <algorithm>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 namespace Gdiplus {
   using std::max;

@@ -12,7 +12,8 @@ class CSplashScreen : public Singleton<CSplashScreen>
 public:
   ~CSplashScreen();
 
-  void ShowSplash(bool show = true);
+  void ShowSplash();
+  void HideSplash();
   void SetTextMessage(const TCHAR *pszMessage);
   bool IsVisible() const;
 
