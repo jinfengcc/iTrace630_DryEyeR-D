@@ -13,6 +13,7 @@
 
 #include "INIParser.h" //6.2.0 ini registration
 #include "libs/CommonLib/GdiplusInitializer.h"
+#include "DbgMiniDump.h"
 
 //***************************************************************************************
 //***************************************************************************************
@@ -77,6 +78,7 @@ BOOL CiTraceApp::InitInstance()
   GdiplusInitializer gdipi;
   CoInitialize(nullptr);
 
+  DbgMiniDumpInit();
   CSplashScreen::CreateInstance(IDB_SPLASH_SCREEN);
 
   INITCOMMONCONTROLSEX InitCtrls;
@@ -159,7 +161,7 @@ BOOL CiTraceApp::InitInstance()
 
   ::HW.SetNotificationWindow(m_pMainWnd);
 
-  CSplashScreen::Instance()->ShowSplash(false);
+  CSplashScreen::Instance()->ShowSplash();
 
   return TRUE;
 }

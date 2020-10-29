@@ -830,6 +830,9 @@
     <ClCompile Include="SplashScreen.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
+    <ClCompile Include="DbgMiniDump.cpp">
+      <Filter>Others</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PatientDlg.h">
@@ -1359,6 +1362,9 @@
     </ClInclude>
     <ClInclude Include="SplashScreen.h">
       <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="DbgMiniDump.h">
+      <Filter>Others</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

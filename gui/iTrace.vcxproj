@@ -304,6 +304,7 @@
     <ClCompile Include="DatabaseDestDlg.cpp" />
     <ClCompile Include="DatabaseDlg.cpp" />
     <ClCompile Include="DatabaseMerge.cpp" />
+    <ClCompile Include="DbgMiniDump.cpp" />
     <ClCompile Include="DcmtkDicom.cpp" />
     <ClCompile Include="DeleteDlg.cpp" />
     <ClCompile Include="DicomMWLRecDlg.cpp" />
@@ -494,6 +495,7 @@
     <ClInclude Include="DatabaseDestDlg.h" />
     <ClInclude Include="DatabaseDlg.h" />
     <ClInclude Include="DatabaseMerge.h" />
+    <ClInclude Include="DbgMiniDump.h" />
     <ClInclude Include="DcmtkDicom.h" />
     <ClInclude Include="DeleteDlg.h" />
     <ClInclude Include="DicomMWLRecDlg.h" />
