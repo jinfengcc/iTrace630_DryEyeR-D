@@ -19,6 +19,8 @@ BEGIN_MESSAGE_MAP(CVideo2ToolDlg, CDialog)
 	ON_MESSAGE(WM_THREAD_UPDATE, OnUpdate)
 	ON_MESSAGE(WM_THREAD_FINISH, OnFinish)
 
+	ON_BN_CLICKED(IDC_PLACIDO_CHK, OnPlacdioCheckClicked) // test cjf 10292020
+
 END_MESSAGE_MAP()
 
 //***************************************************************************************
@@ -63,6 +65,9 @@ void CVideo2ToolDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CAL_VIDEO_CONTRAST_SLIDER, m_ContrastSlider);
 	DDX_Control(pDX, IDC_CAL_VIDEO_HUE_SLIDER, m_HueSlider);
 	DDX_Control(pDX, IDC_CAL_VIDEO_SATURATION_SLIDER, m_SaturationSlider);
+
+	DDX_Control(pDX, IDC_PLACIDO_CHK, m_PlacdioCheck);//test cjf 10292020
+	
 }
 
 //***************************************************************************************
@@ -127,6 +132,8 @@ BOOL CVideo2ToolDlg::OnInitDialog()
 
 	s.Format(_T("%i"), m_pHW->m_Calibration.ColorImageDelay);
 	m_DelayEdit.SetWindowText(s);
+
+	m_PlacdioCheck.SetCheck(FALSE);//test cjf 10292020
 
 	RECT Rect = { 10, 10, 10 + CHW::m_VideoWidth, 10 + CHW::m_VideoHeight };
 	m_VideoWnd.CreateWnd(Rect, this);
@@ -322,7 +329,7 @@ void CVideo2ToolDlg::OnStartButtonClicked()
 		*/
 
 		m_pHW->StartTransferringVideoFrame();
-
+		
 		memcpy(m_VideoWnd.m_MemDC.m_RGBData, m_pHW->GetRGBData(), CHW::m_VideoSize);
 		s.Format(_T("%i ms"), Time);
 		m_VideoWnd.m_MemDC.WriteText(s, Rect, Font, YELLOW, 2);
@@ -349,3 +356,20 @@ void CVideo2ToolDlg::OnStartButtonClicked()
 }
 
 //***************************************************************************************
+
+// test cjf 10292020
+void CVideo2ToolDlg::OnPlacdioCheckClicked()
+{
+  BOOL Checked = m_PlacdioCheck.GetCheck();
+
+  if (Checked) {
+    m_pHW->TurnPlacidoOn();
+  }
+  else {
+    m_pHW->TurnPlacidoOff();
+  }
+}
+
+//***************************************************************************************
+
+

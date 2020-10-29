@@ -61,12 +61,16 @@ private:
 	CSliderCtrl m_HueSlider;
 	CSliderCtrl m_SaturationSlider;
 
+	CButton     m_PlacdioCheck;//test cjf 10292020
+
 	afx_msg void OnStartVideoButtonClicked();
 	afx_msg void OnAbortVideoButtonClicked();
 	afx_msg void OnStartButtonClicked();
 	afx_msg void OnHScroll(uint nSBCode, uint nPos, CScrollBar* pScrollBar);
 	afx_msg LRESULT OnUpdate(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnFinish(WPARAM wParam, LPARAM lParam);
+
+	afx_msg void OnPlacdioCheckClicked();// test cjf 10292020
 
 	virtual void DoDataExchange(CDataExchange* pDX) override;
 	virtual BOOL OnInitDialog() override;
