@@ -50,15 +50,17 @@ void CCameraHiresView::OnPopupMore(UINT uNotifyCode, int nID, CWindow wndCtl)
   auto  popup = menu.GetSubMenu(0);
 
   auto connected = m_camera->Connected();
-  auto id        = MF_BYCOMMAND | (connected ? MF_CHECKED : MF_UNCHECKED);
 
-  popup.CheckMenuItem(ID_HIRESCAMEARA_CONNECT, id);
+  popup.CheckMenuItem(ID_HIRESCAMEARA_CONNECT, MF_BYCOMMAND | (connected ? MF_CHECKED : MF_UNCHECKED));
+  popup.CheckMenuItem(ID_HIRESCAMEARA_COLORIMAGE, MF_BYCOMMAND | (m_colorImg ? MF_CHECKED : MF_UNCHECKED));
 
   auto flags = TPM_RIGHTBUTTON | TPM_RETURNCMD;
   auto cmd   = TrackPopupMenuEx(popup, flags, rc.left, rc.bottom, m_hWnd, nullptr);
 
   if (cmd == ID_HIRESCAMEARA_CONNECT)
     m_camera->Connect(!connected);
+  else if (cmd == ID_HIRESCAMEARA_COLORIMAGE)
+    m_colorImg = !m_colorImg;
 }
 
 void CCameraHiresView::OnEditChanged(UINT uNotifyCode, int nID, CWindow wndCtl)
@@ -97,9 +99,9 @@ void CCameraHiresView::CreateObjects()
   m_camera = CreateObj<ICameraHires>(m_config);
   m_cameraWnd.SubclassWindow(GetDlgItem(IDC_CAMERA), [this](CDCHandle dc, const RECT &rc) {
     dc.FillSolidRect(&rc, RGB(0, 0, 0));
-    m_camera->GetImage(m_image);
+    //m_camera->GetImage(m_image);
     UpdateFPS();
-    DrawImage(dc, rc, m_image);
+    DrawImage(dc, rc, GetImage());
   });
 }
 
@@ -133,11 +135,23 @@ void CCameraHiresView::UpdateFPS()
 {
   double fps{};
   if (m_camera && m_camera->Connected(&fps)) {
-    SetDlgItemText(IDC_IMG_SIZE, fmt::format(L"{}x{}", m_image.cols, m_image.rows).c_str());
     SetDlgItemText(IDC_FPS, fmt::format(L"{:.2}fps", fps).c_str());
   }
   else {
-    SetDlgItemText(IDC_IMG_SIZE, L"");
     SetDlgItemText(IDC_FPS, L"");
   }
+}
+
+cv::Mat CCameraHiresView::GetImage()
+{
+  cv::Mat img;
+  m_camera->GetImage(img);
+  if (!m_colorImg) {
+    cv::Mat tmp;
+    cv::cvtColor(img, tmp, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(tmp, img, cv::COLOR_GRAY2BGR);
+  }
+
+  SetDlgItemText(IDC_IMG_SIZE, fmt::format(L"{}x{}", img.cols, img.rows).c_str());
+  return img;
 }

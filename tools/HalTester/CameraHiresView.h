@@ -33,8 +33,9 @@ private:
   CWindowPaintImpl                  m_cameraWnd;
   TraceyConfigImpl                  m_config;
   wil::com_ptr_t<hal::ICameraHires> m_camera;
+  bool                              m_colorImg{true};
   std::mutex                        m_mutex;
-  cv::Mat                           m_image;
+  //cv::Mat                           m_image;
   std::unique_ptr<CLightsWindow>    m_lightsWindow;
 
   BOOL OnInitDialog(CWindow wndFocus, LPARAM lInitParam);
@@ -42,10 +43,11 @@ private:
   void OnEditChanged(UINT uNotifyCode, int nID, CWindow wndCtl);
   void OnExposureChanged(UINT uNotifyCode, int nID, CWindow wndCtl);
 
-  void InitializeSpinners();
-  void InitializeCombo();
-  void CreateObjects();
-  void UpdateFPS();
+  void    InitializeSpinners();
+  void    InitializeCombo();
+  void    CreateObjects();
+  void    UpdateFPS();
+  cv::Mat GetImage();
 
   BEGIN_MSG_MAP_EX(CCameraHiresView)
     MSG_WM_INITDIALOG(OnInitDialog)

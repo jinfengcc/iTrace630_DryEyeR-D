@@ -36,3 +36,11 @@ void CLightsWindow::OnEditChanged(UINT uNotifyCode, int nID, CWindow wndCtl)
   }
 }
 
+void CLightsWindow::OnButtonClicked(UINT uNotifyCode, int nID, CWindow wndCtl)
+{
+  SetMsgHandled(FALSE); // Let siblings have a chance on a button click
+
+  if (m_lights && DoDataExchange(DDX_SAVE)) {
+    m_lights->Power(hal::POWER::PLACIDO, m_placido);
+  }
+}
