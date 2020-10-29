@@ -35,6 +35,9 @@ namespace hrc {
 
   int GetDeviceId(std::string_view name)
   {
+    if (name.empty())
+      return -1;
+
     try {
         auto names = GetCameraList();
         auto pred  = [name](const auto &w) { return _stricmp(w.c_str(), name.data()) == 0; };

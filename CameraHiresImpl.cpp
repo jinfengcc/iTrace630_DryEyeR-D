@@ -13,10 +13,8 @@ bool CameraHiResImpl::Open(std::string_view devName)
   StopCapture(0);
   std::fill(m_capProps.begin(), m_capProps.end(), 0);
 
-  m_devName = devName.empty() ? defCameraName : devName;
-  if (Connect(true)) {
-    m_videoCap.grab();
-  }
+  Connect(true);
+  DefaultSettings();
 
   return Connected();
 }
@@ -41,20 +39,24 @@ bool CameraHiResImpl::Connected(double *fps) const
 
 bool CameraHiResImpl::Connect(bool yes)
 {
-  if (auto prev = m_videoCap.isOpened(); prev != yes) {
-    if (!yes) {
-      m_videoCap.release();
-    }
-    else if (auto devid = hrc::GetDeviceId(m_devName); devid >= 0) {
-      m_videoCap.open(devid);
-      DefaultSettings();
-    }
-    else {
-      return false;
+  auto prev = m_videoCap.isOpened();
+
+  if (yes) {
+    if (auto devid = hrc::GetDeviceId(m_devName); devid >= 0) {
+      if (!prev)
+        m_videoCap.open(devid);
+
+      m_tickCount = GetTickCount64();
+      // Read once
+      cv::Mat img;
+      m_videoCap.read(img);
     }
   }
+  else {
+    m_videoCap.release();
+  }
 
-  return true;
+  return prev;
 }
 
 bool CameraHiResImpl::Settings(ITraceyConfig *pc)
@@ -140,8 +142,8 @@ void CameraHiResImpl::DefaultSettings()
     SetCapProperty(cv::CAP_PROP_FOURCC       , fourcc);
     SetCapProperty(cv::CAP_PROP_FRAME_WIDTH  , 1280);
     SetCapProperty(cv::CAP_PROP_FRAME_HEIGHT , 960);
-    //SetCapProperty(cv::CAP_PROP_AUTO_EXPOSURE, 1);
-    //SetCapProperty(cv::CAP_PROP_GAIN         , 100);
+    SetCapProperty(cv::CAP_PROP_AUTO_EXPOSURE, 1);
+    SetCapProperty(cv::CAP_PROP_GAIN         , 100);
     // SetCapProperty(cv::CAP_PROP_ISO_SPEED , 400);
     // SetCapProperty(cv::CAP_PROP_BACKLIGHT , 0);
     // SetCapProperty(cv::CAP_PROP_BUFFERSIZE, 2);
@@ -186,7 +188,7 @@ void CameraHiResImpl::ThreadFunc(std::stop_token token)
   }
 }
 
-// v is 0...255
+  // v is 0...255
 double CameraHiResImpl::TranslateProp(const GUID &id, double v)
 {
   /*****************
@@ -236,11 +238,11 @@ void CameraHiResImpl::LogProperties() const
     // clang-format off
     std::make_pair( cv::CAP_PROP_FRAME_WIDTH , "WIDTH"),
     std::make_pair( cv::CAP_PROP_FRAME_HEIGHT, "HEIGHT"),
-    std::make_pair( cv::CAP_PROP_BRIGHTNESS, "BRIGHTNESS"),
-    std::make_pair( cv::CAP_PROP_CONTRAST  , "CONTRAST"),
-    std::make_pair( cv::CAP_PROP_HUE       , "HUE"),
-    std::make_pair( cv::CAP_PROP_SATURATION, "SATURATION"),
-    std::make_pair( cv::CAP_PROP_GAIN      , "GAIN"),
+    std::make_pair( cv::CAP_PROP_BRIGHTNESS  , "BRIGHTNESS"),
+    std::make_pair( cv::CAP_PROP_CONTRAST    , "CONTRAST"),
+    std::make_pair( cv::CAP_PROP_HUE         , "HUE"),
+    std::make_pair( cv::CAP_PROP_SATURATION  , "SATURATION"),
+    std::make_pair( cv::CAP_PROP_GAIN        , "GAIN"),
     // clang-format on
   };
 
@@ -252,7 +254,8 @@ void CameraHiResImpl::LogProperties() const
   }
   else {
     std::array exposure = {
-      "Auto", "640 ms", "320 ms", "160 ms", "80 ms", "40 ms", "20 ms", "10 ms", "5 ms", "2.50 ms", "1.25 ms", "650 us", "312 us", "150 us",
+      "Auto",  "640 ms", "320 ms",  "160 ms",  "80 ms",  "40 ms",  "20 ms",
+      "10 ms", "5 ms",   "2.50 ms", "1.25 ms", "650 us", "312 us", "150 us",
     };
 
     unsigned ndx = -m_capProps[cv::CAP_PROP_EXPOSURE];

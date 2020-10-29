@@ -39,7 +39,13 @@ void CameraHires::Initialize(IUnknown *unk)
 
 bool CameraHires::Connect(bool yes)
 {
-  return m_pimpl->Connect(yes);
+  if (m_pimpl->Connect(yes)) {
+    m_pimpl->Settings(m_config.get());
+    return true;
+  }
+  else {
+    return false;
+  }
 }
 
 bool CameraHires::StartCapture(std::function<void(cv::Mat)> notify)
