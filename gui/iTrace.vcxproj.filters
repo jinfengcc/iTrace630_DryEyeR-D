@@ -2079,6 +2079,9 @@
     <Image Include="res\bitmap1.bmp">
       <Filter>Resources</Filter>
     </Image>
+    <Image Include="Res\iTrace6_3_Splash-About.bmp">
+      <Filter>Resources</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="iTrace.rc">

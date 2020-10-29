@@ -1087,6 +1087,7 @@ BEGIN
     EDITTEXT        IDC_CAL_VIDEO_INFRARED_LEDS_POWER_LEVEL_EDIT,355,305,40,12,ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY,WS_EX_RIGHT
     CONTROL         "",IDC_CAL_VIDEO_INFRARED_LEDS_POWER_LEVEL_SLIDER,
                     "msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,95,305,255,13
+    CONTROL         "  Placido  On",IDC_PLACIDO_CHK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,499,90,90,8
 END
 
 IDD_PREOP_DATA_DLG DIALOGEX 0, 0, 421, 335
@@ -3602,18 +3603,18 @@ END
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE
+2 TEXTINCLUDE 
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE
+3 TEXTINCLUDE 
 BEGIN
     "#include ""Res\\iTrace.rc2""\r\n"
     "\0"
@@ -4296,13 +4297,18 @@ BEGIN
     0
 END
 
+IDD_VIDEO2_TOOL_DLG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Bitmap
 //
 
-IDB_SPLASH_SCREEN BITMAP "Res\\iTrace6_3_Splash-About.bmp"
+IDB_SPLASH_SCREEN       BITMAP                  "Res\\iTrace6_3_Splash-About.bmp"
 
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////

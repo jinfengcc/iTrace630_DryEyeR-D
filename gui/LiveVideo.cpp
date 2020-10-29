@@ -85,7 +85,7 @@ void CLiveVideo::Main()
 	int StartTime = clock();
 	m_NumFramesReceived = 0;
 	m_AverageCycleTime = 0.0;
-
+			
 	while (!Done)
 	{
 		m_pHW->StartTransferringVideoFrame();
