@@ -76,7 +76,7 @@ bool CameraHiResImpl::Settings(ITraceyConfig *pc)
   TraceyConfig c(pc);
   for (auto &p : ps) {
     if (auto v = c.Get<int>(p.first); v.has_value()) {
-      SetCapProperty(p.second, TranslateProp(p.first, v.value()));
+      SetCapProperty(p.second, v.value());
       if (p.first == ICameraHires::EXPOSURE) {
         if (v.value() == 0)
           SetCapProperty(cv::CAP_PROP_AUTO_EXPOSURE, 1);
@@ -187,7 +187,7 @@ void CameraHiResImpl::ThreadFunc(std::stop_token token)
 }
 
 // v is 0...255
-double CameraHiResImpl::TranslateProp(const GUID &id, double v)
+double CameraHiResImpl::TranslateProp(int propid, double v)
 {
   /*****************
 
@@ -208,22 +208,22 @@ double CameraHiResImpl::TranslateProp(const GUID &id, double v)
 
   struct PropRange
   {
-    GUID   id;
+    int   id;
     double minValue;
     double maxValue;
   };
 
   static PropRange propRange[] = {
     // clang-format off
-      { ICameraHires::BRIGHTNESS,   -64,   64},  // Range [  -64,   64]
-      { ICameraHires::CONTRAST  ,     0,   95},  // Range [    0,   95]
-      { ICameraHires::HUE       ,  -128,  128},  // Range [-2000, 2000]
-      { ICameraHires::SATURATION,     0,  128},  // Range [    0,  128]
-      { ICameraHires::GAIN      ,     0,  100},  // Range [    0,  100]
+      { cv::CAP_PROP_BRIGHTNESS,   -64,   64},  // Range [  -64,   64]
+      { cv::CAP_PROP_CONTRAST  ,     0,   95},  // Range [    0,   95]
+      { cv::CAP_PROP_HUE       ,  -128,  128},  // Range [-2000, 2000]
+      { cv::CAP_PROP_SATURATION,     0,  128},  // Range [    0,  128]
+      { cv::CAP_PROP_GAIN      ,     0,  100},  // Range [    0,  100]
     // clang-format on
   };
 
-  auto i = std::find_if(std::begin(propRange), std::end(propRange), [&](const auto &x) { return x.id == id; });
+  auto i = std::find_if(std::begin(propRange), std::end(propRange), [propid](const auto &x) { return x.id == propid; });
   if (i != std::end(propRange)) {
     v = i->minValue + (v / 256.0) * (i->maxValue - i->minValue);
   }

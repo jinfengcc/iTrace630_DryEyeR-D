@@ -38,20 +38,20 @@ private:
   sig::SignalId StartCapture(std::function<void(cv::Mat)> notify);
   void          StopCapture(sig::SignalId sigId);
   bool          GetImage(cv::Mat &img) const;
-  static double TranslateProp(const GUID &id, double v);
+  static double TranslateProp(int propid, double v);
   void          LogProperties() const;
   void          DefaultSettings();
   void          ThreadFunc(std::stop_token token);
 
-  void SetCapProperty(int property, double value)
+  void SetCapProperty(int propid, double value)
   {
-    m_capProps[property] = static_cast<int>(value);
-    m_videoCap.set(property, value);
+    m_capProps[propid] = static_cast<int>(value);
+    m_videoCap.set(propid, TranslateProp(propid, value));
   }
 };
 
 template <typename... Args>
-inline void CAMERA_DILASCIA(std::string_view data, Args... args)
+inline void CAMERA_DILASCIA(std::string_view fmt, Args... args)
 {
-  DILASCIA_TRACE_EX("HRCAM", data, args...);
+  DILASCIA_TRACE_EX("HRCAM", fmt, args...);
 }

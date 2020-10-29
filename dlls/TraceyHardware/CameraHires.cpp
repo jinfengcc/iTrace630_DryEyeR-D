@@ -67,7 +67,7 @@ bool CameraHires::GetImage(cv::Mat &img, Mode mode) const
     return false;
   }
 
-#ifdef _DEBUG
+#if defined(_DEBUG) || 1
   if (fs::exists(R"(C:\1\thanos)"))
     cv::imwrite(R"(C:\1\thanos\hires_ct.png)", img);
 #endif
