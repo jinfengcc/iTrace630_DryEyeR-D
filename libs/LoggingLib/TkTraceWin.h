@@ -1,6 +1,7 @@
 #pragma once
 
 #include <fmt/format.h>
+#include <fmt/chrono.h>
 
 namespace dilascia {
   namespace details {
@@ -27,23 +28,29 @@ namespace dilascia {
 } // namespace dilascia
 
 template <typename... Args>
-void TkTraceWinPrintEx(const char *id, std::string_view data, Args... args)
+void TkTraceWinPrintEx(bool pretime, const char *id, std::string_view data, Args... args)
 {
   if (IsWindow(dilascia::Window())) {
-    auto s = fmt::format(data, args...);
-    dilascia::Write(id, s);
+    fmt::memory_buffer buf;
+    if (pretime) {
+      std::time_t t = std::time(nullptr);
+      fmt::format_to(buf, "[{:%H:%M:%S}] ", fmt::localtime(t));
+    }
+    fmt::format_to(buf, data, args...);
+    dilascia::Write(id, fmt::to_string(buf));
   }
 }
 
 template <typename... Args>
 void TkTraceWinPrint(std::string_view data, Args... args)
 {
-  TkTraceWinPrintEx(nullptr, data, args...);
+  TkTraceWinPrintEx(false, nullptr, data, args...);
 }
 
 #define DILASCIA_VISIBLE() IsWindow(dilascia::Window())
 #define DILASCIA_TRACE(fmt, ...) TkTraceWinPrint(fmt, __VA_ARGS__)
-#define DILASCIA_TRACE_EX(id, fmt, ...) TkTraceWinPrintEx(id, fmt, __VA_ARGS__)
+#define DILASCIA_TRACE_EX(id, fmt, ...) TkTraceWinPrintEx(false, id, fmt, __VA_ARGS__)
+#define DILASCIA_TRACE_TIME(id, fmt, ...) TkTraceWinPrintEx(true, id, fmt, __VA_ARGS__)
 
 inline void DILASCIA_TRACEIMG_RGB(const char *id, SIZE size, const void *data)
 {

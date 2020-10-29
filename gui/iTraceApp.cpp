@@ -161,7 +161,7 @@ BOOL CiTraceApp::InitInstance()
 
   ::HW.SetNotificationWindow(m_pMainWnd);
 
-  CSplashScreen::Instance()->ShowSplash();
+  CSplashScreen::Instance()->HideSplash();
 
   return TRUE;
 }

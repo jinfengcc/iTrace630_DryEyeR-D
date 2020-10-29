@@ -51,7 +51,7 @@ private:
 };
 
 template <typename... Args>
-inline void CAMERA_DILASCIA(std::string_view data, Args... args)
+inline void CAMERA_DILASCIA(std::string_view fmt, Args... args)
 {
-  DILASCIA_TRACE_EX("HRCAM", data, args...);
+  DILASCIA_TRACE_TIME("HRCAM", fmt, args...);
 }

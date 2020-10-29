@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "TkTraceWin.h"
 #include "TkTraceWinParam.h"
+#include <chrono>
+#include <fmt/chrono.h>
 
 namespace Gdiplus {
   using std::max;
@@ -99,5 +101,10 @@ namespace dilascia {
 
     auto id = MAKELONG(GetTraceId(ids), ID_COPYDATA_TRACE_IMG);
     details::WriteImpl(id, &buf[0], buf.size());
+  }
+  std::string Time()
+  {
+    std::time_t t = std::time(nullptr);
+    return fmt::format("{:%H:%M:%S}", fmt::localtime(t));
   }
 } // namespace dilascia
