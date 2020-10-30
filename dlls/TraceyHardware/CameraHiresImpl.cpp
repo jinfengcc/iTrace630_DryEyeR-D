@@ -70,7 +70,7 @@ bool CameraHiResImpl::Settings(ITraceyConfig *pc)
     std::make_pair(ICameraHires::SATURATION, cv::CAP_PROP_SATURATION),
     std::make_pair(ICameraHires::HUE       , cv::CAP_PROP_HUE       ),
     std::make_pair(ICameraHires::GAIN      , cv::CAP_PROP_GAIN      ),
-    std::make_pair(ICameraHires::EXPOSURE  , cv::CAP_PROP_EXPOSURE  ),
+    //std::make_pair(ICameraHires::EXPOSURE  , cv::CAP_PROP_EXPOSURE  ),
     // clang-format on
   };
 
@@ -108,13 +108,8 @@ bool CameraHiResImpl::GetImage(cv::Mat &img) const
 {
   if (m_thread.joinable()) {
     std::lock_guard lock(m_mutex);
-    if (auto &i = m_threadImgs[1 - m_curThreadImg]; !i.empty()) {
-      i.copyTo(img);
-      return true;
-    }
-    else {
-      return false;
-    }
+    m_image.copyTo(img);
+    return !m_image.empty();
   }
   else {
     if (GetTickCount64() - m_tickCount > 5000) {
@@ -151,13 +146,16 @@ void CameraHiResImpl::DefaultSettings()
 
 void CameraHiResImpl::ThreadFunc(std::stop_token token)
 {
-  auto ndx = [this]() -> int {
-    std::lock_guard lock(m_mutex);
-    m_curThreadImg = ++m_curThreadImg & 1;
-    return m_curThreadImg;
-  };
+  //auto ndx = [this]() -> int {
+  //  std::lock_guard lock(m_mutex);
+  //  m_curThreadImg = ++m_curThreadImg & 1;
+  //  return m_curThreadImg;
+  //};
 
   auto now = std::chrono::steady_clock::now();
+
+  cv::Mat img;
+  m_image = img.clone();
 
   for (unsigned n = 0; !token.stop_requested(); ++n) {
     if (!m_videoCap.isOpened()) {
@@ -165,13 +163,16 @@ void CameraHiResImpl::ThreadFunc(std::stop_token token)
       continue;
     }
 
-    auto &img = m_threadImgs[ndx()];
-    if (!m_videoCap.read(img)) {
+    if (m_videoCap.read(img)) {
+      m_signal(img);
+    }
+    else {
       CAMERA_DILASCIA("Unable to read hi-res image\n");
-      continue;
     }
 
-    m_signal(img);
+    std::lock_guard lock(m_mutex);
+    if (!img.empty())
+      m_image = img.clone();
 
     // Frames per second
     auto t = std::chrono::steady_clock::now();

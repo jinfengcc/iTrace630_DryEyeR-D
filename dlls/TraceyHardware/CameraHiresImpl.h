@@ -21,12 +21,13 @@ private:
 
   mutable cv::VideoCapture m_videoCap;
   mutable std::mutex       m_mutex;
+  std::jthread             m_thread;
+  sig::Signal<cv::Mat>     m_signal;
   CapProperties            m_capProps;
   std::string              m_devName;
-  sig::Signal<cv::Mat>     m_signal;
-  std::jthread             m_thread;
-  cv::Mat                  m_threadImgs[2];
-  int                      m_curThreadImg{};
+  cv::Mat                  m_image;
+  //cv::Mat                  m_threadImgs[2];
+  //int                      m_curThreadImg{};
   double                   m_fps{};
   mutable std::uint64_t    m_tickCount{};
 
