@@ -6,6 +6,7 @@ using namespace std::literals;
 
 namespace {
   const char defCameraName[] = "HD USB Camera";
+
 } // namespace
 
 bool CameraHiResImpl::Open(std::string_view devName)
@@ -232,10 +233,16 @@ double CameraHiResImpl::TranslateProp(int propid, int v)
 bool CameraHiResImpl::SetCapProperty(int propid, int value)
 {
   if (propid == cv::CAP_PROP_EXPOSURE) {
-    if (value)
+    if (value) {
       m_videoCap.set(cv::CAP_PROP_EXPOSURE, value);
-    else
+    }
+    else {
+      // Somehow going to auto does not work if the manual was set to long exposure.
+      // So, step manually to a low setting and then set auto.
+      const auto stepForAuto = static_cast<int>(ICameraHires::Exposure::_5ms);
+      m_videoCap.set(cv::CAP_PROP_EXPOSURE, stepForAuto);
       m_videoCap.set(cv::CAP_PROP_AUTO_EXPOSURE, 1);
+    }
   }
   else if (m_capProps[propid] != value) {
     m_videoCap.set(propid, TranslateProp(propid, value));

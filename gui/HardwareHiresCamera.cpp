@@ -18,6 +18,18 @@ int HardwareHiresCamera::GetHeight() const
   return 468;
 }
 
+void HardwareHiresCamera::StartTransferringVideoFrame()
+{
+  m_getNewImage = true;
+  m_cameraImpl->StartCapture(m_imgColor);
+}
+
+void HardwareHiresCamera::FinishTransferringVideoFrame()
+{
+  m_cameraImpl->StopCapture();
+  m_getNewImage = false;
+}
+
 uchar *HardwareHiresCamera::GetRGBData(bool color)
 {
   if (Connected()) {

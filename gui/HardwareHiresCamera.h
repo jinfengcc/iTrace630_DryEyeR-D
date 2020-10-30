@@ -26,8 +26,7 @@ public:
     try {
       return const_cast<HardwareHiresCamera *>(this)->m_cameraImpl->Connected();
     }
-    catch(...)
-    {
+    catch (...) {
       return false;
     }
   }
@@ -45,19 +44,10 @@ public:
     return Connect(false);
   }
 
-
-  int GetWidth() const;
-  int GetHeight() const;
-
-  void StartTransferringVideoFrame()
-  {
-    m_getNewImage = true;
-  }
-  void FinishTransferringVideoFrame()
-  {
-    m_getNewImage = false;
-  }
-
+  int    GetWidth() const;
+  int    GetHeight() const;
+  void   StartTransferringVideoFrame();
+  void   FinishTransferringVideoFrame();
   uchar *GetRGBData(bool color);
 
   // clang-format off
@@ -68,9 +58,8 @@ public:
   void SetGain      (int value)  { m_config.Set(Camera::GAIN      , value); }
   // clang-format on
 
-  void SetExposure  (Camera::Exposure value)
+  void SetExposure(Camera::Exposure value)
   {
-    m_config.Set(Camera::EXPOSURE  , static_cast<int>(value));
+    m_config.Set(Camera::EXPOSURE, static_cast<int>(value));
   }
 };
-
