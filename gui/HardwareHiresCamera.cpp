@@ -34,7 +34,9 @@ uchar *HardwareHiresCamera::GetRGBData(bool color)
 {
   if (Connected()) {
     if (m_getNewImage) {
-      m_cameraImpl->GetImage(m_imgColor, Camera::Mode::LORES);
+      if (!m_cameraImpl->GetImage(m_imgColor, Camera::Mode::LORES))
+        return nullptr;
+
       ConvertToGray();
     }
 
