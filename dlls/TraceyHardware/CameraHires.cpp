@@ -48,10 +48,9 @@ bool CameraHires::Connect(bool yes)
   }
 }
 
-bool CameraHires::StartCapture(std::function<void(cv::Mat)> notify)
+void CameraHires::StartCapture(std::function<void(unsigned)> notify)
 {
   m_configSignalId = m_pimpl->StartCapture(std::move(notify));
-  return m_configSignalId != 0;
 }
 
 void CameraHires::StopCapture()

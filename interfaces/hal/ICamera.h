@@ -58,7 +58,7 @@ namespace hal {
     virtual bool Connect(bool yes) = 0;
 
     //! Starts Capture
-    virtual bool StartCapture(std::function<void(cv::Mat)> notify) = 0;
+    virtual void StartCapture(std::function<void(unsigned)> notify) = 0;
     virtual void StopCapture()                                     = 0;
 
     //! Returns the most recent captured image

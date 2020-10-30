@@ -6,6 +6,7 @@ HardwareHiresCamera::HardwareHiresCamera()
   // DO NOT change the order of the next 2 statements
   InitializeConfig();
   m_cameraImpl = CreateObj<Camera>(m_config);
+  m_cameraImpl->StartCapture(nullptr);
 }
 
 int HardwareHiresCamera::GetWidth() const
@@ -21,12 +22,11 @@ int HardwareHiresCamera::GetHeight() const
 void HardwareHiresCamera::StartTransferringVideoFrame()
 {
   m_getNewImage = true;
-  m_cameraImpl->StartCapture(m_imgColor);
 }
 
 void HardwareHiresCamera::FinishTransferringVideoFrame()
 {
-  m_cameraImpl->StopCapture();
+  //m_cameraImpl->StopCapture();
   m_getNewImage = false;
 }
 

@@ -22,7 +22,7 @@ private:
   mutable cv::VideoCapture m_videoCap;
   mutable std::mutex       m_mutex;
   std::jthread             m_thread;
-  sig::Signal<cv::Mat>     m_signal;
+  sig::Signal<unsigned>    m_signal;
   CapProperties            m_capProps;
   std::string              m_devName;
   cv::Mat                  m_image;
@@ -36,7 +36,7 @@ private:
   bool          Connected(double *fps = nullptr) const;
   bool          Connect(bool yes);
   bool          Settings(ITraceyConfig *tc);
-  sig::SignalId StartCapture(std::function<void(cv::Mat)> notify);
+  sig::SignalId StartCapture(std::function<void(unsigned)> notify);
   void          StopCapture(sig::SignalId sigId);
   bool          GetImage(cv::Mat &img) const;
   static double TranslateProp(int propid, int v);

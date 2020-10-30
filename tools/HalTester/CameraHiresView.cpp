@@ -14,7 +14,7 @@ bool CCameraHiresView::OnHide(bool)
 void CCameraHiresView::OnShow()
 {
   if (m_camera)
-    m_camera->StartCapture([this](cv::Mat) { m_cameraWnd.Invalidate(); });
+    m_camera->StartCapture([this](unsigned) { m_cameraWnd.Invalidate(); });
 }
 
 void CCameraHiresView::OnTerminating()

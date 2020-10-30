@@ -2,7 +2,7 @@
 #include "CameraHiresImpl.h"
 #include "CameraHiresUtil.h"
 
-using namespace std::literals;
+//using namespace std::literals;
 
 namespace {
   const char defCameraName[] = "HD USB Camera";
@@ -85,9 +85,13 @@ bool CameraHiResImpl::Settings(ITraceyConfig *pc)
   return true;
 }
 
-sig::SignalId CameraHiResImpl::StartCapture(std::function<void(cv::Mat)> notify)
+sig::SignalId CameraHiResImpl::StartCapture(std::function<void(unsigned)> notify)
 {
-  auto id  = m_signal.Connect(std::move(notify));
+  if (m_thread.joinable()) {
+    return {};
+  }
+
+  auto id  = notify ? m_signal.Connect(std::move(notify)) : 0;
   m_thread = std::jthread([this](std::stop_token token) { ThreadFunc(token); });
 
   return id;
@@ -152,7 +156,8 @@ void CameraHiResImpl::ThreadFunc(std::stop_token token)
   //  return m_curThreadImg;
   //};
 
-  auto now = std::chrono::steady_clock::now();
+  auto fpc = 0;
+  auto now = GetTickCount64();
 
   cv::Mat img;
   for (unsigned n = 0; !token.stop_requested(); ++n) {
@@ -162,7 +167,7 @@ void CameraHiResImpl::ThreadFunc(std::stop_token token)
     }
 
     if (m_videoCap.read(img)) {
-      //m_signal(img);
+      m_signal(n);
     }
     else {
       CAMERA_DILASCIA("Unable to read hi-res image\n");
@@ -174,12 +179,14 @@ void CameraHiResImpl::ThreadFunc(std::stop_token token)
     }
 
     // Frames per second
-    auto t = std::chrono::steady_clock::now();
-    if (auto d = std::chrono::duration_cast<std::chrono::milliseconds>(t - now); d >= 2000ms) {
-      m_fps = n / (d.count() / 1000.0);
+    ++fpc;
+    if (auto elapsed = GetTickCount64() - now; elapsed >= 2000)
+    {
+      m_fps = fpc / (elapsed / 1000.0);
 
-      now = t;
-      n   = 0;
+      DILASCIA_TRACE_EX("CAM_FPS", "FPS = {:.2f} ({})\n", m_fps, fpc);
+      now = GetTickCount64();
+      fpc = 0;
     }
   }
 }
