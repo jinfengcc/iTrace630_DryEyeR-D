@@ -49,18 +49,33 @@ void CCameraHiresView::OnPopupMore(UINT uNotifyCode, int nID, CWindow wndCtl)
   CMenu menu  = LoadMenu(_Module.m_hInst, MAKEINTRESOURCE(IDR_POPUP_MENU));
   auto  popup = menu.GetSubMenu(0);
 
+  auto check = [&popup](int id, bool yes) {
+    popup.CheckMenuItem(id, MF_BYCOMMAND | (yes ? MF_CHECKED : MF_UNCHECKED));
+  };
+
   auto connected = m_camera->Connected();
 
-  popup.CheckMenuItem(ID_HIRESCAMEARA_CONNECT, MF_BYCOMMAND | (connected ? MF_CHECKED : MF_UNCHECKED));
-  popup.CheckMenuItem(ID_HIRESCAMEARA_COLORIMAGE, MF_BYCOMMAND | (m_colorImg ? MF_CHECKED : MF_UNCHECKED));
+  check(ID_HIRESCAMEARA_CONNECT, connected);
+  check(ID_HIRESCAMEARA_COLORIMAGE, m_colorImg);
+  check(ID_HIRESCAMEARA_ROTATE, m_rotate);
 
   auto flags = TPM_RIGHTBUTTON | TPM_RETURNCMD;
   auto cmd   = TrackPopupMenuEx(popup, flags, rc.left, rc.bottom, m_hWnd, nullptr);
 
-  if (cmd == ID_HIRESCAMEARA_CONNECT)
+  switch (cmd) {
+  case ID_HIRESCAMEARA_CONNECT:
     m_camera->Connect(!connected);
-  else if (cmd == ID_HIRESCAMEARA_COLORIMAGE)
+    break;
+  case ID_HIRESCAMEARA_COLORIMAGE:
     m_colorImg = !m_colorImg;
+    break;
+  case ID_HIRESCAMEARA_ROTATE:
+    m_rotate = !m_rotate;
+    break;
+
+  default:
+    break;
+  }
 }
 
 void CCameraHiresView::OnEditChanged(UINT uNotifyCode, int nID, CWindow wndCtl)
@@ -152,6 +167,9 @@ cv::Mat CCameraHiresView::GetImage()
     cv::cvtColor(m_image, tmp, cv::COLOR_BGR2GRAY);
     cv::cvtColor(tmp, m_image, cv::COLOR_GRAY2BGR);
   }
+
+  if (m_rotate)
+    cv::rotate(m_image, m_image, cv::ROTATE_180);
 
   return m_image;
 }

@@ -445,6 +445,12 @@ BEGIN
         MENUITEM "Connect",                     ID_HIRESCAMEARA_CONNECT
         MENUITEM SEPARATOR
         MENUITEM "Color Image",                 ID_HIRESCAMEARA_COLORIMAGE
+        MENUITEM "Rotate",                      ID_HIRESCAMEARA_ROTATE
+        POPUP "Flip"
+        BEGIN
+            MENUITEM "Horizontal",                  ID_FLIP_HORIZONTAL
+            MENUITEM "Vertical",                    ID_FLIP_VERTICAL
+        END
     END
 END
 

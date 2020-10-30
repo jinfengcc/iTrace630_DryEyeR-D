@@ -30,12 +30,16 @@ private:
   void OnTerminating() override;
 
 private:
+  enum class Flip { none, hor, ver };
+
   CWindowPaintImpl                  m_cameraWnd;
   TraceyConfigImpl                  m_config;
   wil::com_ptr_t<hal::ICameraHires> m_camera;
   bool                              m_colorImg{true};
   std::mutex                        m_mutex;
   cv::Mat                           m_image;
+  bool                              m_rotate{};
+  Flip                              m_flip{Flip::none};
   std::unique_ptr<CLightsWindow>    m_lightsWindow;
 
   BOOL OnInitDialog(CWindow wndFocus, LPARAM lInitParam);

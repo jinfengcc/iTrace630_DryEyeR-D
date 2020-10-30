@@ -54,18 +54,22 @@
 #define IDC_IMG_SIZE                    1036
 #define IDC_EXPOSURE                    1037
 #define IDC_MORE                        1038
-#define IDC_CHECK1                      1039
 #define IDC_PLACIDO                     1039
 #define ID_HIRESCAMEARA_DISCONNECT      32775
 #define ID_HIRESCAMEARA_CONNECT         32776
 #define ID_HIRESCAMEARA_COLORIMAGE      32777
+#define ID_HIRESCAMEARA_ROTATE          32778
+#define ID_HIRESCAMEARA_FLIP            32779
+#define ID_FLIP_HORI                    32780
+#define ID_FLIP_HORIZONTAL              32781
+#define ID_FLIP_VERTICAL                32782
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        211
-#define _APS_NEXT_COMMAND_VALUE         32778
+#define _APS_NEXT_COMMAND_VALUE         32783
 #define _APS_NEXT_CONTROL_VALUE         1040
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
