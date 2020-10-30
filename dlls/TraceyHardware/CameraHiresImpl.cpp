@@ -155,8 +155,6 @@ void CameraHiResImpl::ThreadFunc(std::stop_token token)
   auto now = std::chrono::steady_clock::now();
 
   cv::Mat img;
-  m_image = img.clone();
-
   for (unsigned n = 0; !token.stop_requested(); ++n) {
     if (!m_videoCap.isOpened()) {
       std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -164,15 +162,16 @@ void CameraHiResImpl::ThreadFunc(std::stop_token token)
     }
 
     if (m_videoCap.read(img)) {
-      m_signal(img);
+      //m_signal(img);
     }
     else {
       CAMERA_DILASCIA("Unable to read hi-res image\n");
     }
 
-    std::lock_guard lock(m_mutex);
-    if (!img.empty())
-      m_image = img.clone();
+    if (!img.empty()) {
+      std::lock_guard lock(m_mutex);
+      img.copyTo(m_image);
+    }
 
     // Frames per second
     auto t = std::chrono::steady_clock::now();
