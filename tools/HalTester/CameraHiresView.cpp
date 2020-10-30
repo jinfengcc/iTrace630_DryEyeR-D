@@ -136,22 +136,22 @@ void CCameraHiresView::UpdateFPS()
   double fps{};
   if (m_camera && m_camera->Connected(&fps)) {
     SetDlgItemText(IDC_FPS, fmt::format(L"{:.2}fps", fps).c_str());
+    SetDlgItemText(IDC_IMG_SIZE, fmt::format(L"{}x{}", m_image.cols, m_image.rows).c_str());
   }
   else {
     SetDlgItemText(IDC_FPS, L"");
+    SetDlgItemText(IDC_IMG_SIZE, L"");
   }
 }
 
 cv::Mat CCameraHiresView::GetImage()
 {
-  cv::Mat img;
-  m_camera->GetImage(img);
+  m_camera->GetImage(m_image);
   if (!m_colorImg) {
     cv::Mat tmp;
-    cv::cvtColor(img, tmp, cv::COLOR_BGR2GRAY);
-    cv::cvtColor(tmp, img, cv::COLOR_GRAY2BGR);
+    cv::cvtColor(m_image, tmp, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(tmp, m_image, cv::COLOR_GRAY2BGR);
   }
 
-  SetDlgItemText(IDC_IMG_SIZE, fmt::format(L"{}x{}", img.cols, img.rows).c_str());
-  return img;
+  return m_image;
 }

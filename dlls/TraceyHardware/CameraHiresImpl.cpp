@@ -11,7 +11,7 @@ namespace {
 bool CameraHiResImpl::Open(std::string_view devName)
 {
   StopCapture(0);
-  std::fill(m_capProps.begin(), m_capProps.end(), 0);
+  std::fill(m_capProps.begin(), m_capProps.end(), -10000);
 
   m_devName = devName.empty() ? defCameraName : devName;
   if (Connect(true)) {
@@ -77,14 +77,10 @@ bool CameraHiResImpl::Settings(ITraceyConfig *pc)
   for (auto &p : ps) {
     if (auto v = c.Get<int>(p.first); v.has_value()) {
       SetCapProperty(p.second, v.value());
-      if (p.first == ICameraHires::EXPOSURE) {
-        if (v.value() == 0)
-          SetCapProperty(cv::CAP_PROP_AUTO_EXPOSURE, 1);
-      }
     }
   }
 
-  LogProperties();
+  // LogProperties();
   return true;
 }
 
@@ -140,8 +136,9 @@ void CameraHiResImpl::DefaultSettings()
     SetCapProperty(cv::CAP_PROP_FOURCC       , fourcc);
     SetCapProperty(cv::CAP_PROP_FRAME_WIDTH  , 1280);
     SetCapProperty(cv::CAP_PROP_FRAME_HEIGHT , 960);
-    //SetCapProperty(cv::CAP_PROP_AUTO_EXPOSURE, 1);
-    //SetCapProperty(cv::CAP_PROP_GAIN         , 100);
+    SetCapProperty(cv::CAP_PROP_AUTO_EXPOSURE, 1);
+    // SetCapProperty(cv::CAP_PROP_EXPOSURE     , 0);
+    // SetCapProperty(cv::CAP_PROP_GAIN         , 100);
     // SetCapProperty(cv::CAP_PROP_ISO_SPEED , 400);
     // SetCapProperty(cv::CAP_PROP_BACKLIGHT , 0);
     // SetCapProperty(cv::CAP_PROP_BUFFERSIZE, 2);
@@ -187,7 +184,7 @@ void CameraHiResImpl::ThreadFunc(std::stop_token token)
 }
 
 // v is 0...255
-double CameraHiResImpl::TranslateProp(int propid, double v)
+double CameraHiResImpl::TranslateProp(int propid, int v)
 {
   /*****************
 
@@ -208,56 +205,83 @@ double CameraHiResImpl::TranslateProp(int propid, double v)
 
   struct PropRange
   {
-    int   id;
+    int    id;
     double minValue;
     double maxValue;
   };
 
   static PropRange propRange[] = {
     // clang-format off
-      { cv::CAP_PROP_BRIGHTNESS,   -64,   64},  // Range [  -64,   64]
-      { cv::CAP_PROP_CONTRAST  ,     0,   95},  // Range [    0,   95]
-      { cv::CAP_PROP_HUE       ,  -128,  128},  // Range [-2000, 2000]
-      { cv::CAP_PROP_SATURATION,     0,  128},  // Range [    0,  128]
-      { cv::CAP_PROP_GAIN      ,     0,  100},  // Range [    0,  100]
+    { cv::CAP_PROP_BRIGHTNESS,   -64,   64},  // Range [  -64,   64]
+    { cv::CAP_PROP_CONTRAST  ,     0,   95},  // Range [    0,   95]
+    { cv::CAP_PROP_HUE       ,  -128,  128},  // Range [-2000, 2000]
+    { cv::CAP_PROP_SATURATION,     0,  128},  // Range [    0,  128]
+    { cv::CAP_PROP_GAIN      ,     0,  100},  // Range [    0,  100]
     // clang-format on
   };
+
+  double x = v;
 
   auto i = std::find_if(std::begin(propRange), std::end(propRange), [propid](const auto &x) { return x.id == propid; });
   if (i != std::end(propRange)) {
-    v = i->minValue + (v / 256.0) * (i->maxValue - i->minValue);
+    x = i->minValue + (v / 256.0) * (i->maxValue - i->minValue);
   }
-  return std::round(v);
+  return std::round(x);
 }
 
-void CameraHiResImpl::LogProperties() const
+bool CameraHiResImpl::SetCapProperty(int propid, int value)
+{
+  if (propid == cv::CAP_PROP_EXPOSURE) {
+    if (value)
+      m_videoCap.set(cv::CAP_PROP_EXPOSURE, value);
+    else
+      m_videoCap.set(cv::CAP_PROP_AUTO_EXPOSURE, 1);
+  }
+  else if (m_capProps[propid] != value) {
+    m_videoCap.set(propid, TranslateProp(propid, value));
+  }
+  else {
+    return false;
+  }
+
+  m_capProps[propid] = value;
+  LogProperties(propid);
+  return true;
+}
+
+void CameraHiResImpl::LogProperties(int onepropid /*= -1*/) const
 {
   std::array ps = {
     // clang-format off
-    std::make_pair( cv::CAP_PROP_FRAME_WIDTH , "WIDTH"),
-    std::make_pair( cv::CAP_PROP_FRAME_HEIGHT, "HEIGHT"),
-    std::make_pair( cv::CAP_PROP_BRIGHTNESS, "BRIGHTNESS"),
-    std::make_pair( cv::CAP_PROP_CONTRAST  , "CONTRAST"),
-    std::make_pair( cv::CAP_PROP_HUE       , "HUE"),
-    std::make_pair( cv::CAP_PROP_SATURATION, "SATURATION"),
-    std::make_pair( cv::CAP_PROP_GAIN      , "GAIN"),
+    std::make_pair( cv::CAP_PROP_FRAME_WIDTH  , "WIDTH"),
+    std::make_pair( cv::CAP_PROP_FRAME_HEIGHT , "HEIGHT"),
+    std::make_pair( cv::CAP_PROP_BRIGHTNESS   , "BRIGHTNESS"),
+    std::make_pair( cv::CAP_PROP_CONTRAST     , "CONTRAST"),
+    std::make_pair( cv::CAP_PROP_HUE          , "HUE"),
+    std::make_pair( cv::CAP_PROP_SATURATION   , "SATURATION"),
+    std::make_pair( cv::CAP_PROP_GAIN         , "GAIN"),
+    std::make_pair( cv::CAP_PROP_EXPOSURE     , "EXPOSURE"),
+    std::make_pair( cv::CAP_PROP_AUTO_EXPOSURE, "AUTO_EXP."),
     // clang-format on
   };
 
-  for (auto &p : ps)
-    CAMERA_DILASCIA("{:<10} = {:4} ({:5.0f})\n", p.second, m_capProps[p.first], m_videoCap.get(p.first));
+  for (auto &p : ps) {
+    if (onepropid >= 0 && onepropid != p.first)
+      continue;
 
-  if (m_videoCap.get(cv::CAP_PROP_AUTO_EXPOSURE)) {
-    CAMERA_DILASCIA("{:<10} = auto\n", "EXPOSURE");
-  }
-  else {
-    std::array exposure = {
-      "Auto", "640 ms", "320 ms", "160 ms", "80 ms", "40 ms", "20 ms", "10 ms", "5 ms", "2.50 ms", "1.25 ms", "650 us", "312 us", "150 us",
-    };
+    if (p.first == cv::CAP_PROP_EXPOSURE) {
+      std::array exposure = {
+        "Auto",  "640 ms", "320 ms",  "160 ms",  "80 ms",  "40 ms",  "20 ms",
+        "10 ms", "5 ms",   "2.50 ms", "1.25 ms", "650 us", "312 us", "150 us",
+      };
 
-    unsigned ndx = -m_capProps[cv::CAP_PROP_EXPOSURE];
-    auto     txt = ndx < exposure.size() ? exposure[ndx] : "???";
+      unsigned ndx = -m_capProps[cv::CAP_PROP_EXPOSURE];
+      auto     txt = ndx < exposure.size() ? exposure[ndx] : "???";
 
-    CAMERA_DILASCIA("{:<10} = {}\n", "EXPOSURE", txt);
+      CAMERA_DILASCIA("{:<10} = {}\n", p.second, txt);
+    }
+    else {
+      CAMERA_DILASCIA("{:<10} = {:4} ({:5.0f})\n", p.second, m_capProps[p.first], m_videoCap.get(p.first));
+    }
   }
 }

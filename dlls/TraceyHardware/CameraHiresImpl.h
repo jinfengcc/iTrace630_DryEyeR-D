@@ -38,16 +38,12 @@ private:
   sig::SignalId StartCapture(std::function<void(cv::Mat)> notify);
   void          StopCapture(sig::SignalId sigId);
   bool          GetImage(cv::Mat &img) const;
-  static double TranslateProp(int propid, double v);
-  void          LogProperties() const;
+  static double TranslateProp(int propid, int v);
+  bool          SetCapProperty(int propid, int value);
+  void LogProperties(int onepropid = -1) const;
   void          DefaultSettings();
   void          ThreadFunc(std::stop_token token);
 
-  void SetCapProperty(int propid, double value)
-  {
-    m_capProps[propid] = static_cast<int>(value);
-    m_videoCap.set(propid, TranslateProp(propid, value));
-  }
 };
 
 template <typename... Args>

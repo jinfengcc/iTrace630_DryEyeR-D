@@ -35,7 +35,7 @@ private:
   wil::com_ptr_t<hal::ICameraHires> m_camera;
   bool                              m_colorImg{true};
   std::mutex                        m_mutex;
-  //cv::Mat                           m_image;
+  cv::Mat                           m_image;
   std::unique_ptr<CLightsWindow>    m_lightsWindow;
 
   BOOL OnInitDialog(CWindow wndFocus, LPARAM lInitParam);
