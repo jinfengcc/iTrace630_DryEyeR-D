@@ -448,9 +448,18 @@ BEGIN
         MENUITEM "Rotate",                      ID_HIRESCAMEARA_ROTATE
         POPUP "Flip"
         BEGIN
+            MENUITEM "None",                        ID_FLIP_NONE
             MENUITEM "Horizontal",                  ID_FLIP_HORIZONTAL
             MENUITEM "Vertical",                    ID_FLIP_VERTICAL
         END
+        POPUP "Enhance"
+        BEGIN
+            MENUITEM "None",                        ID_ENHANCE_NONE
+            MENUITEM "Normalize",                   ID_ENHANCE_NORMALIZE
+            MENUITEM "Gamma",                       ID_ENHANCE_GAMMA
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Show Info",                   ID_HIRESCAMEARA_SHOWINFO
     END
 END
 

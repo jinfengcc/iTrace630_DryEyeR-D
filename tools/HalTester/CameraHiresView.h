@@ -31,27 +31,32 @@ private:
 
 private:
   enum class Flip { none, hor, ver };
+  enum class Enhance { none, normal, gamma};
 
   CWindowPaintImpl                  m_cameraWnd;
   TraceyConfigImpl                  m_config;
   wil::com_ptr_t<hal::ICameraHires> m_camera;
+  cv::Mat                           m_colorImage;
+  cv::Mat                           m_grayImage;
+  std::unique_ptr<CLightsWindow>    m_lightsWindow;
   bool                              m_colorImg{true};
-  std::mutex                        m_mutex;
-  cv::Mat                           m_image;
   bool                              m_rotate{};
   Flip                              m_flip{Flip::none};
-  std::unique_ptr<CLightsWindow>    m_lightsWindow;
+  Enhance                           m_enhance{Enhance::none};
+  bool                              m_showInfo{true};
 
   BOOL OnInitDialog(CWindow wndFocus, LPARAM lInitParam);
   void OnPopupMore(UINT uNotifyCode, int nID, CWindow wndCtl);
   void OnEditChanged(UINT uNotifyCode, int nID, CWindow wndCtl);
   void OnExposureChanged(UINT uNotifyCode, int nID, CWindow wndCtl);
 
-  void    InitializeSpinners();
-  void    InitializeCombo();
-  void    CreateObjects();
-  void    UpdateFPS();
-  cv::Mat GetImage();
+  void InitializeSpinners();
+  void InitializeCombo();
+  void CreateObjects();
+  void UpdateFPS();
+  void LoadImage();
+  void ProcessImage();
+  void DrawInfo(CDCHandle dc, const RECT &rc);
 
   BEGIN_MSG_MAP_EX(CCameraHiresView)
     MSG_WM_INITDIALOG(OnInitDialog)

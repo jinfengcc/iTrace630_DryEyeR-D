@@ -70,7 +70,7 @@ bool CameraHiResImpl::Settings(ITraceyConfig *pc)
     std::make_pair(ICameraHires::SATURATION, cv::CAP_PROP_SATURATION),
     std::make_pair(ICameraHires::HUE       , cv::CAP_PROP_HUE       ),
     std::make_pair(ICameraHires::GAIN      , cv::CAP_PROP_GAIN      ),
-    //std::make_pair(ICameraHires::EXPOSURE  , cv::CAP_PROP_EXPOSURE  ),
+    std::make_pair(ICameraHires::EXPOSURE  , cv::CAP_PROP_EXPOSURE  ),
     // clang-format on
   };
 

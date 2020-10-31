@@ -43,20 +43,23 @@ std::vector<HWND> WindowAreaControls(HWND hWnd, int nIDMarker)
   return ws;
 }
 
-std::unique_ptr<Gdiplus::Bitmap> Mat2Bitmap(const cv::Mat &img)
+std::unique_ptr<Gdiplus::Bitmap> Mat2BitmapImpl(const cv::Mat &img, bool alloc)
 {
   auto size   = img.size();
   auto stride = img.step1();
 
-  auto bmp = std::make_unique<Gdiplus::Bitmap>(size.width, size.height, stride, PixelFormat24bppRGB, img.data);
+  std::unique_ptr<Gdiplus::Bitmap> bmp;
+
+  if (!alloc)
+    bmp = std::make_unique<Gdiplus::Bitmap>(size.width, size.height, stride, PixelFormat24bppRGB, img.data);
 
   // Gdiplus bitmap cannot cop with any stride value, so sometimes direct copying of pixels is required
-  if (bmp->GetLastStatus() != Gdiplus::Ok) {
+  if (!bmp || bmp->GetLastStatus() != Gdiplus::Ok) {
     using namespace Gdiplus;
 
     bmp = std::make_unique<Bitmap>(size.width, size.height, PixelFormat24bppRGB);
     BitmapData bmData;
-    if (bmp->LockBits(NULL, ImageLockModeWrite | ImageLockModeRead, PixelFormat32bppARGB, &bmData) == Ok) {
+    if (bmp->LockBits(nullptr, ImageLockModeWrite | ImageLockModeRead, PixelFormat24bppRGB, &bmData) == Ok) {
       for (size_t iy = 0; iy < bmData.Height; iy++) {
         auto pPixels = static_cast<DWORD *>(bmData.Scan0) + iy * bmData.Stride / 4;
         memcpy(pPixels, img.ptr(iy), bmData.Stride);
@@ -64,7 +67,20 @@ std::unique_ptr<Gdiplus::Bitmap> Mat2Bitmap(const cv::Mat &img)
       bmp->UnlockBits(&bmData);
     }
   }
+
   return bmp;
+}
+
+std::unique_ptr<Gdiplus::Bitmap> Mat2Bitmap(const cv::Mat &img)
+{
+  if (img.channels() == 1) {
+    cv::Mat tmp;
+    cv::cvtColor(img, tmp, cv::COLOR_GRAY2BGR);
+    return Mat2BitmapImpl(tmp, true);
+  }
+  else {
+    return Mat2BitmapImpl(img, false);
+  }
 }
 
 void DrawImage(CDCHandle dc, const RECT &rc, const cv::Mat &img)

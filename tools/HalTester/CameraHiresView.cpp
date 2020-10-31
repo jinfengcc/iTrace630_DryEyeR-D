@@ -49,15 +49,27 @@ void CCameraHiresView::OnPopupMore(UINT uNotifyCode, int nID, CWindow wndCtl)
   CMenu menu  = LoadMenu(_Module.m_hInst, MAKEINTRESOURCE(IDR_POPUP_MENU));
   auto  popup = menu.GetSubMenu(0);
 
-  auto check = [&popup](int id, bool yes) {
-    popup.CheckMenuItem(id, MF_BYCOMMAND | (yes ? MF_CHECKED : MF_UNCHECKED));
-  };
+  auto check  = [&popup](int id, bool yes) { popup.CheckMenuItem(id, MF_BYCOMMAND | (yes ? MF_CHECKED : MF_UNCHECKED)); };
+  auto enable = [&popup](int id, bool yes) { popup.EnableMenuItem(id, MF_BYCOMMAND | (yes ? MF_ENABLED : MF_DISABLED)); };
 
   auto connected = m_camera->Connected();
 
   check(ID_HIRESCAMEARA_CONNECT, connected);
   check(ID_HIRESCAMEARA_COLORIMAGE, m_colorImg);
   check(ID_HIRESCAMEARA_ROTATE, m_rotate);
+  check(ID_FLIP_NONE, m_flip == Flip::none);
+  check(ID_FLIP_HORIZONTAL, m_flip == Flip::hor);
+  check(ID_FLIP_VERTICAL, m_flip == Flip::ver);
+  check(ID_HIRESCAMEARA_SHOWINFO, m_showInfo);
+  check(ID_ENHANCE_NONE, m_colorImg || m_enhance == Enhance::none);
+  if (m_colorImg) {
+    enable(ID_ENHANCE_NORMALIZE, false);
+    enable(ID_ENHANCE_GAMMA, false);
+  }
+  else {
+    check(ID_ENHANCE_NORMALIZE, m_enhance == Enhance::normal);
+    check(ID_ENHANCE_GAMMA, m_enhance == Enhance::gamma);
+  }
 
   auto flags = TPM_RIGHTBUTTON | TPM_RETURNCMD;
   auto cmd   = TrackPopupMenuEx(popup, flags, rc.left, rc.bottom, m_hWnd, nullptr);
@@ -71,6 +83,27 @@ void CCameraHiresView::OnPopupMore(UINT uNotifyCode, int nID, CWindow wndCtl)
     break;
   case ID_HIRESCAMEARA_ROTATE:
     m_rotate = !m_rotate;
+    break;
+  case ID_FLIP_NONE:
+    m_flip = Flip::none;
+    break;
+  case ID_FLIP_HORIZONTAL:
+    m_flip = Flip::hor;
+    break;
+  case ID_FLIP_VERTICAL:
+    m_flip = Flip::ver;
+    break;
+  case ID_HIRESCAMEARA_SHOWINFO:
+    m_showInfo = !m_showInfo;
+    break;
+  case ID_ENHANCE_NONE:
+    m_enhance = Enhance::none;
+    break;
+  case ID_ENHANCE_NORMALIZE:
+    m_enhance = Enhance::normal;
+    break;
+  case ID_ENHANCE_GAMMA:
+    m_enhance = Enhance::gamma;
     break;
 
   default:
@@ -113,10 +146,12 @@ void CCameraHiresView::CreateObjects()
 
   m_camera = CreateObj<ICameraHires>(m_config);
   m_cameraWnd.SubclassWindow(GetDlgItem(IDC_CAMERA), [this](CDCHandle dc, const RECT &rc) {
+    LoadImage();
+
     dc.FillSolidRect(&rc, RGB(0, 0, 0));
-    //m_camera->GetImage(m_image);
+    DrawImage(dc, rc, m_colorImg ? m_colorImage : m_grayImage);
     UpdateFPS();
-    DrawImage(dc, rc, GetImage());
+    DrawInfo(dc, rc);
   });
 }
 
@@ -148,28 +183,93 @@ void CCameraHiresView::InitializeCombo()
 
 void CCameraHiresView::UpdateFPS()
 {
-  double fps{};
-  if (m_camera && m_camera->Connected(&fps)) {
-    SetDlgItemText(IDC_FPS, fmt::format(L"{:.2}fps", fps).c_str());
-    SetDlgItemText(IDC_IMG_SIZE, fmt::format(L"{}x{}", m_image.cols, m_image.rows).c_str());
-  }
-  else {
-    SetDlgItemText(IDC_FPS, L"");
-    SetDlgItemText(IDC_IMG_SIZE, L"");
+  //double fps{};
+  //if (m_camera && m_camera->Connected(&fps)) {
+  //  SetDlgItemText(IDC_FPS, fmt::format(L"{:.2}fps", fps).c_str());
+  //  SetDlgItemText(IDC_IMG_SIZE, fmt::format(L"{}x{}", m_colorImage.cols, m_colorImage.rows).c_str());
+  //}
+  //else {
+  //  SetDlgItemText(IDC_FPS, L"");
+  //  SetDlgItemText(IDC_IMG_SIZE, L"");
+  //}
+}
+
+void CCameraHiresView::LoadImage()
+{
+  if (m_camera->GetImage(m_colorImage)) {
+    cv::cvtColor(m_colorImage, m_grayImage, cv::COLOR_BGR2GRAY);
+    if (m_rotate)
+      cv::rotate(m_colorImage, m_colorImage, cv::ROTATE_180);
+
+    if (m_flip == Flip::hor)
+      cv::flip(m_colorImage, m_colorImage, 1);
+    else if (m_flip == Flip::ver)
+      cv::flip(m_colorImage, m_colorImage, 0);
+
+    ProcessImage();
   }
 }
 
-cv::Mat CCameraHiresView::GetImage()
+void CCameraHiresView::ProcessImage()
 {
-  m_camera->GetImage(m_image);
-  if (!m_colorImg) {
-    cv::Mat tmp;
-    cv::cvtColor(m_image, tmp, cv::COLOR_BGR2GRAY);
-    cv::cvtColor(tmp, m_image, cv::COLOR_GRAY2BGR);
+  if (m_enhance == Enhance::none)
+    return;
+
+  double minVal, maxVal;
+  cv::minMaxIdx(m_grayImage, &minVal, &maxVal);
+
+  auto a = 255 / (maxVal - minVal);
+  auto b = -minVal;
+
+  m_grayImage.convertTo(m_grayImage, -1, a, b);
+
+  if (m_enhance == Enhance::gamma) {
+    auto    gamma_ = 1.5;
+    cv::Mat lookUpTable(1, 256, CV_8U);
+    uchar * p = lookUpTable.ptr();
+    for (int i = 0; i < 256; ++i)
+      p[i] = cv::saturate_cast<uchar>(pow(i / 255.0, gamma_) * 255.0);
+
+    cv::Mat tmp1 = m_grayImage;
+    cv::Mat tmp2 = tmp1.clone();
+    cv::LUT(tmp1, lookUpTable, tmp2);
+
+    tmp2.copyTo(m_grayImage);
+  }
+}
+
+void CCameraHiresView::DrawInfo(CDCHandle dc, const RECT &rc)
+{
+  if (m_colorImage.empty() || !m_showInfo)
+    return;
+
+  CBrush brush;
+  brush.CreateSolidBrush(RGB(255, 255, 255));
+
+  CFont font;
+  font.CreatePointFont(80, _T("Arial"), dc);
+
+  dc.SaveDC();
+
+  dc.SelectBrush(brush);
+  dc.SelectFont(font);
+  dc.SetTextAlign(TA_BOTTOM);
+
+  double maxValue;
+  cv::minMaxIdx(m_grayImage, nullptr, &maxValue);
+
+  const int margin = 1;
+
+  auto txt = fmt::format(L"max = {}", maxValue);
+  dc.TextOut(rc.left + margin, rc.bottom - (margin - 1), txt.c_str(), txt.size());
+
+  double fps = 0;
+  if (m_camera->Connected(&fps)) {
+    txt = fmt::format(L"{}x{} FPS={:.1f}fps", m_colorImage.cols, m_colorImage.rows, fps);
+    SIZE size;
+    dc.GetTextExtent(txt.c_str(), txt.size(), &size);
+    dc.TextOut(rc.right + (margin - 1) - size.cx, rc.bottom - (margin - 1), txt.c_str(), txt.size());
   }
 
-  if (m_rotate)
-    cv::rotate(m_image, m_image, cv::ROTATE_180);
-
-  return m_image;
+  dc.RestoreDC(-1);
 }

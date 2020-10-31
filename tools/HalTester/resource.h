@@ -63,13 +63,19 @@
 #define ID_FLIP_HORI                    32780
 #define ID_FLIP_HORIZONTAL              32781
 #define ID_FLIP_VERTICAL                32782
+#define ID_FLIP_NONE                    32783
+#define ID_HIRESCAMEARA_SHOWINFO        32784
+#define ID_Menu                         32785
+#define ID_ENHANCE_NONE                 32786
+#define ID_ENHANCE_NORMALIZE            32787
+#define ID_ENHANCE_GAMMA                32788
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        211
-#define _APS_NEXT_COMMAND_VALUE         32783
+#define _APS_NEXT_COMMAND_VALUE         32789
 #define _APS_NEXT_CONTROL_VALUE         1040
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
