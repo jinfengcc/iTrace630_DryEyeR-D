@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)ILogger.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ILoggerSettings.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ISettings.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)hal\ICamera.h">
       <Filter>hal</Filter>
     </ClInclude>
@@ -24,9 +23,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)data\Image.h">
       <Filter>data</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)ISettings.md" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="hal">

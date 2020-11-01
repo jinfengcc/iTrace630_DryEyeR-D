@@ -1,0 +1,15 @@
+{
+   "FileVersion": 2,
+   "Id": "e389e737-d28c-442f-a417-d2962faf16d2",
+
+   // HalTester config
+   "HalTester": {
+      "x1": true,
+      "x2": 1,
+      "x3": 3.14,
+      "x4": "sharpen",
+      "camera": {
+         "enhance": "sharpen"
+      }
+   }
+}

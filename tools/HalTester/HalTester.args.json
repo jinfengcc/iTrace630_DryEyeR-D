@@ -1,0 +1,10 @@
+{
+  "FileVersion": 2,
+  "Id": "e389e737-d28c-442f-a417-d2962faf16d2",
+  "Items": [
+    {
+      "Id": "a5cc9de5-80c4-4b4f-b686-fa8ef4767fbe",
+      "Command": "$(ProjectDir)HalTester.json"
+    }
+  ]
+}

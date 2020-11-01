@@ -8,26 +8,11 @@ namespace {
   {
     AppLocalClassFactory()
     {
-      AddCreator(__uuidof(ISettings), &AppLocalClassFactory::CreateObj);
     }
 
     static bool CreateObj(REFIID riid, void **ppv)
     {
-      if (riid == __uuidof(ISettings)) {
-        return CreateSettings(ppv);
-      }
-      else {
-        return false;
-      }
-    }
-
-    static bool CreateSettings(void **ppv)
-    {
-      static AppSettings *appSettings;
-      if (appSettings == nullptr) {
-        ASSERT(FALSE);
-      }
-      return appSettings->QueryInterface(__uuidof(ISettings), ppv) == S_OK;
+      return false;
     }
   };
 } // namespace

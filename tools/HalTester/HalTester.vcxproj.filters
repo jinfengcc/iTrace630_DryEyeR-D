@@ -106,4 +106,7 @@
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="HalTester.json" />
+  </ItemGroup>
 </Project>

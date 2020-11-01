@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CameraHiresView.h"
 #include "WinHelpers.h"
+#include "libs/CommonLib/AppSettings.h"
 
 using hal::ICameraHires;
 
@@ -19,6 +20,7 @@ void CCameraHiresView::OnShow()
 
 void CCameraHiresView::OnTerminating()
 {
+  AppSettings::Instance()->RemoveNotify(m_notificationId);
   m_camera->StopCapture();
 }
 
@@ -153,6 +155,10 @@ void CCameraHiresView::CreateObjects()
     UpdateFPS();
     DrawInfo(dc, rc);
   });
+
+  m_notificationId = AppSettings::Instance()->AddNotify([this]() {
+
+  });
 }
 
 void CCameraHiresView::InitializeSpinners()
@@ -223,6 +229,8 @@ void CCameraHiresView::ProcessImage()
 
   m_grayImage.convertTo(m_grayImage, -1, a, b);
 
+  m_grayImage = SharpenImage(m_grayImage);
+
   if (m_enhance == Enhance::gamma) {
     auto    gamma_ = 1.5;
     cv::Mat lookUpTable(1, 256, CV_8U);
@@ -272,4 +280,14 @@ void CCameraHiresView::DrawInfo(CDCHandle dc, const RECT &rc)
   }
 
   dc.RestoreDC(-1);
+}
+
+cv::Mat CCameraHiresView::SharpenImage(const cv::Mat &lena)
+{
+  using namespace cv;
+  Mat sharpenedLena;
+  Mat kernel = (Mat_<float>(3, 3) << 0, -1, 0, -1, 5, -1, 0, -1, 0);
+  cv::filter2D(lena, sharpenedLena, lena.depth(), kernel);
+
+  return sharpenedLena;
 }

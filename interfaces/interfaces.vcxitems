@@ -24,9 +24,5 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ILoggerSettings.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ITraceyConfig.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TraceyObj.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ISettings.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)ISettings.md" />
   </ItemGroup>
 </Project>

@@ -1,32 +1,47 @@
 #pragma once
 
-#include <filesystem>
-#include <fstream>
+#include <variant>
+#include <functional>
+#include "Singleton.h"
 
 namespace fs = std::filesystem;
 
-#include <Interfaces/ISettings.h>
-#include <libs/CommonLib/Implements.h>
-
-struct AppSettings final: ImplementsStatic<ISettings>
+class AppSettings : public Singleton<AppSettings>
 {
-  explicit AppSettings(std::string_view str_or_filename);
+public:
   ~AppSettings();
 
-  // Inherited via ISettings
-  json        Get(std::string_view section) const override;
-  void        Set(std::string_view section, const json &js) override;
-  std::string ToString(bool formatted = true) const override
+  int  AddNotify(std::function<void()> func);
+  void RemoveNotify(int id);
+
+  template <class T>
+  std::optional<T> Get(std::string_view section, std::string_view name)
   {
-    return m_json.dump(formatted ? 2 : -1);
+    auto v = GetData(section, name);
+
+    if (std::holds_alternative<T>(v))
+      return std::get<T>(v);
+
+    if constexpr (std::is_floating_point_v<T>) {
+      if (std::holds_alternative<int>(v))
+        return static_cast<T>(std::get<int>(v));
+    }
+    return {};
   }
 
-private:
-  fs::path m_file;
-  json     m_json;
-  bool     m_modified{};
+  std::wstring GetConfigFile() const;
 
-  void Load(std::istream &fs);
-  void Save(std::ostream &fs);
-  void Flush();
+private:
+  struct Impl;
+  std::unique_ptr<Impl> m_pimpl;
+
+  friend class Singleton<AppSettings>;
+
+  AppSettings();
+  AppSettings(std::wstring_view jsonfile);
+
+  using Data = std::variant<std::monostate, bool, int, double, std::string>;
+  Data GetData(std::string_view section, std::string_view name) const;
+
+  static fs::path GetJsonFilename();
 };
