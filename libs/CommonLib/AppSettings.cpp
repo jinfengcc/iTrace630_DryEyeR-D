@@ -21,7 +21,6 @@ private:
   void OnFileChanged(wil::FolderChangeEvent, const wchar_t *fileName);
 
   std::vector<std::string> SplitAddr(std::string &addr) const;
-
 };
 
 ////////////////////////////////////////////////////////////////////
@@ -108,9 +107,19 @@ AppSettings::Impl::Impl(const fs::path &file)
 void AppSettings::Impl::Load()
 {
   m_json.clear();
-  if (fs::exists(m_file)) {
-    auto fs = std::ifstream(m_file);
-    m_json  = json::parse(fs, nullptr, true, true);
+  if (!fs::exists(m_file))
+    return;
+
+  for (int i = 0; i++ < 3; ) {
+    try {
+      auto fs = std::ifstream(m_file);
+      m_json  = json::parse(fs, nullptr, true, true);
+      break;
+    }
+    catch (std::exception &e) {
+      DILASCIA_TRACE("Error: {}\n", e.what());
+      Sleep(i*100);
+    }
   }
 }
 

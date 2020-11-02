@@ -64,10 +64,10 @@ void CMainDlg::InitializeViews()
   });
 
   m_viewContainer.CreateContainer(*this, IDC_CONTENTS);
-  SIGNALS.commandFired.Connect([this]() {
-    if (this->SendDlgItemMessage(IDC_AUTO_CLOSE, BM_GETCHECK))
-      this->PostMessage(WM_COMMAND, IDCANCEL);
-  });
+  //SIGNALS.commandFired.Connect([this]() {
+  //  if (this->SendDlgItemMessage(IDC_AUTO_CLOSE, BM_GETCHECK))
+  //    this->PostMessage(WM_COMMAND, IDCANCEL);
+  //});
 
   CreateView<CCameraHiresView>(_T("Camera (Hi Res)"));
 

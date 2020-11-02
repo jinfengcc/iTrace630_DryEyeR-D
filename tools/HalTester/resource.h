@@ -14,7 +14,6 @@
 #define IDR_POPUP_MENU                  210
 #define IDC_TABMENU                     1000
 #define IDC_CONTENTS                    1001
-#define IDC_AUTO_CLOSE                  1002
 #define IDC_FREEZE                      1002
 #define IDC_POWER                       1003
 #define IDC_CAMERA                      1005
@@ -26,7 +25,6 @@
 #define IDC_SPIN3                       1011
 #define IDC_EDIT4                       1012
 #define IDC_SPIN4                       1013
-#define IDC_EDIT10                      1014
 #define IDC_GAIN                        1014
 #define IDC_UNWRAP                      1015
 #define IDC_CAMERA_PROPS                1016
@@ -50,32 +48,20 @@
 #define IDC_CONTRAST                    1032
 #define IDC_HUE                         1033
 #define IDC_SATURATION                  1034
-#define IDC_FPS                         1035
-#define IDC_IMG_SIZE                    1036
 #define IDC_EXPOSURE                    1037
 #define IDC_MORE                        1038
 #define IDC_PLACIDO                     1039
-#define ID_HIRESCAMEARA_DISCONNECT      32775
-#define ID_HIRESCAMEARA_CONNECT         32776
-#define ID_HIRESCAMEARA_COLORIMAGE      32777
-#define ID_HIRESCAMEARA_ROTATE          32778
-#define ID_HIRESCAMEARA_FLIP            32779
-#define ID_FLIP_HORI                    32780
-#define ID_FLIP_HORIZONTAL              32781
-#define ID_FLIP_VERTICAL                32782
-#define ID_FLIP_NONE                    32783
+#define ID_HIRESCAMEARA_CONNECT         32781
+#define ID_HIRESCAMEARA_COLORIMAGE      32782
+#define ID_HIRESCAMEARA_ENHANCE         32783
 #define ID_HIRESCAMEARA_SHOWINFO        32784
-#define ID_Menu                         32785
-#define ID_ENHANCE_NONE                 32786
-#define ID_ENHANCE_NORMALIZE            32787
-#define ID_ENHANCE_GAMMA                32788
 
 // Next default values for new objects
-// 
+//
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        211
-#define _APS_NEXT_COMMAND_VALUE         32789
+#define _APS_NEXT_COMMAND_VALUE         32787
 #define _APS_NEXT_CONTROL_VALUE         1040
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

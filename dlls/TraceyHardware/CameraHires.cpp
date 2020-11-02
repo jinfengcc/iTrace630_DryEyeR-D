@@ -73,7 +73,8 @@ bool CameraHires::GetImage(cv::Mat &img, Mode mode) const
 
 #ifdef _DEBUG
   cv::Mat tmp;
-  cv::equalizeHist(img, tmp);
+  cv::cvtColor(img, tmp, cv::COLOR_BGR2GRAY);
+  cv::equalizeHist(tmp, tmp);
 #endif // _DEBUG
 
 

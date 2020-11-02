@@ -30,19 +30,14 @@ private:
   void OnTerminating() override;
 
 private:
-  enum class Flip { none, hor, ver };
-  enum class Enhance { none, normal, gamma };
-
   CWindowPaintImpl                  m_cameraWnd;
   TraceyConfigImpl                  m_config;
   wil::com_ptr_t<hal::ICameraHires> m_camera;
   cv::Mat                           m_colorImage;
   cv::Mat                           m_grayImage;
   std::unique_ptr<CLightsWindow>    m_lightsWindow;
-  bool                              m_colorImg{true};
-  bool                              m_rotate{};
-  Flip                              m_flip{Flip::none};
-  Enhance                           m_enhance{Enhance::none};
+  bool                              m_showColor{true};
+  bool                              m_enhance{false};
   bool                              m_showInfo{true};
   int                               m_notificationId{};
 
@@ -54,7 +49,6 @@ private:
   void           InitializeSpinners();
   void           InitializeCombo();
   void           CreateObjects();
-  void           UpdateFPS();
   void           LoadImage();
   void           ProcessImage();
   void           DrawInfo(CDCHandle dc, const RECT &rc);

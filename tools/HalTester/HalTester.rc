@@ -172,8 +172,6 @@ BEGIN
     CONTROL         "",IDC_SPIN10,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,361,230,10,18
     LTEXT           "Exposure:",IDC_STATIC,380,235,33,8
     COMBOBOX        IDC_EXPOSURE,416,234,53,165,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    RTEXT           "{x}",IDC_IMG_SIZE,491,229,32,8,NOT WS_VISIBLE
-    RTEXT           "{FPS}",IDC_FPS,491,240,32,8,NOT WS_VISIBLE
     CONTROL         "Freeze",IDC_FREEZE,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_TABSTOP,409,207,40,18
     CONTROL         "Unwrap",IDC_UNWRAP,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,455,214,37,10
     GROUPBOX        "Lights",IDC_LIGHT_SEC,4,261,523,32
@@ -409,8 +407,6 @@ BEGIN
     0, 100, 0, 0,
     0, 100, 0, 0,
     0, 100, 0, 0,
-    100, 100, 0, 0,
-    100, 100, 0, 0,
     0, 100, 0, 0,
     0, 100, 0, 0,
     0, 100, 100, 0,
@@ -445,19 +441,7 @@ BEGIN
         MENUITEM "Connect",                     ID_HIRESCAMEARA_CONNECT
         MENUITEM SEPARATOR
         MENUITEM "Color Image",                 ID_HIRESCAMEARA_COLORIMAGE
-        MENUITEM "Rotate",                      ID_HIRESCAMEARA_ROTATE
-        POPUP "Flip"
-        BEGIN
-            MENUITEM "None",                        ID_FLIP_NONE
-            MENUITEM "Horizontal",                  ID_FLIP_HORIZONTAL
-            MENUITEM "Vertical",                    ID_FLIP_VERTICAL
-        END
-        POPUP "Enhance"
-        BEGIN
-            MENUITEM "None",                        ID_ENHANCE_NONE
-            MENUITEM "Normalize",                   ID_ENHANCE_NORMALIZE
-            MENUITEM "Gamma",                       ID_ENHANCE_GAMMA
-        END
+        MENUITEM "Enhance",                     ID_HIRESCAMEARA_ENHANCE
         MENUITEM SEPARATOR
         MENUITEM "Show Info",                   ID_HIRESCAMEARA_SHOWINFO
     END
