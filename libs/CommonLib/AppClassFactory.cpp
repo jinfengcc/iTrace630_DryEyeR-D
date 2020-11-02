@@ -122,7 +122,7 @@ auto AppClassFactory::GetDllList() -> DataList
   fs::path jsf(sz);
   jsf.replace_extension(".json");
 
-  if (!fs::exists(jsf)) {
+  if (1 || !fs::exists(jsf)) {
     for (fs::directory_iterator b(jsf.parent_path()), e; b != e; ++b) {
       fs::path p = *b;
       if (_stricmp(p.extension().string().c_str(), ".dll") == 0) {

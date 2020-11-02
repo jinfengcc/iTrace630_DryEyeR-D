@@ -24,19 +24,22 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
     CMessageLoop theLoop;
     _Module.AddMessageLoop(&theLoop);
 
-    if (__argc == 2) {
-      AppSettings::CreateInstance(__wargv[1]);
-      // clang-format off
-      auto x1  = AppSettings::Instance()->Get<bool       >("HalTester", "x1");
-      auto x2a = AppSettings::Instance()->Get<int        >("HalTester", "x2");
-      auto x2b = AppSettings::Instance()->Get<double     >("HalTester", "x2");
-      auto x3  = AppSettings::Instance()->Get<double     >("HalTester", "x3");
-      auto x4  = AppSettings::Instance()->Get<std::string>("HalTester", "x4");
-      // clang-format on
-    }
-    else {
-      AppSettings::CreateInstance();
-    }
+    AppSettings::CreateInstance();
+
+#ifdef _DEBUG
+    // clang-format off
+    auto x1  = AppSettings::Instance()->Get<bool       >("HalTester.x1");
+    auto x2a = AppSettings::Instance()->Get<int        >("HalTester.x2");
+    auto x2b = AppSettings::Instance()->Get<double     >("HalTester.x2");
+    auto x3  = AppSettings::Instance()->Get<double     >("HalTester.x3");
+    auto x4  = AppSettings::Instance()->Get<std::string>("HalTester.x4");
+
+    auto xx = AppSettings::Instance()->Get<std::string>("HalTester.camera.enhance");
+
+    auto y4 = AppSettings::Instance()->Get("HalTester.x2", 12);
+    auto y5 = AppSettings::Instance()->Get("HalTester.x5", 16);
+    // clang-format on
+#endif // _DEBUG
 
     CMainDlg dlgMain;
     if (dlgMain.Create(nullptr) == nullptr) {

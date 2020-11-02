@@ -2,8 +2,19 @@
 #include "CameraHiresView.h"
 #include "WinHelpers.h"
 #include "libs/CommonLib/AppSettings.h"
+#include <nlohmann/json.hpp>
 
 using hal::ICameraHires;
+
+enum class Orient { none, rotate, flipx, flipy };
+
+// map TaskState values to JSON as strings
+NLOHMANN_JSON_SERIALIZE_ENUM(Orient, {
+                                       {Orient::none, nullptr},
+                                       {Orient::rotate, "rotate"},
+                                       {Orient::flipx, "flipx"},
+                                       {Orient::flipy, "flipy"},
+                                     })
 
 bool CCameraHiresView::OnHide(bool)
 {
@@ -189,12 +200,12 @@ void CCameraHiresView::InitializeCombo()
 
 void CCameraHiresView::UpdateFPS()
 {
-  //double fps{};
-  //if (m_camera && m_camera->Connected(&fps)) {
+  // double fps{};
+  // if (m_camera && m_camera->Connected(&fps)) {
   //  SetDlgItemText(IDC_FPS, fmt::format(L"{:.2}fps", fps).c_str());
   //  SetDlgItemText(IDC_IMG_SIZE, fmt::format(L"{}x{}", m_colorImage.cols, m_colorImage.rows).c_str());
   //}
-  //else {
+  // else {
   //  SetDlgItemText(IDC_FPS, L"");
   //  SetDlgItemText(IDC_IMG_SIZE, L"");
   //}

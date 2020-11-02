@@ -22,6 +22,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)hal\ICamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ILogger.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ILoggerSettings.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ISettingsStorage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ITraceyConfig.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TraceyObj.h" />
   </ItemGroup>

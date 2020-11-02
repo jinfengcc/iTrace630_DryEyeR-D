@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <fstream>
 #include <wil/filesystem.h>
+#include <interfaces/ISettingsStorage.h>
 #include "SignalUI.h"
 
 struct AppSettings::Impl
@@ -12,19 +13,23 @@ struct AppSettings::Impl
   sig::SignalUI<>                  m_notify;
   wil::unique_folder_change_reader m_dirWatcher;
 
-  Impl(const std::wstring &file);
-  const json *GetData(std::string_view section, std::string_view name) const;
+  Impl(const fs::path &file);
+  const json *GetData(std::string addr) const;
 
 private:
   void Load();
   void OnFileChanged(wil::FolderChangeEvent, const wchar_t *fileName);
+
+  std::vector<std::string> SplitAddr(std::string &addr) const;
+
 };
 
 ////////////////////////////////////////////////////////////////////
 
 AppSettings::AppSettings()
-  : m_pimpl(std::make_unique<Impl>(GetJsonFilename()))
 {
+  auto ss = CreateObj<ISettingsStorage>();
+  m_pimpl = std::make_unique<Impl>(ss->GetSysFile());
 }
 
 AppSettings::AppSettings(std::wstring_view jsonfile)
@@ -46,9 +51,14 @@ void AppSettings::RemoveNotify(int id)
   m_pimpl->m_notify.Disconnect(id);
 }
 
-AppSettings::Data AppSettings::GetData(std::string_view section, std::string_view name) const
+std::string AppSettings::GetSection(std::string_view addr) const
 {
-  if (auto js = m_pimpl->GetData(section, name)) {
+  return std::string();
+}
+
+AppSettings::Data AppSettings::GetData(std::string_view addr) const
+{
+  if (auto js = m_pimpl->GetData(addr.data())) {
     if (js->is_boolean())
       return js->get<bool>();
     else if (js->is_number_float())
@@ -80,7 +90,7 @@ fs::path AppSettings::GetJsonFilename()
 
 ////////////////////////////////////////////////////////////////////
 
-AppSettings::Impl::Impl(const std::wstring &file)
+AppSettings::Impl::Impl(const fs::path &file)
   : m_file(file)
 {
   Load();
@@ -112,15 +122,38 @@ void AppSettings::Impl::OnFileChanged(wil::FolderChangeEvent, const wchar_t *fil
   }
 }
 
-const json *AppSettings::Impl::GetData(std::string_view section, std::string_view name) const
+const json *AppSettings::Impl::GetData(std::string addr) const
 {
   if (!m_json.is_object())
     return nullptr;
 
-  if (auto &j1 = m_json.at(section.data()); j1.is_object()) {
-    if (auto &j2 = j1.at(name.data()); !j2.is_null())
-      return &j2;
+  auto kv = SplitAddr(addr);
+  auto js = &m_json;
+
+  for (auto &k : kv) {
+    if (auto i = js->find(k); i != js->end()) {
+      js = &*i;
+    }
+    else {
+      js = nullptr;
+      break;
+    }
   }
 
-  return nullptr;
+  return js;
+}
+
+std::vector<std::string> AppSettings::Impl::SplitAddr(std::string &addr) const
+{
+  auto kv = std::vector<std::string>();
+
+  for (auto n = addr.find('.'); !addr.empty() && n != std::string::npos;) {
+    kv.push_back(addr.substr(0, n));
+    addr = addr.substr(n + 1);
+    n    = addr.find('.');
+  }
+  if (!addr.empty())
+    kv.push_back(addr);
+
+  return kv;
 }

@@ -71,6 +71,12 @@ bool CameraHires::GetImage(cv::Mat &img, Mode mode) const
     cv::imwrite(R"(C:\1\thanos\hires_ct.png)", img);
 #endif
 
+#ifdef _DEBUG
+  cv::Mat tmp;
+  cv::equalizeHist(img, tmp);
+#endif // _DEBUG
+
+
   if (mode == ICameraHires::Mode::LORES) {
     enum { IMG_ROWS = 468, IMG_COLS = 624 };
     cv::resize(img, img, {IMG_COLS, IMG_ROWS}, cv::INTER_AREA);

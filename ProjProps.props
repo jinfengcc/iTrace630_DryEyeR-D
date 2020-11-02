@@ -5,7 +5,7 @@
    <PropertyGroup Label="UserMacros">
       <RootFolder>$(MSBuildThisFileDirectory)</RootFolder>
       <WINVER>0x601</WINVER>
-      <JsonFile>$(TargetDir)$(TargetName).json</JsonFile>
+      <JsonFile>$(TargetName).json</JsonFile>
    </PropertyGroup>
 
    <PropertyGroup>

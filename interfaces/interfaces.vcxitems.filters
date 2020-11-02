@@ -23,6 +23,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)data\Image.h">
       <Filter>data</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ISettingsStorage.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="hal">
