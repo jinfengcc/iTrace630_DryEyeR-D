@@ -166,6 +166,13 @@ void CameraHiResImpl::ThreadFunc(std::stop_token token)
       continue;
     }
 
+#if 0
+    if (m_image.empty())
+      m_image = cv::imread("D:\\hires_ct.png");
+    m_signal(n);
+    continue;
+#endif
+
     if (m_videoCap.read(img)) {
       m_signal(n);
     }

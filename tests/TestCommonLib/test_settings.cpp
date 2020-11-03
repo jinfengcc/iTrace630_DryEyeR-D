@@ -10,6 +10,7 @@ static const char test_settings[] = R"({
   }
 })";
 
+#if 0
 using json = nlohmann::json;
 
 GTEST_TEST(Settings, Load)
@@ -42,3 +43,4 @@ GTEST_TEST(Settings, Get)
   EXPECT_THROW(([&aps]() { aps.Get("Something"); })(), std::exception);
 }
 
+#endif

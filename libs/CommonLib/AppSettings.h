@@ -11,14 +11,15 @@ class AppSettings : public Singleton<AppSettings>
 {
 public:
   AppSettings();
-  AppSettings(std::wstring_view jsonfile);
+  AppSettings(const fs::path &jsonfile);
+  AppSettings(std::string_view jsonfile);
 
   ~AppSettings();
 
+  AppSettings GetSection(std::string_view addr) const;
+
   int  AddNotify(std::function<void()> func);
   void RemoveNotify(int id);
-
-  std::string GetSection(std::string_view addr) const;
 
   /// 'addr' is in a.b.c format
   template <class T>

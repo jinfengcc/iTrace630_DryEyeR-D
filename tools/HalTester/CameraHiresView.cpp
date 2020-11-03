@@ -3,6 +3,8 @@
 #include "WinHelpers.h"
 #include "libs/CommonLib/AppSettings.h"
 #include <nlohmann/json.hpp>
+#include "Spline.h"
+#include "libs/CalcLib/Image/ImgContrast.h"
 
 using hal::ICameraHires;
 
@@ -190,26 +192,21 @@ void CCameraHiresView::ProcessImage()
 
   cv::cvtColor(m_colorImage, m_grayImage, cv::COLOR_BGR2GRAY);
 
-  if (!m_enhance)
-    return;
+#ifdef _DEBUG
+  auto tmp = m_grayImage.clone();
+#endif
 
+  if (m_enhance)
+    img::EnhanceContrast(m_grayImage);
+
+#if 0
   if (apps.Get("HalTester.hrcam.enhance.histogram", false)) {
     cv::equalizeHist(m_grayImage, m_grayImage);
   }
-  //else {
-  //  double minVal, maxVal;
-  //  cv::minMaxIdx(m_grayImage, &minVal, &maxVal);
-
-  //  auto a = 255 / (maxVal - minVal);
-  //  auto b = -minVal;
-
-  //  m_grayImage.convertTo(m_grayImage, -1, a, b);
-  //}
 
   if (apps.Get("HalTester.hrcam.enhance.sharpen", false)) {
     m_grayImage = SharpenImage(m_grayImage);
   }
-
 
   if (auto gamma = apps.Get("HalTester.hrcam.enhance.gamma", 0.0); gamma > 0.0) {
     cv::Mat lookUpTable(1, 256, CV_8U);
@@ -223,6 +220,74 @@ void CCameraHiresView::ProcessImage()
 
     tmp2.copyTo(m_grayImage);
   }
+#endif
+}
+
+void CCameraHiresView::ProcessImageMore()
+{
+  #ifdef _DEBUG
+  #endif
+
+  /// Establish the number of bins
+
+  float        range[]   = {0, 256};
+  const float *histRange = {range};
+  int          histSize  = 256;
+
+  bool uniform    = true;
+  bool accumulate = false;
+
+  cv::Mat_<float> hist;
+  cv::calcHist(&m_grayImage, 1, 0, cv::Mat(), hist, 1, &histSize, &histRange, uniform, accumulate);
+
+  std::vector<int> hv;
+  for (auto v : hist)
+    hv.push_back(static_cast<int>(v));
+
+  const int N = m_grayImage.rows * m_grayImage.cols;
+  int       xx0 = 0, xx1 = 0;
+  int       sum = 0;
+  for (unsigned i = 0; i < hv.size() && xx1 == 0; ++i) {
+    sum += hv[i];
+    if (xx0 == 0 && sum > 2* N / 3)
+      xx0 = i;
+
+    if (xx1 == 0 && sum > 95 * N / 100)
+      xx1 = i;
+  }
+
+  // const int    x0 = 30, x1 = 100;
+  const int    x0 = 50, x1 = xx1;
+  const double y0 = 15, y1 = 240;
+
+  std::vector<double> tv(256);
+  for (int i = 0; i < x0; ++i) {
+    const double slope = y0 / x0;
+    tv[i]              = i * slope;
+  }
+  for (int i = x0; i < x1; ++i) {
+    const double slope = (y1 - y0) / (x1 - x0 - 1);
+    tv[i]              = y0 + (i - x0) * slope;
+  }
+  for (int i = x1; i < 256; ++i) {
+    const double slope = (255 - y1) / (255 - x1);
+    tv[i]              = y1 + (i - x1) * slope;
+  }
+
+  cv::Mat1b tmp = m_grayImage.clone();
+  tmp.forEach([&](uchar &v, const int *) { v = static_cast<uchar>(tv[v]); });
+
+  // for (int )
+
+  std::vector<double> X{0, 20, 100, 255};
+  std::vector<double> Y{0, 0, 255, 255};
+
+  tk::spline s;
+  s.set_points(X, Y);
+
+  std::vector<int> kxs;
+  for (int i = 0; i < 256; ++i)
+    kxs.push_back(s(i));
 }
 
 void CCameraHiresView::DrawInfo(CDCHandle dc, const RECT &rc)
