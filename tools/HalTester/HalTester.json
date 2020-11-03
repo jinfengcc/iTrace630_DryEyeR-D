@@ -9,11 +9,12 @@
       "x3": 3.14,
       "x4": "sharpen",
       "hrcam": {
-         "rotate": false,
+         "rotate": true,
+         "fliph": true,
          "enhance": {
             "sharpen": true,
             "histogram": false,
-            "gamma": 1.2
+            "gamma": 0.5
          }
       }
 

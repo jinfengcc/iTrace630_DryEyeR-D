@@ -15,6 +15,7 @@ private:
   wil::com_ptr_t<hal::IDevice> m_lights;
   std::array<int, 5>           m_lightIntensity{};
   BOOL                         m_placido{FALSE};
+  BOOL                         m_laser{FALSE};
 
   void OnEditChanged(UINT uNotifyCode, int nID, CWindow wndCtl);
   void OnButtonClicked(UINT uNotifyCode, int nID, CWindow wndCtl);
@@ -31,5 +32,6 @@ private:
     DDX_INT_RANGE(IDC_EDIT8, m_lightIntensity[3], 0, 100)
     DDX_INT_RANGE(IDC_EDIT9, m_lightIntensity[4], 0, 100)
     DDX_CHECK(IDC_PLACIDO, m_placido)
+    DDX_CHECK(IDC_LASER, m_laser)
   END_DDX_MAP()
 };

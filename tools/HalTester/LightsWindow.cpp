@@ -42,5 +42,6 @@ void CLightsWindow::OnButtonClicked(UINT uNotifyCode, int nID, CWindow wndCtl)
 
   if (m_lights && DoDataExchange(DDX_SAVE)) {
     m_lights->Power(hal::POWER::PLACIDO, m_placido);
+    m_lights->Power(hal::POWER::TRIANGULATION_LASER, m_laser);
   }
 }

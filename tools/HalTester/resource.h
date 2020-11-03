@@ -51,13 +51,15 @@
 #define IDC_EXPOSURE                    1037
 #define IDC_MORE                        1038
 #define IDC_PLACIDO                     1039
+#define IDC_PLACIDO2                    1040
+#define IDC_LASER                       1040
 #define ID_HIRESCAMEARA_CONNECT         32781
 #define ID_HIRESCAMEARA_COLORIMAGE      32782
 #define ID_HIRESCAMEARA_ENHANCE         32783
 #define ID_HIRESCAMEARA_SHOWINFO        32784
 
 // Next default values for new objects
-//
+// 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        211
