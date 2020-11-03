@@ -167,6 +167,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SettingsStorage.h" />
+    <ClInclude Include="Spline.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="FlashView.h" />
     <ClInclude Include="CameraView.h" />
@@ -187,6 +188,7 @@
     <ClCompile Include="FlashView.cpp" />
     <ClCompile Include="CameraView.cpp" />
     <ClCompile Include="SettingsStorage.cpp" />
+    <ClCompile Include="Spline.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="HalTester.rc" />
@@ -201,6 +203,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\dlls\TraceyHardware\TraceyHardware.vcxproj">
       <Project>{c7034b3f-11a5-4f1b-bf5d-a7da69431855}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\libs\CalcLib\CalcLib.vcxproj">
+      <Project>{fe883fa5-bd68-49d8-9b77-0211817dd014}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\libs\CommonLib\CommonLib.vcxproj">
       <Project>{fb2bbf5a-c4a0-4fd8-9966-53f2a3ee90cc}</Project>

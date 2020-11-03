@@ -31,8 +31,8 @@ AppSettings::AppSettings()
   m_pimpl = std::make_unique<Impl>(ss->GetSysFile());
 }
 
-AppSettings::AppSettings(std::wstring_view jsonfile)
-  : m_pimpl(std::make_unique<Impl>(std::wstring(jsonfile)))
+AppSettings::AppSettings(const fs::path &jsonfile)
+  : m_pimpl(std::make_unique<Impl>(jsonfile))
 {
 }
 
@@ -50,9 +50,9 @@ void AppSettings::RemoveNotify(int id)
   m_pimpl->m_notify.Disconnect(id);
 }
 
-std::string AppSettings::GetSection(std::string_view addr) const
+AppSettings AppSettings::GetSection(std::string_view addr) const
 {
-  return std::string();
+  return {};
 }
 
 AppSettings::Data AppSettings::GetData(std::string_view addr) const

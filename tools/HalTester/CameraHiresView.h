@@ -51,6 +51,7 @@ private:
   void           CreateObjects();
   void           LoadImage();
   void           ProcessImage();
+  void           ProcessImageMore();
   void           DrawInfo(CDCHandle dc, const RECT &rc);
   static cv::Mat SharpenImage(const cv::Mat &mat);
 
