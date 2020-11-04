@@ -4,7 +4,7 @@
 #include "libs/CommonLib/AppSettings.h"
 #include <nlohmann/json.hpp>
 #include "Spline.h"
-#include "libs/CalcLib/Image/ImgContrast.h"
+#include "libs/CalcLib/Image/ImgEnhanceContrast.h"
 
 using hal::ICameraHires;
 

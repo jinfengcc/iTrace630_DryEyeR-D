@@ -13,13 +13,13 @@ struct AppSettings::Impl
   sig::SignalUI<>                  m_notify;
   wil::unique_folder_change_reader m_dirWatcher;
 
+  Impl() = default;
   Impl(const fs::path &file);
   const json *GetData(std::string addr) const;
 
 private:
-  void Load();
-  void OnFileChanged(wil::FolderChangeEvent, const wchar_t *fileName);
-
+  void                     Load();
+  void                     OnFileChanged(wil::FolderChangeEvent, const wchar_t *fileName);
   std::vector<std::string> SplitAddr(std::string &addr) const;
 };
 
@@ -32,7 +32,24 @@ AppSettings::AppSettings()
 }
 
 AppSettings::AppSettings(const fs::path &jsonfile)
-  : m_pimpl(std::make_unique<Impl>(jsonfile))
+{
+  m_pimpl = std::make_unique<Impl>(jsonfile);
+}
+
+AppSettings::AppSettings(std::string_view jsonStr)
+{
+  try {
+    m_pimpl = std::make_unique<Impl>();
+    if (!jsonStr.empty())
+      m_pimpl->m_json = json::parse(jsonStr, nullptr, true, true);
+  }
+  catch (std::exception &e) {
+    DILASCIA_TRACE("Error: {}\n", e.what());
+  }
+}
+
+AppSettings::AppSettings(AppSettings &&s) noexcept
+  : m_pimpl(std::move(s.m_pimpl))
 {
 }
 
@@ -52,6 +69,12 @@ void AppSettings::RemoveNotify(int id)
 
 AppSettings AppSettings::GetSection(std::string_view addr) const
 {
+  if (auto j = m_pimpl->GetData(std::string(addr))) {
+    AppSettings s(std::string_view(""));
+    s.m_pimpl         = std::make_unique<Impl>();
+    s.m_pimpl->m_json = *j;
+    return s;
+  }
   return {};
 }
 
@@ -110,7 +133,7 @@ void AppSettings::Impl::Load()
   if (!fs::exists(m_file))
     return;
 
-  for (int i = 0; i++ < 3; ) {
+  for (int i = 0; i++ < 3;) {
     try {
       auto fs = std::ifstream(m_file);
       m_json  = json::parse(fs, nullptr, true, true);
@@ -118,7 +141,7 @@ void AppSettings::Impl::Load()
     }
     catch (std::exception &e) {
       DILASCIA_TRACE("Error: {}\n", e.what());
-      Sleep(i*100);
+      Sleep(i * 100);
     }
   }
 }

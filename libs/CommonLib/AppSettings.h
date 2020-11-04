@@ -3,6 +3,7 @@
 #include <variant>
 #include <functional>
 #include <optional>
+#include <filesystem>
 #include "Singleton.h"
 
 namespace fs = std::filesystem;
@@ -23,26 +24,10 @@ public:
 
   /// 'addr' is in a.b.c format
   template <class T>
-  std::optional<T> Get(std::string_view addr)
-  {
-    auto v = GetData(addr);
-
-    if (std::holds_alternative<T>(v))
-      return std::get<T>(v);
-
-    if constexpr (std::is_floating_point_v<T>) {
-      if (std::holds_alternative<int>(v))
-        return static_cast<T>(std::get<int>(v));
-    }
-    return {};
-  }
+  std::optional<T> Get(std::string_view addr);
 
   template <class T>
-  T Get(std::string_view addr, T defaultValue)
-  {
-    auto v = Get<T>(addr);
-    return v.has_value() ? v.value() : defaultValue;
-  }
+  T Get(std::string_view addr, T defaultValue);
 
   std::wstring GetConfigFile() const;
 
@@ -50,8 +35,31 @@ private:
   struct Impl;
   std::unique_ptr<Impl> m_pimpl;
 
-  using Data = std::variant<std::monostate, bool, int, double, std::string>;
-  Data GetData(std::string_view addr) const;
+  AppSettings(AppSettings &&s) noexcept;
 
+  using Data = std::variant<std::monostate, bool, int, double, std::string>;
+  Data            GetData(std::string_view addr) const;
   static fs::path GetJsonFilename();
 };
+
+template <class T>
+inline std::optional<T> AppSettings::Get(std::string_view addr)
+{
+  auto v = GetData(addr);
+
+  if (std::holds_alternative<T>(v))
+    return std::get<T>(v);
+
+  if constexpr (std::is_floating_point_v<T>) {
+    if (std::holds_alternative<int>(v))
+      return static_cast<T>(std::get<int>(v));
+  }
+  return {};
+}
+
+template <class T>
+inline T AppSettings::Get(std::string_view addr, T defaultValue)
+{
+  auto v = Get<T>(addr);
+  return v.has_value() ? v.value() : defaultValue;
+}
