@@ -12,7 +12,8 @@ private:
   wil::com_ptr_t<Camera> m_cameraImpl;
   bool                   m_getNewImage{false};
   cv::Mat                m_imgColor;
-  cv::Mat3b              m_imgGray;
+  cv::Mat3b              m_imgGray3;
+  cv::Mat1b              m_imgGray1;
   TraceyConfigImpl       m_config;
 
   void InitializeConfig();
@@ -51,15 +52,18 @@ public:
   uchar *GetRGBData(bool color);
 
   // clang-format off
-  void SetBrightness(int value)  { m_config.Set(Camera::BRIGHTNESS, value); }
-  void SetContrast  (int value)  { m_config.Set(Camera::CONTRAST  , value); }
-  void SetHue       (int value)  { m_config.Set(Camera::HUE       , value); }
-  void SetSaturation(int value)  { m_config.Set(Camera::SATURATION, value); }
-  void SetGain      (int value)  { m_config.Set(Camera::GAIN      , value); }
+  void SetBrightness(int value)  { SetConfig(Camera::BRIGHTNESS, value); }
+  void SetContrast  (int value)  { SetConfig(Camera::CONTRAST  , value); }
+  void SetHue       (int value)  { SetConfig(Camera::HUE       , value); }
+  void SetSaturation(int value)  { SetConfig(Camera::SATURATION, value); }
+  void SetGain      (int value)  { SetConfig(Camera::GAIN      , value); }
   // clang-format on
 
   void SetExposure(Camera::Exposure value)
   {
-    m_config.Set(Camera::EXPOSURE, static_cast<int>(value));
+    SetConfig(Camera::EXPOSURE, static_cast<int>(value));
   }
+
+private:
+  void SetConfig(const Guid &id, int value);
 };

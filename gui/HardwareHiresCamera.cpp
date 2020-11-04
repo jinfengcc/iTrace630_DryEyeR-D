@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "HardwareHiresCamera.h"
+#include <libs/CalcLib/Image/ImgContrast.h>
 
 HardwareHiresCamera::HardwareHiresCamera()
 {
@@ -40,11 +41,17 @@ uchar *HardwareHiresCamera::GetRGBData(bool color)
       ConvertToGray();
     }
 
-    return color ? m_imgColor.ptr<uchar>() : m_imgGray.ptr<uchar>();
+    return color ? m_imgColor.ptr<uchar>() : m_imgGray3.ptr<uchar>();
   }
   else {
     return nullptr;
   }
+}
+
+void HardwareHiresCamera::SetConfig(const Guid &id, int value)
+{
+  m_config.Set(id, value);
+  img::EnhanceContrast(cv::Mat(), true);
 }
 
 void HardwareHiresCamera::InitializeConfig()
@@ -54,15 +61,20 @@ void HardwareHiresCamera::InitializeConfig()
   SetContrast  ( 10);
   SetHue       (128);
   SetSaturation( 64);
-  SetExposure  ( Camera::Exposure::_40ms);
+  SetExposure  (Camera::Exposure::_80ms);
+  SetGain      (200);
   // clang-format on
 }
 
 void HardwareHiresCamera::ConvertToGray()
 {
-  m_imgColor.copyTo(m_imgGray);
-  m_imgGray.forEach([](cv::Vec3b &value, const int *) {
-    auto gray = 0.299 * value[2] + 0.587 * value[1] + 0.114 * value[0];
-    value[0] = value[1] = value[2] = cv::saturate_cast<std::uint8_t>(gray);
-  });
+  cv::cvtColor(m_imgColor, m_imgGray1, cv::COLOR_BGR2GRAY);
+  img::EnhanceContrast(m_imgGray1);
+  cv::cvtColor(m_imgGray1, m_imgGray3, cv::COLOR_GRAY2BGR);
+
+  //m_imgColor.copyTo(m_imgGray);
+  //m_imgGray.forEach([](cv::Vec3b &value, const int *) {
+  //  auto gray = 0.299 * value[2] + 0.587 * value[1] + 0.114 * value[0];
+  //  value[0] = value[1] = value[2] = cv::saturate_cast<std::uint8_t>(gray);
+  //});
 }
