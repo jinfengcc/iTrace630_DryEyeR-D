@@ -2116,5 +2116,6 @@
     <None Include="Bin\thw.dll">
       <Filter>Bin</Filter>
     </None>
+    <None Include="iTrace.json" />
   </ItemGroup>
 </Project>

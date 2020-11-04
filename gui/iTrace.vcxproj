@@ -891,6 +891,7 @@
   <ItemGroup>
     <None Include="Bin\tdbmsjet62.dll" />
     <None Include="Bin\thw.dll" />
+    <None Include="iTrace.json" />
     <None Include="res\iTrace.rc2" />
     <None Include="Res\png1.bin" />
     <None Include="Res\png2.bin" />

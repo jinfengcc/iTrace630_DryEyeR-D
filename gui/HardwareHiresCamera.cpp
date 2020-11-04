@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "HardwareHiresCamera.h"
-#include <libs/CalcLib/Image/ImgContrast.h>
+#include <libs/CalcLib/Image/ImgEnhanceContrast.h>
 
 HardwareHiresCamera::HardwareHiresCamera()
 {
@@ -51,7 +51,7 @@ uchar *HardwareHiresCamera::GetRGBData(bool color)
 void HardwareHiresCamera::SetConfig(const Guid &id, int value)
 {
   m_config.Set(id, value);
-  img::EnhanceContrast(cv::Mat(), true);
+  //img::EnhanceContrast(cv::Mat());
 }
 
 void HardwareHiresCamera::InitializeConfig()
