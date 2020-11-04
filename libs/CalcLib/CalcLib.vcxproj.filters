@@ -27,7 +27,7 @@
     <ClInclude Include="Image\Histogram.h">
       <Filter>Image</Filter>
     </ClInclude>
-    <ClInclude Include="Image\ImgContrast.h">
+    <ClInclude Include="Image\ImgEnhanceContrast.h">
       <Filter>Image</Filter>
     </ClInclude>
   </ItemGroup>
@@ -38,8 +38,8 @@
     <ClCompile Include="Image\Histogram.cpp">
       <Filter>Image</Filter>
     </ClCompile>
-    <ClCompile Include="Image\ImgContrast.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Image\ImgEnhanceContrast.cpp">
+      <Filter>Image</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

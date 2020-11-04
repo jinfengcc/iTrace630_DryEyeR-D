@@ -156,13 +156,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Image\Histogram.h" />
-    <ClInclude Include="Image\ImgContrast.h" />
+    <ClInclude Include="Image\ImgEnhanceContrast.h" />
     <ClInclude Include="Image\Mat2Vector.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Image\Histogram.cpp" />
-    <ClCompile Include="Image\ImgContrast.cpp" />
+    <ClCompile Include="Image\ImgEnhanceContrast.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

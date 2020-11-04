@@ -1,19 +1,32 @@
 #include "pch.h"
-#include "ImgContrast.h"
+#include "ImgEnhanceContrast.h"
 #include "Histogram.h"
+#include <libs/CommonLib/AppSettings.h>
 
 namespace {
   using MapData = std::array<std::uint8_t, 256>;
+
   void GetMapData(const cv::Mat &img, MapData &md);
+
+  const double K = 0.0;
 } // namespace
 
-void img::EnhanceContrast(cv::Mat &img)
+void img::EnhanceContrast(cv::Mat img)
 {
+  if (img.empty())
+    return;
+
   MapData md;
   GetMapData(img, md);
 
   Expects(img.type() == CV_8UC1);
   cv::Mat1b(img).forEach([&](uchar &v, const int *) { v = static_cast<uchar>(md[v]); });
+
+  auto size  = AppSettings::Instance()->Get("hrcam.filter.size", 0);
+  auto sigma = AppSettings::Instance()->Get("hrcam.filter.sigma", 0);
+
+  if (size > 0 && sigma > 0)
+    cv::GaussianBlur(img, img, {size, size}, sigma, sigma);
 }
 
 namespace {
@@ -30,10 +43,17 @@ namespace {
     GetMapData(edgp, md);
   }
 
-  void GetMapData(Pair x, MapData &md)
+  void GetMapData(Pair p, MapData &md)
   {
-    const int    x0 = x.first;
-    const int    x1 = x.second;
+    if (K > 0) {
+      for (int i = 0; i < 256; ++i) {
+        auto x = 255 / (1 + std::exp(-K * (i - p.second)));
+        md[i]  = static_cast<int>(std::round(x));
+      }
+      return;
+    }
+    const int    x0 = p.first;
+    const int    x1 = p.second;
     const double y0 = x0 / 2.0;
     const double y1 = 256 - y0;
 

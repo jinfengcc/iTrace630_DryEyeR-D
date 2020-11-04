@@ -5,5 +5,5 @@
 
 namespace img
 {
-  void EnhanceContrast(cv::Mat & img);
+  void EnhanceContrast(cv::Mat img);
 }

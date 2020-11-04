@@ -8,18 +8,20 @@
       "x2": 1,
       "x3": 3.14,
       "x4": "sharpen",
-      "hrcam": {
-         "rotate": true,
-         "fliph": true,
-         "enhance": {
-            "sharpen": true,
-            "histogram": false,
-            "gamma": 0.5
-         }
+   },
+
+   "hrcam": {
+      "rotate": true,
+      "fliph": true,
+      "enhance": {
+         "sharpen": true,
+         "histogram": false,
+         "gamma": 0.5
+      },
+      "filter": {
+         "size": 7,
+         "sigma": 7
       }
-
-
    }
-
 
 }
