@@ -24,20 +24,19 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
     CMessageLoop theLoop;
     _Module.AddMessageLoop(&theLoop);
 
-    AppSettings::CreateInstance();
-
 #ifdef _DEBUG
+    AppSettings aps;
     // clang-format off
-    auto x1  = AppSettings::Instance()->Get<bool       >("HalTester.x1");
-    auto x2a = AppSettings::Instance()->Get<int        >("HalTester.x2");
-    auto x2b = AppSettings::Instance()->Get<double     >("HalTester.x2");
-    auto x3  = AppSettings::Instance()->Get<double     >("HalTester.x3");
-    auto x4  = AppSettings::Instance()->Get<std::string>("HalTester.x4");
+    auto x1  = aps.Get<bool       >("HalTester.x1");
+    auto x2a = aps.Get<int        >("HalTester.x2");
+    auto x2b = aps.Get<double     >("HalTester.x2");
+    auto x3  = aps.Get<double     >("HalTester.x3");
+    auto x4  = aps.Get<std::string>("HalTester.x4");
 
-    auto xx = AppSettings::Instance()->Get<std::string>("HalTester.camera.enhance");
+    auto xx = aps.Get<std::string>("HalTester.camera.enhance");
 
-    auto y4 = AppSettings::Instance()->Get("HalTester.x2", 12);
-    auto y5 = AppSettings::Instance()->Get("HalTester.x5", 16);
+    auto y4 = aps.Get("HalTester.x2", 12);
+    auto y5 = aps.Get("HalTester.x5", 16);
     // clang-format on
 #endif // _DEBUG
 

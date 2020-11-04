@@ -159,6 +159,11 @@ void CameraHiResImpl::ThreadFunc(std::stop_token token)
   auto fpc = 0;
   auto now = GetTickCount64();
 
+  cv::VideoWriter vw;
+  vw.open("D:\\video.avi", cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), m_videoCap.get(cv::CAP_PROP_FPS), {1280, 960});
+
+  int save_frames = 120;
+
   cv::Mat img;
   for (unsigned n = 0; !token.stop_requested(); ++n) {
     if (!m_videoCap.isOpened()) {
@@ -183,6 +188,14 @@ void CameraHiResImpl::ThreadFunc(std::stop_token token)
     if (!img.empty()) {
       std::lock_guard lock(m_mutex);
       img.copyTo(m_image);
+    }
+
+    if (save_frames > 0) {
+      --save_frames;
+      vw.write(img);
+    }
+    else {
+      vw.release();
     }
 
     // Frames per second

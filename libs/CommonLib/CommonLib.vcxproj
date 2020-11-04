@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="AppClassFactory.h" />
     <ClInclude Include="AppSettings.h" />
+    <ClInclude Include="AppSettingsImpl.h" />
     <ClInclude Include="atlgdix.h" />
     <ClInclude Include="Benchmark.h" />
     <ClInclude Include="Cast.h" />
@@ -203,6 +204,7 @@
   <ItemGroup>
     <ClCompile Include="AppClassFactory.cpp" />
     <ClCompile Include="AppSettings.cpp" />
+    <ClCompile Include="AppSettingsImpl.cpp" />
     <ClCompile Include="Benchmark.cpp" />
     <ClCompile Include="ClassFactoryImpl.cpp" />
     <ClCompile Include="Compression\Blob.cpp" />

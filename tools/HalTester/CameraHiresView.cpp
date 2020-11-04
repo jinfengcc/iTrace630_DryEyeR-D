@@ -33,7 +33,6 @@ void CCameraHiresView::OnShow()
 
 void CCameraHiresView::OnTerminating()
 {
-  AppSettings::Instance()->RemoveNotify(m_notificationId);
   m_camera->StopCapture();
 }
 
@@ -135,10 +134,6 @@ void CCameraHiresView::CreateObjects()
     DrawImage(dc, rc, m_showColor ? m_colorImage : m_grayImage);
     DrawInfo(dc, rc);
   });
-
-  m_notificationId = AppSettings::Instance()->AddNotify([this]() {
-
-  });
 }
 
 void CCameraHiresView::InitializeSpinners()
@@ -189,6 +184,11 @@ void CCameraHiresView::ProcessImage()
   if (apps.Get("HalTester.hrcam.fliph", false)) {
     cv::flip(m_colorImage, m_colorImage, 1);
   }
+
+  cv::Mat img0, img1, img2;
+  cv::extractChannel(m_colorImage, img0, 0);
+  cv::extractChannel(m_colorImage, img1, 1);
+  cv::extractChannel(m_colorImage, img2, 2);
 
   cv::cvtColor(m_colorImage, m_grayImage, cv::COLOR_BGR2GRAY);
 

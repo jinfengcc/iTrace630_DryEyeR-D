@@ -22,8 +22,10 @@ void img::EnhanceContrast(cv::Mat img)
   Expects(img.type() == CV_8UC1);
   cv::Mat1b(img).forEach([&](uchar &v, const int *) { v = static_cast<uchar>(md[v]); });
 
-  auto size  = AppSettings::Instance()->Get("hrcam.filter.size", 0);
-  auto sigma = AppSettings::Instance()->Get("hrcam.filter.sigma", 0);
+  AppSettings aps;
+
+  auto size  = aps.Get("hrcam.filter.size", 0);
+  auto sigma = aps.Get("hrcam.filter.sigma", 0);
 
   if (size > 0 && sigma > 0)
     cv::GaussianBlur(img, img, {size, size}, sigma, sigma);
@@ -33,17 +35,17 @@ namespace {
   using Pair = std::pair<int, int>;
 
   Pair GetEdgePoints(const cv::Mat_<float> &hist, int numPixels);
-  void GetMapData(Pair x, MapData &md);
+  void GetMapData(Pair x, MapData &md, int maxValue);
 
   void GetMapData(const cv::Mat &img, MapData &md)
   {
     auto hist = Histogram(img, 256);
     auto edgp = GetEdgePoints(hist, img.total());
 
-    GetMapData(edgp, md);
+    GetMapData(edgp, md, 180);
   }
 
-  void GetMapData(Pair p, MapData &md)
+  void GetMapData(Pair p, MapData &md, int maxValue)
   {
     if (K > 0) {
       for (int i = 0; i < 256; ++i) {
@@ -55,11 +57,11 @@ namespace {
     const int    x0 = p.first;
     const int    x1 = p.second;
     const double y0 = x0 / 2.0;
-    const double y1 = 256 - y0;
+    const double y1 = maxValue - y0;
 
     const double slope1 = y0 / x0;
     const double slope2 = (y1 - y0) / (x1 - x0 - 1);
-    const double slope3 = (255 - y1) / (255 - x1);
+    const double slope3 = (maxValue - y1) / (maxValue - x1);
 
     for (int i = 0; i < x0; ++i)
       md[i] = static_cast<std::uint8_t>(i * slope1);

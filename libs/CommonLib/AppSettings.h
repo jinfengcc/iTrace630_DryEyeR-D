@@ -4,23 +4,19 @@
 #include <functional>
 #include <optional>
 #include <filesystem>
-#include "Singleton.h"
+#include <nlohmann/json.hpp>
 
 namespace fs = std::filesystem;
 
-class AppSettings : public Singleton<AppSettings>
+class AppSettings // : public Singleton<AppSettings>
 {
 public:
-  AppSettings();
+  AppSettings(std::function<void()> func = nullptr);
   AppSettings(const fs::path &jsonfile);
   AppSettings(std::string_view jsonfile);
+  AppSettings(const AppSettings &aps, std::string_view addr);
 
   ~AppSettings();
-
-  AppSettings GetSection(std::string_view addr) const;
-
-  int  AddNotify(std::function<void()> func);
-  void RemoveNotify(int id);
 
   /// 'addr' is in a.b.c format
   template <class T>
@@ -29,17 +25,19 @@ public:
   template <class T>
   T Get(std::string_view addr, T defaultValue);
 
-  std::wstring GetConfigFile() const;
+  static fs::path GetStdSettingsFile();
 
 private:
-  struct Impl;
-  std::unique_ptr<Impl> m_pimpl;
+  using json = nlohmann::json;
 
-  AppSettings(AppSettings &&s) noexcept;
+  json m_json;
+  int  m_sigId{};
 
   using Data = std::variant<std::monostate, bool, int, double, std::string>;
-  Data            GetData(std::string_view addr) const;
-  static fs::path GetJsonFilename();
+
+  Data        GetData(std::string_view addr) const;
+  const json *GetJsonData(std::string addr) const;
+  auto        SplitAddr(std::string &addr) const -> std::vector<std::string>;
 };
 
 template <class T>

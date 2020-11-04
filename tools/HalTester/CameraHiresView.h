@@ -39,7 +39,6 @@ private:
   bool                              m_showColor{true};
   bool                              m_enhance{false};
   bool                              m_showInfo{true};
-  int                               m_notificationId{};
 
   BOOL OnInitDialog(CWindow wndFocus, LPARAM lInitParam);
   void OnPopupMore(UINT uNotifyCode, int nID, CWindow wndCtl);

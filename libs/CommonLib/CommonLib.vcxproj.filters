@@ -171,6 +171,9 @@
     <ClInclude Include="TestSupport\TestDataFolder.h">
       <Filter>TestSupport</Filter>
     </ClInclude>
+    <ClInclude Include="AppSettingsImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -250,6 +253,9 @@
     </ClCompile>
     <ClCompile Include="TestSupport\TestDataFolder.cpp">
       <Filter>TestSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="AppSettingsImpl.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
