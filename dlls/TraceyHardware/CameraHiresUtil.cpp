@@ -33,23 +33,25 @@ namespace hrc {
 
   std::vector<std::string> GetCameraList();
 
-  int GetDeviceId(std::string_view name)
+  int GetDeviceId(std::span<const char *> names)
   {
-    if (name.empty())
+    if (names.empty())
       return -1;
 
     try {
-        auto names = GetCameraList();
-        auto pred  = [name](const auto &w) { return _stricmp(w.c_str(), name.data()) == 0; };
-        auto i     = std::find_if(names.begin(), names.end(), pred);
+      auto cameras = GetCameraList();
 
-        return i == names.end() ? -1 : std::distance(names.begin(), i);
+      for (auto name : names) {
+        auto pred = [name](const auto &w) { return _stricmp(w.c_str(), name) == 0; };
+        if (auto i = std::find_if(cameras.begin(), cameras.end(), pred); i != cameras.end())
+          return std::distance(cameras.begin(), i);
+      }
     }
-    catch(std::exception &) {
-      return -1;
+    catch (std::exception &) {
     }
+
+    return -1;
   }
-
 
   std::string ReadStr(IPropertyBag *pPropBag, const wchar_t *name)
   {

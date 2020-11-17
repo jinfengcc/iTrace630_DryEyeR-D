@@ -18,7 +18,7 @@ public:
     Close();
   }
 
-  bool          Open(std::string_view devName);
+  bool          Open();
   void          Close();
   bool          Connected(double *fps = nullptr) const;
   bool          Connect(bool yes);

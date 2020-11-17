@@ -5,17 +5,17 @@
 //using namespace std::literals;
 
 namespace {
-  const char defCameraName[] = "HD USB Camera";
   enum { IMG_ROWS = 468, IMG_COLS = 624 };
+  const char *defCameraName[] = {"UVC Video Device", "HD USB Camera"};
 
 } // namespace
 
-bool CameraHiResImpl::Open(std::string_view devName)
+bool CameraHiResImpl::Open()
 {
   StopCapture(0);
   std::fill(m_capProps.begin(), m_capProps.end(), -10000);
 
-  m_devName = devName.empty() ? defCameraName : devName;
+  // m_devName = devName;
   if (Connect(true)) {
     m_videoCap.grab();
   }
@@ -47,7 +47,7 @@ bool CameraHiResImpl::Connect(bool yes)
     if (!yes) {
       m_videoCap.release();
     }
-    else if (auto devid = hrc::GetDeviceId(m_devName); devid >= 0) {
+    else if (auto devid = hrc::GetDeviceId({defCameraName}); devid >= 0) {
       m_videoCap.open(devid);
       DefaultSettings();
     }

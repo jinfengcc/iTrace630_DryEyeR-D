@@ -4,7 +4,6 @@
 #include <interfaces/ITraceyConfig.h>
 
 namespace {
-  const char defCameraName[] = "HD USB Camera";
 }
 
 CameraHires::CameraHires()
@@ -28,7 +27,7 @@ void CameraHires::Initialize(IUnknown *unk)
       m_configSignalId = m_config->OnDataChanged([this]() { m_pimpl->Settings(m_config.get()); });
   }
 
-  m_pimpl->Open(GetCameraName());
+  m_pimpl->Open();
   m_pimpl->Settings(m_config.get());
 
   // Prime the camera
@@ -97,8 +96,8 @@ bool CameraHires::Connected(double *fps) const
   return c;
 }
 
-std::string CameraHires::GetCameraName()
-{
-  TraceyConfig tc(m_config.get());
-  return tc.Get<std::string>(CFG::CAMERA::NAME, defCameraName);
-}
+//std::string CameraHires::GetCameraName()
+//{
+//  TraceyConfig tc(m_config.get());
+//  return tc.Get<std::string>(CFG::CAMERA::NAME, defCameraName);
+//}
