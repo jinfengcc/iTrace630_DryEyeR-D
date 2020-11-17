@@ -35,13 +35,14 @@ uchar *HardwareHiresCamera::GetRGBData(bool color)
 {
   if (Connected()) {
     if (m_getNewImage) {
-      if (!m_cameraImpl->GetImage(m_imgColor, Camera::Mode::LORES))
+      auto mode = color ? Camera::Mode::LORES_COLOR : Camera::Mode::LORES_GRAY; 
+      if (!m_cameraImpl->GetImage(m_image, mode))
         return nullptr;
 
-      ConvertToGray();
+      // ConvertToGray();
     }
 
-    return color ? m_imgColor.ptr<uchar>() : m_imgGray3.ptr<uchar>();
+    return m_image.ptr<uchar>();
   }
   else {
     return nullptr;
@@ -66,15 +67,15 @@ void HardwareHiresCamera::InitializeConfig()
   // clang-format on
 }
 
-void HardwareHiresCamera::ConvertToGray()
-{
-  cv::cvtColor(m_imgColor, m_imgGray1, cv::COLOR_BGR2GRAY);
-  img::EnhanceContrast(m_imgGray1);
-  cv::cvtColor(m_imgGray1, m_imgGray3, cv::COLOR_GRAY2BGR);
-
-  //m_imgColor.copyTo(m_imgGray);
-  //m_imgGray.forEach([](cv::Vec3b &value, const int *) {
-  //  auto gray = 0.299 * value[2] + 0.587 * value[1] + 0.114 * value[0];
-  //  value[0] = value[1] = value[2] = cv::saturate_cast<std::uint8_t>(gray);
-  //});
-}
+//void HardwareHiresCamera::ConvertToGray()
+//{
+//  cv::cvtColor(m_imgColor, m_imgGray1, cv::COLOR_BGR2GRAY);
+//  img::EnhanceContrast(m_imgGray1);
+//  cv::cvtColor(m_imgGray1, m_imgGray3, cv::COLOR_GRAY2BGR);
+//
+//  //m_imgColor.copyTo(m_imgGray);
+//  //m_imgGray.forEach([](cv::Vec3b &value, const int *) {
+//  //  auto gray = 0.299 * value[2] + 0.587 * value[1] + 0.114 * value[0];
+//  //  value[0] = value[1] = value[2] = cv::saturate_cast<std::uint8_t>(gray);
+//  //});
+//}

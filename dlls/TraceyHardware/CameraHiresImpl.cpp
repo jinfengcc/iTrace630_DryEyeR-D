@@ -6,6 +6,7 @@
 
 namespace {
   const char defCameraName[] = "HD USB Camera";
+  enum { IMG_ROWS = 468, IMG_COLS = 624 };
 
 } // namespace
 
@@ -108,12 +109,16 @@ void CameraHiResImpl::StopCapture(sig::SignalId sigId)
   }
 }
 
-bool CameraHiResImpl::GetImage(cv::Mat &img) const
+bool CameraHiResImpl::GetImage(Mode mode, cv::Mat &img) const
 {
   if (m_thread.joinable()) {
     std::lock_guard lock(m_mutex);
-    m_image.copyTo(img);
-    return !m_image.empty();
+    auto &i = m_images[static_cast<int>(mode)];
+    if (i.empty())
+      return false;
+
+    i.copyTo(img);
+    return true;
   }
   else {
     if (GetTickCount64() - m_tickCount > 5000) {
@@ -121,7 +126,26 @@ bool CameraHiResImpl::GetImage(cv::Mat &img) const
       LogProperties();
     }
 
-    return m_videoCap.read(img);
+    if (!m_videoCap.read(img))
+      return false;
+
+    cv::cvtColor(img, m_images[static_cast<int>(Mode::HIRES_GRAY)], cv::COLOR_BGR2GRAY);
+
+    switch (mode) {
+    case Mode::HIRES_COLOR:
+      break;
+    case Mode::HIRES_GRAY:
+      cv::cvtColor(m_images[static_cast<int>(Mode::HIRES_GRAY)], img, cv::COLOR_GRAY2BGR);
+      break;
+    case Mode::LORES_COLOR:
+      cv::resize(img, img, {IMG_COLS, IMG_ROWS});
+      break;
+    case Mode::LORES_GRAY:
+      cv::resize(m_images[static_cast<int>(Mode::HIRES_GRAY)], img, {IMG_COLS, IMG_ROWS});
+      break;
+    }
+
+    return true;
   }
 }
 
@@ -150,21 +174,11 @@ void CameraHiResImpl::DefaultSettings()
 
 void CameraHiResImpl::ThreadFunc(std::stop_token token)
 {
-  //auto ndx = [this]() -> int {
-  //  std::lock_guard lock(m_mutex);
-  //  m_curThreadImg = ++m_curThreadImg & 1;
-  //  return m_curThreadImg;
-  //};
-
   auto fpc = 0;
   auto now = GetTickCount64();
 
-  cv::VideoWriter vw;
-  vw.open("D:\\video.avi", cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), m_videoCap.get(cv::CAP_PROP_FPS), {1280, 960});
-
-  int save_frames = 120;
-
-  cv::Mat img;
+  cv::Mat images[4];
+  cv::Mat grayImg1;
   for (unsigned n = 0; !token.stop_requested(); ++n) {
     if (!m_videoCap.isOpened()) {
       std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -177,25 +191,29 @@ void CameraHiResImpl::ThreadFunc(std::stop_token token)
     m_signal(n);
     continue;
 #endif
+    auto &colorImg = images[static_cast<int>(Mode::HIRES_COLOR)];
+    auto &grayImg3 = images[static_cast<int>(Mode::HIRES_GRAY)];
 
-    if (m_videoCap.read(img)) {
+    bool ok = m_videoCap.retrieve(colorImg);
+    m_videoCap.grab();
+
+    if (ok && !colorImg.empty()) {
+      cv::cvtColor(colorImg, grayImg1, cv::COLOR_BGR2GRAY);
+      cv::cvtColor(grayImg1, grayImg3, cv::COLOR_GRAY2BGR);
+
+      cv::resize(colorImg, images[static_cast<int>(Mode::LORES_COLOR)], {IMG_COLS, IMG_ROWS});
+      cv::resize(grayImg3, images[static_cast<int>(Mode::LORES_GRAY)], {IMG_COLS, IMG_ROWS});
+
+      {
+        std::lock_guard lock(m_mutex);
+        for (unsigned i = 0; i < _countof(m_images); ++i)
+          images[i].copyTo(m_images[i]);
+      }
+
       m_signal(n);
     }
     else {
       CAMERA_DILASCIA("Unable to read hi-res image\n");
-    }
-
-    if (!img.empty()) {
-      std::lock_guard lock(m_mutex);
-      img.copyTo(m_image);
-    }
-
-    if (save_frames > 0) {
-      --save_frames;
-      vw.write(img);
-    }
-    else {
-      vw.release();
     }
 
     // Frames per second
@@ -208,6 +226,7 @@ void CameraHiResImpl::ThreadFunc(std::stop_token token)
       now = GetTickCount64();
       fpc = 0;
     }
+
   }
 }
 

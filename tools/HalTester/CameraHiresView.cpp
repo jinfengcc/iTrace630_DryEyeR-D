@@ -131,7 +131,7 @@ void CCameraHiresView::CreateObjects()
     LoadImage();
 
     dc.FillSolidRect(&rc, RGB(0, 0, 0));
-    DrawImage(dc, rc, m_showColor ? m_colorImage : m_grayImage);
+    DrawImage(dc, rc, m_image);
     DrawInfo(dc, rc);
   });
 }
@@ -164,33 +164,35 @@ void CCameraHiresView::InitializeCombo()
 
 void CCameraHiresView::LoadImage()
 {
-  if (m_camera->GetImage(m_colorImage)) {
-    ProcessImage();
+  auto mode = m_showColor ? ICameraHires::Mode::HIRES_COLOR : ICameraHires::Mode::HIRES_GRAY;
+  if (m_camera->GetImage(m_image, mode)) {
+    //ProcessImage();
   }
 }
 
+#if 0
 void CCameraHiresView::ProcessImage()
 {
   AppSettings apps;
 
   if (apps.Get("HalTester.hrcam.rotate", false)) {
-    cv::rotate(m_colorImage, m_colorImage, cv::ROTATE_180);
+    cv::rotate(m_image, m_image, cv::ROTATE_180);
   }
 
   if (apps.Get("HalTester.hrcam.flipv", false)) {
-    cv::flip(m_colorImage, m_colorImage, 0);
+    cv::flip(m_image, m_image, 0);
   }
 
   if (apps.Get("HalTester.hrcam.fliph", false)) {
-    cv::flip(m_colorImage, m_colorImage, 1);
+    cv::flip(m_image, m_image, 1);
   }
 
   cv::Mat img0, img1, img2;
-  cv::extractChannel(m_colorImage, img0, 0);
-  cv::extractChannel(m_colorImage, img1, 1);
-  cv::extractChannel(m_colorImage, img2, 2);
+  cv::extractChannel(m_image, img0, 0);
+  cv::extractChannel(m_image, img1, 1);
+  cv::extractChannel(m_image, img2, 2);
 
-  cv::cvtColor(m_colorImage, m_grayImage, cv::COLOR_BGR2GRAY);
+  cv::cvtColor(m_image, m_grayImage, cv::COLOR_BGR2GRAY);
 
 #ifdef _DEBUG
   auto tmp = m_grayImage.clone();
@@ -222,7 +224,9 @@ void CCameraHiresView::ProcessImage()
   }
 #endif
 }
+#endif
 
+#if 0
 void CCameraHiresView::ProcessImageMore()
 {
   #ifdef _DEBUG
@@ -289,10 +293,11 @@ void CCameraHiresView::ProcessImageMore()
   for (int i = 0; i < 256; ++i)
     kxs.push_back(s(i));
 }
+#endif
 
 void CCameraHiresView::DrawInfo(CDCHandle dc, const RECT &rc)
 {
-  if (m_colorImage.empty() || !m_showInfo)
+  if (m_image.empty() || !m_showInfo)
     return;
 
   CBrush brush;
@@ -307,8 +312,8 @@ void CCameraHiresView::DrawInfo(CDCHandle dc, const RECT &rc)
   dc.SelectFont(font);
   dc.SetTextAlign(TA_BOTTOM);
 
-  double maxValue;
-  cv::minMaxIdx(m_grayImage, nullptr, &maxValue);
+  double maxValue{-1};
+  // cv::minMaxIdx(m_grayImage, nullptr, &maxValue);
 
   const int margin = 1;
 
@@ -325,7 +330,7 @@ void CCameraHiresView::DrawInfo(CDCHandle dc, const RECT &rc)
 
   double fps = 0;
   if (m_camera->Connected(&fps)) {
-    txt = fmt::format(L"{}x{} FPS={:.1f}fps", m_colorImage.cols, m_colorImage.rows, fps);
+    txt = fmt::format(L"{}x{} FPS={:.1f}fps", m_image.cols, m_image.rows, fps);
     SIZE size;
     dc.GetTextExtent(txt.c_str(), txt.size(), &size);
     dc.TextOut(rc.right + (margin - 1) - size.cx, rc.bottom - (margin - 1), txt.c_str(), txt.size());

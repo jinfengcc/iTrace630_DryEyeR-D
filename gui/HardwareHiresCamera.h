@@ -11,9 +11,7 @@ private:
 
   wil::com_ptr_t<Camera> m_cameraImpl;
   bool                   m_getNewImage{false};
-  cv::Mat                m_imgColor;
-  cv::Mat3b              m_imgGray3;
-  cv::Mat1b              m_imgGray1;
+  cv::Mat                m_image;
   TraceyConfigImpl       m_config;
 
   void InitializeConfig();

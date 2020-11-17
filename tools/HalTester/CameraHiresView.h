@@ -33,10 +33,9 @@ private:
   CWindowPaintImpl                  m_cameraWnd;
   TraceyConfigImpl                  m_config;
   wil::com_ptr_t<hal::ICameraHires> m_camera;
-  cv::Mat                           m_colorImage;
-  cv::Mat                           m_grayImage;
-  std::unique_ptr<CLightsWindow>    m_lightsWindow;
   bool                              m_showColor{true};
+  cv::Mat                           m_image;
+  std::unique_ptr<CLightsWindow>    m_lightsWindow;
   bool                              m_enhance{false};
   bool                              m_showInfo{true};
   double                            m_framesPerSecond{};

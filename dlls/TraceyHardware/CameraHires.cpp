@@ -61,27 +61,28 @@ void CameraHires::StopCapture()
 
 bool CameraHires::GetImage(cv::Mat &img, Mode mode) const
 {
-  if (!m_pimpl->GetImage(img)) {
+  const auto color = mode == ICameraHires::Mode::LORES_COLOR || mode == ICameraHires::Mode::HIRES_COLOR;
+  if (!m_pimpl->GetImage(mode, img)) {
     CAMERA_DILASCIA( "Unable to get image\n");
     return false;
   }
 
-#if defined(_DEBUG) || 1
+#if defined(_DEBUG) && 0
   if (fs::exists(R"(C:\1\thanos)"))
     cv::imwrite(R"(C:\1\thanos\hires_ct.png)", img);
 #endif
 
-#ifdef _DEBUG
+#if defined(_DEBUG) && 0
   cv::Mat tmp;
   cv::cvtColor(img, tmp, cv::COLOR_BGR2GRAY);
   cv::equalizeHist(tmp, tmp);
 #endif // _DEBUG
 
 
-  if (mode == ICameraHires::Mode::LORES) {
-    enum { IMG_ROWS = 468, IMG_COLS = 624 };
-    cv::resize(img, img, {IMG_COLS, IMG_ROWS}, cv::INTER_AREA);
-  }
+  //if (mode == ICameraHires::Mode::LORES_COLOR || mode == ICameraHires::Mode::LORES_GRAY) {
+  //  enum { IMG_ROWS = 468, IMG_COLS = 624 };
+  //  cv::resize(img, img, {IMG_COLS, IMG_ROWS}, cv::INTER_AREA);
+  //}
 
   return true;
 }
