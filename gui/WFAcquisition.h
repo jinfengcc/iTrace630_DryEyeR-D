@@ -34,7 +34,6 @@ public:
 	BOOL       m_ChangeAlMethod;
 	BOOL       m_ChangeIllumi;
 	BOOL       m_ChangeToPresbia256;//Presbia
-	BOOL       m_FromPreToNat;//Presbia
 
 	real_t       m_NewScanSize;
 	CString    m_LastNumStr;

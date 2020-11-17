@@ -383,27 +383,6 @@ void CWFAcquisition::Main()
 	m_pHW->MoveOptometerTargetToPositionD(10.0, TRUE);
 
 
-
-
-	////cjf 10212020 test for slow gain
-	//int St   = (int)clock();
-	//int FrameTimes = 0;
-	//while (TRUE)
-	//{
-	//	m_pHW->StartTransferringVideoFrame();
-	//	m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 1, 0);
-
-	//	//m_pHW->FinishTransferringVideoFrame();
- //
-	//	FrameTimes++;
-
-	//	 if ((FrameTimes >= 40)) {
-	//		break;
-	//	}
-	//}
- //   // cjf 10212020 test for slow gain
-
-
 	//int Ut = (int)clock() - St;
 
 	m_Eye = m_pHW->GetEye();
@@ -420,9 +399,6 @@ void CWFAcquisition::Main()
 
 	StartTime = (int)clock();//presbia
 
-	m_FromPreToNat = FALSE;
-
-A:
 	m_ChangeToPresbia256 = FALSE;
 	m_user_r_max_um = RealRound(0.5 * m_pSettings->m_ManualScanDiameterUm, 50.0);
 	if (m_user_r_max_um < SCAN_R_MIN_UM)
@@ -443,12 +419,6 @@ A:
 	m_AlignmentCounter = 0;
 	ODOSCounter = 0;
 	Done = 0;
-
-	if (m_FromPreToNat)
-	{
-		m_FromPreToNat = FALSE;
-		goto B;
-	}
 
 	if (m_pSettings->m_ProbingEnabled)
 	{
@@ -660,239 +630,271 @@ A:
 
 	for (int i = 0; i <= t; i++)//Setting of the super Exams code(3 times)
 	{
-	B:  Aligned = FALSE;
-		m_Probing = FALSE;
-		m_WFAutoMode = 1;//
+		BOOL Repeate = TRUE;//Remove goto line 11162020			
 
-						 //Presbia
-		if (::PresbiaMode == 2 || ::PresbiaMode == 3)
+		while (Repeate)//Remove goto line 11162020			
 		{
-			m_WFAutoMode = ::PresbiaMode;
-		}
-		//Presbia
+			Repeate = FALSE;//Remove goto line 11162020			
 
-		m_AlignmentCounter = 0;
-		ODOSCounter = 0;
-		Done = 0;
-		m_TimeLeft = TimeLimit;
-		int SeStime = (int)clock();
-		StartTime = (int)clock();
+			Aligned = FALSE;
+			m_Probing = FALSE;
+			m_WFAutoMode = 1;//
 
-		m_NumFramesReceived = 0;
-		m_AverageCycleTime = 0.0;
-
-		m_LastNumStr = "";
-
-		while (Done == 0)
-		{
-			if (m_TargetTime == 0)
+							 //Presbia
+			if (::PresbiaMode == 2 || ::PresbiaMode == 3)
 			{
-				m_ToDo = SWITCH_TARGET_LIGHT;
-				m_TargetTime = -1;
-			}
-
-			//presbia
-			m_ChangeToPresbia256 = FALSE;
-
-			if (::PresbiaMode == 1)
-			{
-				if (m_WFAutoMode == 3 && r_max_um != m_user_r_max_um2)
-				{
-					m_WFExam.CreateScanPattern(m_user_r_max_um2);
-					r_max_um = m_user_r_max_um2;
-
-					m_ChangeScanSize = true;
-				}
-
-				if (m_WFAutoMode == 2 && r_max_um != m_user_r_max_um)
-				{
-					m_WFExam.CreateScanPattern(m_user_r_max_um);
-					r_max_um = m_user_r_max_um;
-
-					m_ChangeScanSize = true;
-				}
-			}
-			//presbia
-
-			//Presbia
-			if ((::PresbiaMode == 1 && ::PresbiaModeOrder == 2) ||
-				(::PresbiaMode == 1 && ::PresbiaModeOrder == 3))
-			{
-				r_max_um = 0.0;
-				m_WFExam.CreateProbePattern(r_max_um);
-
-				::PresbiaModeOrder = 1;
-				m_FromPreToNat = TRUE;
-				goto A;
-			}
-
-			if (::PresbiaMode == 2 && ::PresbiaModeOrder != 2)
-			{
-				m_WFExam.CreateScanPattern(r_max_um);
-
-				m_user_r_max_um = r_max_um;
-				::PresbiaModeOrder = 2;
-			}
-
-			if (::PresbiaMode == 3 && ::PresbiaModeOrder != 3)
-			{
-				r_max_um = 2000;
-				m_WFExam.CreateScanPattern(r_max_um);
-
-				m_user_r_max_um = r_max_um;
-				::PresbiaModeOrder = 3;
-				m_ChangeToPresbia256 = TRUE;
+				m_WFAutoMode = ::PresbiaMode;
 			}
 			//Presbia
 
-			if (++ODOSCounter == 30)
+			m_AlignmentCounter = 0;
+			ODOSCounter = 0;
+			Done = 0;
+			m_TimeLeft = TimeLimit;
+			int SeStime = (int)clock();
+			StartTime = (int)clock();
+
+			m_NumFramesReceived = 0;
+			m_AverageCycleTime = 0.0;
+
+			m_LastNumStr = "";
+
+
+			while (Done == 0)
 			{
-				m_Eye = m_pHW->GetEye();
-				ODOSCounter = 0;
-			}
-
-			m_pHW->StartTransferringVideoFrame();
-
-			Aligned = CheckAlignment();
-
-			m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 0, 0);
-
-			m_pHW->FinishTransferringVideoFrame();
-
-			m_TimeLeft = TimeLimit - ((int)clock() - StartTime);
-
-			m_ChangeScanSize = FALSE;
-			m_ChangeAlMode = FALSE;
-			m_ChangeAlMethod = FALSE;
-			m_ChangeIllumi = FALSE;
-
-			if ((m_TimeLeft <= 0) || (m_ToDo == ABORT))
-			{
-				Done = 1;
-			}
-			else if (Aligned && ((int)clock() - SeStime) >= Delay && m_WFAutoMode == 1)
-			{
-				Done = 2;
-			}
-			else if (m_WFAutoMode != 1 && (m_ToDo == ACQUIRE || m_pHW->IsButtonPressed()))
-			{
-				Done = 3;
-			}
-			else if (m_ToDo == CHANGE_MODE)
-			{
-				ChangeAlignmentMode();
-				m_ChangeAlMode = TRUE;//530
-
-				if (m_WFAutoMode != 1)
+				if (m_TargetTime == 0)
 				{
-					m_WFExam.CreateScanPattern(m_user_r_max_um);
+					m_ToDo = SWITCH_TARGET_LIGHT;
+					m_TargetTime = -1;
 				}
-				else m_WFExam.CreateScanPattern(m_user_r_max_um);
-			}
-			else if (m_ToDo == INC_SCAN_SIZE)
-			{
-				//
-				if (::Normal64Mode && m_user_r_max_um2 < 4000 - 50.0 + 0.001)
+
+				//presbia
+				m_ChangeToPresbia256 = FALSE;
+
+				if (::PresbiaMode == 1)
 				{
-					m_ChangeScanSize = TRUE;//530
-					m_user_r_max_um2 += 50.0;
-					m_WFExam.CreateScanPattern(m_user_r_max_um2);
-				}
-				else
-				{
-				    //Presbia
-					if (::PresbiaMode == 2)
+					if (m_WFAutoMode == 3 && r_max_um != m_user_r_max_um2)
 					{
+						m_WFExam.CreateScanPattern(m_user_r_max_um2);
+						r_max_um = m_user_r_max_um2;
+
+						m_ChangeScanSize = true;
 					}
-					else if (::PresbiaMode == 3)
+
+					if (m_WFAutoMode == 2 && r_max_um != m_user_r_max_um)
 					{
-						if (m_WFAutoMode != 1 && m_user_r_max_um < 2000 - 50.0 + 0.001)
-						{
-							m_ChangeScanSize = TRUE;
-							m_user_r_max_um += 50.0;
-							m_WFExam.CreateScanPattern(m_user_r_max_um);
-						}
+						m_WFExam.CreateScanPattern(m_user_r_max_um);
+						r_max_um = m_user_r_max_um;
+
+						m_ChangeScanSize = true;
+					}
+				}
+				//presbia
+
+				//Presbia
+				if ((::PresbiaMode == 1 && ::PresbiaModeOrder == 2) ||
+					(::PresbiaMode == 1 && ::PresbiaModeOrder == 3))
+				{
+					r_max_um = 0.0;
+					m_WFExam.CreateProbePattern(r_max_um);
+
+					::PresbiaModeOrder = 1;
+
+					//Remove goto line 11162020
+					m_ChangeToPresbia256 = FALSE;
+					m_user_r_max_um = RealRound(0.5 * m_pSettings->m_ManualScanDiameterUm, 50.0);
+					if (m_user_r_max_um < SCAN_R_MIN_UM)
+					{
+						m_user_r_max_um = SCAN_R_MIN_UM;
+					}
+					else if (m_user_r_max_um > SCAN_R_MAX_UM)
+					{
+						m_user_r_max_um = SCAN_R_MAX_UM;
+					}
+
+					r_max_um = 1000.0;
+					m_user_r_max_um2 = 500;
+
+					BOOL Aligned = FALSE;
+					m_Probing = TRUE;
+					m_WFAutoMode = 1;
+					m_AlignmentCounter = 0;
+					ODOSCounter = 0;
+					Done = 0;
+
+					Repeate = TRUE;
+					break;
+					//Remove goto line 11162020				
+				}
+
+				if (::PresbiaMode == 2 && ::PresbiaModeOrder != 2)
+				{
+					m_WFExam.CreateScanPattern(r_max_um);
+
+					m_user_r_max_um = r_max_um;
+					::PresbiaModeOrder = 2;
+				}
+
+				if (::PresbiaMode == 3 && ::PresbiaModeOrder != 3)
+				{
+					r_max_um = 2000;
+					m_WFExam.CreateScanPattern(r_max_um);
+
+					m_user_r_max_um = r_max_um;
+					::PresbiaModeOrder = 3;
+					m_ChangeToPresbia256 = TRUE;
+				}
+				//Presbia
+
+				if (++ODOSCounter == 30)
+				{
+					m_Eye = m_pHW->GetEye();
+					ODOSCounter = 0;
+				}
+
+				m_pHW->StartTransferringVideoFrame();
+
+				Aligned = CheckAlignment();
+
+				m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 0, 0);
+
+				m_pHW->FinishTransferringVideoFrame();
+
+				m_TimeLeft = TimeLimit - ((int)clock() - StartTime);
+
+				m_ChangeScanSize = FALSE;
+				m_ChangeAlMode = FALSE;
+				m_ChangeAlMethod = FALSE;
+				m_ChangeIllumi = FALSE;
+
+				if ((m_TimeLeft <= 0) || (m_ToDo == ABORT))
+				{
+					Done = 1;
+				}
+				else if (Aligned && ((int)clock() - SeStime) >= Delay && m_WFAutoMode == 1)
+				{
+					Done = 2;
+				}
+				else if (m_WFAutoMode != 1 && (m_ToDo == ACQUIRE || m_pHW->IsButtonPressed()))
+				{
+					Done = 3;
+				}
+				else if (m_ToDo == CHANGE_MODE)
+				{
+					ChangeAlignmentMode();
+					m_ChangeAlMode = TRUE;//530
+
+					if (m_WFAutoMode != 1)
+					{
+						m_WFExam.CreateScanPattern(m_user_r_max_um);
+					}
+					else m_WFExam.CreateScanPattern(m_user_r_max_um);
+				}
+				else if (m_ToDo == INC_SCAN_SIZE)
+				{
+					//
+					if (::Normal64Mode && m_user_r_max_um2 < 4000 - 50.0 + 0.001)
+					{
+						m_ChangeScanSize = TRUE;//530
+						m_user_r_max_um2 += 50.0;
+						m_WFExam.CreateScanPattern(m_user_r_max_um2);
 					}
 					else
 					{
 						//Presbia
-						if (m_WFAutoMode != 1 && m_user_r_max_um < SCAN_R_MAX_UM - 50.0 + 0.001)
+						if (::PresbiaMode == 2)
 						{
-							m_ChangeScanSize = TRUE;
-							m_user_r_max_um += 50.0;
-							m_WFExam.CreateScanPattern(m_user_r_max_um);
+						}
+						else if (::PresbiaMode == 3)
+						{
+							if (m_WFAutoMode != 1 && m_user_r_max_um < 2000 - 50.0 + 0.001)
+							{
+								m_ChangeScanSize = TRUE;
+								m_user_r_max_um += 50.0;
+								m_WFExam.CreateScanPattern(m_user_r_max_um);
+							}
+						}
+						else
+						{
+							//Presbia
+							if (m_WFAutoMode != 1 && m_user_r_max_um < SCAN_R_MAX_UM - 50.0 + 0.001)
+							{
+								m_ChangeScanSize = TRUE;
+								m_user_r_max_um += 50.0;
+								m_WFExam.CreateScanPattern(m_user_r_max_um);
+							}
 						}
 					}
 				}
-			}
-			else if (m_ToDo == DEC_SCAN_SIZE)
-			{
-				if (::Normal64Mode && m_user_r_max_um2 > 500 + 50.0 - 0.001)
+				else if (m_ToDo == DEC_SCAN_SIZE)
 				{
-					m_ChangeScanSize = TRUE;
-					m_user_r_max_um2 -= 50.0;
-					m_WFExam.CreateScanPattern(m_user_r_max_um2);
-				}
-				else
-				{
-					//Presbia
-					if (::PresbiaMode == 2)
+					if (::Normal64Mode && m_user_r_max_um2 > 500 + 50.0 - 0.001)
 					{
-					}
-					else if (::PresbiaMode == 3)
-					{
-						if (m_WFAutoMode != 1 && m_user_r_max_um > 650 + 50.0 - 0.001)
-						{
-							m_ChangeScanSize = TRUE;
-							m_user_r_max_um -= 50.0;
-							m_WFExam.CreateScanPattern(m_user_r_max_um);
-						}
+						m_ChangeScanSize = TRUE;
+						m_user_r_max_um2 -= 50.0;
+						m_WFExam.CreateScanPattern(m_user_r_max_um2);
 					}
 					else
-					{   //Presbia
-						if (m_WFAutoMode != 1 && m_user_r_max_um > SCAN_R_MIN_UM + 50.0 - 0.001)
+					{
+						//Presbia
+						if (::PresbiaMode == 2)
 						{
-							m_ChangeScanSize = TRUE;
-							m_user_r_max_um -= 50.0;
-							m_WFExam.CreateScanPattern(m_user_r_max_um);
+						}
+						else if (::PresbiaMode == 3)
+						{
+							if (m_WFAutoMode != 1 && m_user_r_max_um > 650 + 50.0 - 0.001)
+							{
+								m_ChangeScanSize = TRUE;
+								m_user_r_max_um -= 50.0;
+								m_WFExam.CreateScanPattern(m_user_r_max_um);
+							}
+						}
+						else
+						{   //Presbia
+							if (m_WFAutoMode != 1 && m_user_r_max_um > SCAN_R_MIN_UM + 50.0 - 0.001)
+							{
+								m_ChangeScanSize = TRUE;
+								m_user_r_max_um -= 50.0;
+								m_WFExam.CreateScanPattern(m_user_r_max_um);
+							}
 						}
 					}
 				}
-			}
-			else if (m_ToDo == CHANGE_SCAN_SIZE)
-			{
-				m_ChangeScanSize = TRUE;
-				m_user_r_max_um = m_NewScanSize;
-				m_WFExam.CreateScanPattern(m_user_r_max_um);
-			}
-			else if (m_ToDo == MOVE_TARGET_UP)
-			{
-				m_pHW->MoveOptometerTargetToPositionD(m_pHW->GetOptometerTargetPositionD() + 0.25, FALSE);
-			}
-			else if (m_ToDo == MOVE_TARGET_DN)
-			{
-				m_pHW->MoveOptometerTargetToPositionD(m_pHW->GetOptometerTargetPositionD() - 0.25, FALSE);
-			}
-			else if (m_ToDo == MOVE_TARGET_HOME)
-			{
-				m_pHW->MoveOptometerTargetToPositionD(0.0, FALSE);
-			}
-			else if (m_ToDo == SWITCH_TARGET_LIGHT)
-			{
-				ChangeIllumination();
-				m_ChangeIllumi = TRUE;
-			}
-			else if (m_ToDo == CHANGE_ALIGNMENT_METHOD)
-			{
-				ChangeAlignmentMethod();
-				m_ChangeAlMethod = TRUE;
-			}
+				else if (m_ToDo == CHANGE_SCAN_SIZE)
+				{
+					m_ChangeScanSize = TRUE;
+					m_user_r_max_um = m_NewScanSize;
+					m_WFExam.CreateScanPattern(m_user_r_max_um);
+				}
+				else if (m_ToDo == MOVE_TARGET_UP)
+				{
+					m_pHW->MoveOptometerTargetToPositionD(m_pHW->GetOptometerTargetPositionD() + 0.25, FALSE);
+				}
+				else if (m_ToDo == MOVE_TARGET_DN)
+				{
+					m_pHW->MoveOptometerTargetToPositionD(m_pHW->GetOptometerTargetPositionD() - 0.25, FALSE);
+				}
+				else if (m_ToDo == MOVE_TARGET_HOME)
+				{
+					m_pHW->MoveOptometerTargetToPositionD(0.0, FALSE);
+				}
+				else if (m_ToDo == SWITCH_TARGET_LIGHT)
+				{
+					ChangeIllumination();
+					m_ChangeIllumi = TRUE;
+				}
+				else if (m_ToDo == CHANGE_ALIGNMENT_METHOD)
+				{
+					ChangeAlignmentMethod();
+					m_ChangeAlMethod = TRUE;
+				}
 
-			m_ToDo = DO_NOTHING;
+				m_ToDo = DO_NOTHING;
 
-			m_AverageCycleTime = (real_t)(clock() - StartTime) / (++m_NumFramesReceived);
+				m_AverageCycleTime = (real_t)(clock() - StartTime) / (++m_NumFramesReceived);
 
-			::Sleep(0);
+				::Sleep(0);
+			}		
 		}
 
 		//if (!::NewSettings.m_Super_Exam) //531//cjf1020
@@ -900,7 +902,7 @@ A:
 		//	m_pHW->TurnInfraredLEDsOff();
 		//	m_pHW->TurnAccommodationTargetOff();
 		//}
-
+    
 		if (Done == 1)
 		{
 			if (::NewSettings.m_Super_Exam)
@@ -964,9 +966,9 @@ A:
 
 		m_WFExam.m_ScanDiameter = 2.0 * r_max_um;
 		m_WFExam.m_AccommTargetPosition = m_pHW->GetOptometerTargetPositionD();
-		//m_WFExam.m_PrecalcSphere          = уж?
-		//m_WFExam.m_PrecalcCylinder        = уж?
-		//m_WFExam.m_PrecalcAxis            = уж?
+		//m_WFExam.m_PrecalcSphere          = пїЅпїЅ?
+		//m_WFExam.m_PrecalcCylinder        = пїЅпїЅ?
+		//m_WFExam.m_PrecalcAxis            = пїЅпїЅ?
 		m_WFExam.m_WavetouchLensPower = INVALID_VALUE;
 		m_WFExam.m_WavetouchLensBaseCurve = WAVETOUCH_LENS_BASECURVE_UNKNOWN;
 		m_WFExam.m_WavetouchSph = INVALID_VALUE;
@@ -980,7 +982,7 @@ A:
 		m_WFExam.m_Image.Destroy();
 		m_WFExam.m_ColorImage.Destroy();
 
-
+		
 
 		Result = FALSE;
 		//int St = (int)clock();
@@ -999,7 +1001,7 @@ A:
 				Result = DownloadScanResults();
 			}
 
-			//int Ut = (int)clock() - St;
+			//int Ut = (int)clock() - St;  
 		}
 		else
 		{
