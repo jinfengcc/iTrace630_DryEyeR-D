@@ -21,6 +21,18 @@ AppSettingsImpl::AppSettingsImpl()
   });
 }
 
+json AppSettingsImpl::GetJson() const
+{
+  std::lock_guard lock(m_mutex);
+  return m_jsonDONOTUSEDIRECTLY;
+}
+
+void AppSettingsImpl::SetJson(json j)
+{
+  std::lock_guard lock(m_mutex);
+  m_jsonDONOTUSEDIRECTLY = j;
+}
+
 json AppSettingsImpl::LoadJson(std::istream &&ss, int retries)
 {
   for (int i = 0; i++ < retries;) {

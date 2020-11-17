@@ -273,7 +273,7 @@ public:
 		return &pNewNode->m_Data;
 	}
 
-	T* Append(T* pData = NULL)
+	T* Append(const T* pData = NULL)
 	{
 		ListNode<T>* pNewNode = new ListNode<T>;
 		pNewNode->m_pPrvListNode = m_pTailListNode;
@@ -295,7 +295,7 @@ public:
 		return &pNewNode->m_Data;
 	}
 
-	T* Append(T& Data)
+	T* Append(const T& Data)
 	{
 		return Append(&Data);
 	}

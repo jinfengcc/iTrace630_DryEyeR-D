@@ -1193,29 +1193,39 @@ void CEyeImage::ValidateLensDots()
 
 	real_t x0_um = 0.5 * (m_le_x_um[0] + m_le_x_um[2]);
 	real_t y0_um = 0.5 * (m_le_y_um[0] + m_le_y_um[2]);
-	if (hyp(x0_um, y0_um) > 2000.0) goto _ERROR_;
+	if (hyp(x0_um, y0_um) > 2000.0) {
+    ClearLensDots();
+    return;
+  }
 
 	real_t dx_um = m_le_x_um[2] - m_le_x_um[0];
 	real_t dy_um = m_le_y_um[2] - m_le_y_um[0];
-	if (dx_um < 5000.0 || dx_um > 10000.0) goto _ERROR_;
+  if (dx_um < 5000.0 || dx_um > 10000.0) {
+    ClearLensDots();
+    return;
+  }
 
 	real_t Angle1 = _180_Pi * angle(dy_um, dx_um);
-	if (!((0.0 <= Angle1 && Angle1 <= 45.0) || (315.0 <= Angle1 && Angle1 < 360.0))) goto _ERROR_;
+  if (!((0.0 <= Angle1 && Angle1 <= 45.0) || (315.0 <= Angle1 && Angle1 < 360.0))) {
+    ClearLensDots();
+    return;
+  }
 
 	dy_um = y0_um - m_le_y_um[1];
 	dx_um = x0_um - m_le_x_um[1];
-	if (dy_um < 2500.0) goto _ERROR_;
+  if (dy_um < 2500.0) {
+    ClearLensDots();
+    return;
+  }
 
 	real_t Angle2 = _180_Pi * angle(dy_um, dx_um);
-	if (!(45.0 <= Angle2 && Angle2 <= 135.0)) goto _ERROR_;
+  if (!(45.0 <= Angle2 && Angle2 <= 135.0)) {
+    ClearLensDots();
+    return;
+  }
 
 	m_le_ok = TRUE;
 
-	return;
-
-_ERROR_:
-
-	ClearLensDots();
 }
 
 //***************************************************************************************

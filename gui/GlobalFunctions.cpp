@@ -547,7 +547,7 @@ CString  G_ReadChinese(CString Str)
 
 				if (Chinese)
 				{
-					CString StrIds = StrId;
+					CString StrIds(StrId);
 
 					if (InputIsIntNum(StrIds))
 					{
@@ -574,7 +574,7 @@ CString  G_ReadChinese(CString Str)
 			NewLen = Str.GetLength();
 		}
 
-		CString SS = StrId;
+		CString SS(StrId);
 		Str = Name + SS;
 	}
 

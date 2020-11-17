@@ -346,7 +346,7 @@ void CTaskSetting::SaveBtnName(CString BtnName)
 	}
 	else
 	{
-		CStringA ATaskName = BtnName;
+		CStringA ATaskName(BtnName);
 		strncpy(m_ButtonName, ATaskName, 25);
 	}
 }

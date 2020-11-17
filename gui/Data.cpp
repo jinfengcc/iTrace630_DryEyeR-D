@@ -787,10 +787,10 @@ CString CDB::SplitDatabaseProcess(CString FolderName, BOOL& NeedChangeLinker, BO
 		CString InstDate = IniPar.GetStrKey(IniSection, "Inst Data", IniPath);
 
 		//InstDate.Replace(_T("-"),)
-		CStringA YearA = InstDate.Right(4);
-		CString Temp = InstDate.Left(4);
-		CStringA Month = Temp.Left(2);
-		CStringA Day = Temp.Right(2);
+		CStringA YearA (InstDate.Right(4));
+		CString Temp   (InstDate.Left(4) );
+		CStringA Month (Temp.Left(2)     );
+		CStringA Day   (Temp.Right(2)    );
 
 		int YearI = atoi(YearA);
 		int MonthI = atoi(Month);
@@ -1366,7 +1366,7 @@ void CDB::Connect(const BOOL ReadOnly)
 
 	if (Type == DATABASE_TYPE_MSJET_OLD)
 	{
-		CStringA Astr = FileName;
+		CStringA Astr(FileName);
 		if (::PathFileExists(FileName))
 		{
 			BOOL Res = FALSE;
@@ -4535,6 +4535,7 @@ BOOL CDB::ExportPatient(const GUID& PatientID, const CString& FolderName)
 	FileName = FolderName + "\\" + FileName;
 
 	HZIP hZip = ::CreateZip(FileName, "");
+	TDB_GROUP* pGroup = NULL;
 
 	// patient
 	if ((BytesAvail -= sizeof(TDB_PATIENT)) < 0) {
@@ -4545,7 +4546,6 @@ BOOL CDB::ExportPatient(const GUID& PatientID, const CString& FolderName)
 	::ZipAdd(hZip, FileName, pPatient, sizeof(TDB_PATIENT));
 
 	// group
-	TDB_GROUP* pGroup = NULL;
 	for (int i = 0; i < NumGroups; i++) {
 		if (pGroups[i].GroupID == pPatient->GroupID) {
 			pGroup = &pGroups[i];

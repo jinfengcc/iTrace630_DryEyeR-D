@@ -84,14 +84,15 @@ typedef double           real_t;
 #define LINE_SIZE(w)     (((w) + (w) + (w)) & 3 ? (((w) + (w) + (w)) | 3) + 1 : (w) + (w) + (w))
 #define IMAGE_SIZE(w, h) ((h)*LINE_SIZE(w))
 
-#define _E1     2.71828182845904523536028747135 // change from _E to _E1. 0528 for vs2013
-#define _Pi     3.14159265358979323846264338328
-#define _2_Pi   6.28318530717958647692528676656
-#define _Pi_2   1.57079632679489661923132169164
-#define _Pi_180 0.01745329251994329576923690768
-#define _180_Pi 57.29577951308232087679815481411
+#include <libs/CommonLib/constants.h>
+//#define _E1     2.71828182845904523536028747135 // change from _E to _E1. 0528 for vs2013
+//#define _Pi     3.14159265358979323846264338328
+//#define _2_Pi   6.28318530717958647692528676656
+//#define _Pi_2   1.57079632679489661923132169164
+//#define _Pi_180 0.01745329251994329576923690768
+//#define _180_Pi 57.29577951308232087679815481411
 
-#define INVALID_VALUE 1000000000
+//#define INVALID_VALUE 1000000000
 
 #define NOCOLOR     0xffffffff
 #define RED         0x000000ff

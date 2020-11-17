@@ -199,7 +199,8 @@ void ExportTopconCV5000(CWFExam* pWFODExam, CCTExam* pCTODExam, CWFExam* pWFOSEx
 
 	// k  429
 
-	CString s;
+	ulong   bt = 0;
+  CString s;
 
 	s.Format(_T("COM%i"), (int)PortNumber);
 	HANDLE hComm = ::CreateFile(s, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
@@ -312,7 +313,6 @@ void ExportTopconCV5000(CWFExam* pWFODExam, CCTExam* pCTODExam, CWFExam* pWFOSEx
 		goto _END;
 	}
 
-	ulong bt = 0;
 	if (::WriteFile(hComm, pBuffer, k, &bt, &ol))
 	{
 		// is not supposed to happen with asynchronous handle

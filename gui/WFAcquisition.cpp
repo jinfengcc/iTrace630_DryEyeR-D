@@ -388,13 +388,13 @@ void CWFAcquisition::Main()
 	////cjf 10212020 test for slow gain
 	//int St   = (int)clock();
 	//int FrameTimes = 0;
-	//while (TRUE) 
-	//{    
-	//	m_pHW->StartTransferringVideoFrame();  
+	//while (TRUE)
+	//{
+	//	m_pHW->StartTransferringVideoFrame();
 	//	m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 1, 0);
 
 	//	//m_pHW->FinishTransferringVideoFrame();
- //   
+ //
 	//	FrameTimes++;
 
 	//	 if ((FrameTimes >= 40)) {
@@ -799,7 +799,7 @@ A:
 					m_WFExam.CreateScanPattern(m_user_r_max_um2);
 				}
 				else
-				{ 
+				{
 				    //Presbia
 					if (::PresbiaMode == 2)
 					{
@@ -814,7 +814,7 @@ A:
 						}
 					}
 					else
-					{   
+					{
 						//Presbia
 						if (m_WFAutoMode != 1 && m_user_r_max_um < SCAN_R_MAX_UM - 50.0 + 0.001)
 						{
@@ -900,7 +900,7 @@ A:
 		//	m_pHW->TurnInfraredLEDsOff();
 		//	m_pHW->TurnAccommodationTargetOff();
 		//}
-    
+
 		if (Done == 1)
 		{
 			if (::NewSettings.m_Super_Exam)
@@ -980,7 +980,7 @@ A:
 		m_WFExam.m_Image.Destroy();
 		m_WFExam.m_ColorImage.Destroy();
 
-		
+
 
 		Result = FALSE;
 		//int St = (int)clock();
@@ -999,7 +999,7 @@ A:
 				Result = DownloadScanResults();
 			}
 
-			//int Ut = (int)clock() - St;  
+			//int Ut = (int)clock() - St;
 		}
 		else
 		{

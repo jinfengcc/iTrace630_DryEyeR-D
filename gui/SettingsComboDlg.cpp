@@ -1620,6 +1620,9 @@ void CSettingsComboDlg::OnDefaultButtonClicked()
 BOOL CSettingsComboDlg::CheckSetting()
 {
 	CString s_TargetTime, s_MSD, s_ASD;
+  int     TargetTime = 0;
+  real_t  MSD        = 0.0;
+  real_t  ASD        = 0.0;
 
 	//Target Light time
 	if (m_AccommTargetLightOnCheck.GetCheck())
@@ -1638,7 +1641,7 @@ BOOL CSettingsComboDlg::CheckSetting()
 	}
 
 	G_As = s_TargetTime;
-	int TargetTime = atoi(G_As);
+	TargetTime = atoi(G_As);
 	if (TargetTime > 60) goto A2;
 	//Done
 
@@ -1652,7 +1655,7 @@ BOOL CSettingsComboDlg::CheckSetting()
 	}
 
 	G_As = s_MSD;
-	real_t MSD = atof(G_As);
+	MSD = atof(G_As);
 	if (MSD < 2 || MSD > 8) goto B2;
 	//Done
 
@@ -1667,7 +1670,7 @@ BOOL CSettingsComboDlg::CheckSetting()
 	}
 
 	G_As = s_ASD;
-	real_t ASD = atof(G_As);
+	ASD = atof(G_As);
 	if (ASD < 2 || ASD > 8) goto C2;
 	//Done
 

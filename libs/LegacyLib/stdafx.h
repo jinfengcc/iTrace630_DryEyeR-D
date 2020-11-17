@@ -45,5 +45,13 @@ using json = nlohmann::json;
 constexpr BOOL m_isCombo = FALSE;
 constexpr BOOL m_isValid = FALSE;
 
+#ifndef _D
+#ifdef _DEBUG
+#define _D(x) x
+#else
+#define _D(x)
+#endif
+#endif
+
 
 #endif //STDAFX_H

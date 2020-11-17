@@ -53,14 +53,14 @@ void CXPListCtrl::CreateWnd(ulong Style, const RECT& Rect, CWnd* pParentWnd, uin
 
 //***************************************************************************************
 
-void CXPListCtrl::InsertColumn(const int n, LPWSTR Name, const int Width)
+void CXPListCtrl::InsertColumn(const int n, const wchar_t *Name, const int Width)
 {
 	LVCOLUMN Column;
 
 	Column.mask = LVCF_ORDER | LVCF_SUBITEM | LVCF_TEXT | LVCF_WIDTH;
 	Column.fmt = 0;
 	Column.cx = Width;
-	Column.pszText = Name;
+	Column.pszText = (LPTSTR)Name;
 	Column.cchTextMax = lstrlenW(Name);
 	Column.iSubItem = -1;
 	Column.iOrder = n;

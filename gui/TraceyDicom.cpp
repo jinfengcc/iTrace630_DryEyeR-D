@@ -77,7 +77,7 @@ BOOL CTraceyDicom::TestActivation()
 	for (int i = 0; i < 100; i++)
 	{
 		try
-		{					
+		{
 			IDCXOBJPtr obj(__uuidof(DCXOBJ));
 		}
 		catch (const _com_error)
@@ -109,14 +109,14 @@ void CTraceyDicom::OutputDicomImage(CString filename, CDicomInfo DicomInfo, CHAR
 	IDCXUIDPtr id(__uuidof(DCXUID));
 
 	// Set the basic elements - patient name and ID, study, series and instance UID's
-	// You don't have to create an element every time, 
+	// You don't have to create an element every time,
 	// just initialize it.
 
 	CString s;
 	s = DicomInfo.m_Patient_Name;
 	G_As = s;
 
-	char* sChar = G_As.GetBuffer(s.GetLength());		
+	char* sChar = G_As.GetBuffer(s.GetLength());
 
 	el->Init(rzdcxLib::patientName);
 	el->Value = sChar;
@@ -224,7 +224,7 @@ void CTraceyDicom::OutputDicomImage(CString filename, CDicomInfo DicomInfo, CHAR
 
 	s = DicomInfo.m_Equi_Manufacturer;
 	G_As = s;
-	sChar = G_As.GetBuffer(s.GetLength());;
+	sChar = G_As.GetBuffer(s.GetLength());
 
 	el->Init(rzdcxLib::Manufacturer);
 	el->Value = sChar;
@@ -234,7 +234,7 @@ void CTraceyDicom::OutputDicomImage(CString filename, CDicomInfo DicomInfo, CHAR
 
 	s = DicomInfo.m_Equi_Manufacture_Model;
 	G_As = s;
-	sChar = G_As.GetBuffer(s.GetLength());;
+	sChar = G_As.GetBuffer(s.GetLength());
 
 	el->Init(rzdcxLib::ManufacturerModelName);
 	el->Value = sChar;
@@ -245,7 +245,7 @@ void CTraceyDicom::OutputDicomImage(CString filename, CDicomInfo DicomInfo, CHAR
 	//6.2.0 Add 9 other items
 	s = DicomInfo.m_Physician_Name;
 	G_As = s;
-	sChar = G_As.GetBuffer(s.GetLength());;
+	sChar = G_As.GetBuffer(s.GetLength());
 
 	el->Init(rzdcxLib::PerformingPhysicianName);
 	el->Value = sChar;
@@ -254,7 +254,7 @@ void CTraceyDicom::OutputDicomImage(CString filename, CDicomInfo DicomInfo, CHAR
 	//----------------------------------
 	s = DicomInfo.m_Study_ID;
 	G_As = s;
-	sChar = G_As.GetBuffer(s.GetLength());;
+	sChar = G_As.GetBuffer(s.GetLength());
 
 	el->Init(rzdcxLib::StudyID);
 	el->Value = sChar;
@@ -264,7 +264,7 @@ void CTraceyDicom::OutputDicomImage(CString filename, CDicomInfo DicomInfo, CHAR
 	//----------------------------------
 	s = DicomInfo.m_Series_Instance_UID;
 	G_As = s;
-	sChar = G_As.GetBuffer(s.GetLength());;
+	sChar = G_As.GetBuffer(s.GetLength());
 
 	el->Init(rzdcxLib::seriesInstanceUID);
 	el->Value = sChar;
@@ -273,7 +273,7 @@ void CTraceyDicom::OutputDicomImage(CString filename, CDicomInfo DicomInfo, CHAR
 	//----------------------------------
 	s = DicomInfo.m_Series_Num;
 	G_As = s;
-	sChar = G_As.GetBuffer(s.GetLength());;
+	sChar = G_As.GetBuffer(s.GetLength());
 
 	el->Init(rzdcxLib::SeriesNumber);
 	el->Value = sChar;
@@ -282,7 +282,7 @@ void CTraceyDicom::OutputDicomImage(CString filename, CDicomInfo DicomInfo, CHAR
 	//----------------------------------
 	s = DicomInfo.m_Acess_Num;
 	G_As = s;
-	sChar = G_As.GetBuffer(s.GetLength());;
+	sChar = G_As.GetBuffer(s.GetLength());
 
 	el->Init(rzdcxLib::AccessionNumber);
 	el->Value = sChar;
@@ -291,7 +291,7 @@ void CTraceyDicom::OutputDicomImage(CString filename, CDicomInfo DicomInfo, CHAR
 	//----------------------------------
 	s = DicomInfo.m_Laterality;
 	G_As = s;
-	sChar = G_As.GetBuffer(s.GetLength());;
+	sChar = G_As.GetBuffer(s.GetLength());
 
 	el->Init(rzdcxLib::Laterality);
 	el->Value = sChar;
@@ -300,7 +300,7 @@ void CTraceyDicom::OutputDicomImage(CString filename, CDicomInfo DicomInfo, CHAR
 	//----------------------------------
 	s = DicomInfo.m_Conversion_Type;
 	G_As = s;
-	sChar = G_As.GetBuffer(s.GetLength());;
+	sChar = G_As.GetBuffer(s.GetLength());
 
 	el->Init(rzdcxLib::ConversionType);
 	el->Value = sChar;
@@ -309,7 +309,7 @@ void CTraceyDicom::OutputDicomImage(CString filename, CDicomInfo DicomInfo, CHAR
 	//----------------------------------
 	s = DicomInfo.m_Instance_Num;
 	G_As = s;
-	sChar = G_As.GetBuffer(s.GetLength());;
+	sChar = G_As.GetBuffer(s.GetLength());
 
 	el->Init(rzdcxLib::InstanceNumber);
 	el->Value = sChar;
@@ -318,7 +318,7 @@ void CTraceyDicom::OutputDicomImage(CString filename, CDicomInfo DicomInfo, CHAR
 	//----------------------------------
 	s = DicomInfo.m_Patient_Orientation;
 	G_As = s;
-	sChar = G_As.GetBuffer(s.GetLength());;
+	sChar = G_As.GetBuffer(s.GetLength());
 
 	el->Init(rzdcxLib::PatientOrientation);
 	el->Value = sChar;
@@ -334,7 +334,7 @@ void CTraceyDicom::OutputDicomImage(CString filename, CDicomInfo DicomInfo, CHAR
 	int BITS_STORED = 8;
 	int NUMBER_OF_FRAMES = 1;
 	int RESCALE_INTERCEPT = 0;
-	char* PHOTOMETRIC_INTERPRETATION = "RGB";
+	const char* PHOTOMETRIC_INTERPRETATION = "RGB";
 
 	el->Init(rzdcxLib::Rows);
 	el->Value = ROWS;
@@ -383,7 +383,7 @@ void CTraceyDicom::OutputDicomImage(CString filename, CDicomInfo DicomInfo, CHAR
 
 	s = ::MAIN_DIR + "\\pixel.data";
 	G_As = s;
-	CHAR *charTempFile = G_As.GetBuffer(s.GetLength());;
+	CHAR *charTempFile = G_As.GetBuffer(s.GetLength());
 
 	ofstream sf(charTempFile, ios_base::binary);
 	for (int i = 0; i<NUMBER_OF_FRAMES; i++)
@@ -554,7 +554,7 @@ void  CTraceyDicom::InputChinseeDicom(wchar_t* filename, CDicomInfo & DicomInfo)
 	try
 	{
 		elem = NULL;
-		elem = obj->getElementByTag(patientName);		
+		elem = obj->getElementByTag(patientName);
 	}
 	catch (const _com_error)
 	{
@@ -789,7 +789,7 @@ void  CTraceyDicom::ReadDicomImage(char* filename, CDicomInfo &OutDicomInfo)
 	//}
 	//
 
-	////Sop SopInstanceUID 
+	////Sop SopInstanceUID
 	//try
 	//{
 	//	elem = NULL;
@@ -804,7 +804,7 @@ void  CTraceyDicom::ReadDicomImage(char* filename, CDicomInfo &OutDicomInfo)
 	//	OutDicomInfo.m_SopInstanceUID = elem->Value;
 	//}
 	//
-	////Sop SopClassUid UID 
+	////Sop SopClassUid UID
 	//try
 	//{
 	//	elem = NULL;
@@ -867,13 +867,13 @@ void  CTraceyDicom::ReadDicomImage(char* filename, CDicomInfo &OutDicomInfo)
 
 	//
 	////Equi Institution Model Name
-	//try 
+	//try
 	//{
 	//	elem = NULL;
 	//	elem = obj->getElementByTag(InstitutionName);
 	//}
-	//catch (const _com_error) 
-	//{	
+	//catch (const _com_error)
+	//{
 	//}
 
 	//if (elem != NULL)
@@ -885,8 +885,8 @@ void  CTraceyDicom::ReadDicomImage(char* filename, CDicomInfo &OutDicomInfo)
 	////Done
 }
 //***************************************************************************************
-//For date filtering you can add Scheduled Procedure Step Start Date(0040, 0002) to the query(you currently don’t 
-//have this field in the query I think, but you seem to have added it to your Import dialog below, so I’m not 
+//For date filtering you can add Scheduled Procedure Step Start Date(0040, 0002) to the query(you currently don’t
+//have this field in the query I think, but you seem to have added it to your Import dialog below, so I’m not
 //exactly sure what is going on).
 //
 //The date format is fixed at YYYYMMDD(it must be 8 and only 8 characters),
@@ -896,10 +896,10 @@ void  CTraceyDicom::ReadDicomImage(char* filename, CDicomInfo &OutDicomInfo)
 BOOL  CTraceyDicom::Query(CString ModalityStr, CString host, unsigned short port, CString CallAETitle, CString CalledTitle, CString PatientID, CString FirstName, CString LastName, CString DateFrom, CString DateTo, int & count)
 {
 	try
-	{				
+	{
 
-		_bstr_t hCallAETitle = CallAETitle;
-		
+		_bstr_t hCallAETitle(CallAETitle);
+
 
 		//Build query
 		// Fill the query object
@@ -909,23 +909,23 @@ BOOL  CTraceyDicom::Query(CString ModalityStr, CString host, unsigned short port
 		IDCXOBJIteratorPtr spsIt(__uuidof(DCXOBJIterator));
 
 		// Build the Scheduled procedure Step (SPS) item
-		el->Init(ScheduledStationAETitle);		
+		el->Init(ScheduledStationAETitle);
 		el->Value = hCallAETitle;//07202018
 		sps->insertElement(el);
-			
+
 
 		//Schedule Start Time and End Time
 		el->Init(ScheduledProcedureStepStartDate);
-		//07202018				
-		CString ParsedDateFrom;		
+		//07202018
+		CString ParsedDateFrom;
 		if (GetStandDate(DateFrom, ParsedDateFrom, "/"))
 		{
 			CString ParsedDateTo;
 			if (GetStandDate(DateTo, ParsedDateTo, "/"))
 			{
-				_bstr_t hDate = ParsedDateFrom + "-" + ParsedDateTo + " ";
+				_bstr_t hDate(ParsedDateFrom + "-" + ParsedDateTo + " ");
 				el->Value = hDate;
-			}			
+			}
 		}
 		//07202018
 
@@ -933,20 +933,20 @@ BOOL  CTraceyDicom::Query(CString ModalityStr, CString host, unsigned short port
 
 		//el->Init(ScheduledProcedureStepEndDate);
 		//el->Value = "20180723";
-		////////07202018		
+		////////07202018
 		////CString ParsedDateTo;
 		////if (GetStandDate(DateTo, ParsedDateTo, "/"))
 		////{
-		////	_bstr_t hEndDate = ParsedDateTo;		
+		////	_bstr_t hEndDate = ParsedDateTo;
 		////	el->Value = hEndDate;
 		////}
-		//////07202018	
-		//sps->insertElement(el);	
+		//////07202018
+		//sps->insertElement(el);
 
 		//Search fields
 		el->Init(Modality);
 		//07202018
-		_bstr_t hModality = ModalityStr;
+		_bstr_t hModality(ModalityStr);
 		el->Value = hModality;
 		//07202018
 		sps->insertElement(el);
@@ -999,7 +999,7 @@ BOOL  CTraceyDicom::Query(CString ModalityStr, CString host, unsigned short port
 
 		// and add the sequence Scheduled Procedure Step Sequence to the requested procedure (parent) object
 		el->Init(ScheduledProcedureStepSequence);
-		el->PutValue(&_variant_t((IUnknown*)spsIt, false));
+		el->PutValue(_variant_t((IUnknown*)spsIt, false));
 		rp->insertElement(el);
 
 		//Build query Done
@@ -1007,9 +1007,8 @@ BOOL  CTraceyDicom::Query(CString ModalityStr, CString host, unsigned short port
 		//------------------------------------------------
 
 		//Query
-		_bstr_t hhost = host;
-		
-		_bstr_t hCalledTitle = CalledTitle;
+		_bstr_t hhost(host);
+		_bstr_t hCalledTitle(CalledTitle);
 
 		IDCXREQPtr req(__uuidof(DCXREQ));
 		IDCXOBJIteratorPtr it(__uuidof(DCXOBJIterator));
@@ -1038,7 +1037,7 @@ BOOL  CTraceyDicom::Query(CString ModalityStr, CString host, unsigned short port
 		{
 			IDCXOBJPtr r(__uuidof(DCXOBJ));
 			r = it->Get();
-						
+
 			IDCXELMPtr elem;
 
 			elem = NULL;
@@ -1053,7 +1052,7 @@ BOOL  CTraceyDicom::Query(CString ModalityStr, CString host, unsigned short port
 					BOOL SameName = TRUE;
 					BOOL DateRange = TRUE;
 					BOOL PatientIDOK = TRUE;
-					
+
 					CString  Patient_Name, DicomPID;
 
 					//Check patient name
@@ -1081,9 +1080,9 @@ BOOL  CTraceyDicom::Query(CString ModalityStr, CString host, unsigned short port
 								if (count == -1)
 								{
 									SameName = FALSE;
-								}								
+								}
 							}
-							
+
 							if (LastName != "")
 							{
 								CString LowerLastName = LastName;
@@ -1116,14 +1115,14 @@ BOOL  CTraceyDicom::Query(CString ModalityStr, CString host, unsigned short port
 						}
 					}
 					//Check patient id Done
-					
+
 					//if (SameName && DateRange && PatientIDOK)
 					if (SameName && DateRange && PatientIDOK)
 					{
 						BOOL exist = FALSE;
 
 						CDicomInfo OneDicomInfo;
-						
+
 						OneDicomInfo.m_Patient_ID = DicomPID;
 
 						elem = NULL;
@@ -1141,7 +1140,7 @@ BOOL  CTraceyDicom::Query(CString ModalityStr, CString host, unsigned short port
 						{
 							OneDicomInfo.m_StudyDes = elem->Value;
 						}
-						
+
 						elem = NULL;
 						elem = r->GetElement(PatientsBirthDate);
 						if (elem != NULL)
@@ -1177,13 +1176,13 @@ BOOL  CTraceyDicom::Query(CString ModalityStr, CString host, unsigned short port
 						}
 						//08212019 Test for 'Study Instance UID'*/
 
-						//Merge same patients if there is 
+						//Merge same patients if there is
 						for (int i = 0; i < count; i++)
 						{
 							if ((OneDicomInfo.m_Patient_ID == m_DicomInfo[i].m_Patient_ID) &&
 								(OneDicomInfo.m_Patient_Name == m_DicomInfo[i].m_Patient_Name) &&
 								(OneDicomInfo.m_Patient_BirthDate == m_DicomInfo[i].m_Patient_BirthDate) &&
-								(OneDicomInfo.m_Patient_Sex == m_DicomInfo[i].m_Patient_Sex) 
+								(OneDicomInfo.m_Patient_Sex == m_DicomInfo[i].m_Patient_Sex)
 								)
 							{
 								exist = TRUE;
@@ -1191,7 +1190,7 @@ BOOL  CTraceyDicom::Query(CString ModalityStr, CString host, unsigned short port
 							}
 						}
 
-						
+
 						//Merge same patient Done
 						if (!exist)
 						{
@@ -1260,7 +1259,7 @@ BOOL CTraceyDicom::GetStandDate(CString OriDate, CString &NewDate, CString NewNo
 
 					NewDate = Year + Month + Day;
 				}
-			}			
+			}
 		}
 		else if (count == 2)
 		{
@@ -1326,8 +1325,8 @@ BOOL CTraceyDicom::GetStandDate(CString OriDate, CString &NewDate, CString NewNo
 				}
 			}
 		}
-		else 
-		{			
+		else
+		{
 			NewDate.Replace(NewNote, _T(""));
 		}
 

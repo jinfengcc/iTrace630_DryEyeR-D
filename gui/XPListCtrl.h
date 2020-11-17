@@ -18,7 +18,7 @@ public:
 	CXPHeaderCtrl m_HeaderCtrl;
 
 	void CreateWnd(ulong Style, const RECT& Rect, CWnd* pParentWnd, uint ID);
-	void InsertColumn(const int n, LPWSTR Name, const int Width);
+	void InsertColumn(const int n, const wchar_t *Name, const int Width);
 	void SetSortItem(const int sort_col);
 
 	void SetFont(CMFont* pFont) { m_pFont = pFont; m_HeaderCtrl.SetFont(pFont); }

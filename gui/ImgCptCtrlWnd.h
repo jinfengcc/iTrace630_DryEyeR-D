@@ -19,7 +19,7 @@ public:
 	CImgCptCtrlWnd();
 	~CImgCptCtrlWnd();
 
-	void CImgCptCtrlWnd::CreateThisWnd(RECT& Rect, CWnd* pWnd, int ScreenTop, int CapHeight);
+	void CreateThisWnd(RECT& Rect, CWnd* pWnd, int ScreenTop, int CapHeight);
 
 	void  ShowGUI();
 	void  HideGUI();

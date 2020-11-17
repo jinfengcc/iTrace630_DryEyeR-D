@@ -33,10 +33,15 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
     auto x3  = aps.Get<double     >("HalTester.x3");
     auto x4  = aps.Get<std::string>("HalTester.x4");
 
-    auto xx = aps.Get<std::string>("HalTester.camera.enhance");
+    auto xa = aps.Get<std::string>("HalTester.camera.enhance");
 
     auto y4 = aps.Get("HalTester.x2", 12);
     auto y5 = aps.Get("HalTester.x5", 16);
+
+    AppSettings aps2(AppSettings(), "HalTester.camera");
+
+    auto xb = aps2.Get<std::string>("enhance");
+
     // clang-format on
 #endif // _DEBUG
 

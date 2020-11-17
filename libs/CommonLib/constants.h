@@ -10,12 +10,18 @@ constexpr auto _Pi_180 = 0.01745329251994329576923690768;
 constexpr auto _180_Pi = 57.29577951308232087679815481411;
 
 #define INVALID_VALUE 1'000'000'000
-#define TOPRING_VALUE 2'000'000'000
+#define TOPRING_VALUE 20'000'000
+#define LID_VALUE     30'000'000
 
 inline bool IsValidValue(double value)
 {
-  static_assert(INVALID_VALUE < TOPRING_VALUE);
-  return value < INVALID_VALUE;
+  const DWORD BAD_VALUE_MIN = 10'000'000;
+
+  static_assert(INVALID_VALUE > BAD_VALUE_MIN);
+  static_assert(TOPRING_VALUE > BAD_VALUE_MIN);
+  static_assert(LID_VALUE > BAD_VALUE_MIN);
+
+  return value < static_cast<double>(BAD_VALUE_MIN);
 }
 
 inline bool AllValuesValid(std::initializer_list<double> v)

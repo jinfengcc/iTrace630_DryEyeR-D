@@ -54,35 +54,35 @@ BEGIN_MESSAGE_MAP(CSettingsDlg, CDialog)
 	ON_BN_CLICKED(IDC_SUBTASK2_CHECK, OnSubTasck2ChkClicked)
 	ON_BN_CLICKED(IDC_SUBTASK3_CHECK, OnSubTasck3ChkClicked)
 	ON_BN_CLICKED(IDC_SUBTASK4_CHECK, OnSubTasck4ChkClicked)
-	ON_BN_CLICKED(IDC_SUBTASK5_CHECK, OnSubTasck5ChkClicked)  
+	ON_BN_CLICKED(IDC_SUBTASK5_CHECK, OnSubTasck5ChkClicked)
 
 	ON_BN_CLICKED(IDC_TASK1_RADIO, OnSubTasck1RioClicked)
 	ON_BN_CLICKED(IDC_TASK2_RADIO, OnSubTasck2RioClicked)
 	ON_BN_CLICKED(IDC_TASK3_RADIO, OnSubTasck3RioClicked)
 	ON_BN_CLICKED(IDC_TASK4_RADIO, OnSubTasck4RioClicked)
-	ON_BN_CLICKED(IDC_TASK5_RADIO, OnSubTasck5RioClicked) 
+	ON_BN_CLICKED(IDC_TASK5_RADIO, OnSubTasck5RioClicked)
 
-	ON_BN_CLICKED(IDC_WFSUM2_CHECK, OnWFChk2Clicked) 
-	ON_BN_CLICKED(IDC_WFSUM3_CHECK, OnWFChk3Clicked) 
-	ON_BN_CLICKED(IDC_WFSUM4_CHECK, OnWFChk4Clicked) 
-	ON_BN_CLICKED(IDC_WFSUM5_CHECK, OnWFChk5Clicked) 
-	ON_BN_CLICKED(IDC_WFSUM6_CHECK, OnWFChk6Clicked) 
-	ON_BN_CLICKED(IDC_WFSUM7_CHECK, OnWFChk7Clicked) 
+	ON_BN_CLICKED(IDC_WFSUM2_CHECK, OnWFChk2Clicked)
+	ON_BN_CLICKED(IDC_WFSUM3_CHECK, OnWFChk3Clicked)
+	ON_BN_CLICKED(IDC_WFSUM4_CHECK, OnWFChk4Clicked)
+	ON_BN_CLICKED(IDC_WFSUM5_CHECK, OnWFChk5Clicked)
+	ON_BN_CLICKED(IDC_WFSUM6_CHECK, OnWFChk6Clicked)
+	ON_BN_CLICKED(IDC_WFSUM7_CHECK, OnWFChk7Clicked)
 
-	ON_BN_CLICKED(IDC_CTSUM1_CHECK, OnCTChk1Clicked) 
-	ON_BN_CLICKED(IDC_CTSUM2_CHECK, OnCTChk2Clicked) 
-	ON_BN_CLICKED(IDC_CTSUM3_CHECK, OnCTChk3Clicked) 
-	ON_BN_CLICKED(IDC_CTSUM4_CHECK, OnCTChk4Clicked) 
-	ON_BN_CLICKED(IDC_CTSUM5_CHECK, OnCTChk5Clicked) 
-	ON_BN_CLICKED(IDC_CTSUM6_CHECK, OnCTChk6Clicked) 
+	ON_BN_CLICKED(IDC_CTSUM1_CHECK, OnCTChk1Clicked)
+	ON_BN_CLICKED(IDC_CTSUM2_CHECK, OnCTChk2Clicked)
+	ON_BN_CLICKED(IDC_CTSUM3_CHECK, OnCTChk3Clicked)
+	ON_BN_CLICKED(IDC_CTSUM4_CHECK, OnCTChk4Clicked)
+	ON_BN_CLICKED(IDC_CTSUM5_CHECK, OnCTChk5Clicked)
+	ON_BN_CLICKED(IDC_CTSUM6_CHECK, OnCTChk6Clicked)
 
-	ON_BN_CLICKED(IDC_INSUM1_CHECK, OnINChk0Clicked) 
-	ON_BN_CLICKED(IDC_INSUM2_CHECK, OnINChk1Clicked) 
-	ON_BN_CLICKED(IDC_INSUM3_CHECK, OnINChk2Clicked) 
-	ON_BN_CLICKED(IDC_INSUM4_CHECK, OnINChk3Clicked) 
-	ON_BN_CLICKED(IDC_INSUM5_CHECK, OnINChk4Clicked) 
-	ON_BN_CLICKED(IDC_INSUM6_CHECK, OnINChk5Clicked) 
-	ON_BN_CLICKED(IDC_INSUM7_CHECK, OnINChk6Clicked) 
+	ON_BN_CLICKED(IDC_INSUM1_CHECK, OnINChk0Clicked)
+	ON_BN_CLICKED(IDC_INSUM2_CHECK, OnINChk1Clicked)
+	ON_BN_CLICKED(IDC_INSUM3_CHECK, OnINChk2Clicked)
+	ON_BN_CLICKED(IDC_INSUM4_CHECK, OnINChk3Clicked)
+	ON_BN_CLICKED(IDC_INSUM5_CHECK, OnINChk4Clicked)
+	ON_BN_CLICKED(IDC_INSUM6_CHECK, OnINChk5Clicked)
+	ON_BN_CLICKED(IDC_INSUM7_CHECK, OnINChk6Clicked)
 
 END_MESSAGE_MAP()
 
@@ -154,7 +154,7 @@ void CSettingsDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_INSUM4_RADIO, m_INSum4Radio);
 	DDX_Control(pDX, IDC_INSUM7_RADIO, m_INSum5Radio);  //530 531 Change to OU Overview
 	DDX_Control(pDX, IDC_INSUM5_RADIO, m_INSum6Radio);  //530
-	DDX_Control(pDX, IDC_INSUM6_RADIO, m_INSum7Radio);  //531 
+	DDX_Control(pDX, IDC_INSUM6_RADIO, m_INSum7Radio);  //531
 	DDX_Control(pDX, IDC_ALIGNMENT_PUPIL_RADIO, m_AlignmentPupilRadio);
 	DDX_Control(pDX, IDC_ALIGNMENT_4IRDOTS_RADIO, m_Alignment4IrdotsRadio);
 	DDX_Control(pDX, IDC_ROUND_1_8_RADIO, m_Round8Radio);
@@ -166,12 +166,12 @@ void CSettingsDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDLOAD, m_LoadButton);
 	DDX_Control(pDX, IDC_CAP_COLORIMG_CHECK, m_CapColorImgCheck);//[520]
 	DDX_Control(pDX, IDC_COLOR_IMG_RADIO1, m_CapColorImgAutoRadio);//[520]
-	DDX_Control(pDX, IDC_COLOR_IMG_RADIO2, m_CapColorImgManuRadio);//[520]   
+	DDX_Control(pDX, IDC_COLOR_IMG_RADIO2, m_CapColorImgManuRadio);//[520]
 
-	DDX_Control(pDX, IDC_EXCEL_EXPORT_CHECK, m_ExcelExportCheck);//[520]   
-	DDX_Control(pDX, IDC_EXCEL_SETTING, m_ExcelSettingButton);//[520]   
-	DDX_Control(pDX, IDC_FOLDERNAME_EDIT2, m_FolderNameEdit2);//[520] 
-	DDX_Control(pDX, IDC_FOLDER_BROWSE2, m_FolderBrowseButton2);//[520] 
+	DDX_Control(pDX, IDC_EXCEL_EXPORT_CHECK, m_ExcelExportCheck);//[520]
+	DDX_Control(pDX, IDC_EXCEL_SETTING, m_ExcelSettingButton);//[520]
+	DDX_Control(pDX, IDC_FOLDERNAME_EDIT2, m_FolderNameEdit2);//[520]
+	DDX_Control(pDX, IDC_FOLDER_BROWSE2, m_FolderBrowseButton2);//[520]
 
 	DDX_Control(pDX, IDIOLSELECTION2, m_IolSelButton);//530
 
@@ -195,12 +195,12 @@ void CSettingsDlg::DoDataExchange(CDataExchange* pDX)
 
 	DDX_Control(pDX, IDC_TASKADVANCE, m_TaskAdBtn);//530
 
-	DDX_Control(pDX, IDC_TASKSHORTCUT_CHECK, m_Task_ShortCutCheck);//530  
+	DDX_Control(pDX, IDC_TASKSHORTCUT_CHECK, m_Task_ShortCutCheck);//530
 
 	DDX_Control(pDX, IDC_STATIC1, m_Static[0]);//530
 	DDX_Control(pDX, IDC_STATIC2, m_Static[1]);//530
 	DDX_Control(pDX, IDC_STATIC3, m_Static[2]);//530
-	DDX_Control(pDX, IDC_STATIC4, m_Static[3]);//530  
+	DDX_Control(pDX, IDC_STATIC4, m_Static[3]);//530
 
 
 	DDX_Control(pDX, IDC_WFSUPEREXAM_CHK, m_Super_ExamCheck);
@@ -270,14 +270,14 @@ BOOL CSettingsDlg::OnInitDialog()
 	}
 	//520
 
-	//530 
+	//530
 	m_Task_ShortCutCheck.SetCheck(::NewSettings.m_ShowTask);
 
 	if (!::NewSettings.m_ShowTask)
 	{
 		HideTaskSettings();
 	}
-	//530 
+	//530
 
 	//531
 	for (int i = 0; i < 5; i++)
@@ -523,7 +523,7 @@ BOOL CSettingsDlg::OnInitDialog()
 
 	m_PosCylCheck.SetCheck(::Settings.m_PositiveCylinder);
 
-	for (real_t v = 0.0; v < 20.001; v += 0.5) 
+	for (real_t v = 0.0; v < 20.001; v += 0.5)
 	{
 		s.Format(_T("%.1f"), v);
 		m_VertexComboBox.AddString(s);
@@ -555,7 +555,7 @@ BOOL CSettingsDlg::OnInitDialog()
 
 	s.Format(_T("%.1f"), ::Settings.m_ManualScanDiameterUm * 0.001);
 	m_ManualScanDiameterEdit.SetWindowText(s);
-		  
+
 	s.Format(_T("%.1f"), ::Settings.m_AutoScanDiameterUm * 0.001);
 	m_AutoScanDiameterEdit.SetWindowText(s);
 
@@ -565,7 +565,7 @@ BOOL CSettingsDlg::OnInitDialog()
 	{
 		m_DDMMYYYYRadio.SetCheck(1);
 	}
-	else if (::Settings.m_DateFormat == DATE_FORMAT_YYYY_MM_DD) 
+	else if (::Settings.m_DateFormat == DATE_FORMAT_YYYY_MM_DD)
 	{
 		m_YYYYMMDDRadio.SetCheck(1);
 	}
@@ -578,7 +578,7 @@ BOOL CSettingsDlg::OnInitDialog()
 	{
 		m_AlignmentPupilRadio.SetCheck(1);
 	}
-	else 
+	else
 	{
 		m_Alignment4IrdotsRadio.SetCheck(1);
 	}
@@ -623,7 +623,7 @@ BOOL CSettingsDlg::OnInitDialog()
 	m_Button13Edit.SetWindowText(ButtonName);
 
 
-	switch (::Settings.m_DefaultWFSum) 
+	switch (::Settings.m_DefaultWFSum)
 	{
 	case 10: m_WFVfaRadio.SetCheck(1); break;
 	case 11: m_WFVrfRadio.SetCheck(1); break;
@@ -634,11 +634,11 @@ BOOL CSettingsDlg::OnInitDialog()
 	case  3: m_WFSum4Radio.SetCheck(1); break;
 	}
 
-	switch (::Settings.m_DefaultCTSum) 
+	switch (::Settings.m_DefaultCTSum)
 	{
 	case 10: m_CTDblRadio.SetCheck(1); break;
 	case 11: m_CTVrfRadio.SetCheck(1); break;
-	case 12: m_CTCmpRadio.SetCheck(1); break;		  
+	case 12: m_CTCmpRadio.SetCheck(1); break;
 	case  0: m_CTSum1Radio.SetCheck(1); break;
 	case  1: m_CTSum2Radio.SetCheck(1); break;
 	case  2: m_CTSum3Radio.SetCheck(1); break;
@@ -673,7 +673,7 @@ BOOL CSettingsDlg::OnInitDialog()
 	m_WFCmpRadio.ShowWindow(SW_SHOW);
 	m_WFSum1Radio.ShowWindow(SW_SHOW);
 	m_WFSum2Radio.ShowWindow(SW_SHOW);
-	
+
 	//WF
 	m_Button3Edit.ShowWindow(SW_SHOW);
 	m_Button4Edit.ShowWindow(SW_SHOW);
@@ -696,7 +696,7 @@ BOOL CSettingsDlg::OnInitDialog()
 	m_INSum4Radio.ShowWindow(SW_SHOW);
 	m_INSum5Radio.ShowWindow(SW_SHOW);
 	m_INSum6Radio.ShowWindow(SW_SHOW);
-	m_INSum7Radio.ShowWindow(SW_SHOW); 
+	m_INSum7Radio.ShowWindow(SW_SHOW);
 
 	m_CTVrfRadio.ShowWindow(SW_SHOW);
 	m_CTDblRadio.ShowWindow(SW_SHOW);
@@ -818,12 +818,12 @@ BOOL CSettingsDlg::OnInitDialog()
 
 	m_ShowSendARKRCheck.SetCheck(::Settings.m_ShowSendARKRButton);
 
-	// Export  
+	// Export
 	m_UseJPGFormatRadio.SetCheck(::Settings.m_UseJPGFormat);
 	m_UsePNGFormatRadio.SetCheck(!::Settings.m_UseJPGFormat);
 	m_IncludeLADsCheck.SetCheck(::Settings.m_IncludeLADs);
 
-	
+
 	CINIParser IniPar;
 	CString FolderName = IniPar.GetStrKey(IniSection, "Export Folder", IniPath);	//6.2.0 ini registration
 	m_FolderNameEdit.SetWindowText(FolderName);
@@ -844,7 +844,7 @@ BOOL CSettingsDlg::OnInitDialog()
 	}
 
 	// Excel export check
-	FolderName = IniPar.GetStrKey(IniSection, "Export Excel Folder", IniPath);	//6.2.0 ini registration	
+	FolderName = IniPar.GetStrKey(IniSection, "Export Excel Folder", IniPath);	//6.2.0 ini registration
 	m_FolderNameEdit2.SetWindowText(FolderName);
 
 	RECT Rect;
@@ -951,7 +951,7 @@ BOOL CSettingsDlg::PreTranslateMessage(MSG* pMsg)
 
 void CSettingsDlg::OnOK()
 {
-	if (!CheckSetting()) return;//To check if there are some dis-allowed inputs 
+	if (!CheckSetting()) return;//To check if there are some dis-allowed inputs
 	SetSetting();// change the original code here to function 'SetSetting'
 	CDialog::OnOK();
 }
@@ -969,7 +969,7 @@ void CSettingsDlg::OnProbingButtonClicked()
 // set the default values of setting
 void CSettingsDlg::OnDefaultButtonClicked()
 {
-	
+
 	CSettingsDefaultDlg* pDlg = new CSettingsDefaultDlg(this);
 
 	if (pDlg->DoModal() == IDOK)
@@ -985,7 +985,7 @@ void CSettingsDlg::OnDefaultButtonClicked()
 		m_ExcDef = FALSE;
 	}
 	delete pDlg;
-	
+
 
 	CString s;
 
@@ -1036,12 +1036,12 @@ void CSettingsDlg::OnDefaultButtonClicked()
 			m_FoggingEnabledCheck.EnableWindow(1);
 		}
 
-		s.Format(_T("%.1f"), 3.0); 
+		s.Format(_T("%.1f"), 3.0);
 		m_ManualScanDiameterEdit.SetWindowText(s);
-				
+
 		s.Format(_T("%.1f"), 6.5);
 		m_AutoScanDiameterEdit.SetWindowText(s);
-		
+
 		m_AnimateAfterNewExamCheck.SetCheck(0);
 
 		m_DDMMYYYYRadio.SetCheck(0);
@@ -1062,7 +1062,7 @@ void CSettingsDlg::OnDefaultButtonClicked()
 
 		m_CTDblRadio.SetCheck(0);
 		m_CTVrfRadio.SetCheck(1);
-		m_CTCmpRadio.SetCheck(0);//531		
+		m_CTCmpRadio.SetCheck(0);//531
 		m_CTSum1Radio.SetCheck(0);
 		m_CTSum2Radio.SetCheck(0);
 		m_CTSum3Radio.SetCheck(0);
@@ -1074,9 +1074,9 @@ void CSettingsDlg::OnDefaultButtonClicked()
 
 		m_INSum3Radio.SetCheck(0);
 		m_INSum4Radio.SetCheck(0);
-		m_INSum5Radio.SetCheck(0);//530 
-		m_INSum6Radio.SetCheck(0);//530 
-		m_INSum7Radio.SetCheck(0);//531 
+		m_INSum5Radio.SetCheck(0);//530
+		m_INSum6Radio.SetCheck(0);//530
+		m_INSum7Radio.SetCheck(0);//531
 
 
 		m_WavetouchCheck.SetCheck(0);
@@ -1161,7 +1161,7 @@ void CSettingsDlg::OnDefaultButtonClicked()
 		}
 		//531 Done
 
-		//[5.1.1] 
+		//[5.1.1]
 		{
 			CString ButtonName;
 			m_Button1Edit.SetWindowText(_T("Visual Acuity"));
@@ -1209,7 +1209,7 @@ void CSettingsDlg::OnDefaultButtonClicked()
 		m_CapColorImgCheck.SetCheck(FALSE);
 		m_CapColorImgAutoRadio.ShowWindow(SW_HIDE);
 		m_CapColorImgManuRadio.ShowWindow(SW_HIDE);
-		//520 
+		//520
 	}
 
 	//For other default settings
@@ -1235,6 +1235,9 @@ void CSettingsDlg::OnDefaultButtonClicked()
 BOOL CSettingsDlg::CheckSetting()
 {
 	CString s_TargetTime, s_MSD, s_ASD;
+  int     TargetTime = 0;
+  real_t  MSD        = 0.0;
+  real_t  ASD        = 0.0;
 
 	//Target Light time
 	if (m_AccommTargetLightOnCheck.GetCheck())
@@ -1248,7 +1251,7 @@ BOOL CSettingsDlg::CheckSetting()
 	}
 
 	G_As = s_TargetTime;
-	int TargetTime = atoi(G_As);
+	TargetTime = atoi(G_As);
 	if (TargetTime > 60) goto A2;
 	//Done
 
@@ -1262,7 +1265,7 @@ BOOL CSettingsDlg::CheckSetting()
 	}
 
 	G_As = s_MSD;
-	real_t MSD = atof(G_As);
+	MSD = atof(G_As);
 	if (MSD < 2 || MSD > 8) goto B2;
 	//Done
 
@@ -1277,7 +1280,7 @@ BOOL CSettingsDlg::CheckSetting()
 	}
 
 	G_As = s_ASD;
-	real_t ASD = atof(G_As);
+	ASD = atof(G_As);
 	if (ASD < 2 || ASD > 8) goto C2;
 	//Done
 
@@ -1354,14 +1357,14 @@ void CSettingsDlg::SetSetting()
 	if (::Settings.m_ManualScanDiameterUm < 2000) ::Settings.m_ManualScanDiameterUm = 2000;
 	else if (::Settings.m_ManualScanDiameterUm > 8000) ::Settings.m_ManualScanDiameterUm = 8000;
 
-	
+
 	m_AutoScanDiameterEdit.GetWindowText(s);
 	G_As = s;
 	::Settings.m_AutoScanDiameterUm = (int)RealRound(atof(G_As) * 1000.0, 100.0);
 
 	if (::Settings.m_AutoScanDiameterUm < 2000) ::Settings.m_AutoScanDiameterUm = 2000;
 	else if (::Settings.m_AutoScanDiameterUm > 8000) ::Settings.m_AutoScanDiameterUm = 8000;
-	
+
 
 	::Settings.m_AnimateAfterNewExam = m_AnimateAfterNewExamCheck.GetCheck();
 
@@ -1407,7 +1410,7 @@ void CSettingsDlg::SetSetting()
 
 	//[520] for Osher alignment button in the combo version
 	::Settings.SetButtonName(1, 2, ButtonName);
-	//[520] 
+	//[520]
 
 	m_Button8Edit.GetWindowText(ButtonName);
 	::Settings.SetButtonName(1, 3, ButtonName);
@@ -1562,7 +1565,7 @@ void CSettingsDlg::SetSetting()
 	{
 		if (m_ExcDef)
 		{
-			//Excel Export	 
+			//Excel Export
 			for (int i = 0; i < 89; i++)
 			{
 				if (i < 53) ::Settings.m_EXCEL_WF_SETS[i] = '0';
@@ -1576,7 +1579,7 @@ void CSettingsDlg::SetSetting()
 			::NewSettings.m_NEW_EXCEL_WFCT_SETS[0] = '0';//WFCT DLI Value
 			::NewSettings.m_NEW_EXCEL_WFCT_SETS[1] = '0';//WFCT Opacity Grade
 														 //
-														 //Done	 
+														 //Done
 		}
 
 		if (m_GUIDef)
@@ -1726,7 +1729,7 @@ void CSettingsDlg::SetSetting()
 
 
 
-			//WF visual acuity display	
+			//WF visual acuity display
 			::Settings.m_TSsmSettings[0][0].m_Mask.SetType(MASK_TOTAL);
 			::Settings.m_TSsmSettings[0][0].m_Piston = TRUE;
 			::Settings.m_TSsmSettings[0][0].m_Tilt = TRUE;
@@ -1901,8 +1904,8 @@ void CSettingsDlg::SetSetting()
 			//Done
 
 
-			//CT OD/OS	
-			::Settings.m_CDsmSettings[0].m_Type = 31;//Axial map       TYPE_CAXM	 
+			//CT OD/OS
+			::Settings.m_CDsmSettings[0].m_Type = 31;//Axial map       TYPE_CAXM
 			::Settings.m_CDsmSettings[1].m_Type = 32;//local Roc  map  TYPE_CTNM
 
 			for (int i = 0; i < 2; i++)
@@ -1952,7 +1955,7 @@ void CSettingsDlg::SetSetting()
 
 			//CT Summary
 			::Settings.m_CSsmSettings[0][0].m_Type = 31; //Axial map       TYPE_CAXM
-			::Settings.m_CSsmSettings[0][1].m_Type = 34; //z elevation     TYPE_CELM 
+			::Settings.m_CSsmSettings[0][1].m_Type = 34; //z elevation     TYPE_CELM
 			::Settings.m_CSsmSettings[0][2].m_Type = 32; //local Roc  map  TYPE_CTNM
 			::Settings.m_CSsmSettings[0][3].m_Type = 33; //refrective map  TYPE_CRFM
 
@@ -1990,7 +1993,7 @@ void CSettingsDlg::SetSetting()
 
 
 			//CT 3D Z Elevation Display
-			::Settings.m_CSsmSettings[2][0].m_Type = 34; //z elevation     TYPE_CELM 
+			::Settings.m_CSsmSettings[2][0].m_Type = 34; //z elevation     TYPE_CELM
 			::Settings.m_CSsmSettings[2][0].m_SizeSmall = FALSE;
 			::Settings.m_CSsmSettings[2][0].m_Method3D = 1;
 			::Settings.m_CSsmSettings[2][0].m_MapShowSolidSurface = TRUE;
@@ -2004,7 +2007,7 @@ void CSettingsDlg::SetSetting()
 
 			//CT Custom Display
 			::Settings.m_CSsmSettings[3][0].m_Type = 31; //Axial map       TYPE_CAXM
-			::Settings.m_CSsmSettings[3][1].m_Type = 34; //z elevation     TYPE_CELM 
+			::Settings.m_CSsmSettings[3][1].m_Type = 34; //z elevation     TYPE_CELM
 			::Settings.m_CSsmSettings[3][2].m_Type = 32; //local Roc  map  TYPE_CTNM
 			::Settings.m_CSsmSettings[3][3].m_Type = 33; //refrective map  TYPE_CRFM
 
@@ -2036,7 +2039,7 @@ void CSettingsDlg::SetSetting()
 			//Done
 
 
-			//WF&CT Change Analysis Display	  
+			//WF&CT Change Analysis Display
 
 			::Settings.m_IDsmSettings[0][0].m_Type = 41; //RMS map        TYPE_IRMS
 			::Settings.m_IDsmSettings[0][0].m_Method3D = 0;
@@ -2075,9 +2078,9 @@ void CSettingsDlg::SetSetting()
 			{
 				if (i != 2)
 				{
-					::Settings.m_IDsmSettings[i][0].m_Type = 40; //Wavefront map     
-					::Settings.m_IDsmSettings[i][1].m_Type = 36; //Wavefront map     
-					::Settings.m_IDsmSettings[i][2].m_Type = 16; //Wavefront map  
+					::Settings.m_IDsmSettings[i][0].m_Type = 40; //Wavefront map
+					::Settings.m_IDsmSettings[i][1].m_Type = 36; //Wavefront map
+					::Settings.m_IDsmSettings[i][2].m_Type = 16; //Wavefront map
 
 					::Settings.m_IDsmSettings[i][0].m_Method3D = 0;
 					::Settings.m_IDsmSettings[i][0].m_MapShowSolidSurface = TRUE;
@@ -2167,7 +2170,7 @@ void CSettingsDlg::SetSetting()
 			::Settings.m_IDsmSettings[2][3].SetDefaultColors(1);
 			//Done
 
-			
+
 			for (int i = 0; i < 3; i++)
 			{
 				for (int j = 0; j < 3; j++)
@@ -2175,7 +2178,7 @@ void CSettingsDlg::SetSetting()
 					::Settings.m_IDsmSettings[i][j].m_MapShowEye = 0;
 				}
 			}
-			
+
 
 			//WF&CT  OU Overview
 			::NewSettings.m_OWFCTSettings[0].m_Type = 31;//Axial map       TYPE_CAXM
@@ -2262,7 +2265,7 @@ void CSettingsDlg::SetSetting()
 			}
 			//Done 530
 
-			//Astiagmatism source 530 
+			//Astiagmatism source 530
 			::NewSettings.m_InAstigSettings[0] = ::Settings.m_IDsmSettings[2][0];
 			::NewSettings.m_InAstigSettings[0] = ::Settings.m_IDsmSettings[2][1];
 			::NewSettings.m_InAstigSettings[0] = ::Settings.m_IDsmSettings[2][2];
@@ -2276,7 +2279,7 @@ void CSettingsDlg::SetSetting()
 			}
 			//Astiagmatism source 530  done
 
-			//Dysfunctional Lens Analysis 531 
+			//Dysfunctional Lens Analysis 531
 			::NewSettings.m_DysfuncSettings[0].m_Type = TYPE_IMTF;
 			::NewSettings.m_DysfuncSettings[0].m_MTFAverage = TRUE;
 			::NewSettings.m_DysfuncSettings[0].m_SimplifiedWFPanel = TRUE;
@@ -2307,7 +2310,7 @@ void CSettingsDlg::SetSetting()
 				::NewSettings.m_DysfuncSettings[i].m_MapTranslucent = 0;
 				::NewSettings.m_DysfuncSettings[i].m_MapShowKeratometry = 0;
 				::NewSettings.m_DysfuncSettings[i].m_MapShowAstigmatismAxes = 0;
-				//::NewSettings.m_DysfuncSettings[i].SetDefaultColors(1);	
+				//::NewSettings.m_DysfuncSettings[i].SetDefaultColors(1);
 
 				::NewSettings.m_DysfuncSettings[i].SetDefaultScale();
 				CScale* pScale = ::NewSettings.m_DysfuncSettings[i].GetScale();
@@ -2357,7 +2360,7 @@ void CSettingsDlg::SetSetting()
 			::NewSettings.m_DysPtSettings[4] = ::NewSettings.m_DysfuncSettings[2];
 			//Done
 
-			//531 For Depth focus display		  
+			//531 For Depth focus display
 			for (int i = 0; i < 4; i++)
 			{
 				::NewSettings.m_TSsm5Settings[i] = ::Settings.m_TSsmSettings[0][i];
@@ -2395,10 +2398,10 @@ void CSettingsDlg::SetSetting()
 			::NewSettings.m_SurInAst_OD = 0.0;
 			::NewSettings.m_SurInAst_OS = 0.0;
 
-			SetDef_ExList_Width();//Set the default widths of the exam list	
+			SetDef_ExList_Width();//Set the default widths of the exam list
 
 								  //for screen shot saving
-			::NewSettings.m_ScreenShotFormat = 0; //0: save 'jpg' format while the users save the screen	  
+			::NewSettings.m_ScreenShotFormat = 0; //0: save 'jpg' format while the users save the screen
 												  //Done
 
 												  //For solo Aberration and Refraction analysis settings
@@ -2445,7 +2448,7 @@ void CSettingsDlg::SetSetting()
 
 
 			//Aberration Analysis Settings
-			::NewSettings.m_WFSoloSettings[1][0].m_Type = 10;//Wavefront map 
+			::NewSettings.m_WFSoloSettings[1][0].m_Type = 10;//Wavefront map
 			::NewSettings.m_WFSoloSettings[1][0].m_Mask.SetType(MASK_TOTAL);
 			::NewSettings.m_WFSoloSettings[1][0].m_SizeSmall = TRUE;
 			::NewSettings.m_WFSoloSettings[1][0].m_Piston = FALSE;
@@ -2472,7 +2475,7 @@ void CSettingsDlg::SetSetting()
 
 
 
-			::NewSettings.m_WFSoloSettings[1][1].m_Type = 10;//Wavefront map 
+			::NewSettings.m_WFSoloSettings[1][1].m_Type = 10;//Wavefront map
 			::NewSettings.m_WFSoloSettings[1][1].m_Mask.SetType(MASK_HO_TOTAL);
 			::NewSettings.m_WFSoloSettings[1][1].m_SizeSmall = TRUE;
 			::NewSettings.m_WFSoloSettings[1][1].m_Piston = FALSE;
@@ -2501,7 +2504,7 @@ void CSettingsDlg::SetSetting()
 
 			::NewSettings.m_WFSoloSettings[1][2].m_Type = TYPE_TRMS;//TYPE_TMTF;
 			::NewSettings.m_WFSoloSettings[1][2].m_Mask.SetType(MASK_TOTAL);
-			::NewSettings.m_WFSoloSettings[1][2].m_RMSIndividual = FALSE;//Combined 
+			::NewSettings.m_WFSoloSettings[1][2].m_RMSIndividual = FALSE;//Combined
 			::NewSettings.m_WFSoloSettings[1][2].m_SizeSmall = TRUE;
 			::NewSettings.m_WFSoloSettings[1][2].m_Piston = FALSE;
 			::NewSettings.m_WFSoloSettings[1][2].m_Tilt = FALSE;
@@ -2540,7 +2543,7 @@ void CSettingsDlg::SetSetting()
 			::NewSettings.m_WFSoloSettings[1][3].m_MapTranslucent = 0;
 			::NewSettings.m_WFSoloSettings[1][3].m_MapShowKeratometry = 0;
 			::NewSettings.m_WFSoloSettings[1][3].m_ZoneRadiusUm = 5000;
-			//Done	  
+			//Done
 
 			//531 For Showing wf or ct buttons setting
 			for (int i = 0; i < 8; i++)
@@ -2656,7 +2659,7 @@ void CSettingsDlg::SetSetting()
 	}
 	//530 set task setting Done
 
-	//531 Set wf button showing  
+	//531 Set wf button showing
 	::NewSettings.m_WFCTSumShow[0] = m_INSum_Check[0].GetCheck();
 	for (int i = 1; i < 7; i++)
 	{
@@ -2677,7 +2680,7 @@ void CSettingsDlg::OnLoadButtonClicked()
 
 	CString Dir;
 
-	
+
 	CINIParser IniPar;
 	Dir = IniPar.GetStrKey(IniSection, "Settings Folder", IniPath);//6.2.0 ini registration
 
@@ -2876,7 +2879,7 @@ void CSettingsDlg::OnExcelCheckClicked()
 //excel setting export
 void CSettingsDlg::OnExcelSettingBtnClicked()
 {
-	CExcelSettingsDlg2* pDlg = new CExcelSettingsDlg2(this, FALSE);// Add false 
+	CExcelSettingsDlg2* pDlg = new CExcelSettingsDlg2(this, FALSE);// Add false
 
 	if (pDlg->DoModal() == IDOK)
 	{
@@ -2971,7 +2974,7 @@ void CSettingsDlg::SetSelection()
 	s.Format(_T("%.1f"), ::Settings.m_ManualScanDiameterUm * 0.001);
 	m_ManualScanDiameterEdit.SetWindowText(s);
 
-	
+
 	s.Format(_T("%.1f"), ::Settings.m_AutoScanDiameterUm * 0.001);
 	m_AutoScanDiameterEdit.SetWindowText(s);
 	//Done
@@ -2999,7 +3002,7 @@ void CSettingsDlg::SetSelection()
 		switch (::Settings.m_DefaultWFSum) {
 		case 10: m_WFVfaRadio.SetCheck(1); break;
 		case 11: m_WFVrfRadio.SetCheck(1); break;
-		case 12: m_WFCmpRadio.SetCheck(1); break;//531		  
+		case 12: m_WFCmpRadio.SetCheck(1); break;//531
 		case  0: m_WFSum1Radio.SetCheck(1); break;
 		case  1: m_WFSum2Radio.SetCheck(1); break;
 		case  2: m_WFSum3Radio.SetCheck(1); break;
@@ -3060,7 +3063,7 @@ void CSettingsDlg::SetSelection()
 
 	m_ShowSendARKRCheck.SetCheck(::Settings.m_ShowSendARKRButton);
 
-	//Export  
+	//Export
 	m_UseJPGFormatRadio.SetCheck(::Settings.m_UseJPGFormat);
 	m_UsePNGFormatRadio.SetCheck(!::Settings.m_UseJPGFormat);
 	m_IncludeLADsCheck.SetCheck(::Settings.m_IncludeLADs);
@@ -3070,8 +3073,8 @@ void CSettingsDlg::SetSelection()
 	m_FolderNameEdit.SetWindowText(FolderName);
 	// Export Done
 
-	//Excel Export   
-	FolderName = IniPar.GetStrKey(IniSection, "Export Excel Folder", IniPath);	//6.2.0 ini registration	
+	//Excel Export
+	FolderName = IniPar.GetStrKey(IniSection, "Export Excel Folder", IniPath);	//6.2.0 ini registration
 	m_FolderNameEdit2.SetWindowText(FolderName);
 	//Excel Export Done
 
@@ -3572,7 +3575,7 @@ void CSettingsDlg::OnIOLSelectionBtnClicked()
 }
 
 //********************************************************************************************
-//530  
+//530
 void CSettingsDlg::OnInRadio1Clicked()
 {
 	m_INSum1Radio.SetCheck(1);
@@ -3585,7 +3588,7 @@ void CSettingsDlg::OnInRadio1Clicked()
 }
 //530
 //********************************************************************************************
-//530  
+//530
 void CSettingsDlg::OnInRadio2Clicked()
 {
 	m_INSum1Radio.SetCheck(0);
@@ -3598,7 +3601,7 @@ void CSettingsDlg::OnInRadio2Clicked()
 }
 //530
 //********************************************************************************************
-//530  
+//530
 void CSettingsDlg::OnInRadio3Clicked()
 {
 	m_INSum1Radio.SetCheck(0);
@@ -3611,7 +3614,7 @@ void CSettingsDlg::OnInRadio3Clicked()
 }
 //530
 //********************************************************************************************
-//530  
+//530
 void CSettingsDlg::OnInRadio4Clicked()
 {
 	m_INSum1Radio.SetCheck(0);
@@ -3624,7 +3627,7 @@ void CSettingsDlg::OnInRadio4Clicked()
 }
 //530
 //********************************************************************************************
-//530  
+//530
 void CSettingsDlg::OnInRadio5Clicked()
 {
 	m_INSum1Radio.SetCheck(0);
@@ -3637,7 +3640,7 @@ void CSettingsDlg::OnInRadio5Clicked()
 }
 //530
 //********************************************************************************************
-//530  
+//530
 void CSettingsDlg::OnInRadio6Clicked()
 {
 	m_INSum1Radio.SetCheck(0);
@@ -3650,7 +3653,7 @@ void CSettingsDlg::OnInRadio6Clicked()
 }
 //530
 //********************************************************************************************
-//530  
+//530
 void CSettingsDlg::OnInRadio7Clicked()
 {
 	m_INSum1Radio.SetCheck(0);
@@ -3730,7 +3733,7 @@ void CSettingsDlg::SetDefTask_CTSU(CWndSettings InWndSetting[4])
 	InWndSetting[3] = ::Settings.m_CSsmSettings[0][3];
 
 	InWndSetting[0].m_Type = 31; //Axial map       TYPE_CAXM
-	InWndSetting[1].m_Type = 34; //z elevation     TYPE_CELM 
+	InWndSetting[1].m_Type = 34; //z elevation     TYPE_CELM
 	InWndSetting[2].m_Type = 32; //local Roc  map  TYPE_CTNM
 	InWndSetting[3].m_Type = 33; //refrective map  TYPE_CRFM
 
@@ -3770,7 +3773,7 @@ void CSettingsDlg::SetDefTask_CTKE(CWndSettings InWndSetting[4])
 	InWndSetting[3] = ::Settings.m_CSsmSettings[1][3];
 
 	InWndSetting[0].m_Type = 51; //Axial map       TYPE_CAXM
-	InWndSetting[1].m_Type = 34; //z elevation     TYPE_CELM 
+	InWndSetting[1].m_Type = 34; //z elevation     TYPE_CELM
 	InWndSetting[2].m_Type = 32; //local Roc  map  TYPE_CTNM
 	InWndSetting[3].m_Type = 33; //refrective map  TYPE_CRFM
 
@@ -4004,7 +4007,7 @@ void CSettingsDlg::SetDefTask_CT3D(CWndSettings InWndSetting[4])
 	InWndSetting[2] = ::Settings.m_CSsmSettings[2][2];
 	InWndSetting[3] = ::Settings.m_CSsmSettings[2][3];
 
-	InWndSetting[0].m_Type = 34; //z elevation     TYPE_CELM 
+	InWndSetting[0].m_Type = 34; //z elevation     TYPE_CELM
 	InWndSetting[0].m_SizeSmall = FALSE;
 	InWndSetting[0].m_Method3D = 1;
 	InWndSetting[0].m_MapShowSolidSurface = TRUE;
@@ -4024,7 +4027,7 @@ void CSettingsDlg::SetDefTask_WCAT(CWndSettings InWndSetting[4])
 	InWndSetting[2] = ::Settings.m_IDsmSettings[0][2];
 	InWndSetting[3] = ::Settings.m_IDsmSettings[0][3];
 
-	//Astiagmatism source 530 
+	//Astiagmatism source 530
 	InWndSetting[0] = ::Settings.m_IDsmSettings[2][0];
 	InWndSetting[1] = ::Settings.m_IDsmSettings[2][1];
 	InWndSetting[2] = ::Settings.m_IDsmSettings[2][2];
@@ -4048,9 +4051,9 @@ void CSettingsDlg::SetDefTask_WCSU(CWndSettings InWndSetting[4])
 	InWndSetting[2] = ::Settings.m_IDsmSettings[0][2];
 	InWndSetting[3] = ::Settings.m_IDsmSettings[0][3];
 
-	InWndSetting[0].m_Type = 40; //Wavefront map     
-	InWndSetting[1].m_Type = 36; //Wavefront map     
-	InWndSetting[2].m_Type = 16; //Wavefront map  
+	InWndSetting[0].m_Type = 40; //Wavefront map
+	InWndSetting[1].m_Type = 36; //Wavefront map
+	InWndSetting[2].m_Type = 16; //Wavefront map
 
 	InWndSetting[0].m_Method3D = 0;
 	InWndSetting[0].m_MapShowSolidSurface = TRUE;

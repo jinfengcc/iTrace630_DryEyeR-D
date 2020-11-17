@@ -177,7 +177,7 @@ void ExportScreen(CExam* pExam1, CExam* pExam2, const Matrix<uchar>& Mem, CDicom
 			G_As = "";
 		}
 
-		fprintf(pFile, "<Name>%s</Name>\n", pGroup ? G_As : "");
+		fprintf(pFile, "<Name>%s</Name>\n", pGroup ? G_As.GetString() : "");
 		fprintf(pFile, "</Group>\n");
 
 		fprintf(pFile, "</Patient>\n");
@@ -769,7 +769,7 @@ void ExportScreen(CExam* pExam1, CExam* pExam2, const Matrix<uchar>& Mem, CDicom
 					fprintf(pFile, "<AverageAxialPowerAtDEqual%iMm_dpt>%s</AverageAxialPowerAtDEqual%iMm_dpt>\n", i, G_As, i);
 				}
 
-				char* c[3] =
+				const char* c[3] =
 				{
 					"LessOrEqual3",
 					"EqualOrGreater3MmAndLessOrEqual5Mm",

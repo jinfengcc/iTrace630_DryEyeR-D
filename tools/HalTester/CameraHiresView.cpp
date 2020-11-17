@@ -312,7 +312,15 @@ void CCameraHiresView::DrawInfo(CDCHandle dc, const RECT &rc)
 
   const int margin = 1;
 
-  auto txt = fmt::format(L"max = {}", maxValue);
+  ++m_frameCount;
+  if (auto elapsed = GetTickCount64() - m_frameTimer; elapsed >= 2000) {
+    m_framesPerSecond = m_frameCount / (elapsed / 1000.0);
+
+    m_frameTimer = GetTickCount64();
+    m_frameCount = 0;
+  }
+
+  auto txt = fmt::format(L"max = {} ({:.1f}fps)", maxValue, m_framesPerSecond);
   dc.TextOut(rc.left + margin, rc.bottom - (margin - 1), txt.c_str(), txt.size());
 
   double fps = 0;

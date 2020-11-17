@@ -9,6 +9,7 @@
 class AppSettingsImpl : Singleton<AppSettingsImpl>
 {
   friend class AppSettings;
+  friend class Singleton<AppSettingsImpl>;
 
   sig::SignalUI<const json *>              m_notify;
   fs::path                                 m_file;
@@ -18,16 +19,8 @@ class AppSettingsImpl : Singleton<AppSettingsImpl>
 
   AppSettingsImpl();
 
-  json GetJson() const
-  {
-      std::lock_guard lock(m_mutex);
-      return m_jsonDONOTUSEDIRECTLY;
-  }
-  void SetJson(json j)
-  {
-    std::lock_guard lock(m_mutex);
-    m_jsonDONOTUSEDIRECTLY = j;
-  }
+  json GetJson() const;
+  void SetJson(json j);
 
   static json LoadJson(std::istream &&ss, int retries = 1);
 };
