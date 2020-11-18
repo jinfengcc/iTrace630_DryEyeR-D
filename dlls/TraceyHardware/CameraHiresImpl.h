@@ -4,13 +4,10 @@
 #include <libs/CommonLib/TraceyConfig.h>
 #include <libs/CommonLib/Singleton.h>
 
-class CameraHires;
-
 class CameraHiResImpl final // : public Singleton<CameraHiResImpl>
 {
-  //friend class CameraHires;
-
   using Mode = ICameraHires::Mode;
+
 public:
   CameraHiResImpl() = default;
   ~CameraHiResImpl()
@@ -36,20 +33,15 @@ private:
   sig::Signal<unsigned>    m_signal;
   CapProperties            m_capProps{};
   std::string              m_devName;
-  cv::Mat                  m_images[4];     // Hires-color, lores-color, hires-gray, lores-gray
-  //cv::Mat                  m_colorImage[2];
-  //cv::Mat                  m_grayImage;
-  // cv::Mat                  m_threadImgs[2];
-  //int                      m_curThreadImg{};
+  cv::Mat                  m_images[4]; // Hires-color, lores-color, hires-gray, lores-gray
   double                   m_fps{};
   mutable std::uint64_t    m_tickCount{};
 
   static double TranslateProp(int propid, int v);
   bool          SetCapProperty(int propid, int value);
-  void LogProperties(int onepropid = -1) const;
+  void          LogProperties(int onepropid = -1) const;
   void          DefaultSettings();
   void          ThreadFunc(std::stop_token token);
-
 };
 
 template <typename... Args>
