@@ -82,6 +82,11 @@ private:
 	virtual void OnOK() override;
 
 	DECLARE_MESSAGE_MAP()
+
+private:
+  double       m_framesPerSecond{};
+  int          m_frameCount{};
+  std::int64_t m_frameTimer{};
 };
 
 //***************************************************************************************
