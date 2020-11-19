@@ -175,7 +175,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraHires.h" />
     <ClInclude Include="CameraHiresImpl.h" />
-    <ClInclude Include="CameraHiresUtil.h" />
+    <ClInclude Include="CameraHiresProps.h" />
     <ClInclude Include="CameraImpl.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="Flash.h" />
@@ -188,7 +188,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraHires.cpp" />
     <ClCompile Include="CameraHiresImpl.cpp" />
-    <ClCompile Include="CameraHiresUtil.cpp" />
+    <ClCompile Include="CameraHiresProps.cpp" />
     <ClCompile Include="CameraImpl.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="dllmain.cpp" />

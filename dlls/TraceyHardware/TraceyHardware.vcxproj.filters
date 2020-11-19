@@ -54,7 +54,7 @@
     <ClInclude Include="CameraHires.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CameraHiresUtil.h">
+    <ClInclude Include="CameraHiresProps.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -89,7 +89,7 @@
     <ClCompile Include="CameraHires.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CameraHiresUtil.cpp">
+    <ClCompile Include="CameraHiresProps.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

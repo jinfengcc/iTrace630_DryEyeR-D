@@ -41,6 +41,7 @@ private:
   double                            m_framesPerSecond{};
   int                               m_frameCount{};
   std::int64_t                      m_frameTimer{};
+  std::jthread                      m_thread;
 
   BOOL OnInitDialog(CWindow wndFocus, LPARAM lInitParam);
   void OnPopupMore(UINT uNotifyCode, int nID, CWindow wndCtl);

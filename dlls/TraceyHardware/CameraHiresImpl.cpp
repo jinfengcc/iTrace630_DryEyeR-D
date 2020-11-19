@@ -1,14 +1,36 @@
 #include "pch.h"
 #include "CameraHiresImpl.h"
-#include "CameraHiresUtil.h"
+#include "CameraHiresProps.h"
 
-//using namespace std::literals;
+// using namespace std::literals;
 
 namespace {
   enum { IMG_ROWS = 468, IMG_COLS = 624 };
-  const char *defCameraName[] = {"UVC Video Device", "HD USB Camera"};
+  const int HIRES_COLOR_ = static_cast<int>(ICameraHires::Mode::HIRES_COLOR);
+  const int LORES_COLOR_ = static_cast<int>(ICameraHires::Mode::LORES_COLOR);
+  const int HIRES_GRAY3_ = static_cast<int>(ICameraHires::Mode::HIRES_GRAY);
+  const int LORES_GRAY3_ = static_cast<int>(ICameraHires::Mode::LORES_GRAY);
+  const int HIRES_GRAY1_ = 4;
 
 } // namespace
+
+struct CameraHiResImpl::Scratch
+{
+  static_assert(HIRES_GRAY1_ == 4);
+  cv::Mat          images[5];
+  bool             emulation{false};
+  CameraHiResProps camProps;
+};
+
+CameraHiResImpl::CameraHiResImpl()
+{
+  m_scratch = std::make_unique<Scratch>();
+}
+
+CameraHiResImpl::~CameraHiResImpl()
+{
+  Close();
+}
 
 bool CameraHiResImpl::Open()
 {
@@ -44,15 +66,17 @@ bool CameraHiResImpl::Connected(double *fps) const
 bool CameraHiResImpl::Connect(bool yes)
 {
   if (auto prev = m_videoCap.isOpened(); prev != yes) {
-    if (!yes) {
-      m_videoCap.release();
-    }
-    else if (auto devid = hrc::GetDeviceId({defCameraName}); devid >= 0) {
+    if (yes) {
+      m_scratch->camProps.Initialize();
+      auto devid = m_scratch->camProps.GetDeviceId();
+      if (devid < 0)
+        return false;
+
       m_videoCap.open(devid);
       DefaultSettings();
     }
     else {
-      return false;
+      m_videoCap.release();
     }
   }
 
@@ -111,17 +135,20 @@ void CameraHiResImpl::StopCapture(sig::SignalId sigId)
 
 void CameraHiResImpl::StartFrameTransfer()
 {
+  m_scratch->emulation = true;
+  ReadImage();
 }
 
 void CameraHiResImpl::StopFrameTransfer()
 {
+  // do nothing
 }
 
-bool CameraHiResImpl::GetImage(Mode mode, cv::Mat &img) const
+bool CameraHiResImpl::GetImage(Mode mode, cv::Mat &img)
 {
-  if (m_thread.joinable()) {
+  auto &i = m_images[static_cast<int>(mode)];
+  if (m_scratch->emulation || m_thread.joinable()) {
     std::lock_guard lock(m_mutex);
-    auto &i = m_images[static_cast<int>(mode)];
     if (i.empty())
       return false;
 
@@ -129,30 +156,10 @@ bool CameraHiResImpl::GetImage(Mode mode, cv::Mat &img) const
     return true;
   }
   else {
-    if (GetTickCount64() - m_tickCount > 5000) {
-      m_tickCount = GetTickCount64();
-      LogProperties();
-    }
-
-    if (!m_videoCap.read(img))
+    if (!ReadImage() || i.empty())
       return false;
 
-    cv::cvtColor(img, m_images[static_cast<int>(Mode::HIRES_GRAY)], cv::COLOR_BGR2GRAY);
-
-    switch (mode) {
-    case Mode::HIRES_COLOR:
-      break;
-    case Mode::HIRES_GRAY:
-      cv::cvtColor(m_images[static_cast<int>(Mode::HIRES_GRAY)], img, cv::COLOR_GRAY2BGR);
-      break;
-    case Mode::LORES_COLOR:
-      cv::resize(img, img, {IMG_COLS, IMG_ROWS});
-      break;
-    case Mode::LORES_GRAY:
-      cv::resize(m_images[static_cast<int>(Mode::HIRES_GRAY)], img, {IMG_COLS, IMG_ROWS});
-      break;
-    }
-
+    i.copyTo(img);
     return true;
   }
 }
@@ -160,15 +167,14 @@ bool CameraHiResImpl::GetImage(Mode mode, cv::Mat &img) const
 void CameraHiResImpl::DefaultSettings()
 {
   if (Connected()) {
-    hrc::DumpSettings("before setup", m_videoCap);
+    DumpSettings("before setup", m_videoCap);
 
     auto fourcc = cv::VideoWriter::fourcc('M', 'J', 'P', 'G');
 
     // clang-format off
     SetCapProperty(cv::CAP_PROP_FOURCC       , fourcc);
-    SetCapProperty(cv::CAP_PROP_FRAME_WIDTH  , 1600); // 1280);
-    SetCapProperty(cv::CAP_PROP_FRAME_HEIGHT , 1200); // 960);
-    //SetCapProperty(cv::CAP_PROP_AUTO_EXPOSURE, 1);
+    SetCapProperty(cv::CAP_PROP_FRAME_WIDTH  , m_scratch->camProps.GetResolution().cx);
+    SetCapProperty(cv::CAP_PROP_FRAME_HEIGHT , m_scratch->camProps.GetResolution().cy);
     SetCapProperty(cv::CAP_PROP_EXPOSURE     , 0);
     SetCapProperty(cv::CAP_PROP_FPS          , 30);
 
@@ -183,124 +189,8 @@ void CameraHiResImpl::DefaultSettings()
     //SetCapProperty(cv::CAP_PROP_BUFFERSIZE, 2);
     // clang-format on
 
-    hrc::DumpSettings("after setup", m_videoCap);
+    DumpSettings("after setup", m_videoCap);
   }
-}
-
-void CameraHiResImpl::ThreadFunc(std::stop_token token)
-{
-  auto fpc = 0;
-  auto now = GetTickCount64();
-
-  cv::Mat images[4];
-  cv::Mat grayImg1;
-  for (unsigned n = 0; !token.stop_requested(); ++n) {
-    if (!m_videoCap.isOpened()) {
-      std::this_thread::sleep_for(std::chrono::milliseconds(100));
-      continue;
-    }
-
-#if 0
-    if (m_image.empty())
-      m_image = cv::imread("D:\\hires_ct.png");
-    m_signal(n);
-    continue;
-#endif
-    auto &colorImg = images[static_cast<int>(Mode::HIRES_COLOR)];
-    auto &grayImg3 = images[static_cast<int>(Mode::HIRES_GRAY)];
-
-    bool ok = m_videoCap.retrieve(colorImg);
-    m_videoCap.grab();
-
-    if (ok && !colorImg.empty()) {
-      cv::cvtColor(colorImg, grayImg1, cv::COLOR_BGR2GRAY);
-      cv::cvtColor(grayImg1, grayImg3, cv::COLOR_GRAY2BGR);
-
-      cv::resize(colorImg, images[static_cast<int>(Mode::LORES_COLOR)], {IMG_COLS, IMG_ROWS});
-      cv::resize(grayImg3, images[static_cast<int>(Mode::LORES_GRAY)], {IMG_COLS, IMG_ROWS});
-
-      {
-        std::lock_guard lock(m_mutex);
-        for (unsigned i = 0; i < _countof(m_images); ++i)
-          images[i].copyTo(m_images[i]);
-      }
-
-      m_signal(n);
-    }
-    else {
-      CAMERA_DILASCIA("Unable to read hi-res image\n");
-    }
-
-    // Frames per second
-    ++fpc;
-    if (auto elapsed = GetTickCount64() - now; elapsed >= 2000)
-    {
-      m_fps = fpc / (elapsed / 1000.0);
-
-      DILASCIA_TRACE_EX("CAM_FPS", "FPS = {:.2f} ({})\n", m_fps, fpc);
-      now = GetTickCount64();
-      fpc = 0;
-    }
-
-  }
-}
-
-// v is 0...255
-double CameraHiResImpl::TranslateProp(int propid, int v)
-{
-  /*****************
-
-  Control                             Reg.            Current         Min.          Max.
-  Control Undefined                   0x00               0             0             0
-  Back light Compensation             0x01               3             0             3
-  Brightness                          0x02              64           -64            64
-  Contrast                            0x03              95             0            95
-  Gain                                0x04             100             0           100
-  Power Line Frequency                0x05               2             0             2
-  Hue                                 0x06            2000         -2000          2000
-  Saturation                          0x07             128             0           128
-  Gamma                               0x08               7             1             7
-  White Balance Temperature           0x09             300           100           300
-  White Balance Temperature (Auto)    0x0a            6500          2800          6500
-                                      0x0b               0             0             0
-  ******************/
-
-  struct PropRange
-  {
-    int    id;
-    double minValue;
-    double maxValue;
-  };
-
-#if 0
-  static PropRange propRange[] = {
-    // clang-format off
-    { cv::CAP_PROP_BRIGHTNESS,   -64,   64},  // Range [  -64,   64]
-    { cv::CAP_PROP_CONTRAST  ,     0,   95},  // Range [    0,   95]
-    { cv::CAP_PROP_HUE       ,  -128,  128},  // Range [-2000, 2000]
-    { cv::CAP_PROP_SATURATION,     0,  128},  // Range [    0,  128]
-    { cv::CAP_PROP_GAIN      ,     0,  100},  // Range [    0,  100]
-    // clang-format on
-  };
-#else
-  static PropRange propRange[] = {
-    // clang-format off
-    { cv::CAP_PROP_BRIGHTNESS,     0, 256},  // Range [   0, 256]
-    { cv::CAP_PROP_CONTRAST  ,     0,  64},  // Range [   0,  64]
-    { cv::CAP_PROP_HUE       ,  -128, 128},  // Range [-180, 180]
-    { cv::CAP_PROP_SATURATION,     0,  20},  // Range [   0,  20]
-    { cv::CAP_PROP_GAIN      ,     0, 100},  // Range [   0, 100]
-    // clang-format on
-  };
-#endif
-
-  double x = v;
-
-  auto i = std::find_if(std::begin(propRange), std::end(propRange), [propid](const auto &x) { return x.id == propid; });
-  if (i != std::end(propRange)) {
-    x = i->minValue + (v / 256.0) * (i->maxValue - i->minValue);
-  }
-  return std::round(x);
 }
 
 bool CameraHiResImpl::SetCapProperty(int propid, int value)
@@ -318,7 +208,7 @@ bool CameraHiResImpl::SetCapProperty(int propid, int value)
     }
   }
   else if (m_capProps[propid] != value) {
-    m_videoCap.set(propid, TranslateProp(propid, value));
+    m_videoCap.set(propid, m_scratch->camProps.TranslatePropery(propid, value));
   }
   else {
     return false;
@@ -327,6 +217,64 @@ bool CameraHiResImpl::SetCapProperty(int propid, int value)
   m_capProps[propid] = value;
   LogProperties(propid);
   return true;
+}
+
+void CameraHiResImpl::ThreadFunc(std::stop_token token)
+{
+  auto fpc = 0;
+  auto now = GetTickCount64();
+
+  for (unsigned n = 0; !token.stop_requested(); ++n) {
+    if (!m_videoCap.isOpened()) {
+      std::this_thread::sleep_for(std::chrono::milliseconds(100));
+      continue;
+    }
+
+    if (ReadImage())
+      m_signal(n);
+
+    // Frames per second
+    ++fpc;
+    if (auto elapsed = GetTickCount64() - now; elapsed >= 2000) {
+      m_fps = fpc / (elapsed / 1000.0);
+
+      DILASCIA_TRACE_EX("CAM_FPS", "FPS = {:.2f} ({})\n", m_fps, fpc);
+      now = GetTickCount64();
+      fpc = 0;
+    }
+  }
+}
+
+bool CameraHiResImpl::ReadImage()
+{
+  auto &colorImg = m_scratch->images[HIRES_COLOR_];
+  auto &grayImg3 = m_scratch->images[HIRES_GRAY3_];
+  auto &grayImg1 = m_scratch->images[HIRES_GRAY1_];
+
+  bool ok = m_videoCap.retrieve(colorImg);
+  m_videoCap.grab();
+
+  if (ok && !colorImg.empty()) {
+    cv::cvtColor(colorImg, grayImg1, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(grayImg1, grayImg3, cv::COLOR_GRAY2BGR);
+
+    cv::resize(colorImg, m_scratch->images[LORES_COLOR_], {IMG_COLS, IMG_ROWS});
+    cv::resize(grayImg3, m_scratch->images[LORES_GRAY3_], {IMG_COLS, IMG_ROWS});
+
+    {
+      std::lock_guard lock(m_mutex);
+      for (unsigned i = 0; i < _countof(m_images); ++i) {
+        //m_images[i] = m_scratch->images[i].clone();
+        m_scratch->images[i].copyTo(m_images[i]);
+      }
+    }
+
+    return true;
+  }
+  else {
+    CAMERA_DILASCIA("Unable to read hi-res image\n");
+    return false;
+  }
 }
 
 void CameraHiResImpl::LogProperties(int onepropid /*= -1*/) const
@@ -363,5 +311,29 @@ void CameraHiResImpl::LogProperties(int onepropid /*= -1*/) const
     else {
       CAMERA_DILASCIA("{:<10} = {:4} ({:5.0f})\n", p.second, m_capProps[p.first], m_videoCap.get(p.first));
     }
+  }
+}
+
+void CameraHiResImpl::DumpSettings(const char *title, cv::VideoCapture &vc)
+{
+  static std::array names = {
+    "CAP_PROP_POS_MSEC            ", "CAP_PROP_POS_FRAMES          ", "CAP_PROP_POS_AVI_RATIO       ", "CAP_PROP_FRAME_WIDTH         ",
+    "CAP_PROP_FRAME_HEIGHT        ", "CAP_PROP_FPS                 ", "CAP_PROP_FOURCC              ", "CAP_PROP_FRAME_COUNT         ",
+    "CAP_PROP_FORMAT              ", "CAP_PROP_MODE                ", "CAP_PROP_BRIGHTNESS          ", "CAP_PROP_CONTRAST            ",
+    "CAP_PROP_SATURATION          ", "CAP_PROP_HUE                 ", "CAP_PROP_GAIN                ", "CAP_PROP_EXPOSURE            ",
+    "CAP_PROP_CONVERT_RGB         ", "CAP_PROP_WHITE_BALANCE_BLUE_U", "CAP_PROP_RECTIFICATION       ", "CAP_PROP_MONOCHROME          ",
+    "CAP_PROP_SHARPNESS           ", "CAP_PROP_AUTO_EXPOSURE       ", "CAP_PROP_GAMMA               ", "CAP_PROP_TEMPERATURE         ",
+    "CAP_PROP_TRIGGER             ", "CAP_PROP_TRIGGER_DELAY       ", "CAP_PROP_WHITE_BALANCE_RED_V ", "CAP_PROP_ZOOM                ",
+    "CAP_PROP_FOCUS               ", "CAP_PROP_GUID                ", "CAP_PROP_ISO_SPEED           ", "CAP_PROP_BACKLIGHT           ",
+    "CAP_PROP_PAN                 ", "CAP_PROP_TILT                ", "CAP_PROP_ROLL                ", "CAP_PROP_IRIS                ",
+    "CAP_PROP_SETTINGS            ", "CAP_PROP_BUFFERSIZE          ", "CAP_PROP_AUTOFOCUS           ", "CAP_PROP_SAR_NUM             ",
+    "CAP_PROP_SAR_DEN             ", "CAP_PROP_BACKEND             ", "CAP_PROP_CHANNEL             ", "CAP_PROP_AUTO_WB             ",
+    "CAP_PROP_WB_TEMPERATURE      ", "CAP_PROP_CODEC_PIXEL_FORMAT  ", "CAP_PROP_BITRATE             ",
+  };
+
+  DILASCIA_TRACE_EX("CAMERA", fmt::format("------- {} -----------\n", title).c_str());
+  for (int i = 0; i < 47; ++i) {
+    auto x = vc.get(i);
+    DILASCIA_TRACE_EX("CAMERA", fmt::format("{} = {}\n", names[i], (int)x).c_str());
   }
 }

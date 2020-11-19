@@ -24,20 +24,22 @@ void HardwareHiresCamera::StartTransferringVideoFrame()
 {
   //m_cameraImpl->StartCapture();
   m_getNewImage = true;
+  m_cameraImpl->StartFrameTransfer();
 }
 
 void HardwareHiresCamera::FinishTransferringVideoFrame()
 {
   //m_cameraImpl->StopCapture();
-  m_getNewImage = false;
-  Sleep(30);
+  //m_getNewImage = false;
+  //Sleep(30);
+  m_cameraImpl->StopFrameTransfer();
 }
 
 uchar *HardwareHiresCamera::GetRGBData(bool color)
 {
   if (Connected()) {
     if (m_getNewImage) {
-      auto mode = color ? Camera::Mode::LORES_COLOR : Camera::Mode::LORES_GRAY; 
+      auto mode = color ? Camera::Mode::LORES_COLOR : Camera::Mode::LORES_GRAY;
       if (!m_cameraImpl->GetImage(m_image, mode))
         return nullptr;
 

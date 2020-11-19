@@ -7,6 +7,7 @@
 
 #include "CTAcquisition.h"
 #include "AppVersion.h"
+#include "libs/LoggingLib/TkTraceWin.h"
 
 //***************************************************************************************
 //***************************************************************************************
@@ -217,6 +218,9 @@ void CCTAcquisition::Main()
 		::Sleep(0);
 	}
 	//Acquisition loop Done
+  char sz[80];
+  sprintf_s(sz, "Avg Cycle time = %.1f ms\n", 1000 * m_AverageCycleTime / CLOCKS_PER_SEC);
+  DILASCIA_TRACE_EX("FPS", sz);
 
 	if (m_TriLaserOn)
 	{

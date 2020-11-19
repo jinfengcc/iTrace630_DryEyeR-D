@@ -6,6 +6,8 @@
 #include "Spline.h"
 #include "libs/CalcLib/Image/ImgEnhanceContrast.h"
 
+#define USE_THREAD
+
 using hal::ICameraHires;
 
 enum class Orient { none, rotate, flipx, flipy };
@@ -20,15 +22,31 @@ NLOHMANN_JSON_SERIALIZE_ENUM(Orient, {
 
 bool CCameraHiresView::OnHide(bool)
 {
+  if (m_thread.joinable()) {
+    m_thread.request_stop();
+    m_thread.join();
+  }
+
   if (m_camera)
     m_camera->StopCapture();
+
   return true;
 }
 
 void CCameraHiresView::OnShow()
 {
+#ifdef USE_THREAD
+  m_thread = std::jthread([this](std::stop_token token) {
+    while (!token.stop_requested()) {
+      m_camera->StartFrameTransfer();
+      m_cameraWnd.Invalidate();
+      m_camera->StopFrameTransfer();
+    }
+  });
+#else
   if (m_camera)
     m_camera->StartCapture([this](unsigned) { m_cameraWnd.Invalidate(); });
+#endif
 }
 
 void CCameraHiresView::OnTerminating()
