@@ -71,7 +71,7 @@ bool CameraHiResImpl::Settings(ITraceyConfig *pc)
     std::make_pair(ICameraHires::SATURATION, cv::CAP_PROP_SATURATION),
     std::make_pair(ICameraHires::HUE       , cv::CAP_PROP_HUE       ),
     std::make_pair(ICameraHires::GAIN      , cv::CAP_PROP_GAIN      ),
-    std::make_pair(ICameraHires::EXPOSURE  , cv::CAP_PROP_EXPOSURE  ),
+    //std::make_pair(ICameraHires::EXPOSURE  , cv::CAP_PROP_EXPOSURE  ),
     // clang-format on
   };
 
@@ -166,14 +166,21 @@ void CameraHiResImpl::DefaultSettings()
 
     // clang-format off
     SetCapProperty(cv::CAP_PROP_FOURCC       , fourcc);
-    SetCapProperty(cv::CAP_PROP_FRAME_WIDTH  , 1280);
-    SetCapProperty(cv::CAP_PROP_FRAME_HEIGHT , 960);
-    SetCapProperty(cv::CAP_PROP_AUTO_EXPOSURE, 1);
-    // SetCapProperty(cv::CAP_PROP_EXPOSURE     , 0);
-    // SetCapProperty(cv::CAP_PROP_GAIN         , 100);
-    // SetCapProperty(cv::CAP_PROP_ISO_SPEED , 400);
-    // SetCapProperty(cv::CAP_PROP_BACKLIGHT , 0);
-    // SetCapProperty(cv::CAP_PROP_BUFFERSIZE, 2);
+    SetCapProperty(cv::CAP_PROP_FRAME_WIDTH  , 1600); // 1280);
+    SetCapProperty(cv::CAP_PROP_FRAME_HEIGHT , 1200); // 960);
+    //SetCapProperty(cv::CAP_PROP_AUTO_EXPOSURE, 1);
+    SetCapProperty(cv::CAP_PROP_EXPOSURE     , 0);
+    SetCapProperty(cv::CAP_PROP_FPS          , 30);
+
+    //SetCapProperty( cv::CAP_PROP_BRIGHTNESS, 100);
+    //SetCapProperty( cv::CAP_PROP_CONTRAST  , 10);
+    //SetCapProperty( cv::CAP_PROP_SATURATION, 70);
+    //SetCapProperty( cv::CAP_PROP_HUE       , 128);
+
+    //SetCapProperty(cv::CAP_PROP_GAIN      , 100);
+    //SetCapProperty(cv::CAP_PROP_ISO_SPEED , 400);
+    //SetCapProperty(cv::CAP_PROP_BACKLIGHT , 0);
+    //SetCapProperty(cv::CAP_PROP_BUFFERSIZE, 2);
     // clang-format on
 
     hrc::DumpSettings("after setup", m_videoCap);
@@ -265,6 +272,7 @@ double CameraHiResImpl::TranslateProp(int propid, int v)
     double maxValue;
   };
 
+#if 0
   static PropRange propRange[] = {
     // clang-format off
     { cv::CAP_PROP_BRIGHTNESS,   -64,   64},  // Range [  -64,   64]
@@ -274,6 +282,17 @@ double CameraHiResImpl::TranslateProp(int propid, int v)
     { cv::CAP_PROP_GAIN      ,     0,  100},  // Range [    0,  100]
     // clang-format on
   };
+#else
+  static PropRange propRange[] = {
+    // clang-format off
+    { cv::CAP_PROP_BRIGHTNESS,     0, 256},  // Range [   0, 256]
+    { cv::CAP_PROP_CONTRAST  ,     0,  64},  // Range [   0,  64]
+    { cv::CAP_PROP_HUE       ,  -128, 128},  // Range [-180, 180]
+    { cv::CAP_PROP_SATURATION,     0,  20},  // Range [   0,  20]
+    { cv::CAP_PROP_GAIN      ,     0, 100},  // Range [   0, 100]
+    // clang-format on
+  };
+#endif
 
   double x = v;
 

@@ -4,6 +4,7 @@
 #include "Resource.h"
 #include "RingsToolDlg.h"
 #include "BusyCursor.h"
+#include "libs/LoggingLib/TkTraceWin.h"
 
 //***************************************************************************************
 //***************************************************************************************
@@ -411,6 +412,18 @@ LRESULT CRingsToolDlg::OnFinish(WPARAM wParam, LPARAM lParam)
 
 LRESULT CRingsToolDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 {
+  ++m_frameCount;
+  if (auto elapsed = GetTickCount64() - m_frameTimer; elapsed >= 2000) {
+    m_framesPerSecond = m_frameCount / (elapsed / 1000.0);
+
+	char sz[80];
+	sprintf(sz, "%.1f FPS (%d)\n", m_framesPerSecond, m_frameCount);
+	DILASCIA_TRACE_EX("FPS", sz);
+
+    m_frameTimer = GetTickCount64();
+    m_frameCount = 0;
+  }
+
 	memcpy(m_Video1Wnd.m_MemDC.m_RGBData, m_pCTAcquisition->m_pHW->GetRGBData(), CHW::m_VideoSize);
 
 	CEyeImage* pImage = &m_pCTAcquisition->m_CTExam.m_Image;

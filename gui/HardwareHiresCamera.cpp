@@ -22,6 +22,7 @@ int HardwareHiresCamera::GetHeight() const
 
 void HardwareHiresCamera::StartTransferringVideoFrame()
 {
+  //m_cameraImpl->StartCapture();
   m_getNewImage = true;
 }
 
@@ -29,6 +30,7 @@ void HardwareHiresCamera::FinishTransferringVideoFrame()
 {
   //m_cameraImpl->StopCapture();
   m_getNewImage = false;
+  Sleep(30);
 }
 
 uchar *HardwareHiresCamera::GetRGBData(bool color)

@@ -2,6 +2,7 @@
 
 #include "StdAfx.h"
 #include "LiveVideo.h"
+#include "libs/LoggingLib/TkTraceWin.h"
 
 //***************************************************************************************
 //***************************************************************************************
@@ -124,6 +125,10 @@ void CLiveVideo::Main()
 
 		::Sleep(0);
 	}
+
+	char sz[80];
+  sprintf_s(sz, "Avg Cycle time = %.1f ms\n", 1000 * m_AverageCycleTime / CLOCKS_PER_SEC);
+  DILASCIA_TRACE_EX("FPS", sz);
 
 	m_pHW->TurnInfraredLEDsOff();
 	m_pHW->TurnWhiteLEDsOff();
