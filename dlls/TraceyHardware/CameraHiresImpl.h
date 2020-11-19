@@ -22,6 +22,8 @@ public:
   bool          Settings(ITraceyConfig *tc);
   sig::SignalId StartCapture(std::function<void(unsigned)> notify);
   void          StopCapture(sig::SignalId sigId);
+  void          StartFrameTransfer();
+  void          StopFrameTransfer();
   bool          GetImage(Mode mode, cv::Mat &img) const;
 
 private:

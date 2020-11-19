@@ -109,6 +109,14 @@ void CameraHiResImpl::StopCapture(sig::SignalId sigId)
   }
 }
 
+void CameraHiResImpl::StartFrameTransfer()
+{
+}
+
+void CameraHiResImpl::StopFrameTransfer()
+{
+}
+
 bool CameraHiResImpl::GetImage(Mode mode, cv::Mat &img) const
 {
   if (m_thread.joinable()) {

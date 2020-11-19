@@ -66,6 +66,10 @@ namespace hal {
     virtual void StartCapture(std::function<void(unsigned)> notify) = 0;
     virtual void StopCapture()                                     = 0;
 
+    //! Starts Frame transfer (simulate old camera driver)
+    virtual void StartFrameTransfer() = 0;
+    virtual void StopFrameTransfer()  = 0;
+
     //! Returns the most recent captured image
     virtual bool GetImage(cv::Mat & mat, Mode mode) const = 0;
 

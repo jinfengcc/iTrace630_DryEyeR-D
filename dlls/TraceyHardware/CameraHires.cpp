@@ -29,11 +29,6 @@ void CameraHires::Initialize(IUnknown *unk)
 
   m_pimpl->Open();
   m_pimpl->Settings(m_config.get());
-
-  // Prime the camera
-  //cv::Mat img;
-  //for (int i = 0; i < 5; ++i)
-  //  GetImage(img, Mode::HIRES);
 }
 
 bool CameraHires::Connect(bool yes)
@@ -56,6 +51,16 @@ void CameraHires::StopCapture()
 {
   m_pimpl->StopCapture(m_configSignalId);
   m_configSignalId = 0;
+}
+
+void CameraHires::StartFrameTransfer()
+{
+  m_pimpl->StartFrameTransfer();
+}
+
+void CameraHires::StopFrameTransfer()
+{
+  m_pimpl->StopFrameTransfer();
 }
 
 bool CameraHires::GetImage(cv::Mat &img, Mode mode) const
