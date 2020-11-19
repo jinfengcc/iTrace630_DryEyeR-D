@@ -23,6 +23,9 @@ private:
   BOOL                       m_cameraPower{};
   ICamera::SETTINGS          m_settings{};
   BOOL                       m_imgUnwrap;
+  double                     m_framesPerSecond{};
+  int                        m_frameCount{};
+  std::int64_t               m_frameTimer{};
 
   void OnTimer(UINT_PTR nIDEvent);
   void OnButtonClicked(UINT uNotifyCode, int nID, CWindow wndCtl);
