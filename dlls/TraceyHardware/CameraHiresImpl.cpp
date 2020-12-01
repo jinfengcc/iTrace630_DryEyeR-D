@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CameraHiresImpl.h"
 #include "CameraHiresProps.h"
+#include "ids/IDSVideoCapture.h"
 
 // using namespace std::literals;
 
@@ -39,7 +40,7 @@ bool CameraHiResImpl::Open()
 
   // m_devName = devName;
   if (Connect(true)) {
-    m_videoCap.grab();
+    m_videoCap->grab();
   }
 
   return Connected();
@@ -52,7 +53,7 @@ void CameraHiResImpl::Close()
     m_thread.request_stop();
     m_thread.join();
   }
-  m_videoCap.release();
+  m_videoCap = nullptr;
 }
 
 bool CameraHiResImpl::Connected(double *fps) const
@@ -60,27 +61,29 @@ bool CameraHiResImpl::Connected(double *fps) const
   if (fps)
     *fps = m_fps;
 
-  return m_videoCap.isOpened();
+  return m_videoCap && m_videoCap->isOpened();
 }
 
 bool CameraHiResImpl::Connect(bool yes)
 {
-  if (auto prev = m_videoCap.isOpened(); prev != yes) {
-    if (yes) {
-      m_scratch->camProps.Initialize();
-      auto devid = m_scratch->camProps.GetDeviceId();
-      if (devid < 0)
-        return false;
+  m_videoCap = nullptr;
+  if (!yes)
+    return true;
 
-      m_videoCap.open(devid);
-      DefaultSettings();
-    }
-    else {
-      m_videoCap.release();
-    }
+  m_scratch->camProps.Initialize();
+  auto devid = m_scratch->camProps.GetDeviceId();
+  if (devid < 0) {
+    //m_videoCap = std::make_unique<IDSVideoCapture>(0);
+
+    return false;
   }
+  else {
+    m_videoCap = std::make_unique<cv::VideoCapture>();
+    m_videoCap->open(devid);
+    DefaultSettings();
 
-  return true;
+    return true;
+  }
 }
 
 bool CameraHiResImpl::Settings(ITraceyConfig *pc)
@@ -167,7 +170,7 @@ bool CameraHiResImpl::GetImage(Mode mode, cv::Mat &img)
 void CameraHiResImpl::DefaultSettings()
 {
   if (Connected()) {
-    DumpSettings("before setup", m_videoCap);
+    DumpSettings("before setup", *m_videoCap);
 
     auto fourcc = cv::VideoWriter::fourcc('M', 'J', 'P', 'G');
 
@@ -189,7 +192,7 @@ void CameraHiResImpl::DefaultSettings()
     //SetCapProperty(cv::CAP_PROP_BUFFERSIZE, 2);
     // clang-format on
 
-    DumpSettings("after setup", m_videoCap);
+    DumpSettings("after setup", *m_videoCap);
   }
 }
 
@@ -197,18 +200,18 @@ bool CameraHiResImpl::SetCapProperty(int propid, int value)
 {
   if (propid == cv::CAP_PROP_EXPOSURE) {
     if (value) {
-      m_videoCap.set(cv::CAP_PROP_EXPOSURE, value);
+      m_videoCap->set(cv::CAP_PROP_EXPOSURE, value);
     }
     else {
       // Somehow going to auto does not work if the manual was set to long exposure.
       // So, step manually to a low setting and then set auto.
       const auto stepForAuto = static_cast<int>(ICameraHires::Exposure::_5ms);
-      m_videoCap.set(cv::CAP_PROP_EXPOSURE, stepForAuto);
-      m_videoCap.set(cv::CAP_PROP_AUTO_EXPOSURE, 1);
+      m_videoCap->set(cv::CAP_PROP_EXPOSURE, stepForAuto);
+      m_videoCap->set(cv::CAP_PROP_AUTO_EXPOSURE, 1);
     }
   }
   else if (m_capProps[propid] != value) {
-    m_videoCap.set(propid, m_scratch->camProps.TranslatePropery(propid, value));
+    m_videoCap->set(propid, m_scratch->camProps.TranslatePropery(propid, value));
   }
   else {
     return false;
@@ -225,7 +228,7 @@ void CameraHiResImpl::ThreadFunc(std::stop_token token)
   auto now = GetTickCount64();
 
   for (unsigned n = 0; !token.stop_requested(); ++n) {
-    if (!m_videoCap.isOpened()) {
+    if (!m_videoCap->isOpened()) {
       std::this_thread::sleep_for(std::chrono::milliseconds(100));
       continue;
     }
@@ -251,8 +254,8 @@ bool CameraHiResImpl::ReadImage()
   auto &grayImg3 = m_scratch->images[HIRES_GRAY3_];
   auto &grayImg1 = m_scratch->images[HIRES_GRAY1_];
 
-  bool ok = m_videoCap.retrieve(colorImg);
-  m_videoCap.grab();
+  bool ok = m_videoCap->retrieve(colorImg);
+  m_videoCap->grab();
 
   if (ok && !colorImg.empty()) {
     cv::cvtColor(colorImg, grayImg1, cv::COLOR_BGR2GRAY);
@@ -264,7 +267,7 @@ bool CameraHiResImpl::ReadImage()
     {
       std::lock_guard lock(m_mutex);
       for (unsigned i = 0; i < _countof(m_images); ++i) {
-        //m_images[i] = m_scratch->images[i].clone();
+        // m_images[i] = m_scratch->images[i].clone();
         m_scratch->images[i].copyTo(m_images[i]);
       }
     }
@@ -309,7 +312,7 @@ void CameraHiResImpl::LogProperties(int onepropid /*= -1*/) const
       CAMERA_DILASCIA("{:<10} = {}\n", p.second, txt);
     }
     else {
-      CAMERA_DILASCIA("{:<10} = {:4} ({:5.0f})\n", p.second, m_capProps[p.first], m_videoCap.get(p.first));
+      CAMERA_DILASCIA("{:<10} = {:4} ({:5.0f})\n", p.second, m_capProps[p.first], m_videoCap->get(p.first));
     }
   }
 }

@@ -16,6 +16,7 @@ class CCameraHiresView
 {
 public:
   CCameraHiresView() = default;
+  ~CCameraHiresView();
 
   enum { IDD = IDD_VIEW_CAMEARA_HIRES };
 

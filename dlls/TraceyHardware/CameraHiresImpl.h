@@ -25,10 +25,11 @@ public:
 
 private:
   using CapProperties = std::array<int, cv::CV__CAP_PROP_LATEST>;
+  using VideoCapturePtr = std::unique_ptr<cv::VideoCapture>;
 
   struct Scratch;
   std::unique_ptr<Scratch> m_scratch;
-  mutable cv::VideoCapture m_videoCap;
+  mutable VideoCapturePtr  m_videoCap;
   mutable std::mutex       m_mutex;
   std::jthread             m_thread;
   sig::Signal<unsigned>    m_signal;

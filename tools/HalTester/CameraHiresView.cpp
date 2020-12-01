@@ -20,6 +20,11 @@ NLOHMANN_JSON_SERIALIZE_ENUM(Orient, {
                                        {Orient::flipy, "flipy"},
                                      })
 
+CCameraHiresView::~CCameraHiresView()
+{
+  OnHide(true);
+}
+
 bool CCameraHiresView::OnHide(bool)
 {
   if (m_thread.joinable()) {
@@ -51,7 +56,7 @@ void CCameraHiresView::OnShow()
 
 void CCameraHiresView::OnTerminating()
 {
-  m_camera->StopCapture();
+  OnHide(true);
 }
 
 BOOL CCameraHiresView::OnInitDialog(CWindow wndFocus, LPARAM lInitParam)
