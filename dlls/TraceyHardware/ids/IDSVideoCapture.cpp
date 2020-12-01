@@ -33,6 +33,9 @@ bool IDSVideoCapture::open(int _index, int apiPreferenece)
     is_GetCameraInfo(m_hCam, &m_cameraInfo);
     is_GetSensorInfo(m_hCam, &m_sensorInfo);
 
+    auto nRet = is_ParameterSet(m_hCam, IS_PARAMETERSET_CMD_LOAD_FILE, (void *)LR"(C:\1\ids_settings.ini)", NULL);
+
+
     // Use maximum dimensions
     m_width  = m_sensorInfo.nMaxWidth;
     m_height = m_sensorInfo.nMaxHeight;
@@ -50,6 +53,9 @@ bool IDSVideoCapture::open(int _index, int apiPreferenece)
     // Initialize start time and start the camera running
     m_startTime = time(nullptr);
     is_CaptureVideo(m_hCam, IS_DONT_WAIT);
+
+    // Run experiments
+    Experiments();
   }
 
   return isOpened();
@@ -177,4 +183,55 @@ bool IDSVideoCapture::set(int propId, double value)
   }
 
   return false;
+}
+
+void IDSVideoCapture::Experiments()
+{
+  /*
+    In general, the pixel clock is set once when opening the camera and will not be changed. Note that, if you change the pixel clock, the
+    setting ranges for frame rate and exposure time also changes. If you change a parameter, the following order is recommended:
+
+    1.Change pixel clock.
+    2.Query frame rate range and, if applicable, set new value.
+    3.Query exposure time range and, if applicable, set new value.
+
+    If one parameter is changed, the following parameters have to be adjusted due to the dependencies.
+  */
+  return;
+  INT nRet;
+
+  double fps;
+  nRet = is_GetFramesPerSecond(m_hCam, &fps);
+
+  // Get current pixel clock
+  UINT nPixelClock;
+  nRet = is_PixelClock(m_hCam, IS_PIXELCLOCK_CMD_GET, (void *)&nPixelClock, sizeof(nPixelClock));
+
+  // Get default pixel clock
+  UINT nPixelClockDefault;
+  nRet = is_PixelClock(m_hCam, IS_PIXELCLOCK_CMD_GET_DEFAULT, (void *)&nPixelClockDefault, sizeof(nPixelClockDefault));
+
+  if (nRet == IS_SUCCESS)
+    nRet = is_PixelClock(m_hCam, IS_PIXELCLOCK_CMD_SET, (void *)&nPixelClockDefault, sizeof(nPixelClockDefault));
+
+  double minr, maxr, intr;
+  nRet = is_GetFrameTimeRange(m_hCam, &minr, &maxr, &intr);
+
+  double dDummy;
+  nRet = is_SetFrameRate(m_hCam, 25.0, &dDummy);
+
+  double dblRange[3];
+  nRet = is_Exposure(m_hCam, IS_EXPOSURE_CMD_GET_EXPOSURE_RANGE, (void *)dblRange, sizeof(dblRange));
+  auto dMin = dblRange[0];
+  auto dMax = dblRange[1];
+  auto dInt = dblRange[2];
+
+  nRet = is_Exposure(m_hCam, IS_EXPOSURE_CMD_SET_EXPOSURE, (void *)&dMax, sizeof(dMax));
+
+  // and remember the value for later use
+  double m_ExposureTime;
+  nRet = is_Exposure(m_hCam, IS_EXPOSURE_CMD_GET_EXPOSURE, (void *)&m_ExposureTime, sizeof(m_ExposureTime));
+
+// Load parameters from file
+  //nRet = is_ParameterSet(m_hCam, IS_PARAMETERSET_CMD_LOAD_FILE, (void *)LR"(C:\1\ids_settings.ini)", NULL);
 }

@@ -23,6 +23,8 @@ private:
   char *     m_imageMemoryAddr[NUM_BUFFERS] = {nullptr}; // Pointers to all buffers in memory that are given to uEye API.
   int        m_imageMemoryId[NUM_BUFFERS];               // API references to image memory.
 
+  void Experiments();
+
 public:
   IDSVideoCapture();
   IDSVideoCapture(int index);

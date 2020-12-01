@@ -73,17 +73,18 @@ bool CameraHiResImpl::Connect(bool yes)
   m_scratch->camProps.Initialize();
   auto devid = m_scratch->camProps.GetDeviceId();
   if (devid < 0) {
-    //m_videoCap = std::make_unique<IDSVideoCapture>(0);
-
-    return false;
+    m_videoCap = std::make_unique<IDSVideoCapture>();
+    if (!m_videoCap->open(0))
+      return false;
   }
   else {
     m_videoCap = std::make_unique<cv::VideoCapture>();
-    m_videoCap->open(devid);
-    DefaultSettings();
-
-    return true;
+    if (!m_videoCap->open(devid))
+      return false;
   }
+
+  DefaultSettings();
+  return true;
 }
 
 bool CameraHiResImpl::Settings(ITraceyConfig *pc)
