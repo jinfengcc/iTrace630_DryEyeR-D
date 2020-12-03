@@ -41,6 +41,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCommonLib", "tests\Test
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CalcLib", "libs\CalcLib\CalcLib.vcxproj", "{FE883FA5-BD68-49D8-9B77-0211817DD014}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LogTester2015", "tools\LogTester2015\LogTester2015.vcxproj", "{5DD05D4E-CA14-479D-87B5-10D8AB2DBD04}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		interfaces\interfaces.vcxitems*{136cc8c9-d852-494e-8036-46b22062b2c4}*SharedItemsImports = 4
@@ -120,6 +122,14 @@ Global
 		{FE883FA5-BD68-49D8-9B77-0211817DD014}.Release|x64.Build.0 = Release|x64
 		{FE883FA5-BD68-49D8-9B77-0211817DD014}.Release|x86.ActiveCfg = Release|Win32
 		{FE883FA5-BD68-49D8-9B77-0211817DD014}.Release|x86.Build.0 = Release|Win32
+		{5DD05D4E-CA14-479D-87B5-10D8AB2DBD04}.Debug|x64.ActiveCfg = Debug|x64
+		{5DD05D4E-CA14-479D-87B5-10D8AB2DBD04}.Debug|x64.Build.0 = Debug|x64
+		{5DD05D4E-CA14-479D-87B5-10D8AB2DBD04}.Debug|x86.ActiveCfg = Debug|Win32
+		{5DD05D4E-CA14-479D-87B5-10D8AB2DBD04}.Debug|x86.Build.0 = Debug|Win32
+		{5DD05D4E-CA14-479D-87B5-10D8AB2DBD04}.Release|x64.ActiveCfg = Release|x64
+		{5DD05D4E-CA14-479D-87B5-10D8AB2DBD04}.Release|x64.Build.0 = Release|x64
+		{5DD05D4E-CA14-479D-87B5-10D8AB2DBD04}.Release|x86.ActiveCfg = Release|Win32
+		{5DD05D4E-CA14-479D-87B5-10D8AB2DBD04}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -133,6 +143,7 @@ Global
 		{903470EB-776F-48D6-B163-0CC6C1C560D5} = {4B2E1044-2F63-40D6-A660-2B31664ED146}
 		{7A7033CE-4050-445A-BD81-64EAA08693A0} = {E11760C6-C9C1-43D1-82B0-1CB55795FB7D}
 		{FE883FA5-BD68-49D8-9B77-0211817DD014} = {4B2E1044-2F63-40D6-A660-2B31664ED146}
+		{5DD05D4E-CA14-479D-87B5-10D8AB2DBD04} = {D2ADC48A-2854-4C5E-8E27-2100CA1B9B46}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {96C5B899-B67E-4E96-8D57-A4A6518A61A2}
