@@ -9,22 +9,6 @@
 */
 class IDSVideoCapture : public cv::VideoCapture
 {
-
-private:
-  enum { NUM_BUFFERS = 2 };
-
-  HIDS       m_hCam = 0;
-  CAMINFO    m_cameraInfo;
-  SENSORINFO m_sensorInfo;
-  int        m_width;
-  int        m_height;
-  time_t     m_startTime;                                // Time stamp for camera recording start.
-  char *     m_lockedMemory                 = nullptr;   // Pointer to currently locked frame.
-  char *     m_imageMemoryAddr[NUM_BUFFERS] = {nullptr}; // Pointers to all buffers in memory that are given to uEye API.
-  int        m_imageMemoryId[NUM_BUFFERS];               // API references to image memory.
-
-  void Experiments();
-
 public:
   IDSVideoCapture();
   IDSVideoCapture(int index);
@@ -53,4 +37,20 @@ public:
     WARNING: not implemented
   */
   bool set(int propId, double value) override;
+
+private:
+  enum { NUM_BUFFERS = 2 };
+
+  HIDS       m_hCam = 0;
+  CAMINFO    m_cameraInfo;
+  SENSORINFO m_sensorInfo;
+  int        m_width;
+  int        m_height;
+  time_t     m_startTime;                                // Time stamp for camera recording start.
+  char *     m_lockedMemory                 = nullptr;   // Pointer to currently locked frame.
+  char *     m_imageMemoryAddr[NUM_BUFFERS] = {nullptr}; // Pointers to all buffers in memory that are given to uEye API.
+  int        m_imageMemoryId[NUM_BUFFERS];               // API references to image memory.
+
+  static bool Configure(HIDS hCam);
+  void        Experiments();
 };
