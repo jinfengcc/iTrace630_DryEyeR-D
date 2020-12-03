@@ -43,10 +43,7 @@ bool IDSVideoCapture::open(int _index, int apiPreferenece)
     m_height = m_sensorInfo.nMaxHeight;
 
     // Allocate memory for API to load frames into
-    for (int i = 0; i < NUM_BUFFERS; ++i) {
-      is_AllocImageMem(m_hCam, m_sensorInfo.nMaxWidth, m_sensorInfo.nMaxHeight, 8 * 3, &m_imageMemoryAddr[i], &m_imageMemoryId[i]);
-      is_AddToSequence(m_hCam, m_imageMemoryAddr[i], m_imageMemoryId[i]);
-    }
+    AllocateImgMem(m_sensorInfo.nMaxWidth, m_sensorInfo.nMaxHeight);
 
     // Tell API to load frames into memory and set the format
     is_SetDisplayMode(m_hCam, IS_SET_DM_DIB);
@@ -71,12 +68,7 @@ void IDSVideoCapture::release()
     is_StopLiveVideo(m_hCam, IS_FORCE_VIDEO_STOP);
 
     // Release memory
-    is_ClearSequence(m_hCam);
-    for (int i = 0; i < NUM_BUFFERS; ++i) {
-      if (m_imageMemoryAddr[i] != nullptr) {
-        is_FreeImageMem(m_hCam, m_imageMemoryAddr[i], m_imageMemoryId[i]);
-      }
-    }
+    FreeImgMem();
 
     // Close the camera handle
     is_ExitCamera(m_hCam);
@@ -91,36 +83,43 @@ bool IDSVideoCapture::isOpened() const
 
 bool IDSVideoCapture::grab()
 {
-  if (isOpened()) {
+  return isOpened();
+  //if (isOpened()) {
 
-    // Unlock image memory to allow the API to write to the previously
-    // locked buffer
-    if (m_lockedMemory != nullptr) {
-      is_UnlockSeqBuf(m_hCam, IS_IGNORE_PARAMETER, m_lockedMemory);
-    }
+  //  // Unlock image memory to allow the API to write to the previously
+  //  // locked buffer
+  //  if (m_lockedMemory != nullptr) {
+  //    is_UnlockSeqBuf(m_hCam, IS_IGNORE_PARAMETER, m_lockedMemory);
+  //  }
 
-    // Grab the last (and not current) image buffer
-    is_GetActSeqBuf(m_hCam, nullptr, nullptr, &m_lockedMemory);
-    is_LockSeqBuf(m_hCam, IS_IGNORE_PARAMETER, m_lockedMemory);
+  //  // Grab the last (and not current) image buffer
+  //  is_GetActSeqBuf(m_hCam, nullptr, nullptr, &m_lockedMemory);
+  //  is_LockSeqBuf(m_hCam, IS_IGNORE_PARAMETER, m_lockedMemory);
 
-    return true;
-  }
-  else {
-    return false;
-  }
+  //  return true;
+  //}
+  //else {
+  //  return false;
+  //}
 }
 
 bool IDSVideoCapture::retrieve(cv::OutputArray image, int flag)
 {
-  if (isOpened()) {
-    // Initialize Mat using locked memory and then duplicate into output
-    cv::Mat ref(m_height, m_width, CV_8UC3, (void *)m_lockedMemory);
-    ref.copyTo(image);
-    return true;
+  char *pLast       = nullptr;
+  INT   lMemoryId   = 0;
+  INT   lSequenceId = 0;
+
+  if (auto pLast = GetLastMem()) {
+    auto nRet = is_LockSeqBuf(m_hCam, IS_IGNORE_PARAMETER, pLast);
+
+    if (IS_SUCCESS == nRet) {
+      cv::Mat ref(m_height, m_width, CV_8UC3, pLast);
+      ref.copyTo(image);
+      is_UnlockSeqBuf(m_hCam, IS_IGNORE_PARAMETER, pLast);
+    }
   }
-  else {
-    return false;
-  }
+
+  return false;
 }
 
 double IDSVideoCapture::get(int propid) const
@@ -226,6 +225,68 @@ bool IDSVideoCapture::Configure(HIDS hCam)
   //  return false;
 
   return true;
+}
+
+bool IDSVideoCapture::AllocateImgMem(int sizeX, int sizeY, int bitsPerPixel)
+{
+  for (auto &m : m_memVector) {
+    auto err = is_AllocImageMem(m_hCam, sizeX, sizeY, bitsPerPixel, &m.pcImageMemory, &m.lMemoryId);
+
+    if (err == IS_SUCCESS)
+      err = is_AddToSequence(m_hCam, m.pcImageMemory, m.lMemoryId);
+
+    if (err != IS_SUCCESS) {
+      FreeImgMem();
+      return false;
+    }
+  }
+
+  return true;
+}
+
+void IDSVideoCapture::FreeImgMem()
+{
+  is_ClearSequence(m_hCam);
+  for (auto &m : m_memVector) {
+    if (m.pcImageMemory)
+      (void)is_FreeImageMem(m_hCam, m.pcImageMemory, m.lMemoryId);
+    m = {};
+  }
+}
+
+char *IDSVideoCapture::GetLastMem() const
+{
+  char *pLast       = nullptr;
+  INT   lMemoryId   = 0;
+  INT   lSequenceId = 0;
+
+  return GetLastMem(&pLast, lMemoryId, lSequenceId) ? pLast : nullptr;
+}
+
+bool IDSVideoCapture::GetLastMem(char **ppLastMem, INT &lMemoryId, INT &lSequenceId) const
+{
+  int   dummy = 0;
+  char *pLast = nullptr;
+  char *pMem  = nullptr;
+
+  auto nRet = is_GetActSeqBuf(m_hCam, &dummy, &pMem, &pLast);
+
+  if ((IS_SUCCESS == nRet) && (nullptr != pLast)) {
+    nRet = IS_NO_SUCCESS;
+
+    for (auto &m : m_memVector) {
+      if (pLast == m.pcImageMemory) {
+        *ppLastMem  = m.pcImageMemory;
+        lMemoryId   = m.lMemoryId;
+        lSequenceId = m.lSequenceId;
+        nRet        = IS_SUCCESS;
+
+        break;
+      }
+    }
+  }
+
+  return nRet == IS_SUCCESS;
 }
 
 void IDSVideoCapture::Experiments()
