@@ -3,9 +3,6 @@
 #include "CameraHiresImpl.h"
 #include <interfaces/ITraceyConfig.h>
 
-namespace {
-}
-
 CameraHires::CameraHires()
   : Implements<hal::ICameraHires>("ICameraHires")
 {

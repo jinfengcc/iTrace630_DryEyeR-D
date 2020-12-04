@@ -105,10 +105,6 @@ bool IDSVideoCapture::grab()
 
 bool IDSVideoCapture::retrieve(cv::OutputArray image, int flag)
 {
-  char *pLast       = nullptr;
-  INT   lMemoryId   = 0;
-  INT   lSequenceId = 0;
-
   if (auto pLast = GetLastMem()) {
     auto nRet = is_LockSeqBuf(m_hCam, IS_IGNORE_PARAMETER, pLast);
 
@@ -116,6 +112,8 @@ bool IDSVideoCapture::retrieve(cv::OutputArray image, int flag)
       cv::Mat ref(m_height, m_width, CV_8UC3, pLast);
       ref.copyTo(image);
       is_UnlockSeqBuf(m_hCam, IS_IGNORE_PARAMETER, pLast);
+
+      return true;
     }
   }
 
