@@ -6,7 +6,7 @@
 #include "Spline.h"
 #include "libs/CalcLib/Image/ImgEnhanceContrast.h"
 
-#define USE_THREAD
+// #define USE_THREAD
 
 using hal::ICameraHires;
 

@@ -51,7 +51,7 @@ bool IDSVideoCapture::open(int _index, int apiPreferenece)
 
     // Initialize start time and start the camera running
     m_startTime = time(nullptr);
-    is_CaptureVideo(m_hCam, IS_DONT_WAIT);
+    is_CaptureVideo(m_hCam, IS_WAIT);
 
     // Run experiments
     Experiments();
