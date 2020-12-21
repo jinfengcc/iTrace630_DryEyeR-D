@@ -1,9 +1,16 @@
 #pragma once
 
-class CameraHiResProps
+class CameraStdHiresProps
 {
 public:
   void Initialize();
+
+  static bool HasStdHiresCamera()
+  {
+    CameraStdHiresProps c;
+    c.Initialize();
+    return c.GetDeviceId() >= 0;
+  }
 
   int GetDeviceId() const
   {

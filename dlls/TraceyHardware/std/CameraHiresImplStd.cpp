@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "CameraHiresImpl.h"
-#include "CameraHiresProps.h"
+#include "CameraHiresImplStd.h"
+#include "CameraStdHiresProps.h"
 #include "ids/IDSVideoCapture.h"
 
 // using namespace std::literals;
@@ -15,25 +15,25 @@ namespace {
 
 } // namespace
 
-struct CameraHiResImpl::Scratch
+struct CameraHiresImplStd::Scratch
 {
   static_assert(HIRES_GRAY1_ == 4);
   cv::Mat          images[5];
   bool             emulation{false};
-  CameraHiResProps camProps;
+  CameraStdHiresProps camProps;
 };
 
-CameraHiResImpl::CameraHiResImpl()
+CameraHiresImplStd::CameraHiresImplStd()
 {
   m_scratch = std::make_unique<Scratch>();
 }
 
-CameraHiResImpl::~CameraHiResImpl()
+CameraHiresImplStd::~CameraHiresImplStd()
 {
   Close();
 }
 
-bool CameraHiResImpl::Open()
+bool CameraHiresImplStd::Open()
 {
   StopCapture(0);
   std::fill(m_capProps.begin(), m_capProps.end(), -10000);
@@ -46,7 +46,7 @@ bool CameraHiResImpl::Open()
   return Connected();
 }
 
-void CameraHiResImpl::Close()
+void CameraHiresImplStd::Close()
 {
   m_signal.DisconnectAll(sig::yes_i_am_sure());
   if (m_thread.joinable()) {
@@ -56,7 +56,7 @@ void CameraHiResImpl::Close()
   m_videoCap = nullptr;
 }
 
-bool CameraHiResImpl::Connected(double *fps) const
+bool CameraHiresImplStd::Connected(double *fps) const
 {
   if (fps)
     *fps = m_fps;
@@ -64,7 +64,7 @@ bool CameraHiResImpl::Connected(double *fps) const
   return m_videoCap && m_videoCap->isOpened();
 }
 
-bool CameraHiResImpl::Connect(bool yes)
+bool CameraHiresImplStd::Connect(bool yes)
 {
   m_videoCap = nullptr;
   if (!yes)
@@ -73,9 +73,10 @@ bool CameraHiResImpl::Connect(bool yes)
   m_scratch->camProps.Initialize();
   auto devid = m_scratch->camProps.GetDeviceId();
   if (devid < 0) {
-    m_videoCap = std::make_unique<IDSVideoCapture>();
-    if (!m_videoCap->open(0))
-      return false;
+    return false;
+    //m_videoCap = std::make_unique<IDSVideoCapture>();
+    //if (!m_videoCap->open(0))
+    //  return false;
   }
   else {
     m_videoCap = std::make_unique<cv::VideoCapture>();
@@ -87,7 +88,7 @@ bool CameraHiResImpl::Connect(bool yes)
   return true;
 }
 
-bool CameraHiResImpl::Settings(ITraceyConfig *pc)
+bool CameraHiresImplStd::Settings(ITraceyConfig *pc)
 {
   if (!Connected())
     return false;
@@ -114,7 +115,7 @@ bool CameraHiResImpl::Settings(ITraceyConfig *pc)
   return true;
 }
 
-sig::SignalId CameraHiResImpl::StartCapture(std::function<void(unsigned)> notify)
+sig::SignalId CameraHiresImplStd::StartCapture(std::function<void(unsigned)> notify)
 {
   if (m_thread.joinable()) {
     return {};
@@ -126,7 +127,7 @@ sig::SignalId CameraHiResImpl::StartCapture(std::function<void(unsigned)> notify
   return id;
 }
 
-void CameraHiResImpl::StopCapture(sig::SignalId sigId)
+void CameraHiresImplStd::StopCapture(sig::SignalId sigId)
 {
   if (sigId)
     m_signal.Disconnect(sigId);
@@ -137,18 +138,18 @@ void CameraHiResImpl::StopCapture(sig::SignalId sigId)
   }
 }
 
-void CameraHiResImpl::StartFrameTransfer()
+void CameraHiresImplStd::StartFrameTransfer()
 {
   m_scratch->emulation = true;
   ReadImage();
 }
 
-void CameraHiResImpl::StopFrameTransfer()
+void CameraHiresImplStd::StopFrameTransfer()
 {
   // do nothing
 }
 
-bool CameraHiResImpl::GetImage(Mode mode, cv::Mat &img)
+bool CameraHiresImplStd::GetImage(Mode mode, cv::Mat &img)
 {
   auto &i = m_images[static_cast<int>(mode)];
   if (m_scratch->emulation || m_thread.joinable()) {
@@ -168,7 +169,7 @@ bool CameraHiResImpl::GetImage(Mode mode, cv::Mat &img)
   }
 }
 
-void CameraHiResImpl::DefaultSettings()
+void CameraHiresImplStd::DefaultSettings()
 {
   if (Connected()) {
     DumpSettings("before setup", *m_videoCap);
@@ -197,7 +198,7 @@ void CameraHiResImpl::DefaultSettings()
   }
 }
 
-bool CameraHiResImpl::SetCapProperty(int propid, int value)
+bool CameraHiresImplStd::SetCapProperty(int propid, int value)
 {
   if (propid == cv::CAP_PROP_EXPOSURE) {
     if (value) {
@@ -223,7 +224,7 @@ bool CameraHiResImpl::SetCapProperty(int propid, int value)
   return true;
 }
 
-void CameraHiResImpl::ThreadFunc(std::stop_token token)
+void CameraHiresImplStd::ThreadFunc(std::stop_token token)
 {
   auto fpc = 0;
   auto now = GetTickCount64();
@@ -249,7 +250,7 @@ void CameraHiResImpl::ThreadFunc(std::stop_token token)
   }
 }
 
-bool CameraHiResImpl::ReadImage()
+bool CameraHiresImplStd::ReadImage()
 {
   auto &colorImg = m_scratch->images[HIRES_COLOR_];
   auto &grayImg3 = m_scratch->images[HIRES_GRAY3_];
@@ -281,7 +282,7 @@ bool CameraHiResImpl::ReadImage()
   }
 }
 
-void CameraHiResImpl::LogProperties(int onepropid /*= -1*/) const
+void CameraHiresImplStd::LogProperties(int onepropid /*= -1*/) const
 {
   std::array ps = {
     // clang-format off
@@ -318,7 +319,7 @@ void CameraHiResImpl::LogProperties(int onepropid /*= -1*/) const
   }
 }
 
-void CameraHiResImpl::DumpSettings(const char *title, cv::VideoCapture &vc)
+void CameraHiresImplStd::DumpSettings(const char *title, cv::VideoCapture &vc)
 {
   static std::array names = {
     "CAP_PROP_POS_MSEC            ", "CAP_PROP_POS_FRAMES          ", "CAP_PROP_POS_AVI_RATIO       ", "CAP_PROP_FRAME_WIDTH         ",

@@ -2,15 +2,14 @@
 
 #include <interfaces/hal/ICamera.h>
 #include <libs/CommonLib/TraceyConfig.h>
-#include <libs/CommonLib/Singleton.h>
 
-class CameraHiResImpl final // : public Singleton<CameraHiResImpl>
+class CameraHiresImplStd final
 {
+public:
   using Mode = ICameraHires::Mode;
 
-public:
-  CameraHiResImpl();
-  ~CameraHiResImpl();
+  CameraHiresImplStd();
+  ~CameraHiresImplStd();
 
   bool          Open();
   void          Close();
@@ -24,7 +23,7 @@ public:
   bool          GetImage(Mode mode, cv::Mat &img);
 
 private:
-  using CapProperties = std::array<int, cv::CV__CAP_PROP_LATEST>;
+  using CapProperties   = std::array<int, cv::CV__CAP_PROP_LATEST>;
   using VideoCapturePtr = std::unique_ptr<cv::VideoCapture>;
 
   struct Scratch;
@@ -45,9 +44,3 @@ private:
   void        LogProperties(int onepropid = -1) const;
   static void DumpSettings(const char *title, cv::VideoCapture &vc);
 };
-
-template <typename... Args>
-inline void CAMERA_DILASCIA(std::string_view fmt, Args... args)
-{
-  DILASCIA_TRACE_EX("HRCAM", fmt, args...);
-}

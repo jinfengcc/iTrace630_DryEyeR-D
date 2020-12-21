@@ -22,6 +22,9 @@
     <Filter Include="ids">
       <UniqueIdentifier>{522a9202-ea1f-4b3e-aeb0-f212ae0bf8a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="std">
+      <UniqueIdentifier>{96cfa21c-23e3-4c96-8402-b7cb4787b762}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -48,19 +51,28 @@
     <ClInclude Include="thw\thw_defines.h">
       <Filter>thw</Filter>
     </ClInclude>
-    <ClInclude Include="CameraHiresImpl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraHires.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraHiresProps.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ids\IDSVideoCapture.h">
       <Filter>ids</Filter>
     </ClInclude>
     <ClInclude Include="ids\uEye.h">
+      <Filter>ids</Filter>
+    </ClInclude>
+    <ClInclude Include="ids\IDSVideoCamera.h">
+      <Filter>ids</Filter>
+    </ClInclude>
+    <ClInclude Include="std\CameraHiResImplStd.h">
+      <Filter>std</Filter>
+    </ClInclude>
+    <ClInclude Include="std\CameraHiresStd.h">
+      <Filter>std</Filter>
+    </ClInclude>
+    <ClInclude Include="std\CameraStdHiresProps.h">
+      <Filter>std</Filter>
+    </ClInclude>
+    <ClInclude Include="ids\CameraHiresImplIDS.h">
+      <Filter>ids</Filter>
+    </ClInclude>
+    <ClInclude Include="ids\CameraHiresIDS.h">
       <Filter>ids</Filter>
     </ClInclude>
   </ItemGroup>
@@ -89,16 +101,25 @@
     <ClCompile Include="CameraImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CameraHiresImpl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraHires.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraHiresProps.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ids\IDSVideoCapture.cpp">
+      <Filter>ids</Filter>
+    </ClCompile>
+    <ClCompile Include="ids\IDSVideoCamera.cpp">
+      <Filter>ids</Filter>
+    </ClCompile>
+    <ClCompile Include="std\CameraHiresImplStd.cpp">
+      <Filter>std</Filter>
+    </ClCompile>
+    <ClCompile Include="std\CameraHiresStd.cpp">
+      <Filter>std</Filter>
+    </ClCompile>
+    <ClCompile Include="std\CameraStdHiresProps.cpp">
+      <Filter>std</Filter>
+    </ClCompile>
+    <ClCompile Include="ids\CameraHiresIDS.cpp">
+      <Filter>ids</Filter>
+    </ClCompile>
+    <ClCompile Include="ids\CameraHiresImplIDS.cpp">
       <Filter>ids</Filter>
     </ClCompile>
   </ItemGroup>

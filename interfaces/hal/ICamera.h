@@ -63,8 +63,10 @@ namespace hal {
     virtual bool Connect(bool yes) = 0;
 
     //! Starts Capture
-    virtual void StartCapture(std::function<void(unsigned)> notify) = 0;
-    virtual void StopCapture()                                     = 0;
+    using Callback = std::function<void(unsigned)>;
+
+    virtual void StartCapture(Callback notify) = 0;
+    virtual void StopCapture()                 = 0;
 
     //! Starts Frame transfer (simulate old camera driver)
     virtual void StartFrameTransfer() = 0;

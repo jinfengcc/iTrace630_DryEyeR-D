@@ -174,28 +174,31 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="CameraHires.h" />
-    <ClInclude Include="CameraHiresImpl.h" />
-    <ClInclude Include="CameraHiresProps.h" />
     <ClInclude Include="CameraImpl.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="Flash.h" />
+    <ClInclude Include="ids\CameraHiresIDS.h" />
+    <ClInclude Include="ids\CameraHiresImplIDS.h" />
+    <ClInclude Include="ids\IDSVideoCamera.h" />
     <ClInclude Include="ids\IDSVideoCapture.h" />
     <ClInclude Include="ids\uEye.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="std\CameraHiResImplStd.h" />
+    <ClInclude Include="std\CameraHiresStd.h" />
+    <ClInclude Include="std\CameraStdHiresProps.h" />
     <ClInclude Include="thw\thw.h" />
     <ClInclude Include="thw\thw_data.h" />
     <ClInclude Include="thw\thw_defines.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="CameraHires.cpp" />
-    <ClCompile Include="CameraHiresImpl.cpp" />
-    <ClCompile Include="CameraHiresProps.cpp" />
     <ClCompile Include="CameraImpl.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Flash.cpp" />
+    <ClCompile Include="ids\CameraHiresIDS.cpp" />
+    <ClCompile Include="ids\CameraHiresImplIDS.cpp" />
+    <ClCompile Include="ids\IDSVideoCamera.cpp" />
     <ClCompile Include="ids\IDSVideoCapture.cpp" />
     <ClCompile Include="LocalClassFactory.cpp" />
     <ClCompile Include="pch.cpp">
@@ -204,6 +207,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="std\CameraHiresImplStd.cpp" />
+    <ClCompile Include="std\CameraHiresStd.cpp" />
+    <ClCompile Include="std\CameraStdHiresProps.cpp" />
     <ClCompile Include="thw\thw.cpp" />
   </ItemGroup>
   <ItemGroup>

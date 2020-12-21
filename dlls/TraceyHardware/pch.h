@@ -32,4 +32,16 @@ using namespace hal;
 
 extern sig::Signal<> ShutdownSignal;
 
+#ifndef HINST_THISCOMPONENT
+EXTERN_C IMAGE_DOS_HEADER __ImageBase;
+#define HINST_THISCOMPONENT ((HINSTANCE)&__ImageBase)
+#endif
+
+template <typename... Args>
+inline void CAMERA_DILASCIA(std::string_view fmt, Args... args)
+{
+  DILASCIA_TRACE_EX("HRCAM", fmt, args...);
+}
+
+
 #endif // PCH_H
