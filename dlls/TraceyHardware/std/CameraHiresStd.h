@@ -1,14 +1,14 @@
 #pragma once
 
 #include <interfaces/hal/ICamera.h>
-#include "CameraHiresImpl.h"
+#include "CameraHiresImplStd.h"
 
-class CameraHires : public Implements<hal::ICameraHires>
+class CameraHiresStd : public Implements<hal::ICameraHires>
 {
 public:
-  CameraHires();
+  CameraHiresStd();
 
-  ~CameraHires()
+  ~CameraHiresStd()
   {
     StopCapture();
   }
@@ -27,9 +27,10 @@ public:
   bool Connected(double *fps) const override;
 
 private:
-  std::shared_ptr<CameraHiResImpl> m_pimpl;
-  wil::com_ptr<ITraceyConfig>      m_config;
-  sig::SignalId                    m_configSignalId{};
+  std::shared_ptr<CameraHiresImplStd> m_pimpl;
+  wil::com_ptr<ITraceyConfig>         m_config;
+  sig::SignalId                       m_configSignalId{};
+  bool                                m_transferImg{true};
 
   // std::string GetCameraName();
 };

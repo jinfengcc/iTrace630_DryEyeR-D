@@ -4,7 +4,9 @@
 #include "Device.h"
 #include "Flash.h"
 #include "Camera.h"
-#include "CameraHiRes.h"
+#include "ids/CameraHiresIDS.h"
+#include "std/CameraHiresStd.h"
+#include "std/CameraStdHiresProps.h"
 
 #define API __declspec(dllexport)
 
@@ -14,15 +16,22 @@ namespace {
     LocalClassFactory()
     {
       // clang-format off
-      AddCreator(__uuidof(hal::IDevice            ), &LocalClassFactory::Create<Device            >);
-      AddCreator(__uuidof(hal::IFlash             ), &LocalClassFactory::Create<Flash             >);
-      AddCreator(__uuidof(hal::ICamera            ), &LocalClassFactory::Create<Camera            >);
-      AddCreator(__uuidof(hal::ICameraHires       ), &LocalClassFactory::Create<CameraHires>);
+      AddCreator(__uuidof(hal::IDevice     ), &LocalClassFactory::Create<Device        >);
+      AddCreator(__uuidof(hal::IFlash      ), &LocalClassFactory::Create<Flash         >);
+      AddCreator(__uuidof(hal::ICamera     ), &LocalClassFactory::Create<Camera        >);
       // clang-format on
+
+      AddHiresCamera();
     }
 
   private:
-    // #todo Handle simulated hardware
+    void AddHiresCamera()
+    {
+      if (CameraStdHiresProps::HasStdHiresCamera())
+        AddCreator(__uuidof(hal::ICameraHires), &LocalClassFactory::CreateHires<CameraHiresStd>);
+      else
+        AddCreator(__uuidof(hal::ICameraHires), &LocalClassFactory::CreateHires<CameraHiresIDS>);
+    }
 
     template <class T>
     static bool Create(REFIID riid, void **ppv)
@@ -30,10 +39,11 @@ namespace {
       auto obj = new T(GetDllStuff());
       return obj->QueryInterface(riid, ppv) == S_OK;
     }
-    template <>
-    static bool Create<CameraHires>(REFIID riid, void **ppv)
+
+    template <class T>
+    static bool CreateHires(REFIID riid, void **ppv)
     {
-      auto obj = new CameraHires;
+      auto obj = new T();
       return obj->QueryInterface(riid, ppv) == S_OK;
     }
 

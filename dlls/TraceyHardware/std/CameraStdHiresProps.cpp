@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CameraHiresProps.h"
+#include "CameraStdHiresProps.h"
 #include <comutil.h>
 #include <Dshow.h>
 
@@ -48,7 +48,7 @@ namespace {
 
 } // namespace
 
-void CameraHiResProps::Initialize()
+void CameraStdHiresProps::Initialize()
 {
   try {
     m_propRange.clear();
@@ -71,7 +71,7 @@ void CameraHiResProps::Initialize()
   }
 }
 
-double CameraHiResProps::TranslatePropery(int propId, int propValue) const
+double CameraStdHiresProps::TranslatePropery(int propId, int propValue) const
 {
   double x = propValue;
 
@@ -83,7 +83,7 @@ double CameraHiResProps::TranslatePropery(int propId, int propValue) const
   return std::round(x);
 }
 
-std::vector<std::string> CameraHiResProps::GetCameraList()
+std::vector<std::string> CameraStdHiresProps::GetCameraList()
 {
   auto ReadStr = [](IPropertyBag *pPropBag, const wchar_t *name) -> std::string {
     variant_t var;
