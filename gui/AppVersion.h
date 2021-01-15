@@ -6,11 +6,11 @@
 #define VERSION_MINOR     30
 #define VERSION_MINOR_STR "30"
 
-#define VERSION_YEAR     2020
-#define VERSION_YEAR_STR "2020"
+#define VERSION_YEAR     2021
+#define VERSION_YEAR_STR "2021"
 
-#define VERSION_DAY     1119
-#define VERSION_DAY_STR "1119"
+#define VERSION_DAY     112
+#define VERSION_DAY_STR "0112"
 
 #ifndef RC_INVOKED
 extern const unsigned SOFTWARE_VERSION_3;

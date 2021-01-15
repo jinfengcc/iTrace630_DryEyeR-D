@@ -50,22 +50,21 @@ private:
   HIDS       m_hCam = 0;
   CAMINFO    m_cameraInfo;
   SENSORINFO m_sensorInfo;
-  int        m_width;
-  int        m_height;
+  int        m_width = 0;
+  int        m_height = 0;
   time_t     m_startTime;
   MemVector  m_memVector;
-
+  double     m_exposureRange[3];
 
   // Time stamp for camera recording start.
-  //char *     m_lockedMemory                 = nullptr;   // Pointer to currently locked frame.
-  //char *     m_imageMemoryAddr[NUM_BUFFERS] = {nullptr}; // Pointers to all buffers in memory that are given to uEye API.
-  //int        m_imageMemoryId[NUM_BUFFERS];               // API references to image memory.
+  // char *     m_lockedMemory                 = nullptr;   // Pointer to currently locked frame.
+  // char *     m_imageMemoryAddr[NUM_BUFFERS] = {nullptr}; // Pointers to all buffers in memory that are given to uEye API.
+  // int        m_imageMemoryId[NUM_BUFFERS];               // API references to image memory.
 
-  static bool Configure(HIDS hCam);
-  bool        AllocateImgMem(int sizeX, int sizeY, int bitsPerPixel = 3 * 8);
-  void        FreeImgMem();
-  char *      GetLastMem() const;
-  bool        GetLastMem(char **ppLastMem, INT &lMemoryId, INT &lSequenceId) const;
-  void        Experiments();
-
+  bool  Configure(HIDS hCam);
+  bool  AllocateImgMem(int sizeX, int sizeY, int bitsPerPixel = 3 * 8);
+  void  FreeImgMem();
+  char *GetLastMem() const;
+  bool  GetLastMem(char **ppLastMem, INT &lMemoryId, INT &lSequenceId) const;
+  void  Experiments();
 };

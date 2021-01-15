@@ -179,6 +179,12 @@ bool IDSVideoCapture::set(int propId, double value)
     imageSize = {.s32Width = m_width, .s32Height = (int)value};
     is_AOI(m_hCam, IS_AOI_IMAGE_SET_SIZE, (void *)&imageSize, sizeof(imageSize));
     return true;
+
+  case CAP_PROP_BRIGHTNESS:
+    value = m_exposureRange[0] + value * (m_exposureRange[1] - m_exposureRange[0]) / 100.0;
+    value = std::clamp(value, m_exposureRange[0], m_exposureRange[1]);
+    is_Exposure(m_hCam, IS_EXPOSURE_CMD_SET_EXPOSURE, (void *)&value, sizeof(value));
+    break;
   }
 
   return false;
@@ -221,6 +227,10 @@ bool IDSVideoCapture::Configure(HIDS hCam)
   //auto nRet = is_ParameterSet(hCam, IS_PARAMETERSET_CMD_LOAD_FILE, (void *)LR"(C:\1\ids_settings.ini)", NULL);
   //if (nRet != IS_SUCCESS)
   //  return false;
+
+  // Get Exposure range
+  nRet = is_Exposure(hCam, IS_EXPOSURE_CMD_GET_EXPOSURE_RANGE, (void *)m_exposureRange, sizeof(m_exposureRange));
+
 
   return true;
 }
