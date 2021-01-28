@@ -17,6 +17,8 @@ The following libaries are used and managed with vcpkg
 * wil:x86-windows
 * wtl:x64-windows
 * zlib:x86-windows
+* sqlitecpp
+* sqlite3
 
 # Tools
 
