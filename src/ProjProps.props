@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+   <ImportGroup Label="PropertySheets" />
+
+   <PropertyGroup Label="UserMacros">
+      <RootFolder>$(MSBuildThisFileDirectory)</RootFolder>
+      <WINVER>0x601</WINVER>
+      <JsonFile>$(TargetName).json</JsonFile>
+   </PropertyGroup>
+
+   <PropertyGroup>
+      <IntDir>$(SolutionDir)_out\$(Platform)\$(Configuration)\$(TargetName)\</IntDir>
+      <OutDir>$(SolutionDir)_out\$(Platform)\$(Configuration)\</OutDir>
+      <!--<EnableCppCoreCheck>true</EnableCppCoreCheck>-->
+   </PropertyGroup>
+
+   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'" Label="StaticAssert">
+      <ClCompile>
+         <PreprocessorDefinitions>_ASSERT_LEVEL=9;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      </ClCompile>
+   </ItemDefinitionGroup>
+
+   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'" Label="StaticAssert">
+      <ClCompile>
+         <PreprocessorDefinitions>_ASSERT_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      </ClCompile>
+   </ItemDefinitionGroup>
+
+   <ItemDefinitionGroup Label="Preprocessor">
+      <ClCompile>
+         <PreprocessorDefinitions>NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+         <PreprocessorDefinitions>FMT_HEADER_ONLY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+         <PreprocessorDefinitions>_HAS_AUTO_PTR_ETC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+         <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+         <PreprocessorDefinitions>_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+         <PreprocessorDefinitions>NANODBC_DISABLE_ASYNC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+         <PreprocessorDefinitions>WINVER=$(WINVER);_WIN32_WINNT=$(WINVER);_WIN32_WINDOWS=$(WINVER);WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      </ClCompile>
+   </ItemDefinitionGroup>
+
+   <ItemDefinitionGroup Label="Warnings">
+      <ClCompile>
+         <WarningLevel>Level4</WarningLevel>
+      </ClCompile>
+   </ItemDefinitionGroup>
+
+   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'" Label="Warnings">
+      <ClCompile>
+         <TreatWarningAsError>false</TreatWarningAsError>
+      </ClCompile>
+   </ItemDefinitionGroup>
+
+   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+      <ClCompile>
+         <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      </ClCompile>
+   </ItemDefinitionGroup>
+
+   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+      <ClCompile>
+         <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      </ClCompile>
+   </ItemDefinitionGroup>
+
+   <ItemDefinitionGroup>
+      <ClCompile>
+         <LanguageStandard>stdcpplatest</LanguageStandard>
+         <PrecompiledHeader>Use</PrecompiledHeader>
+         <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+         <AdditionalIncludeDirectories>$(RootFolder);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+         <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      </ClCompile>
+   </ItemDefinitionGroup>
+
+   <ItemDefinitionGroup>
+      <Link>
+         <AdditionalLibraryDirectories>$(OutDir);$(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      </Link>
+   </ItemDefinitionGroup>
+
+   <ItemDefinitionGroup Condition="'$(ConfigurationType)'=='Application'">
+      <PostBuildEvent>
+         <Command Condition="Exists($(JsonFile))">copy $(JsonFile) $(TargetDir)</Command>
+      </PostBuildEvent>
+   </ItemDefinitionGroup>
+   <ItemGroup />
+
+
+   <ItemGroup />
+
+</Project>

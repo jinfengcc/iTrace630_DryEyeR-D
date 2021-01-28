@@ -1,0 +1,10 @@
+{
+  "FileVersion": 2,
+  "Id": "bc005822-93a9-43d5-b3b9-b728ce8fe20e",
+  "Items": [
+    {
+      "Id": "093a14a2-57cf-4ec8-a38d-40daa2fc66d9",
+      "Command": "FullScreen=false"
+    }
+  ]
+}

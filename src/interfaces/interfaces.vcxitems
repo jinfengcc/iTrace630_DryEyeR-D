@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{c0fe8a08-6012-4a39-b3f0-1599526bd984}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)data\Calibration.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)data\Exam.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)data\ExamCT.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)data\ExamWF.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)data\Image.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)hal\ICamera.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IDatabase.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IDatabaseServices.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ILogger.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ILoggerSettings.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ISettingsStorage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ITraceyConfig.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TraceyObj.h" />
+  </ItemGroup>
+</Project>

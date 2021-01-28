@@ -71,17 +71,19 @@ IncludeCategories:
     Priority:        1
 IncludeIsMainRegex: '(Test)?$'
 IndentCaseLabels: false
+IndentPPDirectives: AfterHash
 IndentWidth:     2
 IndentWrappedFunctionNames: false
 JavaScriptQuotes: Leave
 JavaScriptWrapImports: true
-KeepEmptyLinesAtTheStartOfBlocks: true
+KeepEmptyLinesAtTheStartOfBlocks: false
 # Make sure code like:
 # IPC_BEGIN_MESSAGE_MAP()
 #   IPC_MESSAGE_HANDLER(WidgetHostViewHost_Update, OnUpdate)
 # IPC_END_MESSAGE_MAP()
 # gets correctly indented.
 MacroBlockBegin: "^\
+BEGIN_MESSAGE_MAP|\
 BEGIN_MSG_MAP|\
 BEGIN_MSG_MAP_EX|\
 BEGIN_SAFE_MSG_MAP_EX|\
@@ -91,8 +93,9 @@ BEGIN_REGPROP_MAP|\
 BEGIN_TEST_CLASS_ATTRIBUTE|\
 IPC_STRUCT_TRAITS_BEGIN$"
 MacroBlockEnd: "^\
-END_DDX_MAP|\
+END_MESSAGE_MAP|\
 END_MSG_MAP|\
+END_DDX_MAP|\
 END_REG_MAP|\
 END_REGPROP_MAP|\
 END_TEST_CLASS_ATTRIBUTE|\

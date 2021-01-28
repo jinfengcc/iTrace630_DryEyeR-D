@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "AppInitializer.h"
 
+#pragma comment(lib, "gdiplus.lib")
+
 AppInitializer::AppInitializer()
 {
   HRESULT hRes = ::CoInitialize(nullptr);

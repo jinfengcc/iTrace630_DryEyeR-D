@@ -60,19 +60,19 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)ProjProps.props" />
+    <Import Project="$(SolutionDir)src\ProjProps.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)ProjProps.props" />
+    <Import Project="$(SolutionDir)src\ProjProps.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)ProjProps.props" />
+    <Import Project="$(SolutionDir)src\ProjProps.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)ProjProps.props" />
+    <Import Project="$(SolutionDir)src\ProjProps.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -201,21 +201,18 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\dlls\TraceyHardware\TraceyHardware.vcxproj">
-      <Project>{c7034b3f-11a5-4f1b-bf5d-a7da69431855}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\libs\CalcLib\CalcLib.vcxproj">
-      <Project>{fe883fa5-bd68-49d8-9b77-0211817dd014}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\libs\CommonLib\CommonLib.vcxproj">
-      <Project>{fb2bbf5a-c4a0-4fd8-9966-53f2a3ee90cc}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\libs\LoggingLib\LoggingLib.vcxproj">
-      <Project>{136cc8c9-d852-494e-8036-46b22062b2c4}</Project>
-    </ProjectReference>
+    <None Include="HalTester.json" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="HalTester.json" />
+    <ProjectReference Include="..\..\src\dlls\TraceyHardware\TraceyHardware.vcxproj">
+      <Project>{c7034b3f-11a5-4f1b-bf5d-a7da69431855}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\libs\CommonLib\CommonLib.vcxproj">
+      <Project>{fb2bbf5a-c4a0-4fd8-9966-53f2a3ee90cc}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\libs\LoggingLib\LoggingLib.vcxproj">
+      <Project>{136cc8c9-d852-494e-8036-46b22062b2c4}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,0 +1,328 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_WORKLIST DIALOGEX 0, 0, 409, 279
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "DICOM WorkList"
+FONT 11, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    GROUPBOX        "Query Settings",IDC_STATIC,7,7,395,63
+    LTEXT           "Date:",IDC_STATIC,11,21,17,8
+    CONTROL         "Today",IDC_DATE_RADIO,"Button",BS_AUTORADIOBUTTON | WS_GROUP,71,20,35,10
+    CONTROL         "Last 3 days",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON,109,20,50,10
+    CONTROL         "Last 7 days",IDC_RADIO3,"Button",BS_AUTORADIOBUTTON,162,20,50,10
+    CONTROL         "All (not recommended)",IDC_RADIO4,"Button",BS_AUTORADIOBUTTON,215,20,84,10
+    LTEXT           "Patient Last Name:",IDC_STATIC,11,37,61,8
+    EDITTEXT        IDC_PATIENT_NAME,74,35,60,12,ES_AUTOHSCROLL
+    LTEXT           "Patient ID:",IDC_STATIC,142,37,37,8
+    EDITTEXT        IDC_PATIENT_ID,181,35,60,12,ES_AUTOHSCROLL
+    LTEXT           "Accession No:",IDC_STATIC,11,53,61,8
+    EDITTEXT        IDC_ACCESSION,74,51,60,12,ES_AUTOHSCROLL
+    LTEXT           "Modality:",IDC_STATIC,141,53,37,8
+    COMBOBOX        IDC_MODALITY,181,51,95,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Clear",IDC_CLEAR,285,50,55,14,BS_MULTILINE
+    PUSHBUTTON      "Query",IDC_SEARCH,344,50,55,14,BS_MULTILINE
+    LTEXT           "Patient List",IDC_STATIC,7,76,34,8
+    CONTROL         "",IDC_PATIENTS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,86,395,103
+    LTEXT           "Patient Work List",IDC_STATIC,7,193,52,8
+    CONTROL         "",IDC_ITEMS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,203,395,50
+    PUSHBUTTON      "OK",IDOK,140,258,56,14
+    PUSHBUTTON      "Cancel",IDCANCEL,212,258,56,14
+    PUSHBUTTON      "Settings...",IDC_SETTINGS,346,258,56,14
+END
+
+IDD_SETTINGS DIALOGEX 0, 0, 215, 125
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "DICOM Server Settings"
+FONT 12, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    LTEXT           "IP Address:",IDC_STATIC,10,17,36,8
+    EDITTEXT        IDC_IPADDR,56,15,150,12,ES_AUTOHSCROLL
+    LTEXT           "Port:",IDC_STATIC,10,37,15,8
+    EDITTEXT        IDC_PORT,56,35,38,12,ES_AUTOHSCROLL
+    LTEXT           "Call AE Title:",IDC_STATIC,10,57,41,8
+    EDITTEXT        IDC_CALL,56,55,150,12,ES_AUTOHSCROLL
+    LTEXT           "Calling Title:",IDC_STATIC,10,77,40,8
+    EDITTEXT        IDC_CALLING,56,75,150,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,49,104,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,115,104,50,14
+    LTEXT           "Other????",IDC_STATIC,10,98,32,8,NOT WS_VISIBLE
+END
+
+IDD_SETUP_SERVER DIALOGEX 0, 0, 308, 166
+STYLE DS_SETFONT | WS_CHILD | WS_CAPTION | WS_SYSMENU
+CAPTION "Worklist Server"
+FONT 8, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    LTEXT           "IP Address:",IDC_STATIC,10,17,41,8
+    EDITTEXT        IDC_IPADDR,60,15,150,12,ES_AUTOHSCROLL
+    LTEXT           "Port:",IDC_STATIC,10,40,41,8
+    EDITTEXT        IDC_PORT,60,38,38,12,ES_AUTOHSCROLL
+    LTEXT           "AE-Title:",IDC_STATIC,10,63,28,8
+    EDITTEXT        IDC_CALL,60,61,150,12,ES_AUTOHSCROLL
+    LTEXT           "Local AE-Title:",IDC_STATIC,10,86,46,8
+    EDITTEXT        IDC_CALLING,60,84,150,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Test Connection",IDC_VERIFY,60,107,76,14
+    LTEXT           "Logging:",IDC_STATIC,10,141,41,8
+    CONTROL         "None",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | WS_GROUP,60,140,33,10
+    CONTROL         "Everything",IDC_RADIO6,"Button",BS_AUTORADIOBUTTON,101,140,49,10
+    CONTROL         "Warning, Errors ",IDC_RADIO7,"Button",BS_AUTORADIOBUTTON,158,140,65,10
+    CONTROL         "Errors Only",IDC_RADIO5,"Button",BS_AUTORADIOBUTTON,231,140,51,10
+END
+
+IDD_SETUP_SELECT DIALOGEX 0, 0, 512, 210
+STYLE DS_SETFONT | WS_CHILD | WS_CAPTION | WS_SYSMENU
+CAPTION "Report Selection"
+FONT 8, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    GROUPBOX        "WF Displays:",IDC_STATIC1,7,7,498,41
+    CONTROL         "WF Points",IDC_WFPOINTS_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,74,15,47,10
+    CONTROL         "Near Vision",IDC_NEARVISION_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,186,15,52,10
+    CONTROL         "WF Visual Acuity",IDC_WFVA_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,303,15,68,10
+    CONTROL         "Depth of Focus",IDC_DEPTHFOCUS_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,436,15,63,10
+    CONTROL         "WF/RMS",IDC_WFRMS_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,74,32,42,10
+    CONTROL         "Aberration Analysis",IDC_WFAA_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,186,32,77,10
+    CONTROL         "WF Custom",IDC_WFCUSTOM_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,303,31,52,10
+    GROUPBOX        "CT Displays",IDC_STATIC5,7,52,498,43
+    CONTROL         "CT Rings",IDC_CTRINGS_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,74,62,44,10
+    CONTROL         "CT Summary",IDC_CTSU_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,186,62,57,10
+    CONTROL         "Keratometry",IDC_CTKE_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,303,62,54,10
+    CONTROL         "3D Z-Elevation",IDC_CT3D_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,436,62,62,10
+    CONTROL         "Osher Iris Imaging",IDC_CTOSHER_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,74,79,76,10
+    CONTROL         "CT Custom",IDC_CTCUSTOM_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,186,79,51,10
+    GROUPBOX        "WF/CT Displays",IDC_STATIC7,7,100,498,75
+    CONTROL         "Chang Analysis",IDC_WCCH_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,74,108,64,10
+    CONTROL         "WF/CT Summary",IDC_WCSU_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,186,108,70,10
+    CONTROL         "M T F",IDC_WCVA_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,303,108,34,10
+    CONTROL         "OU Overview",IDC_WCOU_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,436,108,58,10
+    CONTROL         "WF/CT Summary && Analysis",IDC_WCSUMANA_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,74,125,105,10
+    CONTROL         "IOL Selection Analysis",IDC_WCIOL_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,186,124,86,10
+    CONTROL         "Corneal Spherical Aberration",IDC_WCCORSPH_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,303,124,106,10
+    CONTROL         "Angle K/A",IDC_WFKA_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,436,124,48,10
+    CONTROL         "Dysfunctional Lens - MD",IDC_DYSFUN_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,74,142,92,10
+    CONTROL         "Dysfunctional Lens - PT",IDC_DYSPTFUN_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,186,141,90,10
+    CONTROL         "Astigmatism Source",IDC_ASTISOU_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,303,141,79,10
+    CONTROL         "Toric Check",IDC_TORLI_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,436,141,53,10
+    CONTROL         "WF/CT Custom",IDC_WCCUSTOM_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,74,159,64,10
+    GROUPBOX        "Other",IDC_STATIC8,7,179,498,24
+    CONTROL         "Exam Results",IDC_EXAMRES_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,74,187,58,10
+END
+
+IDD_ACCESSION DIALOGEX 0, 0, 364, 171
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "DICOM Export"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,124,150,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,190,150,50,14
+    LTEXT           "You are exporting reports for patient:",IDC_STATIC,7,7,119,8
+    EDITTEXT        IDC_PATIENT,85,23,202,12,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "This patients was created locally and there is no Accession number. Please enter the Accession Number:",IDC_STATIC,8,60,328,8
+    EDITTEXT        IDC_ACCESSION,85,77,123,12,ES_AUTOHSCROLL
+    LTEXT           "NOTE: You may proceed without entering an Accession number if you plan to match this export on the server.",IDC_STATIC,8,113,349,8
+END
+
+IDD_SETUP_OTHER DIALOGEX 0, 0, 234, 165
+STYLE DS_SETFONT | WS_CHILD | WS_CAPTION | WS_SYSMENU
+CAPTION "Storage Server"
+FONT 8, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    LTEXT           "IP Address:",IDC_STATIC,10,17,41,8
+    EDITTEXT        IDC_IPADDR,56,15,150,12,ES_AUTOHSCROLL
+    LTEXT           "Port:",IDC_STATIC,10,41,41,8
+    EDITTEXT        IDC_PORT,56,39,38,12,ES_AUTOHSCROLL
+    LTEXT           "Call AE Title:",IDC_STATIC,10,65,41,8
+    EDITTEXT        IDC_CALL,56,63,150,12,ES_AUTOHSCROLL
+    LTEXT           "Calling Title:",IDC_STATIC,10,89,41,8
+    EDITTEXT        IDC_CALLING,56,87,150,12,ES_AUTOHSCROLL
+    LTEXT           "Logging:",IDC_STATIC,10,121,41,8
+    CONTROL         "None",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | WS_GROUP,56,120,33,10
+    CONTROL         "Errors Only",IDC_RADIO5,"Button",BS_AUTORADIOBUTTON,97,120,51,10
+    CONTROL         "Everything",IDC_RADIO6,"Button",BS_AUTORADIOBUTTON,156,120,49,10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_WORKLIST, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 402
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 272
+    END
+
+    IDD_SETTINGS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 208
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 118
+    END
+
+    IDD_SETUP_SERVER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 301
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 159
+    END
+
+    IDD_SETUP_SELECT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 505
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 203
+    END
+
+    IDD_ACCESSION, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 357
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 164
+    END
+
+    IDD_SETUP_OTHER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 227
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 158
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_WORKLIST AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_SETTINGS AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_SETUP_SERVER AFX_DIALOG_LAYOUT
+BEGIN
+    0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0
+END
+
+IDD_SETUP_SELECT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_ACCESSION AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_SETUP_OTHER AFX_DIALOG_LAYOUT
+BEGIN
+    0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0,
+    50, 50, 0, 0
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
