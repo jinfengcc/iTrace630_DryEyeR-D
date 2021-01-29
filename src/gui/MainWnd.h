@@ -263,6 +263,7 @@ private:
 	CBtn        m_NewCTExamButton;
 	CBtn        m_NewWFCTExamButton;
 	CBtn        m_ViewExamButton;
+	CBtn        m_DicomExportButton;//0129 Dicom Export
 	BOOL        m_CustExamCreated[5];
 	CBtn        m_ViewCustExamButton[5];// to view customed exam
 	CBtn        m_EditExamButton;
