@@ -196,10 +196,10 @@
     <ResourceCompile Include="DatabaseJet.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\DatabaseJet.rc2" />
-    <CopyFileToFolders Include="tdbmsjet62.dll">
+    <CopyFileToFolders Include="Legacy\tdbmsjet62.dll">
       <FileType>Document</FileType>
     </CopyFileToFolders>
+    <None Include="res\DatabaseJet.rc2" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Legacy\Chinese.cpp" />

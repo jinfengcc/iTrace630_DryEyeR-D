@@ -69,6 +69,10 @@
     <None Include="res\DatabaseJet.rc2">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="tdbmsjet62.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Legacy\tdbmsjet62.dll">
+      <Filter>Legacy</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>
