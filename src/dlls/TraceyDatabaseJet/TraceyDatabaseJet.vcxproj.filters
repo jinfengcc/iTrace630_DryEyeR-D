@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{2129bd5c-2640-4c92-8a8e-7a7ffc7dd32f}</UniqueIdentifier>
+      <Extensions>*.h</Extensions>
+    </Filter>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{ac8985ae-50f1-4246-8653-8af968423a9b}</UniqueIdentifier>
+      <Extensions>*.cpp</Extensions>
+    </Filter>
+    <Filter Include="Legacy">
+      <UniqueIdentifier>{dc194042-969a-4d24-9578-eb01e03020c4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="JetClassFactory.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Legacy\DB.cpp">
+      <Filter>Legacy</Filter>
+    </ClCompile>
+    <ClCompile Include="Legacy\Chinese.cpp">
+      <Filter>Legacy</Filter>
+    </ClCompile>
+    <ClCompile Include="DatabaseJet.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="dbconfig.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="JetCasts.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Legacy\Chinese.h">
+      <Filter>Legacy</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseJet.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Legacy\DB.h">
+      <Filter>Legacy</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseServices.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DatabaseJet.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\DatabaseJet.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="tdbmsjet62.dll" />
+  </ItemGroup>
+</Project>
