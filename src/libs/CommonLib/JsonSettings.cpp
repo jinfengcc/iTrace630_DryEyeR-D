@@ -25,7 +25,7 @@ JsonSettings::JsonSettings(const fs::path &p)
 
 void JsonSettings::Load(std::istream &fs)
 {
-  m_json     = json::parse(fs);
+  m_json     = json::parse(fs, nullptr, true, true);
   m_modified = false;
 }
 
@@ -59,7 +59,10 @@ auto JsonSettings::Get(std::string_view section) const -> json
   if (m_json.is_null() || section.empty())
     return m_json;
 
-  return m_json.at(section.data());
+  if (auto i = m_json.find(section.data()); i != m_json.end())
+    return *i;
+  else
+    return {};
 }
 
 void JsonSettings::Set(std::string_view section, const json &js)
