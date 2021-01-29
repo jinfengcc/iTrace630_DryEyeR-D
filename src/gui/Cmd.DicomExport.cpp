@@ -4,8 +4,6 @@
 #include "BatchExportDicom.h"
 #include "CustomMenu.h"
 
-#define IDC_BATCHSAVE_EXAM_BUTTON 1234567
-
 class CmdDicomExport : public CmdTargetBase
 {
   DECLARE_MESSAGE_MAP()
@@ -15,7 +13,7 @@ class CmdDicomExport : public CmdTargetBase
 static CmdDicomExport cmd;
 
 BEGIN_MESSAGE_MAP(CmdDicomExport, CCmdTarget)
-  ON_COMMAND(IDC_BATCHSAVE_EXAM_BUTTON, OnPatientExport)
+  ON_COMMAND(IDC_DICOMEXPORT_BUTTON, OnPatientExport)
 END_MESSAGE_MAP()
 
 void CmdDicomExport::OnPatientExport()

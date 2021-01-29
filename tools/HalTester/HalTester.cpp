@@ -24,7 +24,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
     CMessageLoop theLoop;
     _Module.AddMessageLoop(&theLoop);
 
-#ifdef _DEBUG
+#if defined(_DEBUG) && 0
     AppSettings aps;
     // clang-format off
     auto x1  = aps.Get<bool       >("HalTester.x1");
