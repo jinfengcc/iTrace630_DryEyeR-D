@@ -129,7 +129,7 @@ CWFVrfTestWnd::CWFVrfTestWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFE
 	BOOL DBIsReadOnly = ::DB.IsReadOnly();
 
 	m_RejectButton.Create(_T(""), _T(""), 0, Rect, this, IDC_REJECT);
-	m_RejectButton.SetImage(W == 1920 ? IDR_REJECT_3 : W == 1600 ? IDR_REJECT_2 : IDR_REJECT_1);
+	m_RejectButton.SetImage(W >= 1920 ? IDR_REJECT_3 : W >= 1600 ? IDR_REJECT_2 : IDR_REJECT_1);
 	m_RejectButton.SetBk(FALSE);
 	m_RejectButton.SetBkColor(BLACK);
 	m_RejectButton.SetTip("Reject point");
@@ -139,7 +139,7 @@ CWFVrfTestWnd::CWFVrfTestWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFE
 
 	Rect.left -= s; Rect.right -= s;
 	m_AcceptButton.Create(_T(""), _T(""), 0, Rect, this, IDC_ACCEPT);
-	m_AcceptButton.SetImage(W == 1920 ? IDR_ACCEPT_3 : W == 1600 ? IDR_ACCEPT_2 : IDR_ACCEPT_1);
+	m_AcceptButton.SetImage(W >= 1920 ? IDR_ACCEPT_3 : W >= 1600 ? IDR_ACCEPT_2 : IDR_ACCEPT_1);
 	m_AcceptButton.SetBk(FALSE);
 	m_AcceptButton.SetBkColor(BLACK);
 	m_AcceptButton.SetTip("Accept point");
@@ -149,7 +149,7 @@ CWFVrfTestWnd::CWFVrfTestWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFE
 
 	Rect.left -= s; Rect.right -= s;
 	m_NextButton.Create(_T(""), _T(""), 0, Rect, this, IDC_NEXT);
-	m_NextButton.SetImage(W == 1920 ? IDR_RIGHT_ARROW_3 : W == 1600 ? IDR_RIGHT_ARROW_2 : IDR_RIGHT_ARROW_1);
+	m_NextButton.SetImage(W >= 1920 ? IDR_RIGHT_ARROW_3 : W >= 1600 ? IDR_RIGHT_ARROW_2 : IDR_RIGHT_ARROW_1);
 	m_NextButton.SetBk(FALSE);
 	m_NextButton.SetBkColor(BLACK);
 	m_NextButton.SetTip("Next point");
@@ -158,7 +158,7 @@ CWFVrfTestWnd::CWFVrfTestWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFE
 
 	Rect.left -= s; Rect.right -= s;
 	m_PrevButton.Create(_T(""), _T(""), 0, Rect, this, IDC_PREV);
-	m_PrevButton.SetImage(W == 1920 ? IDR_LEFT_ARROW_3 : W == 1600 ? IDR_LEFT_ARROW_2 : IDR_LEFT_ARROW_1);
+	m_PrevButton.SetImage(W >= 1920 ? IDR_LEFT_ARROW_3 : W >= 1600 ? IDR_LEFT_ARROW_2 : IDR_LEFT_ARROW_1);
 	m_PrevButton.SetBk(FALSE);
 	m_PrevButton.SetBkColor(BLACK);
 	m_PrevButton.SetTip("Previous point");
@@ -169,7 +169,7 @@ CWFVrfTestWnd::CWFVrfTestWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFE
 	{
 		Rect.left -= s; Rect.right -= s;
 		m_Shot2Button.Create(_T(""), _T(""), 0, Rect, this, IDC_SHOT_2);
-		m_Shot2Button.SetImage(W == 1920 ? IDR_SHOT2_3 : W == 1600 ? IDR_SHOT2_2 : IDR_SHOT2_1);
+		m_Shot2Button.SetImage(W >= 1920 ? IDR_SHOT2_3 : W >= 1600 ? IDR_SHOT2_2 : IDR_SHOT2_1);
 		m_Shot2Button.SetBk(FALSE);
 		m_Shot2Button.SetBkColor(BLACK);
 		m_Shot2Button.SetTip("2nd shot");
@@ -179,7 +179,7 @@ CWFVrfTestWnd::CWFVrfTestWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFE
 
 		Rect.left -= s; Rect.right -= s;
 		m_Shot1Button.Create(_T(""), _T(""), 0, Rect, this, IDC_SHOT_1);
-		m_Shot1Button.SetImage(W == 1920 ? IDR_SHOT1_3 : W == 1600 ? IDR_SHOT1_2 : IDR_SHOT1_1);
+		m_Shot1Button.SetImage(W >= 1920 ? IDR_SHOT1_3 : W >= 1600 ? IDR_SHOT1_2 : IDR_SHOT1_1);
 		m_Shot1Button.SetBk(FALSE);
 		m_Shot1Button.SetBkColor(BLACK);
 		m_Shot1Button.SetTip("1st shot");

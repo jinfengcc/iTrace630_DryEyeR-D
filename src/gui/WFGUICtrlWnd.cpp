@@ -61,7 +61,7 @@ void CWFGUICtrlWnd::CreateThisWnd(RECT& Rect, CWnd* pWnd, int CapWidth)
 		int top_h = intRound(real_t(m_h) / 10);
 
 		int W = ::GetSystemMetrics(SM_CXSCREEN);
-		int q = W == 1920 ? 2 : (W == 1600 ? 1 : 0);
+		int q = W >= 1920 ? 2 : (W >= 1600 ? 1 : 0);
 
 		RECT tempRect;
 		::SetRect(&tempRect, m_w + Left_w, top_h, m_w + Left_w + BtnW, top_h + BtnW);

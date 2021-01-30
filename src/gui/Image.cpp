@@ -355,11 +355,11 @@ CProductLogo::CProductLogo(int i)
 
 	int ResourceID;
 
-	if (W == 1920)
+	if (W >= 1920)
 	{
 		ResourceID = i == 0 ? IDR_PRODUCT_LOGO_BLACK_3 : IDR_PRODUCT_LOGO_WHITE_3;
 	}
-	else if (W == 1600)
+	else if (W >= 1600)
 	{
 		ResourceID = i == 0 ? IDR_PRODUCT_LOGO_BLACK_2 : IDR_PRODUCT_LOGO_WHITE_2;
 	}
@@ -381,11 +381,11 @@ CiTraceLogo::CiTraceLogo(int i)
 
 	if (m_isCombo || !m_isValid)
 	{
-		if (W == 1920)
+		if (W >= 1920)
 		{
 			ResourceID = i == 0 ? IDR_ITRACE_LOGO_BLACK_3 : IDR_ITRACE_LOGO_WHITE_3;
 		}
-		else if (W == 1600)
+		else if (W >= 1600)
 		{
 			ResourceID = i == 0 ? IDR_ITRACE_LOGO_BLACK_2 : IDR_ITRACE_LOGO_WHITE_2;
 		}
@@ -396,11 +396,11 @@ CiTraceLogo::CiTraceLogo(int i)
 	}
 	else
 	{
-		if (W == 1920)
+		if (W >= 1920)
 		{
 			ResourceID = i == 0 ? IDR_ITRACE_SOLO_BLACK_3 : IDR_ITRACE_SOLO_WHITE_3;
 		}
-		else if (W == 1600)
+		else if (W >= 1600)
 		{
 			ResourceID = i == 0 ? IDR_ITRACE_SOLO_BLACK_2 : IDR_ITRACE_SOLO_WHITE_2;
 		}
@@ -421,11 +421,11 @@ CTraceyLogo::CTraceyLogo(int i)
 
 	int ResourceID;
 
-	if (W == 1920)
+	if (W >= 1920)
 	{
 		ResourceID = i == 0 ? IDR_TRACEY_LOGO_BLACK_3 : IDR_TRACEY_LOGO_WHITE_3;
 	}
-	else if (W == 1600)
+	else if (W >= 1600)
 	{
 		ResourceID = i == 0 ? IDR_TRACEY_LOGO_BLACK_2 : IDR_TRACEY_LOGO_WHITE_2;
 	}
@@ -454,11 +454,11 @@ CHoyaLogo::CHoyaLogo()
 
 	int ResourceID;
 
-	if (W == 1920)
+	if (W >= 1920)
 	{
 		ResourceID = IDR_HOYA_LOGO_3;
 	}
-	else if (W == 1600)
+	else if (W >= 1600)
 	{
 		ResourceID = IDR_HOYA_LOGO_2;
 	}

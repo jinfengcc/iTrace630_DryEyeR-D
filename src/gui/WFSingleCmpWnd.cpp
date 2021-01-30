@@ -81,8 +81,8 @@ CWFSingleCmpWnd::CWFSingleCmpWnd(CWnd *pWnd, RECT &WndRect, CPatient *pPatient, 
 	::SetRect(&Rect, m_Rect[3].right - 25, m_Rect[3].top + 5, m_Rect[3].right - 5, m_Rect[3].top + 20);
 	m_WFShowFullInfoButton.Create(_T(""), _T(""), WS_CHILD, Rect, this, IDC_SHOW_FULL_INFO);
 	m_WFShowFullInfoButton.SetImage(m_pWndSettings[0].m_SimplifiedWFPanel ?
-		(m_SW == 1920 ? IDR_SHOW_DETAIL_3 : m_SW == 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
-		(m_SW == 1920 ? IDR_HIDE_DETAIL_3 : m_SW == 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
+		(m_SW >= 1920 ? IDR_SHOW_DETAIL_3 : m_SW >= 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
+		(m_SW >= 1920 ? IDR_HIDE_DETAIL_3 : m_SW >= 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
 	m_WFShowFullInfoButton.SetBk(FALSE);
 	m_WFShowFullInfoButton.SetBkColor(BLACK);
 	m_WFShowFullInfoButton.SetTip(s);
@@ -91,8 +91,8 @@ CWFSingleCmpWnd::CWFSingleCmpWnd(CWnd *pWnd, RECT &WndRect, CPatient *pPatient, 
 	::SetRect(&Rect, m_Rect[4].right - 25, m_Rect[4].top + 5, m_Rect[4].right - 5, m_Rect[4].top + 20);
 	m_WFShowFullInfoButton2.Create(_T(""), _T(""), WS_CHILD, Rect, this, IDC_SHOW_FULL_INFO2);
 	m_WFShowFullInfoButton2.SetImage(m_pWndSettings[0].m_SimplifiedWFPanel ?
-		(m_SW == 1920 ? IDR_SHOW_DETAIL_3 : m_SW == 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
-		(m_SW == 1920 ? IDR_HIDE_DETAIL_3 : m_SW == 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
+		(m_SW >= 1920 ? IDR_SHOW_DETAIL_3 : m_SW >= 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
+		(m_SW >= 1920 ? IDR_HIDE_DETAIL_3 : m_SW >= 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
 	m_WFShowFullInfoButton2.SetBk(FALSE);
 	m_WFShowFullInfoButton2.SetBkColor(BLACK);
 	m_WFShowFullInfoButton2.SetTip(s);
@@ -101,8 +101,8 @@ CWFSingleCmpWnd::CWFSingleCmpWnd(CWnd *pWnd, RECT &WndRect, CPatient *pPatient, 
 	::SetRect(&Rect, m_Rect[5].right - 25, m_Rect[5].top + 5, m_Rect[5].right - 5, m_Rect[5].top + 20);
 	m_WFShowFullInfoButton3.Create(_T(""), _T(""), WS_CHILD, Rect, this, IDC_SHOW_FULL_INFO3);
 	m_WFShowFullInfoButton3.SetImage(m_pWndSettings[0].m_SimplifiedWFPanel ?
-		(m_SW == 1920 ? IDR_SHOW_DETAIL_3 : m_SW == 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
-		(m_SW == 1920 ? IDR_HIDE_DETAIL_3 : m_SW == 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
+		(m_SW >= 1920 ? IDR_SHOW_DETAIL_3 : m_SW >= 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
+		(m_SW >= 1920 ? IDR_HIDE_DETAIL_3 : m_SW >= 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
 	m_WFShowFullInfoButton3.SetBk(FALSE);
 	m_WFShowFullInfoButton3.SetBkColor(BLACK);
 	m_WFShowFullInfoButton3.SetTip(s);
@@ -120,13 +120,13 @@ void CWFSingleCmpWnd::RepaintMemDC()
 
 	BOOL Rows[22] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
-	if (m_pWFExam1) 
+	if (m_pWFExam1)
 	{
 		if (m_InsideZone[m_d] == TRUE)
 		{
 			m_pWFExam1->Process();//530
 
-			// for average exam 
+			// for average exam
 			CString ExamId, LoadFileName;
 			GUIDToStr(m_pWFExam1->m_Header.m_ExamID, ExamId);
 			LoadFileName = MAIN_DIR + "\\Data\\" + ExamId;
@@ -154,13 +154,13 @@ void CWFSingleCmpWnd::RepaintMemDC()
 		}
 	}
 
-	if (m_pWFExam2) 
+	if (m_pWFExam2)
 	{
 		if (m_InsideZone[m_d] == TRUE)
 		{
 			m_pWFExam2->Process();
 
-			// for average exam 
+			// for average exam
 			CString ExamId, LoadFileName;
 			GUIDToStr(m_pWFExam2->m_Header.m_ExamID, ExamId);
 			LoadFileName = MAIN_DIR + "\\Data\\" + ExamId;
@@ -203,7 +203,7 @@ void CWFSingleCmpWnd::RepaintMemDC()
 
 	delete pWFExam3;
 
-	// Draw the glass icon for print out  
+	// Draw the glass icon for print out
 	if (m_Printing || m_Saving)
 	{
 
@@ -235,7 +235,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 	for (int d = 0; d < 3; d++) SAFE_DELETE(m_pDispWnd[d]);
 
 	CWndSettings* pWndSettings = GetWndSettings();
-		
+
 	// type
 	if (pWndSettings->m_Type != TYPE_TWFM &&
 		pWndSettings->m_Type != TYPE_TRFM &&
@@ -249,22 +249,22 @@ void CWFSingleCmpWnd::CreateChildWnd()
 		pWndSettings->m_Type = TYPE_TWFM;
 	}
 
-	if (pWndSettings->m_Type == TYPE_TRMS) 
+	if (pWndSettings->m_Type == TYPE_TRMS)
 	{
 		if (pWndSettings->m_Method3D)
 		{
 			pWndSettings->m_RMSIndividual = TRUE;
 		}
 	}
-	else if (pWndSettings->m_Type == TYPE_TLTR) 
+	else if (pWndSettings->m_Type == TYPE_TLTR)
 	{
-		if (!(pWndSettings->m_Ltr == 0 || pWndSettings->m_Ltr == 1)) 
+		if (!(pWndSettings->m_Ltr == 0 || pWndSettings->m_Ltr == 1))
 		{
 			pWndSettings->m_Ltr = 0;
 		}
 		if (!(pWndSettings->m_LtrLine == 20 || pWndSettings->m_LtrLine == 25 || pWndSettings->m_LtrLine == 30 ||
 			pWndSettings->m_LtrLine == 40 || pWndSettings->m_LtrLine == 50 || pWndSettings->m_LtrLine == 70 ||
-			pWndSettings->m_LtrLine == 100 || pWndSettings->m_LtrLine == 200)) 
+			pWndSettings->m_LtrLine == 100 || pWndSettings->m_LtrLine == 200))
 		{
 			pWndSettings->m_LtrLine = 40;
 		}
@@ -273,7 +273,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 		{
 			pWndSettings->m_LtrOrientation = 0;
 		}
-	}	
+	}
 
 	CWFExam* pWFExam[3] = { m_pWFExam1, m_pWFExam2, NULL };
 
@@ -281,7 +281,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 	{
 		m_pWFExam1->Presbia24Process();
 
-		// for average exam 
+		// for average exam
 		CString ExamId, LoadFileName;
 		GUIDToStr(m_pWFExam1->m_Header.m_ExamID, ExamId);
 		LoadFileName = MAIN_DIR + "\\Data\\" + ExamId;
@@ -300,7 +300,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 
 		m_pWFExam2->Presbia24Process();
 
-		// for average exam 
+		// for average exam
 		GUIDToStr(m_pWFExam2->m_Header.m_ExamID, ExamId);
 		LoadFileName = MAIN_DIR + "\\Data\\" + ExamId;
 
@@ -320,7 +320,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 	{
 		m_pWFExam1->Process();
 
-		// for average exam 
+		// for average exam
 		CString ExamId, LoadFileName;
 		GUIDToStr(m_pWFExam1->m_Header.m_ExamID, ExamId);
 		LoadFileName = MAIN_DIR + "\\Data\\" + ExamId;
@@ -339,7 +339,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 
 		m_pWFExam2->Process();
 
-		// for average exam 
+		// for average exam
 		GUIDToStr(m_pWFExam2->m_Header.m_ExamID, ExamId);
 		LoadFileName = MAIN_DIR + "\\Data\\" + ExamId;
 
@@ -397,7 +397,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 			PresbisRBs[i].Format(_T(" %+.2f D %+.2f D x %i° "), Sph, Cyl, Axis);
 		}
 	}
-	
+
 	CZernikeSurface Surfaces[2];
 	Surfaces[0] = m_pWFExam1->m_WfSurface;
 	Surfaces[1] = m_pWFExam2->m_WfSurface;
@@ -457,14 +457,14 @@ void CWFSingleCmpWnd::CreateChildWnd()
 			CScale* pScale = pWndSettings->GetScale();
 			pEyeWnd->m_NumColors = pScale->m_NumColors;
 
-			for (int i = 0; i < pScale->m_NumColors; i++) 
+			for (int i = 0; i < pScale->m_NumColors; i++)
 			{
 				pEyeWnd->m_Colors[i] = pScale->m_Colors[i];
 			}
 
 			pEyeWnd->m_pWFExam = pWFExam[d];
 
-			if (pWndSettings->m_Method3D) 
+			if (pWndSettings->m_Method3D)
 			{
 				if (m_InsideZone[d] == TRUE)
 				{
@@ -552,7 +552,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 			pEyeWnd->CreateZoomButtons();
 
 			if (m_InsideZone[d] == TRUE) pEyeWnd->CreateSoloMaskButtons(pWndSettings->m_Mask.GetType(), 2);
-			else                        pEyeWnd->CreateSoloMaskButtons(pWndSettings->m_Mask.GetType(), 1);																										  
+			else                        pEyeWnd->CreateSoloMaskButtons(pWndSettings->m_Mask.GetType(), 1);
 
 			if (m_InsideZone[m_d] != TRUE) pEyeWnd->CreateZoneButtons();
 			else
@@ -611,7 +611,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 			if (m_InsideZone[m_d] == TRUE) pLtrWnd->m_LTLabel[2] = "Presbia 2.4mm";
 
 			pLtrWnd->CreateZoomButtons();
-		
+
 			if (m_InsideZone[m_d] != TRUE) pLtrWnd->CreateZoneButtons();
 			else
 			{
@@ -649,7 +649,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 			{
 				pMTFWnd->CreateSlider();
 			}
-			
+
 			if (m_InsideZone[m_d] != TRUE) pMTFWnd->CreateZoneButtons();
 			else
 			{
@@ -747,7 +747,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 			pAZRWnd->m_LTLabel[2].Format(_T("%.2f mm"), r_max_um * 0.002);
 
 			if (m_InsideZone[m_d] == TRUE) pAZRWnd->m_LTLabel[2] = "Presbia 2.4mm";
-		
+
 			real_t dr_um = 100.0;
 			int n = (int)(r_max_um / dr_um) + 1;
 
@@ -766,10 +766,10 @@ void CWFSingleCmpWnd::CreateChildWnd()
 			//
 			pAZRWnd->m_BLabels.Create(n);
 
-			for (int i = 0; i < n; i++) 
+			for (int i = 0; i < n; i++)
 			{
 				real_t r_mm = 0.002 * i * dr_um;
-				if (fabs(r_mm - (int)r_mm) < 0.001) 
+				if (fabs(r_mm - (int)r_mm) < 0.001)
 				{
 					pAZRWnd->m_BLabels[i].Format(_T("%i"), (int)r_mm);
 				}
@@ -781,7 +781,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 				real_t r_um = i == 0 ? 1.0 : i * dr_um;
 				pAZRWnd->m_Values(i, 0) = CWFExam::GetAnnularRfAt(m_Surfaces[d], r_um);
 				pAZRWnd->m_Values(i, 1) = CWFExam::GetAverageRfAt(m_Surfaces[d], r_um);
-			}		
+			}
 
 			if (m_InsideZone[m_d] != TRUE)
 			{
@@ -1059,7 +1059,7 @@ void CWFSingleCmpWnd::CreateMenu()
 	m_pMenu->AppendItem(IDC_TYPE_TRFM_ITEM, pWndSettings->m_Type == TYPE_TRFM, FALSE, "Refraction Map", "");
 	m_pMenu->AppendItem(IDC_TYPE_TPSF_ITEM, pWndSettings->m_Type == TYPE_TPSF, FALSE, "Point Spread Function", "");
 	m_pMenu->AppendItem(IDC_TYPE_TLTR_ITEM, pWndSettings->m_Type == TYPE_TLTR, FALSE, "Visual Acuity Chart", "");
-	
+
 	m_pMenu->AppendItem(IDC_TYPE_TMTF_ITEM, pWndSettings->m_Type == TYPE_TMTF, FALSE, "Modulation Transfer Function", "");
 	m_pMenu->AppendItem(IDC_TYPE_TEEF_ITEM, pWndSettings->m_Type == TYPE_TEEF, FALSE, "Encircled Energy Function", "");
 	m_pMenu->AppendItem(IDC_TYPE_TRMS_ITEM, pWndSettings->m_Type == TYPE_TRMS, FALSE, "Root Mean Square", "");
@@ -1312,7 +1312,7 @@ void CWFSingleCmpWnd::OnSelEyeImgItemClicked()
 			m_pWFExam1->m_Image = SelectWFExam->m_Image;
 			m_pWFExam1->Process();
 
-			// for average exam 
+			// for average exam
 			CString ExamId, LoadFileName;
 			GUIDToStr(m_pWFExam1->m_Header.m_ExamID, ExamId);
 			LoadFileName = MAIN_DIR + "\\Data\\" + ExamId;
@@ -1335,7 +1335,7 @@ void CWFSingleCmpWnd::OnSelEyeImgItemClicked()
 			m_pWFExam2->m_Image = SelectWFExam->m_Image;
 			m_pWFExam2->Process();
 
-			// for average exam 
+			// for average exam
 			CString ExamId, LoadFileName;
 			GUIDToStr(m_pWFExam2->m_Header.m_ExamID, ExamId);
 			LoadFileName = MAIN_DIR + "\\Data\\" + ExamId;
@@ -1394,8 +1394,8 @@ LRESULT CWFSingleCmpWnd::OnChangeRmsGUI(WPARAM wParam, LPARAM lParam)
 		m_pDispWnd[s_d]->m_ShowMoreButton.SetTip(s);
 
 		m_pDispWnd[s_d]->m_ShowMoreButton.SetImage(Simple ?
-			(W == 1920 ? IDR_SHOW_DETAIL_3 : W == 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
-			(W == 1920 ? IDR_HIDE_DETAIL_3 : W == 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
+			(W >= 1920 ? IDR_SHOW_DETAIL_3 : W >= 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
+			(W >= 1920 ? IDR_HIDE_DETAIL_3 : W >= 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
 
 		m_pDispWnd[s_d]->m_ShowMoreButton.Repaint();
 		m_pDispWnd[s_d]->Repaint();
@@ -1413,20 +1413,20 @@ void CWFSingleCmpWnd::OnShowWFTextInfoBtnClicked()
 	CString s = (m_pWndSettings[0].m_SimplifiedWFPanel ? "Show Details" : "Hide Details");
 	m_WFShowFullInfoButton.SetTip(s);
 	m_WFShowFullInfoButton.SetImage(m_pWndSettings[0].m_SimplifiedWFPanel ?
-		(m_SW == 1920 ? IDR_SHOW_DETAIL_3 : m_SW == 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
-		(m_SW == 1920 ? IDR_HIDE_DETAIL_3 : m_SW == 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
+		(m_SW >= 1920 ? IDR_SHOW_DETAIL_3 : m_SW >= 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
+		(m_SW >= 1920 ? IDR_HIDE_DETAIL_3 : m_SW >= 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
 	m_WFShowFullInfoButton.Repaint();
 
 	m_WFShowFullInfoButton2.SetTip(s);
 	m_WFShowFullInfoButton2.SetImage(m_pWndSettings[0].m_SimplifiedWFPanel ?
-		(m_SW == 1920 ? IDR_SHOW_DETAIL_3 : m_SW == 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
-		(m_SW == 1920 ? IDR_HIDE_DETAIL_3 : m_SW == 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
+		(m_SW >= 1920 ? IDR_SHOW_DETAIL_3 : m_SW >= 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
+		(m_SW >= 1920 ? IDR_HIDE_DETAIL_3 : m_SW >= 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
 	m_WFShowFullInfoButton2.Repaint();
 
 	m_WFShowFullInfoButton3.SetTip(s);
 	m_WFShowFullInfoButton3.SetImage(m_pWndSettings[0].m_SimplifiedWFPanel ?
-		(m_SW == 1920 ? IDR_SHOW_DETAIL_3 : m_SW == 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
-		(m_SW == 1920 ? IDR_HIDE_DETAIL_3 : m_SW == 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
+		(m_SW >= 1920 ? IDR_SHOW_DETAIL_3 : m_SW >= 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
+		(m_SW >= 1920 ? IDR_HIDE_DETAIL_3 : m_SW >= 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
 	m_WFShowFullInfoButton3.Repaint();
 }
 

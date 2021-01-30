@@ -225,7 +225,7 @@ CPlanBigWnd::CPlanBigWnd(CWnd* pParentWnd, RECT& Rect, CDicomInfo  DicomInfo, CC
 
 	int W = ::GetSystemMetrics(SM_CXSCREEN);
 	int H = ::GetSystemMetrics(SM_CYSCREEN);
-	int m_q = W == 1920 ? 2 : (W == 1600 ? 1 : 0);
+	int m_q = W >= 1920 ? 2 : (W >= 1600 ? 1 : 0);
 
 	m_ImgSize = m_h*m_w * 3;
 

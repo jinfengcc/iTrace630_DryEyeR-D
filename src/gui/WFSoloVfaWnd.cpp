@@ -246,8 +246,8 @@ CWFSoloVfaWnd::CWFSoloVfaWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFE
 		::SetRect(&Rect, m_Rect[6].right - 25, m_Rect[6].top + 5, m_Rect[6].right - 5, m_Rect[6].top + 20);
 		m_WFShowFullInfoButton.Create(_T(""), _T(""), WS_CHILD, Rect, this, IDC_SHOW_FULL_INFO);
 		m_WFShowFullInfoButton.SetImage(m_pWndSettings[0].m_SimplifiedWFPanel ?
-			(m_SW == 1920 ? IDR_SHOW_DETAIL_3 : m_SW == 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
-			(m_SW == 1920 ? IDR_HIDE_DETAIL_3 : m_SW == 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
+			(m_SW >= 1920 ? IDR_SHOW_DETAIL_3 : m_SW >= 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
+			(m_SW >= 1920 ? IDR_HIDE_DETAIL_3 : m_SW >= 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
 		m_WFShowFullInfoButton.SetBk(FALSE);
 		m_WFShowFullInfoButton.SetBkColor(BLACK);
 		m_WFShowFullInfoButton.SetTip(s);
@@ -260,8 +260,8 @@ CWFSoloVfaWnd::CWFSoloVfaWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFE
 		::SetRect(&Rect, m_Rect[7].right - 25, m_Rect[7].top + 5, m_Rect[7].right - 5, m_Rect[7].top + 20);
 		m_WFShowFullInfoButton2.Create(_T(""), _T(""), WS_CHILD, Rect, this, IDC_SHOW_FULL_INFO2);
 		m_WFShowFullInfoButton2.SetImage(m_pWndSettings[0].m_SimplifiedWFPanel ?
-			(m_SW == 1920 ? IDR_SHOW_DETAIL_3 : m_SW == 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
-			(m_SW == 1920 ? IDR_HIDE_DETAIL_3 : m_SW == 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
+			(m_SW >= 1920 ? IDR_SHOW_DETAIL_3 : m_SW >= 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
+			(m_SW >= 1920 ? IDR_HIDE_DETAIL_3 : m_SW >= 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
 		m_WFShowFullInfoButton2.SetBk(FALSE);
 		m_WFShowFullInfoButton2.SetBkColor(BLACK);
 		m_WFShowFullInfoButton2.SetTip(s);
@@ -1497,15 +1497,15 @@ void CWFSoloVfaWnd::OnShowWFTextInfoBtnClicked()
 	CString s = (m_pWndSettings[0].m_SimplifiedWFPanel ? "Show Details" : "Hide Details");
 	m_WFShowFullInfoButton.SetTip(s);
 	m_WFShowFullInfoButton.SetImage(m_pWndSettings[0].m_SimplifiedWFPanel ?
-		(m_SW == 1920 ? IDR_SHOW_DETAIL_3 : m_SW == 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
-		(m_SW == 1920 ? IDR_HIDE_DETAIL_3 : m_SW == 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
+		(m_SW >= 1920 ? IDR_SHOW_DETAIL_3 : m_SW >= 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
+		(m_SW >= 1920 ? IDR_HIDE_DETAIL_3 : m_SW >= 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
 	m_WFShowFullInfoButton.Repaint();
 
 	if (m_pWFExam2)
 	{
 		m_WFShowFullInfoButton2.SetImage(m_pWndSettings[0].m_SimplifiedWFPanel ?
-			(m_SW == 1920 ? IDR_SHOW_DETAIL_3 : m_SW == 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
-			(m_SW == 1920 ? IDR_HIDE_DETAIL_3 : m_SW == 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
+			(m_SW >= 1920 ? IDR_SHOW_DETAIL_3 : m_SW >= 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
+			(m_SW >= 1920 ? IDR_HIDE_DETAIL_3 : m_SW >= 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
 		m_WFShowFullInfoButton2.SetTip(s);
 		m_WFShowFullInfoButton2.Repaint();
 	}

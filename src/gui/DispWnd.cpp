@@ -101,14 +101,14 @@ void CDispWnd::CreateSimpButtons(BOOL ShowDetails)
 	if (m_SizeSmall)
 	{
 		m_ShowMoreButton.SetImage(!ShowDetails ?
-			(W == 1920 ? IDR_SHOW_DETAIL_3 : W == 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
-			(W == 1920 ? IDR_HIDE_DETAIL_3 : W == 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
+			(W >= 1920 ? IDR_SHOW_DETAIL_3 : W >= 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
+			(W >= 1920 ? IDR_HIDE_DETAIL_3 : W >= 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
 	}
 	else
 	{
 		m_ShowMoreButton.SetImage(!ShowDetails ?
-			(W == 1920 ? IDR_SHOW_DETAIL_6 : W == 1600 ? IDR_SHOW_DETAIL_5 : IDR_SHOW_DETAIL_4) :
-			(W == 1920 ? IDR_HIDE_DETAIL_6 : W == 1600 ? IDR_HIDE_DETAIL_5 : IDR_HIDE_DETAIL_4));
+			(W >= 1920 ? IDR_SHOW_DETAIL_6 : W >= 1600 ? IDR_SHOW_DETAIL_5 : IDR_SHOW_DETAIL_4) :
+			(W >= 1920 ? IDR_HIDE_DETAIL_6 : W >= 1600 ? IDR_HIDE_DETAIL_5 : IDR_HIDE_DETAIL_4));
 	}
 
 	m_ShowMoreButton.SetBk(FALSE);
@@ -135,8 +135,8 @@ void CDispWnd::CreateZoneButtons()
 	::SetRect(&Rect, r - w, b - w, r, b);
 	m_IncZoneButton.Create(_T(""), _T(""), WS_CHILD, Rect, this, IDC_INC_ZONE);
 	m_IncZoneButton.SetImage(m_SizeSmall ?
-		(W == 1920 ? IDR_INC_ZONE_3 : W == 1600 ? IDR_INC_ZONE_2 : IDR_INC_ZONE_1) :
-		(W == 1920 ? IDR_INC_ZONE_6 : W == 1600 ? IDR_INC_ZONE_5 : IDR_INC_ZONE_4));
+		(W >= 1920 ? IDR_INC_ZONE_3 : W >= 1600 ? IDR_INC_ZONE_2 : IDR_INC_ZONE_1) :
+		(W >= 1920 ? IDR_INC_ZONE_6 : W >= 1600 ? IDR_INC_ZONE_5 : IDR_INC_ZONE_4));
 	m_IncZoneButton.SetBk(FALSE);
 	m_IncZoneButton.SetBkColor(BLACK);
 	m_IncZoneButton.SetTip("Increase zone size");
@@ -147,8 +147,8 @@ void CDispWnd::CreateZoneButtons()
 	::SetRect(&Rect, r - w, b - w, r, b);
 	m_DecZoneButton.Create(_T(""), _T(""), WS_CHILD, Rect, this, IDC_DEC_ZONE);
 	m_DecZoneButton.SetImage(m_SizeSmall ?
-		(W == 1920 ? IDR_DEC_ZONE_3 : W == 1600 ? IDR_DEC_ZONE_2 : IDR_DEC_ZONE_1) :
-		(W == 1920 ? IDR_DEC_ZONE_6 : W == 1600 ? IDR_DEC_ZONE_5 : IDR_DEC_ZONE_4));
+		(W >= 1920 ? IDR_DEC_ZONE_3 : W >= 1600 ? IDR_DEC_ZONE_2 : IDR_DEC_ZONE_1) :
+		(W >= 1920 ? IDR_DEC_ZONE_6 : W >= 1600 ? IDR_DEC_ZONE_5 : IDR_DEC_ZONE_4));
 	m_DecZoneButton.SetBk(FALSE);
 	m_DecZoneButton.SetBkColor(BLACK);
 	m_DecZoneButton.SetTip("Decrease zone size");
@@ -172,8 +172,8 @@ void CDispWnd::CreateZoneButtons2()
 	::SetRect(&Rect, r - w, 3, r, 3 + w);
 	m_IncZoneButton.Create(_T(""), _T(""), WS_CHILD, Rect, this, IDC_INC_ZONE);
 	m_IncZoneButton.SetImage(m_SizeSmall ?
-		(W == 1920 ? IDR_INC_ZONE_3 : W == 1600 ? IDR_INC_ZONE_2 : IDR_INC_ZONE_1) :
-		(W == 1920 ? IDR_INC_ZONE_6 : W == 1600 ? IDR_INC_ZONE_5 : IDR_INC_ZONE_4));
+		(W >= 1920 ? IDR_INC_ZONE_3 : W >= 1600 ? IDR_INC_ZONE_2 : IDR_INC_ZONE_1) :
+		(W >= 1920 ? IDR_INC_ZONE_6 : W >= 1600 ? IDR_INC_ZONE_5 : IDR_INC_ZONE_4));
 	m_IncZoneButton.SetBk(FALSE);
 	m_IncZoneButton.SetBkColor(BLACK);
 	m_IncZoneButton.SetTip("Increase zone size");
@@ -185,8 +185,8 @@ void CDispWnd::CreateZoneButtons2()
 	::SetRect(&Rect, r - w, 3, r, 3 + w);
 	m_DecZoneButton.Create(_T(""), _T(""), WS_CHILD, Rect, this, IDC_DEC_ZONE);
 	m_DecZoneButton.SetImage(m_SizeSmall ?
-		(W == 1920 ? IDR_DEC_ZONE_3 : W == 1600 ? IDR_DEC_ZONE_2 : IDR_DEC_ZONE_1) :
-		(W == 1920 ? IDR_DEC_ZONE_6 : W == 1600 ? IDR_DEC_ZONE_5 : IDR_DEC_ZONE_4));
+		(W >= 1920 ? IDR_DEC_ZONE_3 : W >= 1600 ? IDR_DEC_ZONE_2 : IDR_DEC_ZONE_1) :
+		(W >= 1920 ? IDR_DEC_ZONE_6 : W >= 1600 ? IDR_DEC_ZONE_5 : IDR_DEC_ZONE_4));
 	m_DecZoneButton.SetBk(FALSE);
 	m_DecZoneButton.SetBkColor(BLACK);
 	m_DecZoneButton.SetTip("Decrease zone size");
@@ -220,25 +220,25 @@ void CDispWnd::CreateSoloMaskButtons(int makeType, int pos)
 	if (makeType == MASK_TOTAL)
 	{
 		// m_SoloMaskButton.SetImage(m_SizeSmall ?
-		//(W == 1920 ? IDR_SOLO_NOCOR3 : W == 1600 ? IDR_SOLO_NOCOR2 : IDR_SOLO_NOCOR1) :
-		//(W == 1920 ? IDR_SOLO_NOCOR6 : W == 1600 ? IDR_SOLO_NOCOR5 : IDR_SOLO_NOCOR4));
+		//(W >= 1920 ? IDR_SOLO_NOCOR3 : W >= 1600 ? IDR_SOLO_NOCOR2 : IDR_SOLO_NOCOR1) :
+		//(W >= 1920 ? IDR_SOLO_NOCOR6 : W >= 1600 ? IDR_SOLO_NOCOR5 : IDR_SOLO_NOCOR4));
 		m_SoloMaskButton.SetImage(m_SizeSmall ?
-			(W == 1920 ? IDR_SOLO_NOCOR3 : W == 1600 ? IDR_SOLO_NOCOR2 : IDR_SOLO_NOCOR1) :
-			(W == 1920 ? IDR_SOLO_NOCOR6 : W == 1600 ? IDR_SOLO_NOCOR5 : IDR_SOLO_NOCOR4));
+			(W >= 1920 ? IDR_SOLO_NOCOR3 : W >= 1600 ? IDR_SOLO_NOCOR2 : IDR_SOLO_NOCOR1) :
+			(W >= 1920 ? IDR_SOLO_NOCOR6 : W >= 1600 ? IDR_SOLO_NOCOR5 : IDR_SOLO_NOCOR4));
 		m_SoloMaskButton.SetTip("Displayed without spectacle correction");
 	}
 	else if (makeType == MASK_HO_TOTAL)
 	{
 		m_SoloMaskButton.SetImage(m_SizeSmall ?
-			(W == 1920 ? IDR_SOLO_COR3 : W == 1600 ? IDR_SOLO_COR2 : IDR_SOLO_COR1) :
-			(W == 1920 ? IDR_SOLO_COR6 : W == 1600 ? IDR_SOLO_COR5 : IDR_SOLO_COR4));
+			(W >= 1920 ? IDR_SOLO_COR3 : W >= 1600 ? IDR_SOLO_COR2 : IDR_SOLO_COR1) :
+			(W >= 1920 ? IDR_SOLO_COR6 : W >= 1600 ? IDR_SOLO_COR5 : IDR_SOLO_COR4));
 		m_SoloMaskButton.SetTip("Displayed with spectacle correction");
 	}
 	else if (makeType == MASK_TOTAL_NO_DEFOCUS)
 	{
 		m_SoloMaskButton.SetImage(m_SizeSmall ?
-			(W == 1920 ? IDR_SOLO_CORSP3 : W == 1600 ? IDR_SOLO_CORSP2 : IDR_SOLO_CORSP1) :
-			(W == 1920 ? IDR_SOLO_CORSP6 : W == 1600 ? IDR_SOLO_CORSP5 : IDR_SOLO_CORSP4));
+			(W >= 1920 ? IDR_SOLO_CORSP3 : W >= 1600 ? IDR_SOLO_CORSP2 : IDR_SOLO_CORSP1) :
+			(W >= 1920 ? IDR_SOLO_CORSP6 : W >= 1600 ? IDR_SOLO_CORSP5 : IDR_SOLO_CORSP4));
 		m_SoloMaskButton.SetTip("Displayed with spherical correction only");
 	}
 

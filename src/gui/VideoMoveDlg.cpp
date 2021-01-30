@@ -132,7 +132,7 @@ BOOL CVideoMoveDlg::OnInitDialog()
 	int H = Rect.bottom - Rect.top;
 	::SetRect(&Rect, intRound(0.825*W), intRound(0.39*H), intRound(0.875*W), intRound(0.46*H));
 	m_LeftButton.Create(_T(""), _T(""), 0, Rect, this, IDC_VIDEO_LEFT_BTN);
-	m_LeftButton.SetImage(W == 1920 ? IDR_LEFT_ARROW_3 : W == 1600 ? IDR_LEFT_ARROW_2 : IDR_LEFT_ARROW_1);
+	m_LeftButton.SetImage(W >= 1920 ? IDR_LEFT_ARROW_3 : W >= 1600 ? IDR_LEFT_ARROW_2 : IDR_LEFT_ARROW_1);
 	m_LeftButton.SetBk(FALSE);
 	m_LeftButton.SetEnabled(FALSE);
 	m_LeftButton.SetTip("Video range move to left");
@@ -140,7 +140,7 @@ BOOL CVideoMoveDlg::OnInitDialog()
 
 	::SetRect(&Rect, intRound(0.905*W), intRound(0.39*H), intRound(0.955*W), intRound(0.46*H));
 	m_RightButton.Create(_T(""), _T(""), 0, Rect, this, IDC_VIDEO_RIGHT_BTN);
-	m_RightButton.SetImage(W == 1920 ? IDR_RIGHT_ARROW_3 : W == 1600 ? IDR_RIGHT_ARROW_2 : IDR_RIGHT_ARROW_1);
+	m_RightButton.SetImage(W >= 1920 ? IDR_RIGHT_ARROW_3 : W >= 1600 ? IDR_RIGHT_ARROW_2 : IDR_RIGHT_ARROW_1);
 	m_RightButton.SetBk(FALSE);
 	m_RightButton.SetEnabled(FALSE);
 	m_RightButton.SetTip("Video range move to right");

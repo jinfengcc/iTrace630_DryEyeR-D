@@ -129,7 +129,7 @@ BOOL CExamAveDlg::OnInitDialog()
 
 	::SetRect(&Rect, intRound(0.1*W), intRound(0.8*H), intRound(0.2*W), intRound(0.85*H));
 	m_LeftButton.Create(_T(""), _T(""), 0, Rect, this, IDC_VIDEO_LEFT_BTN);
-	m_LeftButton.SetImage(W == 1920 ? IDR_LEFT_ARROW_3 : W == 1600 ? IDR_LEFT_ARROW_2 : IDR_LEFT_ARROW_1);
+	m_LeftButton.SetImage(W >= 1920 ? IDR_LEFT_ARROW_3 : W >= 1600 ? IDR_LEFT_ARROW_2 : IDR_LEFT_ARROW_1);
 	m_LeftButton.SetBk(FALSE);
 	m_LeftButton.SetEnabled(FALSE);
 	m_LeftButton.SetTip("Previous eye image");
@@ -137,7 +137,7 @@ BOOL CExamAveDlg::OnInitDialog()
 
 	::SetRect(&Rect, intRound(0.8*W), intRound(0.8*H), intRound(0.9*W), intRound(0.85*H));
 	m_RightButton.Create(_T(""), _T(""), 0, Rect, this, IDC_VIDEO_RIGHT_BTN);
-	m_RightButton.SetImage(W == 1920 ? IDR_RIGHT_ARROW_3 : W == 1600 ? IDR_RIGHT_ARROW_2 : IDR_RIGHT_ARROW_1);
+	m_RightButton.SetImage(W >= 1920 ? IDR_RIGHT_ARROW_3 : W >= 1600 ? IDR_RIGHT_ARROW_2 : IDR_RIGHT_ARROW_1);
 	m_RightButton.SetBk(FALSE);
 	m_RightButton.SetEnabled(TRUE);
 	m_RightButton.SetTip("Next eye image");

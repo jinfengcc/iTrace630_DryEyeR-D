@@ -121,7 +121,7 @@ CPlanWnd::CPlanWnd(RECT& Rect, CWnd* pWnd) :
 
 	::SetRect(&Rect1, m_w - intRound(w), m_l - 2 - intRound(2.0*h), m_w - intRound(w) + s, m_l - 10);
 	m_PrevButton.Create(_T(""), _T(""), 0, Rect1, this, IDC_PREV);
-	m_PrevButton.SetImage(W == 1920 ? IDR_LEFT_ARROW_3 : W == 1600 ? IDR_LEFT_ARROW_2 : IDR_LEFT_ARROW_1);
+	m_PrevButton.SetImage(W >= 1920 ? IDR_LEFT_ARROW_3 : W >= 1600 ? IDR_LEFT_ARROW_2 : IDR_LEFT_ARROW_1);
 	m_PrevButton.SetBk(FALSE);
 	m_PrevButton.SetBkColor(BLACK);
 	m_PrevButton.SetTip("Lens rotation at -1°");
@@ -132,7 +132,7 @@ CPlanWnd::CPlanWnd(RECT& Rect, CWnd* pWnd) :
 	//::SetRect(&Rect1, m_w - 2 - intRound(0.5*w), m_h - 2 - intRound(2.4*h), m_w - 2 - intRound(0.5*w) + s, m_h - 2 - intRound(1.4*h));
 	::SetRect(&Rect1, m_w - intRound(0.5*w), m_l - 2 - intRound(2.0*h), m_w - intRound(0.5*w) + s, m_l - 10);
 	m_NextButton.Create(_T(""), _T(""), 0, Rect1, this, IDC_NEXT);
-	m_NextButton.SetImage(W == 1920 ? IDR_RIGHT_ARROW_3 : W == 1600 ? IDR_RIGHT_ARROW_2 : IDR_RIGHT_ARROW_1);
+	m_NextButton.SetImage(W >= 1920 ? IDR_RIGHT_ARROW_3 : W >= 1600 ? IDR_RIGHT_ARROW_2 : IDR_RIGHT_ARROW_1);
 	m_NextButton.SetBk(FALSE);
 	m_NextButton.SetBkColor(BLACK);
 	m_NextButton.SetTip("Lens roatation at +1°");

@@ -58,7 +58,7 @@ void CImgCptCtrlWnd::CreateThisWnd(RECT& Rect, CWnd* pWnd, int ScreenTop, int Ca
 
 		//530 New Remmber add into Presbia
 		int W = ::GetSystemMetrics(SM_CXSCREEN);
-		int q = W == 1920 ? 2 : (W == 1600 ? 1 : 0);
+		int q = W >= 1920 ? 2 : (W >= 1600 ? 1 : 0);
 
 		RECT tempRect;
 		::SetRect(&tempRect, 2 * Left_w, m_h + top_h, 2 * Left_w + BtnW, m_h + top_h + BtnW);

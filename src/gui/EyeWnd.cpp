@@ -91,8 +91,8 @@ void CEyeWnd::CreateCentButtons()
 	::SetRect(&Rect, l, b - w, l + w, b);
 	m_IncCentButton.Create(_T(""), _T(""), WS_CHILD, Rect, this, IDC_INC_CENT);
 	m_IncCentButton.SetImage(m_SizeSmall ?
-		(W == 1920 ? IDR_DOWN_ARROW_3 : W == 1600 ? IDR_DOWN_ARROW_2 : IDR_DOWN_ARROW_1) :
-		(W == 1920 ? IDR_DOWN_ARROW_6 : W == 1600 ? IDR_DOWN_ARROW_5 : IDR_DOWN_ARROW_4));
+		(W >= 1920 ? IDR_DOWN_ARROW_3 : W >= 1600 ? IDR_DOWN_ARROW_2 : IDR_DOWN_ARROW_1) :
+		(W >= 1920 ? IDR_DOWN_ARROW_6 : W >= 1600 ? IDR_DOWN_ARROW_5 : IDR_DOWN_ARROW_4));
 	m_IncCentButton.SetBk(FALSE);
 	m_IncCentButton.SetBkColor(BLACK);
 	m_IncCentButton.SetTip("Increase middle value");
@@ -103,8 +103,8 @@ void CEyeWnd::CreateCentButtons()
 	::SetRect(&Rect, l, b - w, l + w, b);
 	m_DecCentButton.Create(_T(""), _T(""), WS_CHILD, Rect, this, IDC_DEC_CENT);
 	m_DecCentButton.SetImage(m_SizeSmall ?
-		(W == 1920 ? IDR_UP_ARROW_3 : W == 1600 ? IDR_UP_ARROW_2 : IDR_UP_ARROW_1) :
-		(W == 1920 ? IDR_UP_ARROW_6 : W == 1600 ? IDR_UP_ARROW_5 : IDR_UP_ARROW_4));
+		(W >= 1920 ? IDR_UP_ARROW_3 : W >= 1600 ? IDR_UP_ARROW_2 : IDR_UP_ARROW_1) :
+		(W >= 1920 ? IDR_UP_ARROW_6 : W >= 1600 ? IDR_UP_ARROW_5 : IDR_UP_ARROW_4));
 	m_DecCentButton.SetBk(FALSE);
 	m_DecCentButton.SetBkColor(BLACK);
 	m_DecCentButton.SetTip("Decrease middle value");
@@ -131,8 +131,8 @@ void CEyeWnd::CreateZoomButtons()
 	SetRect(&Rect, l, b - w, l + w, b);
 	m_ZoomOutButton.Create(_T(""), _T(""), WS_CHILD, Rect, this, IDC_ZOOM_OUT);
 	m_ZoomOutButton.SetImage(m_SizeSmall ?
-		(W == 1920 ? IDR_ZOOM_OUT_3 : W == 1600 ? IDR_ZOOM_OUT_2 : IDR_ZOOM_OUT_1) :
-		(W == 1920 ? IDR_ZOOM_OUT_6 : W == 1600 ? IDR_ZOOM_OUT_5 : IDR_ZOOM_OUT_4));
+		(W >= 1920 ? IDR_ZOOM_OUT_3 : W >= 1600 ? IDR_ZOOM_OUT_2 : IDR_ZOOM_OUT_1) :
+		(W >= 1920 ? IDR_ZOOM_OUT_6 : W >= 1600 ? IDR_ZOOM_OUT_5 : IDR_ZOOM_OUT_4));
 	m_ZoomOutButton.SetBk(FALSE);
 	m_ZoomOutButton.SetBkColor(BLACK);
 	m_ZoomOutButton.SetTip("Increase step size");
@@ -143,8 +143,8 @@ void CEyeWnd::CreateZoomButtons()
 	::SetRect(&Rect, l, b - w, l + w, b);
 	m_ZoomInButton.Create(_T(""), _T(""), WS_CHILD, Rect, this, IDC_ZOOM_IN);
 	m_ZoomInButton.SetImage(m_SizeSmall ?
-		(W == 1920 ? IDR_ZOOM_IN_3 : W == 1600 ? IDR_ZOOM_IN_2 : IDR_ZOOM_IN_1) :
-		(W == 1920 ? IDR_ZOOM_IN_6 : W == 1600 ? IDR_ZOOM_IN_5 : IDR_ZOOM_IN_4));
+		(W >= 1920 ? IDR_ZOOM_IN_3 : W >= 1600 ? IDR_ZOOM_IN_2 : IDR_ZOOM_IN_1) :
+		(W >= 1920 ? IDR_ZOOM_IN_6 : W >= 1600 ? IDR_ZOOM_IN_5 : IDR_ZOOM_IN_4));
 	m_ZoomInButton.SetBk(FALSE);
 	m_ZoomInButton.SetBkColor(BLACK);
 	m_ZoomInButton.SetTip("Decrease step size");
@@ -170,8 +170,8 @@ void CEyeWnd::CreateOKulixButtons()
 	::SetRect(&Rect, l, b - w, l + w, b);
 	m_OkulixButton.Create(_T(""), _T(""), WS_CHILD, Rect, this, IDC_Okulix_Btn);
 	m_OkulixButton.SetImage(m_SizeSmall ?
-		(W == 1920 ? IDR_OKULIX_3 : W == 1600 ? IDR_OKULIX_2 : IDR_OKULIX_1) :
-		(W == 1920 ? IDR_OKULIX_6 : W == 1600 ? IDR_OKULIX_5 : IDR_OKULIX_4));
+		(W >= 1920 ? IDR_OKULIX_3 : W >= 1600 ? IDR_OKULIX_2 : IDR_OKULIX_1) :
+		(W >= 1920 ? IDR_OKULIX_6 : W >= 1600 ? IDR_OKULIX_5 : IDR_OKULIX_4));
 	m_OkulixButton.SetBk(FALSE);
 	m_OkulixButton.SetBkColor(BLACK);
 	m_OkulixButton.SetTip("Okulix");

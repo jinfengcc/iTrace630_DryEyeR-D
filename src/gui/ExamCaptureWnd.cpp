@@ -40,7 +40,7 @@ void CExamCaptureWnd::CreateThisWnd(RECT& Rect, CWnd* pWnd)
 
 	//530 New Remmber add into Presbia
 	int W = ::GetSystemMetrics(SM_CXSCREEN);
-	int q = W == 1920 ? 2 : (W == 1600 ? 1 : 0);
+	int q = W >= 1920 ? 2 : (W >= 1600 ? 1 : 0);
 
 	RECT tempRect;
 	::SetRect(&tempRect, Left_w, top_h, Left_w + BtnW, top_h + BtnW);

@@ -97,8 +97,8 @@ CCTDoubleSumWnd::CCTDoubleSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, 
 		::SetRect(&Rect, m_Rect[4].right - 25, m_Rect[4].top + 5, m_Rect[4].right - 5, m_Rect[4].top + 25);
 		m_CTShowFullInfoButton.Create(_T(""), _T(""), WS_CHILD, Rect, this, IDC_SHOW_FULL_CTINFO);
 		m_CTShowFullInfoButton.SetImage(m_pWndSettings[0].m_SimplifiedWFPanel ?
-			(m_SW == 1920 ? IDR_SHOW_DETAIL_3 : m_SW == 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
-			(m_SW == 1920 ? IDR_HIDE_DETAIL_3 : m_SW == 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
+			(m_SW >= 1920 ? IDR_SHOW_DETAIL_3 : m_SW >= 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
+			(m_SW >= 1920 ? IDR_HIDE_DETAIL_3 : m_SW >= 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
 		m_CTShowFullInfoButton.SetBk(FALSE);
 		m_CTShowFullInfoButton.SetBkColor(BLACK);
 		m_CTShowFullInfoButton.SetTip(s);
@@ -111,8 +111,8 @@ CCTDoubleSumWnd::CCTDoubleSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, 
 		::SetRect(&Rect, m_Rect[5].right - 25, m_Rect[5].top + 5, m_Rect[5].right - 5, m_Rect[5].top + 25);
 		m_CTShowFullInfoButton2.Create(_T(""), _T(""), WS_CHILD, Rect, this, IDC_SHOW_FULL_CTINFO);
 		m_CTShowFullInfoButton2.SetImage(m_pWndSettings[0].m_SimplifiedWFPanel ?
-			(m_SW == 1920 ? IDR_SHOW_DETAIL_3 : m_SW == 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
-			(m_SW == 1920 ? IDR_HIDE_DETAIL_3 : m_SW == 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
+			(m_SW >= 1920 ? IDR_SHOW_DETAIL_3 : m_SW >= 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
+			(m_SW >= 1920 ? IDR_HIDE_DETAIL_3 : m_SW >= 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
 		m_CTShowFullInfoButton2.SetBk(FALSE);
 		m_CTShowFullInfoButton2.SetBkColor(BLACK);
 		m_CTShowFullInfoButton2.SetTip(s);
@@ -933,8 +933,8 @@ LRESULT CCTDoubleSumWnd::OnChangeRmsGUI(WPARAM wParam, LPARAM lParam)
 		m_pDispWnd[d]->m_ShowMoreButton.SetTip(s);
 
 		m_pDispWnd[d]->m_ShowMoreButton.SetImage(m_pWndSettings[d].m_SimplifiedRMS ?
-			(W == 1920 ? IDR_SHOW_DETAIL_3 : W == 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
-			(W == 1920 ? IDR_HIDE_DETAIL_3 : W == 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
+			(W >= 1920 ? IDR_SHOW_DETAIL_3 : W >= 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
+			(W >= 1920 ? IDR_HIDE_DETAIL_3 : W >= 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
 
 		m_pDispWnd[d]->m_ShowMoreButton.Repaint();
 		m_pDispWnd[d]->Repaint();
@@ -945,8 +945,8 @@ LRESULT CCTDoubleSumWnd::OnChangeRmsGUI(WPARAM wParam, LPARAM lParam)
 		m_pDispWnd[s_d]->m_ShowMoreButton.SetTip(s);
 
 		m_pDispWnd[s_d]->m_ShowMoreButton.SetImage(m_pWndSettings[s_d].m_SimplifiedRMS ?
-			(W == 1920 ? IDR_SHOW_DETAIL_3 : W == 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
-			(W == 1920 ? IDR_HIDE_DETAIL_3 : W == 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
+			(W >= 1920 ? IDR_SHOW_DETAIL_3 : W >= 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
+			(W >= 1920 ? IDR_HIDE_DETAIL_3 : W >= 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
 
 		m_pDispWnd[s_d]->m_ShowMoreButton.Repaint();
 		m_pDispWnd[s_d]->Repaint();
@@ -965,16 +965,16 @@ void CCTDoubleSumWnd::OnShowCTTextInfoBtnClicked()
 	CString s = (m_pWndSettings[0].m_SimplifiedWFPanel ? "Show Details" : "Hide Details");
 	m_CTShowFullInfoButton.SetTip(s);
 	m_CTShowFullInfoButton.SetImage(m_pWndSettings[0].m_SimplifiedCTPanel ?
-		(m_SW == 1920 ? IDR_SHOW_DETAIL_3 : m_SW == 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
-		(m_SW == 1920 ? IDR_HIDE_DETAIL_3 : m_SW == 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
+		(m_SW >= 1920 ? IDR_SHOW_DETAIL_3 : m_SW >= 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
+		(m_SW >= 1920 ? IDR_HIDE_DETAIL_3 : m_SW >= 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
 	m_CTShowFullInfoButton.Repaint();
 
 	if (m_pCTExam2 != NULL)
 	{
 		m_CTShowFullInfoButton2.SetTip(s);
 		m_CTShowFullInfoButton2.SetImage(m_pWndSettings[0].m_SimplifiedCTPanel ?
-			(m_SW == 1920 ? IDR_SHOW_DETAIL_3 : m_SW == 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
-			(m_SW == 1920 ? IDR_HIDE_DETAIL_3 : m_SW == 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
+			(m_SW >= 1920 ? IDR_SHOW_DETAIL_3 : m_SW >= 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
+			(m_SW >= 1920 ? IDR_HIDE_DETAIL_3 : m_SW >= 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
 		m_CTShowFullInfoButton2.Repaint();
 	}
 }

@@ -1737,14 +1737,14 @@ LRESULT CWFCTAngleSumWnd::OnChangeRmsGUI(WPARAM wParam, LPARAM lParam)
 			if (m_pWndSettings[d].m_SizeSmall)
 			{
 				m_pDispWnd[d]->m_ShowMoreButton.SetImage(m_pWndSettings[d].m_SimplifiedRMS ?
-					(W == 1920 ? IDR_SHOW_DETAIL_3 : W == 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
-					(W == 1920 ? IDR_HIDE_DETAIL_3 : W == 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
+					(W >= 1920 ? IDR_SHOW_DETAIL_3 : W >= 1600 ? IDR_SHOW_DETAIL_2 : IDR_SHOW_DETAIL_1) :
+					(W >= 1920 ? IDR_HIDE_DETAIL_3 : W >= 1600 ? IDR_HIDE_DETAIL_2 : IDR_HIDE_DETAIL_1));
 			}
 			else
 			{
 				m_pDispWnd[d]->m_ShowMoreButton.SetImage(m_pWndSettings[d].m_SimplifiedRMS ?
-					(W == 1920 ? IDR_SHOW_DETAIL_6 : W == 1600 ? IDR_SHOW_DETAIL_5 : IDR_SHOW_DETAIL_4) :
-					(W == 1920 ? IDR_HIDE_DETAIL_6 : W == 1600 ? IDR_HIDE_DETAIL_5 : IDR_HIDE_DETAIL_4));
+					(W >= 1920 ? IDR_SHOW_DETAIL_6 : W >= 1600 ? IDR_SHOW_DETAIL_5 : IDR_SHOW_DETAIL_4) :
+					(W >= 1920 ? IDR_HIDE_DETAIL_6 : W >= 1600 ? IDR_HIDE_DETAIL_5 : IDR_HIDE_DETAIL_4));
 			}
 
 			m_pDispWnd[d]->m_ShowMoreButton.Repaint();

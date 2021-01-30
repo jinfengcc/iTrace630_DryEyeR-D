@@ -424,11 +424,11 @@ void CDOFWnd::CreateSwitchBtn()
 	m_SwitchButton.Create(_T(""), _T(""), WS_CHILD, Rect, this, IDC_DOF_SWITCH);
 
 	if (!m_abs) m_SwitchButton.SetImage(m_SizeSmall ?
-		(W == 1920 ? IDR_DOF_REL_3 : W == 1600 ? IDR_DOF_REL_2 : IDR_DOF_REL_1) :
-		(W == 1920 ? IDR_DOF_REL_6 : W == 1600 ? IDR_DOF_REL_5 : IDR_DOF_REL_4));
+		(W >= 1920 ? IDR_DOF_REL_3 : W >= 1600 ? IDR_DOF_REL_2 : IDR_DOF_REL_1) :
+		(W >= 1920 ? IDR_DOF_REL_6 : W >= 1600 ? IDR_DOF_REL_5 : IDR_DOF_REL_4));
 	else       m_SwitchButton.SetImage(m_SizeSmall ?
-		(W == 1920 ? IDR_DOF_ABS_3 : W == 1600 ? IDR_DOF_ABS_2 : IDR_DOF_ABS_1) :
-		(W == 1920 ? IDR_DOF_ABS_6 : W == 1600 ? IDR_DOF_ABS_5 : IDR_DOF_ABS_4));
+		(W >= 1920 ? IDR_DOF_ABS_3 : W >= 1600 ? IDR_DOF_ABS_2 : IDR_DOF_ABS_1) :
+		(W >= 1920 ? IDR_DOF_ABS_6 : W >= 1600 ? IDR_DOF_ABS_5 : IDR_DOF_ABS_4));
 
 	m_SwitchButton.SetBk(FALSE);
 	m_SwitchButton.SetBkColor(BLACK);
@@ -460,11 +460,11 @@ void CDOFWnd::OnSwitchBtnClicked()
 	int W = ::GetSystemMetrics(SM_CXSCREEN);
 
 	if (!m_abs) m_SwitchButton.SetImage(m_SizeSmall ?
-		(W == 1920 ? IDR_DOF_REL_3 : W == 1600 ? IDR_DOF_REL_2 : IDR_DOF_REL_1) :
-		(W == 1920 ? IDR_DOF_REL_6 : W == 1600 ? IDR_DOF_REL_5 : IDR_DOF_REL_4));
+		(W >= 1920 ? IDR_DOF_REL_3 : W >= 1600 ? IDR_DOF_REL_2 : IDR_DOF_REL_1) :
+		(W >= 1920 ? IDR_DOF_REL_6 : W >= 1600 ? IDR_DOF_REL_5 : IDR_DOF_REL_4));
 	else       m_SwitchButton.SetImage(m_SizeSmall ?
-		(W == 1920 ? IDR_DOF_ABS_3 : W == 1600 ? IDR_DOF_ABS_2 : IDR_DOF_ABS_1) :
-		(W == 1920 ? IDR_DOF_ABS_6 : W == 1600 ? IDR_DOF_ABS_5 : IDR_DOF_ABS_4));
+		(W >= 1920 ? IDR_DOF_ABS_3 : W >= 1600 ? IDR_DOF_ABS_2 : IDR_DOF_ABS_1) :
+		(W >= 1920 ? IDR_DOF_ABS_6 : W >= 1600 ? IDR_DOF_ABS_5 : IDR_DOF_ABS_4));
 
 	m_SwitchButton.Repaint();
 
