@@ -414,6 +414,7 @@
 #define IDR_NEW_SUPERIN_EXAM_2          421
 #define IDC_PLANNER_BUTTON              421
 #define IDR_NEW_SUPERIN_EXAM_1          422
+#define IDC_DICOMEXPORT_BUTTON          422
 #define IDR_NEW_SUPERWF_EXAM_3          423
 #define IDR_NEW_SUPERWF_EXAM_2          424
 #define IDR_NEW_SUPERWF_EXAM_1          425
@@ -2012,6 +2013,6 @@
 #define _APS_NEXT_RESOURCE_VALUE        488
 #define _APS_NEXT_COMMAND_VALUE         32965
 #define _APS_NEXT_CONTROL_VALUE         8486
-#define _APS_NEXT_SYMED_VALUE           422
+#define _APS_NEXT_SYMED_VALUE           423
 #endif
 #endif

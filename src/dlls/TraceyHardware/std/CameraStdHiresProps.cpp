@@ -100,20 +100,21 @@ std::vector<std::string> CameraStdHiresProps::GetCameraList()
   auto hr = CoCreateInstance(CLSID_SystemDeviceEnum, nullptr, CLSCTX_INPROC_SERVER, IID_ICreateDevEnum, pDevEnum.put_void());
   TRACEY_THROW_IF(hr != S_OK || !pDevEnum, "Unable to create 'ICreateDevEnum'");
 
-  wil::com_ptr_t<IEnumMoniker> pEnum;
-  pDevEnum->CreateClassEnumerator(CLSID_VideoInputDeviceCategory, pEnum.put(), 0);
-  TRACEY_THROW_IF(!pEnum, "Unable to create VideoDevice enumerator");
-
   std::vector<std::string> devList;
 
-  wil::com_ptr_t<IMoniker> pMoniker;
-  while (pEnum->Next(1, pMoniker.put(), nullptr) == S_OK) {
+  wil::com_ptr_t<IEnumMoniker> pEnum;
+  pDevEnum->CreateClassEnumerator(CLSID_VideoInputDeviceCategory, pEnum.put(), 0);
+
+  if (pEnum) {
+    wil::com_ptr_t<IMoniker> pMoniker;
+    while (pEnum->Next(1, pMoniker.put(), nullptr) == S_OK) {
     wil::com_ptr_t<IPropertyBag> pPropBag;
     hr = pMoniker->BindToStorage(nullptr, nullptr, IID_IPropertyBag, pPropBag.put_void());
     TRACEY_THROW_IF(hr != S_OK || !pPropBag, "Unable to create 'IPropertyBag'");
 
     if (auto str = ReadStr(pPropBag.get(), L"FriendlyName"); !str.empty())
-      devList.push_back(str);
+        devList.push_back(str);
+    }
   }
 
   return devList;
