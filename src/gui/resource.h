@@ -414,7 +414,6 @@
 #define IDR_NEW_SUPERIN_EXAM_2          421
 #define IDC_PLANNER_BUTTON              421
 #define IDR_NEW_SUPERIN_EXAM_1          422
-#define IDC_DICOMEXPORT_BUTTON          422
 #define IDR_NEW_SUPERWF_EXAM_3          423
 #define IDR_NEW_SUPERWF_EXAM_2          424
 #define IDR_NEW_SUPERWF_EXAM_1          425
