@@ -9,6 +9,7 @@ Description:   Generated this class for global functions
 //***************************************************************************************
 #include "StdAfx.h"
 #include "Chinese.h"
+#include "libs/CommonLib/StringSplit.h"
 
 // 6.2.0 Chinese
 // clang-format off
@@ -398,8 +399,9 @@ static void ConvertLegaceChinese(std::wstring &str)
   if (str.find(header) == std::wstring::npos)
     return;
 
-  std::vector<std::wstring> tokens;
-  boost::split(tokens, str, boost::is_any_of(_T("*")));
+  auto tokens = StringSplit(str.c_str(), L"*");
+  //std::vector<std::wstring> tokens;
+  //boost::split(tokens, str, boost::is_any_of(_T("*")));
 
   fmt::wmemory_buffer buf;
   for (unsigned i = 1; i < tokens.size(); ++i) {

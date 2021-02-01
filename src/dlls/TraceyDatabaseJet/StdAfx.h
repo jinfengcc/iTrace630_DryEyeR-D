@@ -74,7 +74,7 @@ typedef double           real_t;
 BOOL  FindSubString(CString DstStr, CString SearchStr, int &pos);//6.1.0 For finding a DstStr form SearchStr
 
 #include <libs/CommonLib/CommonIncl.h>
-#include <boost/algorithm/string.hpp>
+//#include <boost/algorithm/string.hpp>
 
 #include <interfaces/ILogger.h>
 #include <interfaces/IDatabase.h>
