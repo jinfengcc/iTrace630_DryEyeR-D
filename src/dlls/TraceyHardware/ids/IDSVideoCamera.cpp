@@ -219,6 +219,31 @@ bool IDSVideoCamera::set(int propId, double value)
 }
 #endif
 
+void IDSVideoCamera::SetProperty(Prop prop, double value)
+{
+  switch (prop) {
+  case Prop::brightness:
+    value = m_exposureRange[0] + value * (m_exposureRange[1] - m_exposureRange[0]) / 100.0;
+    value = std::clamp(value, m_exposureRange[0], m_exposureRange[1]);
+    is_Exposure(m_hCam, IS_EXPOSURE_CMD_SET_EXPOSURE, (void *)&value, sizeof(value));
+    break;
+  case Prop::contrast:
+    break;
+  case Prop::hue:
+    break;
+  case Prop::saturation:
+    break;
+  case Prop::exposure:
+    break;
+  case Prop::gain:
+    value = value * 100 / 255;
+    is_SetHardwareGain(m_hCam, static_cast<int>(value), IS_IGNORE_PARAMETER, IS_IGNORE_PARAMETER, IS_IGNORE_PARAMETER);
+    break;
+  default:
+    break;
+  }
+}
+
 void IDSVideoCamera::OnCameraEvent(int id, HIDS hCam)
 {
   if (id == IS_FRAME) {
@@ -238,15 +263,18 @@ bool IDSVideoCamera::Configure(HIDS hCam)
 {
   INT nRet = IS_SUCCESS;
 
-  UINT pixelClock = 118;
-  nRet            = is_PixelClock(hCam, IS_PIXELCLOCK_CMD_SET, (void *)&pixelClock, sizeof(pixelClock));
+  UINT   pixelClock    = 118;
+  double dExposure     = 26.129135;
+  double autoGain      = 1;
+  double autoReference = 128;
+
+  nRet = is_PixelClock(hCam, IS_PIXELCLOCK_CMD_SET, (void *)&pixelClock, sizeof(pixelClock));
   if (nRet != IS_SUCCESS)
     return false;
 
   nRet = is_PixelClock(hCam, IS_PIXELCLOCK_CMD_GET, (void *)&pixelClock, sizeof(pixelClock));
 
-  double dExposure = 26.129135;
-  nRet             = is_Exposure(hCam, IS_EXPOSURE_CMD_SET_EXPOSURE, (void *)&dExposure, sizeof(dExposure));
+  nRet = is_Exposure(hCam, IS_EXPOSURE_CMD_SET_EXPOSURE, (void *)&dExposure, sizeof(dExposure));
   if (nRet != IS_SUCCESS)
     return false;
 
@@ -257,12 +285,10 @@ bool IDSVideoCamera::Configure(HIDS hCam)
 
   // Enable auto gain control:
 
-  double dEnable = 1;
-  nRet           = is_SetAutoParameter(hCam, IS_SET_ENABLE_AUTO_GAIN, &dEnable, 0);
+  nRet = is_SetAutoParameter(hCam, IS_SET_ENABLE_AUTO_GAIN, &autoGain, nullptr);
 
   // Set brightness setpoint to 128:
-  double nominal = 128;
-  nRet           = is_SetAutoParameter(hCam, IS_SET_AUTO_REFERENCE, &nominal, 0);
+  nRet = is_SetAutoParameter(hCam, IS_SET_AUTO_REFERENCE, &autoReference, nullptr);
 
   // Return shutter control limit:
   double maxShutter;
@@ -271,6 +297,8 @@ bool IDSVideoCamera::Configure(HIDS hCam)
   // auto nRet = is_ParameterSet(hCam, IS_PARAMETERSET_CMD_LOAD_FILE, (void *)LR"(C:\1\ids_settings.ini)", NULL);
   // if (nRet != IS_SUCCESS)
   //  return false;
+
+  nRet = is_Exposure(hCam, IS_EXPOSURE_CMD_GET_EXPOSURE_RANGE, (void *)m_exposureRange, sizeof(m_exposureRange));
 
   return true;
 }

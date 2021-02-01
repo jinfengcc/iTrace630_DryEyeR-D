@@ -19,6 +19,9 @@ public:
     return m_hCam != 0;
   }
 
+  enum class Prop {brightness, contrast, hue, saturation, exposure, gain};
+  void SetProperty(Prop prop, double value);
+
   void OnCameraEvent(int id, HIDS hCam);
 
 private:
@@ -38,11 +41,12 @@ private:
   int        m_height;
   time_t     m_startTime;
   MemVector  m_memVector;
+  double     m_exposureRange[3];
 
-  static bool Configure(HIDS hCam);
-  bool        AllocateImgMem(int sizeX, int sizeY, int bitsPerPixel = 3 * 8);
-  void        FreeImgMem();
-  char *      GetLastMem() const;
-  bool        GetLastMem(char **ppLastMem, INT &lMemoryId, INT &lSequenceId) const;
-  void        Experiments();
+  bool  Configure(HIDS hCam);
+  bool  AllocateImgMem(int sizeX, int sizeY, int bitsPerPixel = 3 * 8);
+  void  FreeImgMem();
+  char *GetLastMem() const;
+  bool  GetLastMem(char **ppLastMem, INT &lMemoryId, INT &lSequenceId) const;
+  void  Experiments();
 };

@@ -129,7 +129,27 @@ bool CameraHiresIDS::Connected(double *fps) const
 
 bool CameraHiresIDS::Settings(ITraceyConfig *tc)
 {
-  return false;
+   using Prop = IDSVideoCamera::Prop;
+
+  std::array ps = {
+    // clang-format off
+    std::make_pair(ICameraHires::BRIGHTNESS, Prop::brightness),
+    std::make_pair(ICameraHires::CONTRAST  , Prop::contrast  ),
+    std::make_pair(ICameraHires::SATURATION, Prop::saturation),
+    std::make_pair(ICameraHires::HUE       , Prop::hue       ),
+    std::make_pair(ICameraHires::GAIN      , Prop::gain      ),
+    //std::make_pair(ICameraHires::EXPOSURE  , cv::CAP_PROP_EXPOSURE  ),
+    // clang-format on
+  };
+
+  TraceyConfig c(tc);
+  for (auto &p : ps) {
+    if (auto v = c.Get<int>(p.first); v.has_value()) {
+      m_pimpl->SetProperty(p.second, v.value());
+    }
+  }
+
+  return true;
 }
 
 void CameraHiresIDS::UpdateImages(const cv::Mat &orig)
