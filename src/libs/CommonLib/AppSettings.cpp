@@ -2,19 +2,12 @@
 #include "AppSettings.h"
 #include <filesystem>
 #include <fstream>
-#include "AppSettingsImpl.h"
 
 ////////////////////////////////////////////////////////////////////
 
-AppSettings::AppSettings(std::function<void()> func)
+AppSettings::AppSettings()
   : m_json(AppSettingsImpl::Instance()->GetJson())
 {
-  if (func) {
-    m_sigId = AppSettingsImpl::Instance()->m_notify.Connect([func, this](const json *p) {
-      m_json = *p;
-      func();
-    });
-  }
 }
 
 AppSettings::AppSettings(const fs::path &jsonfile)
