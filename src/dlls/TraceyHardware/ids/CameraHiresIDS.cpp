@@ -5,12 +5,14 @@
 
 namespace {
   enum { IMG_ROWS = 468, IMG_COLS = 624 };
+
+#if USE_OLD_PATIENT_GROUP
   const int HIRES_COLOR_ = static_cast<int>(ICameraHires::Mode::HIRES_COLOR);
   const int LORES_COLOR_ = static_cast<int>(ICameraHires::Mode::LORES_COLOR);
   const int HIRES_GRAY3_ = static_cast<int>(ICameraHires::Mode::HIRES_GRAY);
   const int LORES_GRAY3_ = static_cast<int>(ICameraHires::Mode::LORES_GRAY);
   const int HIRES_GRAY1_ = 4;
-
+#endif
 } // namespace
 
 CameraHiresIDS::CameraHiresIDS()
@@ -81,12 +83,38 @@ void CameraHiresIDS::StopFrameTransfer()
 
 bool CameraHiresIDS::GetImage(cv::Mat &img, Mode mode) const
 {
+#if USE_OLD_PATIENT_GROUP
   if (auto &i = m_images[static_cast<int>(mode)]; i.empty())
     return false;
   else {
     i.copyTo(img);
     return true;
   }
+#else
+  if (m_image.empty())
+    return false;
+
+  switch (mode) {
+  case Mode::HIRES_COLOR:
+    m_image.copyTo(img);
+    break;
+  case Mode::LORES_COLOR:
+    cv::resize(m_image, img, {IMG_COLS, IMG_ROWS});
+    break;
+  case Mode::HIRES_GRAY:
+    cv::cvtColor(m_image, img, cv::COLOR_BGR2GRAY);
+    break;
+  case Mode::LORES_GRAY:
+    cv::cvtColor(m_image, img, cv::COLOR_BGR2GRAY);
+    cv::resize(img, img, {IMG_COLS, IMG_ROWS});
+    break;
+
+  default:
+    return false;
+  }
+
+  return !img.empty();
+#endif
 }
 
 bool CameraHiresIDS::Connected(double *fps) const
@@ -106,6 +134,7 @@ bool CameraHiresIDS::Settings(ITraceyConfig *tc)
 
 void CameraHiresIDS::UpdateImages(const cv::Mat &orig)
 {
+#if USE_OLD_PATIENT_GROUP
   auto &colorImg = m_images[HIRES_COLOR_];
   auto &grayImg3 = m_images[HIRES_GRAY3_];
   auto &grayImg1 = m_images[HIRES_GRAY1_];
@@ -117,6 +146,9 @@ void CameraHiresIDS::UpdateImages(const cv::Mat &orig)
 
   cv::resize(colorImg, m_images[LORES_COLOR_], {IMG_COLS, IMG_ROWS});
   cv::resize(grayImg3, m_images[LORES_GRAY3_], {IMG_COLS, IMG_ROWS});
+#else
+  orig.copyTo(m_image);
+#endif
 }
 
 void CameraHiresIDS::UpdateFPS()

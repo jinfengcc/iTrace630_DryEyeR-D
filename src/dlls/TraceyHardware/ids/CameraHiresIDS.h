@@ -4,6 +4,8 @@
 #include <libs/CommonLib/TraceyConfig.h>
 #include "ids/IDSVideoCamera.h"
 
+#define CAM_HIRES_PRECALC   0
+
 class CameraHiresIDS : public Implements<hal::ICameraHires>
 {
 public:
@@ -28,7 +30,12 @@ public:
   bool Connected(double *fps) const override;
 
 private:
+#if USE_OLD_PATIENT_GROUP
   cv::Mat                           m_images[5]; // Hires-color, lores-color, hires-gray, lores-gray, temp
+#else
+  cv::Mat m_image;
+#endif
+
   std::shared_ptr<IDSVideoCamera>   m_pimpl;
   wil::com_ptr<ITraceyConfig>       m_config;
   Callback                          m_callback;

@@ -27,7 +27,6 @@ bool IDSVideoCapture::open(int _index, int apiPreferenece)
 
   // Ask API to open camera.
   if (is_InitCamera(&hCam, nullptr) == IS_SUCCESS) {
-
     // If success set the camera ID field and fetch camera and sensor info
     is_GetCameraInfo(hCam, &m_cameraInfo);
     is_GetSensorInfo(hCam, &m_sensorInfo);
@@ -63,7 +62,6 @@ bool IDSVideoCapture::open(int _index, int apiPreferenece)
 void IDSVideoCapture::release()
 {
   if (isOpened()) {
-
     // Stop the camera
     is_StopLiveVideo(m_hCam, IS_FORCE_VIDEO_STOP);
 
@@ -84,7 +82,7 @@ bool IDSVideoCapture::isOpened() const
 bool IDSVideoCapture::grab()
 {
   return isOpened();
-  //if (isOpened()) {
+  // if (isOpened()) {
 
   //  // Unlock image memory to allow the API to write to the previously
   //  // locked buffer
@@ -98,7 +96,7 @@ bool IDSVideoCapture::grab()
 
   //  return true;
   //}
-  //else {
+  // else {
   //  return false;
   //}
 }
@@ -125,7 +123,6 @@ double IDSVideoCapture::get(int propid) const
   using namespace cv;
 
   switch (propid) {
-
   case CAP_PROP_POS_MSEC: {
     return (double)(time(nullptr) - m_startTime) * 1e2;
   }
@@ -169,7 +166,6 @@ bool IDSVideoCapture::set(int propId, double value)
   is_AOI(m_hCam, IS_AOI_IMAGE_GET_SIZE, (void *)&imageSize, sizeof(imageSize));
 
   switch (propId) {
-
   case CAP_PROP_FRAME_WIDTH:
     imageSize = {.s32Width = (int)value, .s32Height = m_height};
     is_AOI(m_hCam, IS_AOI_IMAGE_SET_SIZE, (void *)&imageSize, sizeof(imageSize));
@@ -192,16 +188,19 @@ bool IDSVideoCapture::set(int propId, double value)
 
 bool IDSVideoCapture::Configure(HIDS hCam)
 {
-  INT  nRet = IS_SUCCESS;
+  INT nRet = IS_SUCCESS;
 
-  UINT pixelClock = 118;
+  UINT   pixelClock    = 118;
+  double dExposure     = 26.129135;
+  double autoGain      = 0;
+  double autoReference = 128;
+
   nRet = is_PixelClock(hCam, IS_PIXELCLOCK_CMD_SET, (void *)&pixelClock, sizeof(pixelClock));
   if (nRet != IS_SUCCESS)
     return false;
 
   nRet = is_PixelClock(hCam, IS_PIXELCLOCK_CMD_GET, (void *)&pixelClock, sizeof(pixelClock));
 
-  double dExposure = 26.129135;
   nRet = is_Exposure(hCam, IS_EXPOSURE_CMD_SET_EXPOSURE, (void *)&dExposure, sizeof(dExposure));
   if (nRet != IS_SUCCESS)
     return false;
@@ -211,26 +210,23 @@ bool IDSVideoCapture::Configure(HIDS hCam)
   double dDummy;
   nRet = is_SetFrameRate(hCam, 25.0, &dDummy);
 
-// Enable auto gain control:
+  // Enable auto gain control:
 
-  double dEnable = 1;
-  nRet = is_SetAutoParameter(hCam, IS_SET_ENABLE_AUTO_GAIN, &dEnable, 0);
+  nRet = is_SetAutoParameter(hCam, IS_SET_ENABLE_AUTO_GAIN, &autoGain, nullptr);
 
   // Set brightness setpoint to 128:
-  double nominal = 128;
-  nRet = is_SetAutoParameter(hCam, IS_SET_AUTO_REFERENCE, &nominal, 0);
+  nRet = is_SetAutoParameter(hCam, IS_SET_AUTO_REFERENCE, &autoReference, nullptr);
 
   // Return shutter control limit:
   double maxShutter;
   nRet = is_SetAutoParameter(hCam, IS_GET_AUTO_SHUTTER_MAX, &maxShutter, 0);
 
-  //auto nRet = is_ParameterSet(hCam, IS_PARAMETERSET_CMD_LOAD_FILE, (void *)LR"(C:\1\ids_settings.ini)", NULL);
-  //if (nRet != IS_SUCCESS)
+  // auto nRet = is_ParameterSet(hCam, IS_PARAMETERSET_CMD_LOAD_FILE, (void *)LR"(C:\1\ids_settings.ini)", NULL);
+  // if (nRet != IS_SUCCESS)
   //  return false;
 
   // Get Exposure range
   nRet = is_Exposure(hCam, IS_EXPOSURE_CMD_GET_EXPOSURE_RANGE, (void *)m_exposureRange, sizeof(m_exposureRange));
-
 
   return true;
 }
@@ -333,7 +329,7 @@ void IDSVideoCapture::Experiments()
   nRet = is_SetFrameRate(m_hCam, 25.0, &dDummy);
 
   double dblRange[3];
-  nRet = is_Exposure(m_hCam, IS_EXPOSURE_CMD_GET_EXPOSURE_RANGE, (void *)dblRange, sizeof(dblRange));
+  nRet      = is_Exposure(m_hCam, IS_EXPOSURE_CMD_GET_EXPOSURE_RANGE, (void *)dblRange, sizeof(dblRange));
   auto dMin = dblRange[0];
   auto dMax = dblRange[1];
   auto dInt = dblRange[2];
@@ -344,6 +340,6 @@ void IDSVideoCapture::Experiments()
   double m_ExposureTime;
   nRet = is_Exposure(m_hCam, IS_EXPOSURE_CMD_GET_EXPOSURE, (void *)&m_ExposureTime, sizeof(m_ExposureTime));
 
-// Load parameters from file
-  //nRet = is_ParameterSet(m_hCam, IS_PARAMETERSET_CMD_LOAD_FILE, (void *)LR"(C:\1\ids_settings.ini)", NULL);
+  // Load parameters from file
+  // nRet = is_ParameterSet(m_hCam, IS_PARAMETERSET_CMD_LOAD_FILE, (void *)LR"(C:\1\ids_settings.ini)", NULL);
 }
