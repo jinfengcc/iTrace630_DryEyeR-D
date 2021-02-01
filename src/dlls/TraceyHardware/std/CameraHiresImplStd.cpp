@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CameraHiresImplStd.h"
 #include "CameraStdHiresProps.h"
-#include "ids/IDSVideoCapture.h"
+//#include "ids/IDSVideoCapture.h"
 
 // using namespace std::literals;
 

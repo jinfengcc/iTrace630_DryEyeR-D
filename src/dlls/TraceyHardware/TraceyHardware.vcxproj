@@ -180,7 +180,6 @@
     <ClInclude Include="ids\CameraHiresIDS.h" />
     <ClInclude Include="ids\CameraHiresImplIDS.h" />
     <ClInclude Include="ids\IDSVideoCamera.h" />
-    <ClInclude Include="ids\IDSVideoCapture.h" />
     <ClInclude Include="ids\uEye.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="std\CameraHiResImplStd.h" />
@@ -199,7 +198,6 @@
     <ClCompile Include="ids\CameraHiresIDS.cpp" />
     <ClCompile Include="ids\CameraHiresImplIDS.cpp" />
     <ClCompile Include="ids\IDSVideoCamera.cpp" />
-    <ClCompile Include="ids\IDSVideoCapture.cpp" />
     <ClCompile Include="LocalClassFactory.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

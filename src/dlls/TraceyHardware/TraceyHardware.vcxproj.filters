@@ -51,9 +51,6 @@
     <ClInclude Include="thw\thw_defines.h">
       <Filter>thw</Filter>
     </ClInclude>
-    <ClInclude Include="ids\IDSVideoCapture.h">
-      <Filter>ids</Filter>
-    </ClInclude>
     <ClInclude Include="ids\uEye.h">
       <Filter>ids</Filter>
     </ClInclude>
@@ -100,9 +97,6 @@
     </ClCompile>
     <ClCompile Include="CameraImpl.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ids\IDSVideoCapture.cpp">
-      <Filter>ids</Filter>
     </ClCompile>
     <ClCompile Include="ids\IDSVideoCamera.cpp">
       <Filter>ids</Filter>
