@@ -178,7 +178,6 @@
     <ClInclude Include="Device.h" />
     <ClInclude Include="Flash.h" />
     <ClInclude Include="ids\CameraHiresIDS.h" />
-    <ClInclude Include="ids\CameraHiresImplIDS.h" />
     <ClInclude Include="ids\IDSVideoCamera.h" />
     <ClInclude Include="ids\uEye.h" />
     <ClInclude Include="pch.h" />
@@ -196,7 +195,6 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Flash.cpp" />
     <ClCompile Include="ids\CameraHiresIDS.cpp" />
-    <ClCompile Include="ids\CameraHiresImplIDS.cpp" />
     <ClCompile Include="ids\IDSVideoCamera.cpp" />
     <ClCompile Include="LocalClassFactory.cpp" />
     <ClCompile Include="pch.cpp">

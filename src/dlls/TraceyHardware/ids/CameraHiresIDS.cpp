@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "CameraHiresIDS.h"
-#include "CameraHiresImplIDS.h"
 #include <interfaces/ITraceyConfig.h>
 
 namespace {

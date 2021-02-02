@@ -28,8 +28,15 @@ AppSettings::AppSettings(const AppSettings &aps, std::string_view addr)
 
 AppSettings::~AppSettings()
 {
-  if (m_sigId)
+  ClearCallback();
+}
+
+void AppSettings::ClearCallback()
+{
+  if (m_sigId) {
     AppSettingsImpl::Instance()->m_notify.Disconnect(m_sigId);
+    m_sigId = {};
+  }
 }
 
 AppSettings::Data AppSettings::GetData(std::string_view addr) const

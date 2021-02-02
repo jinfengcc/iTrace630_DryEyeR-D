@@ -1,10 +1,21 @@
 #include "pch.h"
 #include "AppSettingsImpl.h"
+#include "AppFiles.h"
 
 AppSettingsImpl::AppSettingsImpl()
 {
-  auto ss                = CreateObj<ISettingsStorage>();
-  m_file                 = ss->GetSysFile();
+  if (auto ss = CreateObj<ISettingsStorage>()) {
+    m_file = ss->GetSysFile();
+  }
+  else {
+    m_file = app::GetAppPath(app::Type::json);
+  }
+
+  if (!fs::exists(m_file)) {
+    m_file.clear();
+    return;
+  }
+
   m_jsonDONOTUSEDIRECTLY = LoadJson(std::ifstream(m_file));
 
   wchar_t sz[_MAX_PATH * 2];

@@ -6,6 +6,15 @@
 #include "CameraHiresView.h"
 #include "CameraView.h"
 
+CMainDlg::CMainDlg()
+{
+  m_appSettings.SetCallback([]() {
+    OutputDebugStringA("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
+  });
+
+  CreateFonts();
+}
+
 LRESULT CMainDlg::OnCancel(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL & /*bHandled*/)
 {
   DestroyWindow();

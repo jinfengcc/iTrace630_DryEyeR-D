@@ -8,8 +8,8 @@
 class AppSettings // : public Singleton<AppSettings>
 {
 public:
-  //template <class Func>
-  //AppSettings(Func &&func)
+  // template <class Func>
+  // AppSettings(Func &&func)
   //  : AppSettings()
   //{
   //  SetCallback(func);
@@ -25,17 +25,11 @@ public:
   template <class Func>
   void SetCallback(Func &&func)
   {
-    if (m_sigId) {
-      AppSettingsImpl::Instance()->m_notify.Disconnect(m_sigId);
-      m_sigId = {};
-    }
-
-    if (func) {
-      m_sigId = AppSettingsImpl::Instance()->m_notify.Connect([func, this](const json *p) {
-        m_json = *p;
-        func();
-      });
-    }
+    ClearCallback();
+    m_sigId = AppSettingsImpl::Instance()->m_notify.Connect([func, this](const json *p) {
+      m_json = *p;
+      func();
+    });
   }
 
   /// 'addr' is in a.b.c format
@@ -47,10 +41,11 @@ public:
     if (std::holds_alternative<T>(v))
       return std::get<T>(v);
 
-    if constexpr (std::is_floating_point_v<T>) {
+    if constexpr (std::is_floating_point_v<T> || std::is_unsigned_v<T>) {
       if (std::holds_alternative<int>(v))
         return static_cast<T>(std::get<int>(v));
     }
+
     return {};
   }
 
@@ -71,8 +66,8 @@ private:
 
   using Data = std::variant<std::monostate, bool, int, double, std::string>;
 
+  void        ClearCallback();
   Data        GetData(std::string_view addr) const;
   const json *GetJsonData(std::string addr) const;
   auto        SplitAddr(std::string &addr) const -> std::vector<std::string>;
 };
-

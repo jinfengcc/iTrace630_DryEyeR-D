@@ -53,6 +53,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TraceyServices", "src\dlls\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TraceyDatabaseJet", "src\dlls\TraceyDatabaseJet\TraceyDatabaseJet.vcxproj", "{D222A1AF-25D3-4A2B-8395-F6AF9CDE505D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uEyeConvertImage", "tools\uEyeConvertImage\uEyeConvertImage.vcxproj", "{41D618B6-E936-490E-9A27-09AD0625D2B6}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\interfaces\interfaces.vcxitems*{136cc8c9-d852-494e-8036-46b22062b2c4}*SharedItemsImports = 4
@@ -172,6 +174,14 @@ Global
 		{D222A1AF-25D3-4A2B-8395-F6AF9CDE505D}.Release|x64.Build.0 = Release|x64
 		{D222A1AF-25D3-4A2B-8395-F6AF9CDE505D}.Release|x86.ActiveCfg = Release|Win32
 		{D222A1AF-25D3-4A2B-8395-F6AF9CDE505D}.Release|x86.Build.0 = Release|Win32
+		{41D618B6-E936-490E-9A27-09AD0625D2B6}.Debug|x64.ActiveCfg = Debug|x64
+		{41D618B6-E936-490E-9A27-09AD0625D2B6}.Debug|x64.Build.0 = Debug|x64
+		{41D618B6-E936-490E-9A27-09AD0625D2B6}.Debug|x86.ActiveCfg = Debug|Win32
+		{41D618B6-E936-490E-9A27-09AD0625D2B6}.Debug|x86.Build.0 = Debug|Win32
+		{41D618B6-E936-490E-9A27-09AD0625D2B6}.Release|x64.ActiveCfg = Release|x64
+		{41D618B6-E936-490E-9A27-09AD0625D2B6}.Release|x64.Build.0 = Release|x64
+		{41D618B6-E936-490E-9A27-09AD0625D2B6}.Release|x86.ActiveCfg = Release|Win32
+		{41D618B6-E936-490E-9A27-09AD0625D2B6}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -190,6 +200,7 @@ Global
 		{1F580E33-0E39-4E6D-9D4F-B9EC1C57301B} = {4B2E1044-2F63-40D6-A660-2B31664ED146}
 		{070776B9-1B36-4153-BA7B-474C2CA1CE56} = {546007DA-FBF4-4AA2-912D-C578B5B089B2}
 		{D222A1AF-25D3-4A2B-8395-F6AF9CDE505D} = {546007DA-FBF4-4AA2-912D-C578B5B089B2}
+		{41D618B6-E936-490E-9A27-09AD0625D2B6} = {D2ADC48A-2854-4C5E-8E27-2100CA1B9B46}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {96C5B899-B67E-4E96-8D57-A4A6518A61A2}

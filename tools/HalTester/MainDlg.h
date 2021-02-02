@@ -8,6 +8,7 @@
 #include "FlashView.h"
 #include <SimpleTabCtrl.h>
 #include <ViewContainer.h>
+#include "libs/CommonLib/AppSettings.h"
 
 class CMainDlg
   : public CDialogImpl<CMainDlg>
@@ -17,10 +18,7 @@ class CMainDlg
   , public CIdleHandler
 {
 public:
-  CMainDlg()
-  {
-    CreateFonts();
-  }
+  CMainDlg();
 
   enum { IDD = IDD_MAINDLG };
 
@@ -37,6 +35,7 @@ private:
   std::unique_ptr<CSimpleTabCtrl> m_btnViewGroup;
   CViewContainer                  m_viewContainer{CViewContainer::Animate::UPDN};
   CFont                           m_font;
+  AppSettings                     m_appSettings;
 
   template <class View>
   void CreateView(const TCHAR *name)
