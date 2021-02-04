@@ -138,7 +138,7 @@ LRESULT CWFAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 	DC.FillSolidRect(&Rect0, BLACK);
 	PaintDC.Attach(DC.Detach());
 	InvalidateRect(&Rect0, FALSE);//530
-								  //Invalidate(FALSE); 
+								  //Invalidate(FALSE);
 
 	if (!m_WFGUICtrlWnd.m_ShowWindow)
 	{
@@ -154,8 +154,8 @@ LRESULT CWFAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 	//int St = (int) clock();
 
  //   // cjf 10222020 test for slow gain
-	//if (wParam != 0) 
-	//{    
+	//if (wParam != 0)
+	//{
  //       memcpy(m_VideoWnd.m_MemDC.m_RGBData, m_pWFAcquisition->m_pHW->GetRGBData(), CHW::m_VideoSize);
  //       m_VideoWnd.Invalidate(FALSE);
  //       m_VideoWnd.UpdateWindow();
