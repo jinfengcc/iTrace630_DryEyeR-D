@@ -48,4 +48,5 @@ private:
   bool Settings(ITraceyConfig *tc);
   void UpdateImages(const cv::Mat &orig);
   void UpdateFPS();
+  void GetLowResGrayImage(cv::Mat &img) const;
 };

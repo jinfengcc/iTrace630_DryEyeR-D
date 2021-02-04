@@ -104,8 +104,7 @@ bool CameraHiresIDS::GetImage(cv::Mat &img, Mode mode) const
     cv::cvtColor(m_image, img, cv::COLOR_BGR2GRAY);
     break;
   case Mode::LORES_GRAY:
-    cv::cvtColor(m_image, img, cv::COLOR_BGR2GRAY);
-    cv::resize(img, img, {IMG_COLS, IMG_ROWS});
+    GetLowResGrayImage(img);
     break;
 
   default:
@@ -128,7 +127,7 @@ bool CameraHiresIDS::Connected(double *fps) const
 
 bool CameraHiresIDS::Settings(ITraceyConfig *tc)
 {
-   using Prop = IDSVideoCamera::Prop;
+  using Prop = IDSVideoCamera::Prop;
 
   std::array ps = {
     // clang-format off
@@ -179,6 +178,21 @@ void CameraHiresIDS::UpdateFPS()
     m_frameTimer = GetTickCount64();
     m_frameCount = 0;
   }
+}
+
+void CameraHiresIDS::GetLowResGrayImage(cv::Mat &img) const
+{
+  cv::resize(m_image, img, {IMG_COLS, IMG_ROWS});
+  ATLASSERT(img.type() == CV_8UC3);
+  cv::Mat3b(img).forEach([](cv::Vec3b &pixel, const int *) {
+    auto B = pixel[0];
+    auto G = pixel[1];
+    auto R = pixel[1];
+
+    auto gray = 0.299 * R + 0.587 * G + 0.114 * B;
+
+    pixel[0] = pixel[1] = pixel[2] = cv::saturate_cast<BYTE>(gray);
+  });
 }
 
 // std::string CameraHires::GetCameraName()
