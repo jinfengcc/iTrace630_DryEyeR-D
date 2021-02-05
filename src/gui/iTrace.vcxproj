@@ -318,6 +318,7 @@
     <ClCompile Include="FarLtrWnd.cpp" />
     <ClCompile Include="HardwareHiresCamera.cpp" />
     <ClCompile Include="HorSliderCtrl.cpp" />
+    <ClCompile Include="HRImgCptCtrlWnd.cpp" />
     <ClCompile Include="INIParser.cpp" />
     <ClCompile Include="LinkLibs.cpp" />
     <ClCompile Include="SameDicomPatientDlg.cpp" />
@@ -518,6 +519,7 @@
     <ClInclude Include="FarLtrWnd.h" />
     <ClInclude Include="HardwareHiresCamera.h" />
     <ClInclude Include="HorSliderCtrl.h" />
+    <ClInclude Include="HRImgCptCtrlWnd.h" />
     <ClInclude Include="INIParser.h" />
     <ClInclude Include="iTraceApp.h" />
     <ClInclude Include="PatientServices.h" />

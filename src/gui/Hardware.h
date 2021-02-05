@@ -155,6 +155,10 @@ public:
 	void ReleaseNotificationWindow();
 	BOOL IsConnected();
 	ulong GetFirmwareBuild();
+	BOOL  IsHRCameraConnected()//For high resolution image capture setting
+	{
+		 return m_hiresCamera->Connected();
+	}
 
 	BOOL ISVideoCameraOn;
 	CALIBRATION m_Calibration;
@@ -169,8 +173,13 @@ public:
 	VIDEO_SETTINGS* m_pCurrentVideoSettings;
 	void ApplyCurrentVideoBrightness();
 	void ApplyCurrentVideoContrast();
-	void ApplyCurrentVideoHue();
+	void ApplyCurrentVideoHue();    
 	void ApplyCurrentVideoSaturation();
+
+	void ApplyCurrentVideoRed();   //high resolution camera image capture settings
+    void ApplyCurrentVideoGreen(); //high resolution camera image capture settings
+    void ApplyCurrentVideoBlue();  //high resolution camera image capture settings
+
 	void StartTransferringVideoFrame();
 	void FinishTransferringVideoFrame();
 	void ClearFrames();

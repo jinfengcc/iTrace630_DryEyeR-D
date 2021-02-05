@@ -84,8 +84,16 @@ void CCTAcquisition::Main()
 	m_pHW->m_pCurrentVideoSettings = &m_pHW->m_Calibration.CTVideoSettings;
 	m_pHW->ApplyCurrentVideoBrightness();
 	m_pHW->ApplyCurrentVideoContrast();
-	m_pHW->ApplyCurrentVideoHue();
-	m_pHW->ApplyCurrentVideoSaturation();
+
+    if (::HW.IsHRCameraConnected()) { // high resolution camera image capture setting        
+        m_pHW->ApplyCurrentVideoRed();
+        m_pHW->ApplyCurrentVideoGreen();
+        m_pHW->ApplyCurrentVideoBlue();
+     }
+    else {
+       m_pHW->ApplyCurrentVideoHue();
+       m_pHW->ApplyCurrentVideoSaturation();
+    }	  
 
 	m_pHW->TurnPlacidoOn();
 	m_pHW->TurnAccommodationTargetOn();
@@ -282,229 +290,14 @@ void CCTAcquisition::Main()
 	::TempSettings.Temp_ColorImgCpted = FALSE;
 
 	//::NewSettings.m_Adjust_CT is used to rings tool setting   
-	if (::Settings.m_Cap_ColorImg && !::NewSettings.m_Adjust_CT)
+	if (::Settings.m_Cap_ColorImg && !::NewSettings.m_Adjust_CT) 
 	{
-		TimeLimit = 1050 * m_pHW->m_Calibration.LaserDuration;
-		StartTime = (int)clock();
-
-		if (::Settings.m_Cap_ColorAutoOrManu)//automatic
-		{
-			m_pHW->TurnPlacidoOff();
-
-			m_pHW->m_pCurrentVideoSettings = &m_pHW->m_Calibration.WFVideo2Settings;
-			m_pHW->ClearFrames();
-			m_pHW->ApplyCurrentVideoBrightness();
-			m_pHW->ApplyCurrentVideoContrast();
-			m_pHW->ApplyCurrentVideoHue();
-			m_pHW->ApplyCurrentVideoSaturation();
-			m_pHW->TurnInfraredLEDsOn();
-			m_pHW->TurnWhiteLEDsOn();
-
-			ulong StartTime = clock();
-
-			while (clock() - StartTime < (ulong)m_pHW->m_Calibration.ColorImageDelay)
-			{
-				m_pHW->StartTransferringVideoFrame();
-				m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 0, 2);
-				m_pHW->FinishTransferringVideoFrame();
-			}
-
-			//adjust the image quality		  		  
-			int ST = (int)clock();
-
-			m_BackupBrightness = m_pHW->m_Calibration.WFVideo2Settings.Brightness;
-
-			m_pHW->StartTransferringVideoFrame();
-			m_pHW->GetRGBData();//cjf10212020
-			m_pHW->FinishTransferringVideoFrame();
-
-			CEyeImage TestImage;
-			TestImage.m_w = m_CTExam.m_Calibration.VideoWidth;
-			TestImage.m_h = m_CTExam.m_Calibration.VideoHeight;
-			TestImage.m_w_um = m_CTExam.m_Calibration.VideoWidthMicrons;
-			TestImage.m_h_um = m_CTExam.m_Calibration.VideoHeightMicrons;
-			TestImage.m_RGBData.Create(m_CTExam.m_ColorImage.m_h, LINE_SIZE(m_CTExam.m_ColorImage.m_w), m_pHW->GetRGBData());
-			TestImage.m_RGBData.Attach(m_CTExam.m_Image.m_h, LINE_SIZE(m_CTExam.m_Image.m_w), m_pHW->GetRGBData());
-
-			real_t Total = 0;
-			real_t count = (real_t)TestImage.m_w*TestImage.m_h;
-			for (int i = 0; i < TestImage.m_w; i++)
-			{
-				for (int j = 0; j < TestImage.m_h; j++)
-				{
-					int R = TestImage.GetRAt(i, j);
-					int G = TestImage.GetGAt(i, j);
-					int B = TestImage.GetBAt(i, j);
-
-					int Gray = intRound(0.3*R + 0.59*G + 0.11*B);
-					Total += Gray;
-				}
-			}
-
-			real_t Brightness = Total / count;
-
-			if (Brightness < 75 || Brightness > 130)
-			{
-				VIDEO_SETTINGS* pVideoSettings = m_pHW->m_pCurrentVideoSettings;
-
-				real_t ratio = 75 / Brightness;
-				if (Brightness < 75)
-				{
-					int newBright = int(75 * ratio);
-
-					if (newBright > 130) pVideoSettings->Brightness = 130;
-					else pVideoSettings->Brightness = newBright;
-
-					/*s.Format(_T("%i"),pVideoSettings->Brightness);
-					::Info("Less than 75 : " + s);*/
-				}
-				else
-				{
-					int newBright = int(65 / ratio);
-
-					if (newBright < 40) pVideoSettings->Brightness = 40;
-					else pVideoSettings->Brightness = newBright;
-
-					/*s.Format(_T("%i"), pVideoSettings->Brightness);
-					::Info("Greater than 75 : " + s);*/
-				}
-
-				m_pHW->ApplyCurrentVideoBrightness();
-
-				StartTime = (int)clock();
-
-				while (clock() - StartTime < (ulong)m_pHW->m_Calibration.ColorImageDelay)
-				{
-					m_pHW->StartTransferringVideoFrame();
-					m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 0, 0);
-					m_pHW->FinishTransferringVideoFrame();
-				}
-			}
-
-			int UT = (int)clock() - ST;
-			//adjust the image quality	Done
-
-			m_pHW->TurnWhiteLEDsOff();
-			m_pHW->TurnInfraredLEDsOff();
-			m_pHW->TurnAccommodationTargetOff();
-
-			m_CTExam.m_ColorImage.m_w = m_CTExam.m_Calibration.VideoWidth;
-			m_CTExam.m_ColorImage.m_h = m_CTExam.m_Calibration.VideoHeight;
-			m_CTExam.m_ColorImage.m_w_um = m_CTExam.m_Calibration.VideoWidthMicrons;
-			m_CTExam.m_ColorImage.m_h_um = m_CTExam.m_Calibration.VideoHeightMicrons;
-			m_CTExam.m_ColorImage.m_RGBData.Create(m_CTExam.m_ColorImage.m_h, LINE_SIZE(m_CTExam.m_ColorImage.m_w), m_pHW->GetRGBData());
-			m_CTExam.m_ColorImage.m_RGBData.Attach(m_CTExam.m_Image.m_h, LINE_SIZE(m_CTExam.m_Image.m_w), m_pHW->GetRGBData());
-
-			::TempSettings.Temp_ColorImgCpted = TRUE;
-
-			if (Brightness < 75 || Brightness > 130)
-				m_pHW->m_Calibration.WFVideo2Settings.Brightness = m_BackupBrightness;
-
-			//m_CTExam.m_ColorImage.SaveIntoFile("C://Tracey//0.jpg");
+		if (::HW.IsHRCameraConnected()) { //high resolution camera image capture setting
+		  HRImgCapture();
 		}
-		else //manual
-		{
-			::NewSettings.m_Adjusting_CT = TRUE;
-
-			m_pHW->TurnPlacidoOff();
-
-			m_BackupWhiteLEDsPowerLevel = m_pHW->m_Calibration.WFVideo2Settings.WhiteLEDsPowerLevel;
-			m_BackupBrightness = m_pHW->m_Calibration.WFVideo2Settings.Brightness;
-			m_BackupContrast = m_pHW->m_Calibration.WFVideo2Settings.Contrast;
-			m_BackupHue = m_pHW->m_Calibration.WFVideo2Settings.Hue;
-			m_BackupSaturation = m_pHW->m_Calibration.WFVideo2Settings.Saturation;
-
-			m_pHW->m_pCurrentVideoSettings = &m_pHW->m_Calibration.WFVideo2Settings;
-			m_pHW->ClearFrames();
-			m_pHW->TurnInfraredLEDsOn();
-			m_pHW->TurnWhiteLEDsOn();
-
-			int LastWhiteLEDsPower = m_pHW->m_pCurrentVideoSettings->WhiteLEDsPowerLevel; // 10262020 Can not adjust the led power
-
-			//530
-			while (TRUE)
-			{
-				m_pHW->StartTransferringVideoFrame();
-				if (m_NumFramesReceived > 20)
-				{
-					m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 0, 1);//Transform the lParam = 1
-				}
-				m_pHW->FinishTransferringVideoFrame();
-
-				m_pHW->m_pCurrentVideoSettings->WhiteLEDsPowerLevel = m_WhiteLEDsPower;
-				m_pHW->m_pCurrentVideoSettings->Brightness = m_Brightness;
-				m_pHW->m_pCurrentVideoSettings->Contrast = m_Contrast;
-				m_pHW->m_pCurrentVideoSettings->Hue = m_Hue;
-				m_pHW->m_pCurrentVideoSettings->Saturation = m_Saturation;
-
-				// 10262020 Can not adjust the led power
-				if (LastWhiteLEDsPower != m_WhiteLEDsPower) {
-					 m_pHW->TurnWhiteLEDsOn();
-					 LastWhiteLEDsPower = m_WhiteLEDsPower;
-				}
-				// 10262020 Can not adjust the led power
-
-				m_pHW->ApplyCurrentVideoBrightness();
-				m_pHW->ApplyCurrentVideoContrast();
-				m_pHW->ApplyCurrentVideoHue();
-				m_pHW->ApplyCurrentVideoSaturation();
-
-				//Abort
-				m_TimeLeft = TimeLimit - ((int)clock() - StartTime);
-				if ((m_TriLaserShutoffOn && m_TimeLeft <= 0) || (m_ToDo == ABORT))//Time is finish
-				{
-					m_pHW->TurnWhiteLEDsOff();
-					m_pHW->TurnInfraredLEDsOff();
-					m_pHW->TurnPlacidoOff();
-					m_pHW->TurnAccommodationTargetOff();
-
-					m_pHW->m_Calibration.WFVideo2Settings.WhiteLEDsPowerLevel = m_BackupWhiteLEDsPowerLevel;
-					m_pHW->m_Calibration.WFVideo2Settings.Brightness = m_BackupBrightness;
-					m_pHW->m_Calibration.WFVideo2Settings.Contrast = m_BackupContrast;
-					m_pHW->m_Calibration.WFVideo2Settings.Hue = m_BackupHue;
-					m_pHW->m_Calibration.WFVideo2Settings.Saturation = m_BackupSaturation;
-
-					break;
-				}
-				//Abort Done
-
-				if ((m_ToDo == ACQUIRE || m_pHW->IsButtonPressed()))
-				{
-					//cjf 10222020 do not allow movement after acquire? why we need this in 6.2.1
-					ulong StartTime = clock();
-					while (clock() - StartTime < (ulong)m_pHW->m_Calibration.ColorImageDelay)
-					{
-						m_pHW->StartTransferringVideoFrame();
-						m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 0, 1);//Transform the lParam = 1
-						m_pHW->FinishTransferringVideoFrame();
-					}
-					// cjf 10222020 do not allow movement after acquire? why we need this in 6.2.1
-
-					m_pHW->TurnWhiteLEDsOff();
-					m_pHW->TurnInfraredLEDsOff();
-
-
-					m_CTExam.m_ColorImage.m_w = m_CTExam.m_Calibration.VideoWidth;
-					m_CTExam.m_ColorImage.m_h = m_CTExam.m_Calibration.VideoHeight;
-					m_CTExam.m_ColorImage.m_w_um = m_CTExam.m_Calibration.VideoWidthMicrons;
-					m_CTExam.m_ColorImage.m_h_um = m_CTExam.m_Calibration.VideoHeightMicrons;
-					m_CTExam.m_ColorImage.m_RGBData.Create(m_CTExam.m_ColorImage.m_h, LINE_SIZE(m_CTExam.m_ColorImage.m_w), m_pHW->GetRGBData());
-					m_CTExam.m_ColorImage.m_RGBData.Attach(m_CTExam.m_Image.m_h, LINE_SIZE(m_CTExam.m_Image.m_w), m_pHW->GetRGBData());
-
-					::TempSettings.Temp_ColorImgCpted = TRUE;
-
-
-					m_pHW->m_Calibration.WFVideo2Settings.WhiteLEDsPowerLevel = m_BackupWhiteLEDsPowerLevel;
-					m_pHW->m_Calibration.WFVideo2Settings.Brightness = m_BackupBrightness;
-					m_pHW->m_Calibration.WFVideo2Settings.Contrast = m_BackupContrast;
-					m_pHW->m_Calibration.WFVideo2Settings.Hue = m_BackupHue;
-					m_pHW->m_Calibration.WFVideo2Settings.Saturation = m_BackupSaturation;
-
-					break;
-				}
-			}
-		}
-		m_pHW->TurnAccommodationTargetOff();
+		else {
+		  PrevImgCapture();
+		}	   
 	}
 	else
 	{
@@ -515,6 +308,450 @@ void CCTAcquisition::Main()
 
 	::NewSettings.m_Adjusting_CT = FALSE;
 	m_pVideoWnd->PostMessage(WM_THREAD_FINISH, 1, 0);
+}
+
+//***************************************************************************************
+
+void CCTAcquisition::HRImgCapture()
+{
+  int TimeLimit = 1050 * m_pHW->m_Calibration.LaserDuration;
+  int StartTime = (int)clock();
+
+  if (::Settings.m_Cap_ColorAutoOrManu) // automatic
+  {
+    m_pHW->TurnPlacidoOff();
+
+    m_pHW->m_pCurrentVideoSettings = &m_pHW->m_Calibration.WFVideo2Settings;
+    m_pHW->ClearFrames();
+    m_pHW->ApplyCurrentVideoBrightness();
+    m_pHW->ApplyCurrentVideoContrast();
+    m_pHW->ApplyCurrentVideoRed();
+    m_pHW->ApplyCurrentVideoGreen();
+    m_pHW->ApplyCurrentVideoBlue();
+
+    m_pHW->TurnInfraredLEDsOn();
+    m_pHW->TurnWhiteLEDsOn();
+
+    ulong StartTime = clock();
+
+    while (clock() - StartTime < (ulong)m_pHW->m_Calibration.ColorImageDelay) {
+      m_pHW->StartTransferringVideoFrame();
+      m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 0, 2);
+      m_pHW->FinishTransferringVideoFrame();
+    }
+
+    // adjust the image quality
+    int ST = (int)clock();
+
+    m_BackupBrightness = m_pHW->m_Calibration.WFVideo2Settings.Brightness;
+
+    m_pHW->StartTransferringVideoFrame();
+    m_pHW->GetRGBData(); 
+    m_pHW->FinishTransferringVideoFrame();
+
+    CEyeImage TestImage;
+    TestImage.m_w    = m_CTExam.m_Calibration.VideoWidth;
+    TestImage.m_h    = m_CTExam.m_Calibration.VideoHeight;
+    TestImage.m_w_um = m_CTExam.m_Calibration.VideoWidthMicrons;
+    TestImage.m_h_um = m_CTExam.m_Calibration.VideoHeightMicrons;
+    TestImage.m_RGBData.Create(m_CTExam.m_ColorImage.m_h, LINE_SIZE(m_CTExam.m_ColorImage.m_w), m_pHW->GetRGBData());
+    TestImage.m_RGBData.Attach(m_CTExam.m_Image.m_h, LINE_SIZE(m_CTExam.m_Image.m_w), m_pHW->GetRGBData());
+
+    real_t Total = 0;
+    real_t count = (real_t)TestImage.m_w * TestImage.m_h;
+    for (int i = 0; i < TestImage.m_w; i++) {
+      for (int j = 0; j < TestImage.m_h; j++) {
+        int R = TestImage.GetRAt(i, j);
+        int G = TestImage.GetGAt(i, j);
+        int B = TestImage.GetBAt(i, j);
+
+        int Gray = intRound(0.3 * R + 0.59 * G + 0.11 * B);
+        Total += Gray;
+      }
+    }
+
+    real_t Brightness = Total / count;
+
+    if (Brightness < 75 || Brightness > 130) {
+      VIDEO_SETTINGS *pVideoSettings = m_pHW->m_pCurrentVideoSettings;
+
+      real_t ratio = 75 / Brightness;
+      if (Brightness < 75) {
+        int newBright = int(75 * ratio);
+
+        if (newBright > 130)
+          pVideoSettings->Brightness = 130;
+        else
+          pVideoSettings->Brightness = newBright;
+
+        /*s.Format(_T("%i"),pVideoSettings->Brightness);
+        ::Info("Less than 75 : " + s);*/
+      }
+      else {
+        int newBright = int(65 / ratio);
+
+        if (newBright < 40)
+          pVideoSettings->Brightness = 40;
+        else
+          pVideoSettings->Brightness = newBright;
+
+        /*s.Format(_T("%i"), pVideoSettings->Brightness);
+        ::Info("Greater than 75 : " + s);*/
+      }
+
+      m_pHW->ApplyCurrentVideoBrightness();
+
+      StartTime = (int)clock();
+
+      while (clock() - StartTime < (ulong)m_pHW->m_Calibration.ColorImageDelay) {
+        m_pHW->StartTransferringVideoFrame();
+        m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 0, 0);
+        m_pHW->FinishTransferringVideoFrame();
+      }
+    }
+
+    int UT = (int)clock() - ST;
+    // adjust the image quality	Done
+
+    m_pHW->TurnWhiteLEDsOff();
+    m_pHW->TurnInfraredLEDsOff();
+    m_pHW->TurnAccommodationTargetOff();
+
+    m_CTExam.m_ColorImage.m_w    = m_CTExam.m_Calibration.VideoWidth;
+    m_CTExam.m_ColorImage.m_h    = m_CTExam.m_Calibration.VideoHeight;
+    m_CTExam.m_ColorImage.m_w_um = m_CTExam.m_Calibration.VideoWidthMicrons;
+    m_CTExam.m_ColorImage.m_h_um = m_CTExam.m_Calibration.VideoHeightMicrons;
+    m_CTExam.m_ColorImage.m_RGBData.Create(m_CTExam.m_ColorImage.m_h, LINE_SIZE(m_CTExam.m_ColorImage.m_w), m_pHW->GetRGBData());
+    m_CTExam.m_ColorImage.m_RGBData.Attach(m_CTExam.m_Image.m_h, LINE_SIZE(m_CTExam.m_Image.m_w), m_pHW->GetRGBData());
+
+    ::TempSettings.Temp_ColorImgCpted = TRUE;
+
+    if (Brightness < 75 || Brightness > 130)
+      m_pHW->m_Calibration.WFVideo2Settings.Brightness = m_BackupBrightness;
+
+    // m_CTExam.m_ColorImage.SaveIntoFile("C://Tracey//0.jpg");
+  }
+  else // manual
+  {
+    ::NewSettings.m_Adjusting_CT = TRUE;
+
+    m_pHW->TurnPlacidoOff();
+
+    m_BackupWhiteLEDsPowerLevel = m_pHW->m_Calibration.WFVideo2Settings.WhiteLEDsPowerLevel;
+    m_BackupBrightness          = m_pHW->m_Calibration.WFVideo2Settings.Brightness;
+    m_BackupContrast            = m_pHW->m_Calibration.WFVideo2Settings.Contrast;
+    m_BackupRed                 = m_pHW->m_Calibration.WFVideo2Settings.Red;
+    m_BackupGreen               = m_pHW->m_Calibration.WFVideo2Settings.Green;
+    m_BackupBlue                = m_pHW->m_Calibration.WFVideo2Settings.Blue;
+
+    m_pHW->m_pCurrentVideoSettings = &m_pHW->m_Calibration.WFVideo2Settings;
+    m_pHW->ClearFrames();
+    m_pHW->TurnInfraredLEDsOn();
+    m_pHW->TurnWhiteLEDsOn();
+
+    int LastWhiteLEDsPower = m_pHW->m_pCurrentVideoSettings->WhiteLEDsPowerLevel; // 10262020 Can not adjust the led power
+
+    // 530
+    while (TRUE) {
+      m_pHW->StartTransferringVideoFrame();
+      if (m_NumFramesReceived > 20) {
+        m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 0, 1); // Transform the lParam = 1
+      }
+      m_pHW->FinishTransferringVideoFrame();
+
+      m_pHW->m_pCurrentVideoSettings->WhiteLEDsPowerLevel = m_WhiteLEDsPower;
+      m_pHW->m_pCurrentVideoSettings->Brightness          = m_Brightness;
+      m_pHW->m_pCurrentVideoSettings->Contrast            = m_Contrast;
+      m_pHW->m_pCurrentVideoSettings->Red                 = m_Red;
+      m_pHW->m_pCurrentVideoSettings->Green               = m_Green;
+      m_pHW->m_pCurrentVideoSettings->Blue                = m_Blue;
+
+      //Can not adjust the led power
+      if (LastWhiteLEDsPower != m_WhiteLEDsPower) {
+        m_pHW->TurnWhiteLEDsOn();
+        LastWhiteLEDsPower = m_WhiteLEDsPower;
+      }
+      //Can not adjust the led power
+
+      m_pHW->ApplyCurrentVideoBrightness();
+      m_pHW->ApplyCurrentVideoContrast();
+      m_pHW->ApplyCurrentVideoRed();
+      m_pHW->ApplyCurrentVideoGreen();
+      m_pHW->ApplyCurrentVideoBlue();
+
+      // Abort
+      m_TimeLeft = TimeLimit - ((int)clock() - StartTime);
+      if ((m_TriLaserShutoffOn && m_TimeLeft <= 0) || (m_ToDo == ABORT)) // Time is finish
+      {
+        m_pHW->TurnWhiteLEDsOff();
+        m_pHW->TurnInfraredLEDsOff();
+        m_pHW->TurnPlacidoOff();
+        m_pHW->TurnAccommodationTargetOff();
+
+        m_pHW->m_Calibration.WFVideo2Settings.WhiteLEDsPowerLevel = m_BackupWhiteLEDsPowerLevel;
+        m_pHW->m_Calibration.WFVideo2Settings.Brightness          = m_BackupBrightness;
+        m_pHW->m_Calibration.WFVideo2Settings.Contrast            = m_BackupContrast;
+        m_pHW->m_Calibration.WFVideo2Settings.Red                 = m_BackupRed;
+        m_pHW->m_Calibration.WFVideo2Settings.Green               = m_BackupGreen;
+        m_pHW->m_Calibration.WFVideo2Settings.Blue                = m_BackupBlue;
+
+        break;
+      }
+      // Abort Done
+
+      if ((m_ToDo == ACQUIRE || m_pHW->IsButtonPressed())) {
+        // cjf 10222020 do not allow movement after acquire? why we need this in 6.2.1
+        ulong StartTime = clock();
+        while (clock() - StartTime < (ulong)m_pHW->m_Calibration.ColorImageDelay) {
+          m_pHW->StartTransferringVideoFrame();
+          m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 0, 1); // Transform the lParam = 1
+          m_pHW->FinishTransferringVideoFrame();
+        }
+        // cjf 10222020 do not allow movement after acquire? why we need this in 6.2.1
+
+        m_pHW->TurnWhiteLEDsOff();
+        m_pHW->TurnInfraredLEDsOff();
+
+        m_CTExam.m_ColorImage.m_w    = m_CTExam.m_Calibration.VideoWidth;
+        m_CTExam.m_ColorImage.m_h    = m_CTExam.m_Calibration.VideoHeight;
+        m_CTExam.m_ColorImage.m_w_um = m_CTExam.m_Calibration.VideoWidthMicrons;
+        m_CTExam.m_ColorImage.m_h_um = m_CTExam.m_Calibration.VideoHeightMicrons;
+        m_CTExam.m_ColorImage.m_RGBData.Create(m_CTExam.m_ColorImage.m_h, LINE_SIZE(m_CTExam.m_ColorImage.m_w), m_pHW->GetRGBData());
+        m_CTExam.m_ColorImage.m_RGBData.Attach(m_CTExam.m_Image.m_h, LINE_SIZE(m_CTExam.m_Image.m_w), m_pHW->GetRGBData());
+
+        ::TempSettings.Temp_ColorImgCpted = TRUE;
+
+        m_pHW->m_Calibration.WFVideo2Settings.WhiteLEDsPowerLevel = m_BackupWhiteLEDsPowerLevel;
+        m_pHW->m_Calibration.WFVideo2Settings.Brightness          = m_BackupBrightness;
+        m_pHW->m_Calibration.WFVideo2Settings.Contrast            = m_BackupContrast;
+        m_pHW->m_Calibration.WFVideo2Settings.Red                 = m_BackupRed;
+        m_pHW->m_Calibration.WFVideo2Settings.Green               = m_BackupGreen;
+        m_pHW->m_Calibration.WFVideo2Settings.Blue                = m_BackupBlue;
+
+        break;
+      }
+    }
+  }
+  m_pHW->TurnAccommodationTargetOff();
+}
+
+//***************************************************************************************
+
+//Copy the 6.2.1 code of image capture process to here
+void CCTAcquisition::PrevImgCapture()
+{
+  int TimeLimit = 1050 * m_pHW->m_Calibration.LaserDuration;
+  int StartTime = (int)clock();
+
+  if (::Settings.m_Cap_ColorAutoOrManu) // automatic
+  {
+    m_pHW->TurnPlacidoOff();
+
+    m_pHW->m_pCurrentVideoSettings = &m_pHW->m_Calibration.WFVideo2Settings;
+    m_pHW->ClearFrames();
+    m_pHW->ApplyCurrentVideoBrightness();
+    m_pHW->ApplyCurrentVideoContrast();
+    m_pHW->ApplyCurrentVideoHue();
+    m_pHW->ApplyCurrentVideoSaturation();
+    m_pHW->TurnInfraredLEDsOn();
+    m_pHW->TurnWhiteLEDsOn();
+
+    ulong StartTime = clock();
+
+    while (clock() - StartTime < (ulong)m_pHW->m_Calibration.ColorImageDelay) {
+      m_pHW->StartTransferringVideoFrame();
+      m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 0, 2);
+      m_pHW->FinishTransferringVideoFrame();
+    }
+
+    // adjust the image quality
+    int ST = (int)clock();
+
+    m_BackupBrightness = m_pHW->m_Calibration.WFVideo2Settings.Brightness;
+
+    m_pHW->StartTransferringVideoFrame();
+    m_pHW->GetRGBData(); // cjf10212020
+    m_pHW->FinishTransferringVideoFrame();
+
+    CEyeImage TestImage;
+    TestImage.m_w    = m_CTExam.m_Calibration.VideoWidth;
+    TestImage.m_h    = m_CTExam.m_Calibration.VideoHeight;
+    TestImage.m_w_um = m_CTExam.m_Calibration.VideoWidthMicrons;
+    TestImage.m_h_um = m_CTExam.m_Calibration.VideoHeightMicrons;
+    TestImage.m_RGBData.Create(m_CTExam.m_ColorImage.m_h, LINE_SIZE(m_CTExam.m_ColorImage.m_w), m_pHW->GetRGBData());
+    TestImage.m_RGBData.Attach(m_CTExam.m_Image.m_h, LINE_SIZE(m_CTExam.m_Image.m_w), m_pHW->GetRGBData());
+
+    real_t Total = 0;
+    real_t count = (real_t)TestImage.m_w * TestImage.m_h;
+    for (int i = 0; i < TestImage.m_w; i++) {
+      for (int j = 0; j < TestImage.m_h; j++) {
+        int R = TestImage.GetRAt(i, j);
+        int G = TestImage.GetGAt(i, j);
+        int B = TestImage.GetBAt(i, j);
+
+        int Gray = intRound(0.3 * R + 0.59 * G + 0.11 * B);
+        Total += Gray;
+      }
+    }
+
+    real_t Brightness = Total / count;
+
+    if (Brightness < 75 || Brightness > 130) {
+      VIDEO_SETTINGS *pVideoSettings = m_pHW->m_pCurrentVideoSettings;
+
+      real_t ratio = 75 / Brightness;
+      if (Brightness < 75) {
+        int newBright = int(75 * ratio);
+
+        if (newBright > 130)
+          pVideoSettings->Brightness = 130;
+        else
+          pVideoSettings->Brightness = newBright;
+
+        /*s.Format(_T("%i"),pVideoSettings->Brightness);
+        ::Info("Less than 75 : " + s);*/
+      }
+      else {
+        int newBright = int(65 / ratio);
+
+        if (newBright < 40)
+          pVideoSettings->Brightness = 40;
+        else
+          pVideoSettings->Brightness = newBright;
+
+        /*s.Format(_T("%i"), pVideoSettings->Brightness);
+        ::Info("Greater than 75 : " + s);*/
+      }
+
+      m_pHW->ApplyCurrentVideoBrightness();
+
+      StartTime = (int)clock();
+
+      while (clock() - StartTime < (ulong)m_pHW->m_Calibration.ColorImageDelay) {
+        m_pHW->StartTransferringVideoFrame();
+        m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 0, 0);
+        m_pHW->FinishTransferringVideoFrame();
+      }
+    }
+
+    int UT = (int)clock() - ST;
+    // adjust the image quality	Done
+
+    m_pHW->TurnWhiteLEDsOff();
+    m_pHW->TurnInfraredLEDsOff();
+    m_pHW->TurnAccommodationTargetOff();
+
+    m_CTExam.m_ColorImage.m_w    = m_CTExam.m_Calibration.VideoWidth;
+    m_CTExam.m_ColorImage.m_h    = m_CTExam.m_Calibration.VideoHeight;
+    m_CTExam.m_ColorImage.m_w_um = m_CTExam.m_Calibration.VideoWidthMicrons;
+    m_CTExam.m_ColorImage.m_h_um = m_CTExam.m_Calibration.VideoHeightMicrons;
+    m_CTExam.m_ColorImage.m_RGBData.Create(m_CTExam.m_ColorImage.m_h, LINE_SIZE(m_CTExam.m_ColorImage.m_w), m_pHW->GetRGBData());
+    m_CTExam.m_ColorImage.m_RGBData.Attach(m_CTExam.m_Image.m_h, LINE_SIZE(m_CTExam.m_Image.m_w), m_pHW->GetRGBData());
+
+    ::TempSettings.Temp_ColorImgCpted = TRUE;
+
+    if (Brightness < 75 || Brightness > 130)
+      m_pHW->m_Calibration.WFVideo2Settings.Brightness = m_BackupBrightness;
+
+    // m_CTExam.m_ColorImage.SaveIntoFile("C://Tracey//0.jpg");
+  }
+  else // manual
+  {
+    ::NewSettings.m_Adjusting_CT = TRUE;
+
+    m_pHW->TurnPlacidoOff();
+
+    m_BackupWhiteLEDsPowerLevel = m_pHW->m_Calibration.WFVideo2Settings.WhiteLEDsPowerLevel;
+    m_BackupBrightness          = m_pHW->m_Calibration.WFVideo2Settings.Brightness;
+    m_BackupContrast            = m_pHW->m_Calibration.WFVideo2Settings.Contrast;
+    m_BackupHue                 = m_pHW->m_Calibration.WFVideo2Settings.Hue;
+    m_BackupSaturation          = m_pHW->m_Calibration.WFVideo2Settings.Saturation;
+
+    m_pHW->m_pCurrentVideoSettings = &m_pHW->m_Calibration.WFVideo2Settings;
+    m_pHW->ClearFrames();
+    m_pHW->TurnInfraredLEDsOn();
+    m_pHW->TurnWhiteLEDsOn();
+
+    int LastWhiteLEDsPower = m_pHW->m_pCurrentVideoSettings->WhiteLEDsPowerLevel; // 10262020 Can not adjust the led power
+
+    // 530
+    while (TRUE) {
+      m_pHW->StartTransferringVideoFrame();
+      if (m_NumFramesReceived > 20) {
+        m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 0, 1); // Transform the lParam = 1
+      }
+      m_pHW->FinishTransferringVideoFrame();
+
+      m_pHW->m_pCurrentVideoSettings->WhiteLEDsPowerLevel = m_WhiteLEDsPower;
+      m_pHW->m_pCurrentVideoSettings->Brightness          = m_Brightness;
+      m_pHW->m_pCurrentVideoSettings->Contrast            = m_Contrast;
+      m_pHW->m_pCurrentVideoSettings->Hue                 = m_Hue;
+      m_pHW->m_pCurrentVideoSettings->Saturation          = m_Saturation;
+
+      // 10262020 Can not adjust the led power
+      if (LastWhiteLEDsPower != m_WhiteLEDsPower) {
+        m_pHW->TurnWhiteLEDsOn();
+        LastWhiteLEDsPower = m_WhiteLEDsPower;
+      }
+      // 10262020 Can not adjust the led power
+
+      m_pHW->ApplyCurrentVideoBrightness();
+      m_pHW->ApplyCurrentVideoContrast();
+      m_pHW->ApplyCurrentVideoHue();
+      m_pHW->ApplyCurrentVideoSaturation();
+
+      // Abort
+      m_TimeLeft = TimeLimit - ((int)clock() - StartTime);
+      if ((m_TriLaserShutoffOn && m_TimeLeft <= 0) || (m_ToDo == ABORT)) // Time is finish
+      {
+        m_pHW->TurnWhiteLEDsOff();
+        m_pHW->TurnInfraredLEDsOff();
+        m_pHW->TurnPlacidoOff();
+        m_pHW->TurnAccommodationTargetOff();
+
+        m_pHW->m_Calibration.WFVideo2Settings.WhiteLEDsPowerLevel = m_BackupWhiteLEDsPowerLevel;
+        m_pHW->m_Calibration.WFVideo2Settings.Brightness          = m_BackupBrightness;
+        m_pHW->m_Calibration.WFVideo2Settings.Contrast            = m_BackupContrast;
+        m_pHW->m_Calibration.WFVideo2Settings.Hue                 = m_BackupHue;
+        m_pHW->m_Calibration.WFVideo2Settings.Saturation          = m_BackupSaturation;
+
+        break;
+      }
+      // Abort Done
+
+      if ((m_ToDo == ACQUIRE || m_pHW->IsButtonPressed())) {
+        // cjf 10222020 do not allow movement after acquire? why we need this in 6.2.1
+        ulong StartTime = clock();
+        while (clock() - StartTime < (ulong)m_pHW->m_Calibration.ColorImageDelay) {
+          m_pHW->StartTransferringVideoFrame();
+          m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 0, 1); // Transform the lParam = 1
+          m_pHW->FinishTransferringVideoFrame();
+        }
+        // cjf 10222020 do not allow movement after acquire? why we need this in 6.2.1
+
+        m_pHW->TurnWhiteLEDsOff();
+        m_pHW->TurnInfraredLEDsOff();
+
+        m_CTExam.m_ColorImage.m_w    = m_CTExam.m_Calibration.VideoWidth;
+        m_CTExam.m_ColorImage.m_h    = m_CTExam.m_Calibration.VideoHeight;
+        m_CTExam.m_ColorImage.m_w_um = m_CTExam.m_Calibration.VideoWidthMicrons;
+        m_CTExam.m_ColorImage.m_h_um = m_CTExam.m_Calibration.VideoHeightMicrons;
+        m_CTExam.m_ColorImage.m_RGBData.Create(m_CTExam.m_ColorImage.m_h, LINE_SIZE(m_CTExam.m_ColorImage.m_w), m_pHW->GetRGBData());
+        m_CTExam.m_ColorImage.m_RGBData.Attach(m_CTExam.m_Image.m_h, LINE_SIZE(m_CTExam.m_Image.m_w), m_pHW->GetRGBData());
+
+        ::TempSettings.Temp_ColorImgCpted = TRUE;
+
+        m_pHW->m_Calibration.WFVideo2Settings.WhiteLEDsPowerLevel = m_BackupWhiteLEDsPowerLevel;
+        m_pHW->m_Calibration.WFVideo2Settings.Brightness          = m_BackupBrightness;
+        m_pHW->m_Calibration.WFVideo2Settings.Contrast            = m_BackupContrast;
+        m_pHW->m_Calibration.WFVideo2Settings.Hue                 = m_BackupHue;
+        m_pHW->m_Calibration.WFVideo2Settings.Saturation          = m_BackupSaturation;
+
+        break;
+      }
+    }
+  }
+  m_pHW->TurnAccommodationTargetOff();
 }
 
 //***************************************************************************************

@@ -897,6 +897,56 @@ void CHW::ApplyCurrentVideoSaturation()
 	DllSetVideoSaturation(m_pCurrentVideoSettings->Saturation);
 }
 
+
+
+//***************************************************************************************
+
+// high resolution camera image capture setting
+void CHW::ApplyCurrentVideoRed()
+{
+  if (m_hiresCamera->Connected()) {
+    int hdCam = m_pCurrentVideoSettings->Saturation;
+   // m_hiresCamera->SetRed(hdCam);
+  }
+
+  if (m_hDLL == NULL)
+    return;
+
+  //DllSetVideoSaturation(m_pCurrentVideoSettings->Saturation);
+}
+
+//***************************************************************************************
+
+//high resolution camera image capture settings
+void CHW::ApplyCurrentVideoGreen()
+{
+  if (m_hiresCamera->Connected()) {
+    int hdCam = m_pCurrentVideoSettings->Saturation;
+    // m_hiresCamera->SetGreen(hdCam);
+  }
+
+  if (m_hDLL == NULL)
+    return;
+
+  // DllSetVideoSaturation(m_pCurrentVideoSettings->Saturation);
+}
+
+//***************************************************************************************
+
+//high resolution camera image capture settings
+void CHW::ApplyCurrentVideoBlue()
+{
+  if (m_hiresCamera->Connected()) {
+    int hdCam = m_pCurrentVideoSettings->Saturation;
+    // m_hiresCamera->SetBlue(hdCam);
+  }
+
+  if (m_hDLL == NULL)
+    return;
+
+  // DllSetVideoSaturation(m_pCurrentVideoSettings->Saturation);
+}
+
 //***************************************************************************************
 
 void CHW::ClearFrames()
@@ -1087,7 +1137,7 @@ uchar* CHW::GetRGBData()
 				{
 					int u = (dx + i) * 701;
 					int v = u % 623;
-					//int sx_y1 = 16 + ((u / 623) << 1) + 1; // домножить на 2 и сдвинуть на 1 вправо, потому что вперемежку с цветностью
+					//int sx_y1 = 16 + ((u / 623) << 1) + 1; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ 2 пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ 1 пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 					int sx_y1 = moveLeftRight * 2 + ((u / 623) << 1) + 1; // [5.1.1]
 					int sx_y2 = sx_y1 + 2;
 					// even
@@ -1253,8 +1303,8 @@ uchar* CHW::GetRGBData()
 				int Crg = -833/* 813*/ * Cr;
 				int Cbb = 2066/*2018*/ * Cb;
 
-				int R1 = (Y1 + Crr) >> 10; // заменил деление на 1000 на деление на 1024
-				int G1 = (Y1 + Crg + Cbg) >> 10; // соответственно чуть чуть поменялись коэффициенты
+				int R1 = (Y1 + Crr) >> 10; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ 1000 пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ 1024
+				int G1 = (Y1 + Crg + Cbg) >> 10; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 				int B1 = (Y1 + Cbb) >> 10;
 				int R2 = (Y2 + Crr) >> 10;
 				int G2 = (Y2 + Crg + Cbg) >> 10;

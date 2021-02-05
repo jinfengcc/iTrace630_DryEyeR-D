@@ -104,12 +104,24 @@ BOOL CAcquisitionDlg::OnInitDialog()
 				int CapHeight = H - m_h;
 
 				//Manual color capture GUI 
-				m_ControlWnd.CreateThisWnd(Rect, this, m_top, CapHeight);
-				m_ControlWnd.m_ShowWindow = FALSE;
-				m_ControlWnd.HideGUI();
+				if (::HW.IsHRCameraConnected()) //high resolution camera image capture settings
+				{
+					m_HRControlWnd.CreateThisWnd(Rect, this, m_top, CapHeight);
+					m_HRControlWnd.m_ShowWindow = FALSE;
+					m_HRControlWnd.HideGUI();
 
-				m_ControlWnd.m_ShowAcqBtn = FALSE;
-				m_ControlWnd.HideAcqBtnGUI();
+				    m_HRControlWnd.m_ShowAcqBtn = FALSE;
+                    m_HRControlWnd.HideAcqBtnGUI();
+				}
+				else 
+				{
+				    m_ControlWnd.CreateThisWnd(Rect, this, m_top, CapHeight);
+				    m_ControlWnd.m_ShowWindow = FALSE;
+				    m_ControlWnd.HideGUI();
+
+				    m_ControlWnd.m_ShowAcqBtn = FALSE;
+				    m_ControlWnd.HideAcqBtnGUI();
+				}
 				//Done
 			}
 

@@ -878,6 +878,9 @@
     <ClCompile Include="CmdLineArgs.cpp">
       <Filter>Others</Filter>
     </ClCompile>
+    <ClCompile Include="HRImgCptCtrlWnd.cpp">
+      <Filter>Windows\Acquisiton Control</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PatientDlg.h">
@@ -1443,6 +1446,9 @@
     </ClInclude>
     <ClInclude Include="CmdLineArgs.h">
       <Filter>Others</Filter>
+    </ClInclude>
+    <ClInclude Include="HRImgCptCtrlWnd.h">
+      <Filter>Windows\Acquisiton Control</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
