@@ -22,6 +22,11 @@ BatchExport::BatchExport()
 
 bool BatchExport::Export()
 {
+  if (m_exams.empty()) {
+    ::Warning("No exams were selected for export");
+    return false;
+  }
+
   int nExams = 0;
 
   try {

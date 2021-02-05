@@ -46,7 +46,7 @@ CMemWnd::~CMemWnd()
 
 //***************************************************************************************
 
-void CMemWnd::CreateWnd(RECT& Rect, CWnd* pParentWnd)
+void CMemWnd::CreateWnd(RECT& Rect, CWnd* pParentWnd, int show)
 {
 	CWnd::CreateEx(0, ::WndClassName, _T(""), WS_CHILD, Rect, pParentWnd, 0);
 
@@ -57,7 +57,7 @@ void CMemWnd::CreateWnd(RECT& Rect, CWnd* pParentWnd)
 
 	m_Rgn.SetRectRgn(0, 0, m_w, m_h);
 
-	ShowWindow(SW_SHOW);
+	ShowWindow(show);
 }
 
 //***************************************************************************************
@@ -352,7 +352,7 @@ void CMemWnd::SaveIntoFile(CDicomInfo DicomInfo)
 //  int w = ::GetDeviceCaps(pDlg->hDC, HORZRES);
 //
 //  int h = w * m_h / m_w;
-//  
+//
 //  ::StretchBlt(pDlg->hDC, 0, 0, w, h, m_MemDC.m_hDC, 0, 0, m_w, m_h, SRCCOPY);
 //
 //  ::EndPage(pDlg->hDC);
@@ -442,11 +442,11 @@ void CMemWnd::SaveDicomFile(CString fileName, CDicomInfo DicomInfo)
 	Image.m_w = m_w;
 	Image.m_h = m_h;
 	Image.m_RGBData.Create(m_h, LINE_SIZE(m_w), m_MemDC.m_RGBData);
-	
+
 	if (m_isComboDicom)
 	{
 		//for (int i = 0; i < 100; i++)
-		{			
+		{
 			CTraceyDicom TraceyDicom;
 
 			CHAR* pData = new CHAR[(m_w + 200)*m_h * 3];
@@ -482,7 +482,7 @@ void CMemWnd::SaveDicomFile(CString fileName, CDicomInfo DicomInfo)
 			TraceyDicom.OutputDicomImage(fileName, DicomInfo, pData, m_w + 200, m_h);
 
 			delete[] pData;
-		}		
+		}
 	}
 	else//DCMTK
 	{

@@ -31,8 +31,7 @@ bool BatchDicomHelper::SendToServer(const ViewServices &vs, ViewType vt) const
     }
   }
   catch (const _com_error &e) {
-    auto err = static_cast<const char *>(e.Description());
-    TRACEY_THROW("DICOM server error: {}", err);
+    ThrowDicomComError("DICOM server error", e);
   }
 }
 
@@ -51,8 +50,7 @@ bool BatchDicomHelper::SendToFile(const fs::path &file, const ViewServices &vs, 
     }
   }
   catch (const _com_error &e) {
-    auto err = static_cast<const char *>(e.Description());
-    TRACEY_THROW("DICOM error: {}", err);
+    ThrowDicomComError("DICOM error: {}", e);
   }
 }
 

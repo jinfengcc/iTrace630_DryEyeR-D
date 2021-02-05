@@ -178,7 +178,7 @@ auto DicomQuery::RunQuery(IDCXOBJ *rp) const -> WorkList
   }
   catch (const _com_error &e) {
     DCMLOG_Error("Query", e);
-    TRACEY_THROW((const char *)e.Description());
+    ThrowDicomComError("DICOM error", e);
   }
   catch (const std::exception &e) {
     DCMLOG_Error("Query: {}", e.what());

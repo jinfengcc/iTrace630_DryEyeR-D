@@ -148,7 +148,7 @@ CCTOsherAliWnd::CCTOsherAliWnd(CWnd *pParentWnd, RECT &Rect, CCTExam *pCTExam, i
 	m_a2 = 0;
 	m_Ali_Rum2 = 0.0;
 
-	CreateWnd(Rect, pParentWnd);
+	CreateWnd(Rect, pParentWnd, SW_HIDE);
 
 	m_ImgSize = m_h*m_w * 3;
 

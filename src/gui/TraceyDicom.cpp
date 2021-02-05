@@ -72,6 +72,7 @@ BOOL CTraceyDicom::TestActivation()
 
 	return TRUE;*/
 
+#if 0
 	int count = 0;
 
 	for (int i = 0; i < 100; i++)
@@ -88,6 +89,7 @@ BOOL CTraceyDicom::TestActivation()
 	}
 
 	if (count != 0) return FALSE;
+#endif
 
 	return TRUE;
 }

@@ -9,9 +9,10 @@ namespace {
   }
 }
 
-CmdTargetBase::CmdTargetBase()
+CmdTargetBase::CmdTargetBase(Attach a)
 {
-  GetList().push_back(this);
+  if (a == Attach::yes)
+    GetList().push_back(this);
 }
 
 
@@ -20,12 +21,27 @@ CmdTargetBase::~CmdTargetBase()
   GetList().remove(this);
 }
 
-BOOL CmdTargetBase::ForwardCommand(UINT nID)
+BOOL CmdTargetBase::OnCmdMsg(UINT nID, int nCode, void *pExtra, AFX_CMDHANDLERINFO *pHandlerInfo)
 {
-  for (auto l : GetList()) {
-    l->m_bHandled = TRUE;
-    if (l->OnCmdMsg(nID, 0, nullptr, nullptr) && l->m_bHandled)
-      return TRUE;
+  m_msgHandled = TRUE;
+  return CCmdTarget::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo) && GetMsgHandled();
+}
+
+BOOL CmdTargetBase::ForwardCommand(UINT nID, int nCode, void *pExtra, AFX_CMDHANDLERINFO *pHandlerInfo)
+{
+  try
+  {
+    for (auto l : GetList()) {
+      l->m_msgHandled = TRUE;
+      if (l->OnCmdMsg(nID, 0, nullptr, nullptr) && l->m_msgHandled)
+        return TRUE;
+    }
   }
+  catch (const std::exception &e)
+  {
+    if (*e.what())
+      ::Error(e.what());
+  }
+  
   return FALSE;
 }

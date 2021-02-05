@@ -24,7 +24,7 @@ public:
 
 	int  HighLightOutline[4];//6.2.0 NEAR VISION
 
-	void CreateWnd(RECT& Rect, CWnd* pParentWnd);
+	void CreateWnd(RECT& Rect, CWnd* pParentWnd, int show = SW_SHOW);
 	void ClearMemDC();
 	virtual void RepaintMemDC() {}
 	virtual void PaintControls() {};//6.2.1
@@ -45,7 +45,7 @@ protected:
 	CMRgn m_Rgn;
 
 	void Border();
-	
+
 	void BackupMemDC();
 	void RestoreMemDC();
 

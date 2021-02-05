@@ -32,6 +32,7 @@ void RZDCX::SetLogging(LogLevel logLevel, const fs::path &logFile)
 
 bool RZDCX::TestActivation()
 {
+#if 0
   const int N = 100 + 10;
 
   for (int i = 0; i < N; i++) {
@@ -42,6 +43,7 @@ bool RZDCX::TestActivation()
       return false;
     }
   }
+#endif
 
   return true;
 }

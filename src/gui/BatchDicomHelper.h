@@ -11,6 +11,7 @@ public:
   BatchDicomHelper(const CPatient *pat, std::span<const CExamHeader *> exams);
 
   bool SendToServer(const ViewServices &vs, ViewType vt) const;
+
   bool SendToFile(const fs::path &file, const ViewServices &vs, ViewType vt) const;
 
 private:
@@ -20,3 +21,4 @@ private:
   dicom::Patient DcmPatient() const;
   dicom::Work    DcmWork(ViewType vt) const;
 };
+
