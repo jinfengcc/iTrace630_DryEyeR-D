@@ -33,6 +33,16 @@ BOOL CCTAcquisitionDlg::OnInitDialog()
 
 LRESULT CCTAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 {
+	////cjf 10222020 test for slow gain
+ // if (wParam != 0) {
+ //   memcpy(m_VideoWnd.m_MemDC.m_RGBData, m_pCTAcquisition->m_pHW->GetRGBData(), CHW::m_VideoSize);
+ //   m_VideoWnd.Invalidate(FALSE);
+ //   m_VideoWnd.UpdateWindow();
+
+ //   return 0;
+ // }
+ // //cjf 10222020 test for slow gain
+
 	memcpy(m_VideoWnd.m_MemDC.m_RGBData, m_pCTAcquisition->m_pHW->GetRGBData(), CHW::m_VideoSize);
 
 	//530
@@ -74,38 +84,27 @@ LRESULT CCTAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 
 	if (lParam == 1)//Manual Color Image Capture
 	{
-		if (::HW.IsHRCameraConnected()) { //high resolution camera image capture settings
-		  if (!m_HRControlWnd.m_ShowWindow) {
-				m_HRControlWnd.ShowGUI();
-			  }
+		/* if(m_WFGUICtrlWnd.m_ShowWindow)
+		{
+		m_WFGUICtrlWnd.m_ShowWindow = FALSE;
+		m_WFGUICtrlWnd.HideGUI();
+		}*/
 
-		  m_pCTAcquisition->m_WhiteLEDsPower = m_HRControlWnd.GetWhiteLEDsPower();
-		  m_pCTAcquisition->m_Brightness     = m_HRControlWnd.GetBrightness();
-		  m_pCTAcquisition->m_Contrast       = m_HRControlWnd.GetContrast();
-		  m_pCTAcquisition->m_Red            = m_HRControlWnd.GetRed();
-		  m_pCTAcquisition->m_Green          = m_HRControlWnd.GetGreen();
-		  m_pCTAcquisition->m_Blue           = m_HRControlWnd.GetBlue();
-
-		  if (!m_HRControlWnd.m_ShowAcqBtn) {
-			m_HRControlWnd.m_ShowAcqBtn = TRUE;
-			m_HRControlWnd.ShowAcqBtnGUI();
-		  }
-		}
-		else {
-		  if (!m_ControlWnd.m_ShowWindow) {
+		if (!m_ControlWnd.m_ShowWindow)
+		{
 			m_ControlWnd.ShowGUI();
-		  }
+		}
 
-		  m_pCTAcquisition->m_WhiteLEDsPower = m_ControlWnd.GetWhiteLEDsPower();
-		  m_pCTAcquisition->m_Brightness     = m_ControlWnd.GetBrightness();
-		  m_pCTAcquisition->m_Contrast       = m_ControlWnd.GetContrast();
-		  m_pCTAcquisition->m_Hue            = m_ControlWnd.GetHue();
-		  m_pCTAcquisition->m_Saturation     = m_ControlWnd.GetSaturation();
+		m_pCTAcquisition->m_WhiteLEDsPower = m_ControlWnd.GetWhiteLEDsPower();
+		m_pCTAcquisition->m_Brightness = m_ControlWnd.GetBrightness();
+		m_pCTAcquisition->m_Contrast = m_ControlWnd.GetContrast();
+		m_pCTAcquisition->m_Hue = m_ControlWnd.GetHue();
+		m_pCTAcquisition->m_Saturation = m_ControlWnd.GetSaturation();
 
-		  if (!m_ControlWnd.m_ShowAcqBtn) {
+		if (!m_ControlWnd.m_ShowAcqBtn)
+		{
 			m_ControlWnd.m_ShowAcqBtn = TRUE;
 			m_ControlWnd.ShowAcqBtnGUI();
-		  }
 		}
 	}
 	else if (lParam == 0) //CT Capture
@@ -138,43 +137,36 @@ LRESULT CCTAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 		m_pCTAcquisition->m_AutoMode  = m_WFGUICtrlWnd.m_AutoMode;
 		}*/
 	}
-	else if (lParam == 2) // Auto Color Image Capture
+	else if (lParam == 2)//Auto Color Image Capture
 	{
-		if (::HW.IsHRCameraConnected()) { // high resolution camera image capture settings
-		  if (m_HRControlWnd) {
-			if (m_HRControlWnd.m_ShowAcqBtn) {
-			  m_HRControlWnd.m_ShowAcqBtn = FALSE;
-			  m_HRControlWnd.HideAcqBtnGUI();
+		if (m_ControlWnd)//6.2.0
+		{
+			if (m_ControlWnd.m_ShowAcqBtn)
+			{
+				m_ControlWnd.m_ShowAcqBtn = FALSE;
+				m_ControlWnd.HideAcqBtnGUI();
 			}
-		  }
 		}
-		else {
-		  if (m_ControlWnd) {
-			if (m_ControlWnd.m_ShowAcqBtn) {
-			  m_ControlWnd.m_ShowAcqBtn = FALSE;
-			  m_ControlWnd.HideAcqBtnGUI();
-			}
-		  }
-		}
+
+		/*if(m_WFGUICtrlWnd.m_ShowWindow)
+		{
+		m_WFGUICtrlWnd.m_ShowWindow = FALSE;
+		m_WFGUICtrlWnd.HideGUI();
+		}*/
 	}
 
 
-	if (lParam != 2) {
-		// CT Exam or color image Capture
-		if (::HW.IsHRCameraConnected()) //high resolution camera image capture settings
+	if (lParam != 2)
+	{
+		//CT Exam or color image Capture
+		if (m_ControlWnd.m_Acquire == TRUE)
 		{
-		  if (m_HRControlWnd.m_Acquire == TRUE) {
-			m_pCTAcquisition->Acquire();
-			m_HRControlWnd.m_Acquire = FALSE;
-		  }
-		}
-		else {
-		  if (m_ControlWnd.m_Acquire == TRUE) {
 			m_pCTAcquisition->Acquire();
 			m_ControlWnd.m_Acquire = FALSE;
-		  }
 		}
+		//Done
 	}
+	//530
 
 	CEyeImage* pImage = &m_pCTAcquisition->m_CTExam.m_Image;
 
@@ -227,7 +219,7 @@ LRESULT CCTAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 	COLORREF green = m_pCTAcquisition->m_ve0_ok ? 0x0000ff00 : 0x00007f00;
 	COLORREF red = m_pCTAcquisition->m_la_ok ? 0x000000ff : 0x0000009f;
 
-	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	// оболочка
 	if (!::NewSettings.m_Adjusting_CT)//[520]
 	{
 		CNode* pNode = pImage->m_hull.MoveFirst();
@@ -244,7 +236,7 @@ LRESULT CCTAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 	m_VideoWnd.m_MemDC.DrawLine(icx, icy - Y2, icx, icy + Y2 + 1, 1, YELLOW);
 	m_VideoWnd.m_MemDC.DrawLine(icx + X2, icy - Y2, icx + X2, icy + Y2 + 1, 1, YELLOW);
 
-	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	// отрезок от центра до вертекса
 	if (!::NewSettings.m_Adjusting_CT)//[520]
 	{
 		if (pImage->m_ve0_ok) {
@@ -252,7 +244,7 @@ LRESULT CCTAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 		}
 	}
 
-	// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+	// кружок вокруг лазера
 	//if (pImage->m_la_ok)//
 	if (!::NewSettings.m_Adjusting_CT)//[520]
 	{

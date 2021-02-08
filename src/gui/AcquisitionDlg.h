@@ -6,11 +6,10 @@
 
 #include "MemWnd.h"
 #include "Acquisition.h"
-#include "ImgCptCtrlWnd.h"
-#include "WFGUICtrlWnd.h"
-#include "WFGUICtrl0Wnd.h"
-#include "ExamCaptureWnd.h"
-#include "HRImgCptCtrlWnd.h"//high resolution camera image settings
+#include "ImgCptCtrlWnd.h"//530
+#include "WFGUICtrlWnd.h"//530
+#include "WFGUICtrl0Wnd.h"//530
+#include "ExamCaptureWnd.h"//530
 
 
 //***************************************************************************************
@@ -43,19 +42,19 @@ protected:
 
 	int  m_top;
 
-	HACCEL             m_hAccel;
+	HACCEL          m_hAccel;
 
-	CMemWnd            m_VideoWnd;
+	CMemWnd          m_VideoWnd;
 
 	//530
-	CMemWnd			   m_unUseWnd;
+	CMemWnd          m_unUseWnd;
 
-	CImgCptCtrlWnd	   m_ControlWnd;      //CT color image setting
-	CHRImgCptCtrlWnd   m_HRControlWnd;    //high resolution camera image capture settings
-	CWFGUICtrl0Wnd     m_WFGUICtrl0Wnd;   //WF Slider of scan size
+	CImgCptCtrlWnd   m_ControlWnd;     //CT color image setting
+	CWFGUICtrl0Wnd   m_WFGUICtrl0Wnd;  //WF Slider of scan size
 
-	CWFGUICtrlWnd      m_WFGUICtrlWnd;   //WF Based panel
-		
+	CWFGUICtrlWnd    m_WFGUICtrlWnd;   //WF Based panel
+									   //530
+
 	 //afx_msg void OnCtrlS();//520, while the user capture the color image, let user adjust camera setting
 
 	afx_msg void OnEscape();
