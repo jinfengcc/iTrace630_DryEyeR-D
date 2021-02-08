@@ -104,7 +104,8 @@ BOOL CAcquisitionDlg::OnInitDialog()
 				int CapHeight = H - m_h;
 
 				//Manual color capture GUI 
-				m_ControlWnd.CreateThisWnd(Rect, this, m_top, CapHeight);
+				BOOL IsHRCamera = ::HW.IsHRCameraConnected();
+				m_ControlWnd.CreateThisWnd(Rect, this, m_top, CapHeight, IsHRCamera);
 				m_ControlWnd.m_ShowWindow = FALSE;
 				m_ControlWnd.HideGUI();
 

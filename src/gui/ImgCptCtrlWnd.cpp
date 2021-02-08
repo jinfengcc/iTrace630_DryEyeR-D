@@ -30,20 +30,22 @@ END_MESSAGE_MAP()
 //***************************************************************************************
 CImgCptCtrlWnd::CImgCptCtrlWnd() :CMemWnd()
 {
+
 }
 
 //***************************************************************************************
 
 CImgCptCtrlWnd::~CImgCptCtrlWnd()
 {
-	//int a = 0;
 }
 //***************************************************************************************
-void CImgCptCtrlWnd::CreateThisWnd(RECT& Rect, CWnd* pWnd, int ScreenTop, int CapHeight)
+void CImgCptCtrlWnd::CreateThisWnd(RECT &Rect, CWnd *pWnd, int ScreenTop, int CapHeight, BOOL IsHRCamera)
 {
 	CreateWnd(Rect, pWnd);
 
 	m_ScreenTop = ScreenTop;
+
+	m_IsHRCamera = IsHRCamera;
 
 	m_w = Rect.right - Rect.left;
 	m_h = Rect.bottom - Rect.top - CapHeight;
@@ -71,10 +73,13 @@ void CImgCptCtrlWnd::CreateThisWnd(RECT& Rect, CWnd* pWnd, int ScreenTop, int Ca
 	}
 	//Acq Btn
 
-	int sh = 10;
-	m_eH = intRound(real_t(m_h - 130) / 10);
+	int    sh    = 10;
+	real_t StepH = m_IsHRCamera ? 12 : 10;
+    real_t FontSizeRatio = m_IsHRCamera ? 0.7 : 0.5;
 
-	m_FontSize = intRound(0.5*m_eH);
+	m_eH  = intRound(real_t(m_h-130)/StepH);
+
+	m_FontSize = intRound(FontSizeRatio * m_eH);
 
 	::SetRect(&m_sRect[0], 50, sh, m_w - 10, sh + m_eH);
 	sh += (m_eH + 10);
@@ -113,6 +118,13 @@ void CImgCptCtrlWnd::CreateThisWnd(RECT& Rect, CWnd* pWnd, int ScreenTop, int Ca
 	::SetRect(&m_sRect[9], intRound(0.35*m_w), sh, intRound(0.8*m_w), sh + m_eH);
 	::SetRect(&m_lRect[4], 50, sh, intRound(0.35*m_w), sh + m_eH);
 	::SetRect(&m_rRect[4], intRound(0.8*m_w), sh, m_w - 10, sh + m_eH);
+		
+	//For HR Camera
+    sh += (m_eH + 10);
+    ::SetRect(&m_sRect[10], intRound(0.35 * m_w), sh, intRound(0.8 * m_w), sh + m_eH);
+    ::SetRect(&m_lRect[5], 50, sh, intRound(0.35 * m_w), sh + m_eH);
+    ::SetRect(&m_rRect[5], intRound(0.8 * m_w), sh, m_w - 10, sh + m_eH);
+    // For HR Camera
 
 	m_VeryLightEyeRad.Create(_T(""), _T(""), 0, m_sRect[0], this, IDC_VERY_LIGHT_EYE_RADIO);
 	m_LightEyeRad.Create(_T(""), _T(""), 0, m_sRect[1], this, IDC_LIGHT_EYE_RADIO);
@@ -143,44 +155,30 @@ void CImgCptCtrlWnd::CreateThisWnd(RECT& Rect, CWnd* pWnd, int ScreenTop, int Ca
 
 	m_MediumEyeRad.SetCheck(TRUE);
 
-	m_WhiteLEDsPowerLevelSlider.Create(_T(""), _T(""), WS_CHILD | WS_VISIBLE, m_sRect[5], this, IDC_MTF_ANGLE_SLIDER);
-	m_BrightnessSlider.Create(_T(""), _T(""), WS_CHILD | WS_VISIBLE, m_sRect[6], this, IDC_MTF_ANGLE_SLIDER);
-	m_ContrastSlider.Create(_T(""), _T(""), WS_CHILD | WS_VISIBLE, m_sRect[7], this, IDC_MTF_ANGLE_SLIDER);
-	m_HueSlider.Create(_T(""), _T(""), WS_CHILD | WS_VISIBLE, m_sRect[8], this, IDC_MTF_ANGLE_SLIDER);
-	m_SaturationSlider.Create(_T(""), _T(""), WS_CHILD | WS_VISIBLE, m_sRect[9], this, IDC_MTF_ANGLE_SLIDER);
+	m_WhiteLEDsPowerLevelSlider.Create(_T(""), _T(""), WS_CHILD | WS_VISIBLE, m_sRect[5], this, IDC_IMGCTRL_SLIDER);
+    m_BrightnessSlider.Create(_T(""), _T(""), WS_CHILD | WS_VISIBLE, m_sRect[6], this, IDC_IMGCTRL_SLIDER);
+    m_ContrastSlider.Create(_T(""), _T(""), WS_CHILD | WS_VISIBLE, m_sRect[7], this, IDC_IMGCTRL_SLIDER);     
+    
+	// For HR Camera
+    if (m_IsHRCamera) {
+      m_RedSlider.Create(_T(""), _T(""), WS_CHILD | WS_VISIBLE, m_sRect[8], this, IDC_IMGCTRL_SLIDER);
+      m_GreenSlider.Create(_T(""), _T(""), WS_CHILD | WS_VISIBLE, m_sRect[9], this, IDC_IMGCTRL_SLIDER);
+      m_BlueSlider.Create(_T(""), _T(""), WS_CHILD | WS_VISIBLE, m_sRect[10], this, IDC_IMGCTRL_SLIDER);
+    }
+    else {
+      m_HueSlider.Create(_T(""), _T(""), WS_CHILD | WS_VISIBLE, m_sRect[8], this, IDC_IMGCTRL_SLIDER);
+      m_SaturationSlider.Create(_T(""), _T(""), WS_CHILD | WS_VISIBLE, m_sRect[9], this, IDC_IMGCTRL_SLIDER);
+	}
+    // For HR Camera
 
-	//m_WhiteLEDsPowerLevelSlider.m_Pos = 0.1;
-	//m_BrightnessSlider.m_Pos = 95.0 / 255.0;
-	//m_ContrastSlider.m_Pos = 1;
-	//m_HueSlider.m_Pos = 22.0 / 255.0;
-	//m_SaturationSlider.m_Pos = 1;
-
-	//m_WhiteLEDsPower = 10;
-	//m_Brightness = 95;
-	//m_Contrast = 255;
-	//m_Hue = 22;
-	//m_Saturation = 255;
-
-	// 7.0.0 HireCamera
-  m_WhiteLEDsPowerLevelSlider.m_Pos = 30.0 / 50.0;
-  m_BrightnessSlider.m_Pos          = 140.0 / 255.0;
-  m_ContrastSlider.m_Pos            = 200.0 / 255.0;
-  m_HueSlider.m_Pos                 = 145.0 / 255.0;
-  m_SaturationSlider.m_Pos          = 90.0 / 255.0;
-
-  m_WhiteLEDsPower = 30;
-  m_Brightness     = 140;
-  m_Contrast       = 200;
-  m_Hue            = 145;
-  m_Saturation     = 90;
-  // 7.0.0 HireCamera
+	SetVideoAttributes(MEDIUMEYE);
 }
 
 //***************************************************************************************
 
 void CImgCptCtrlWnd::ShowGUI()
 {
-	m_ShowWindow = TRUE;
+ 	m_ShowWindow = TRUE;
 
 	m_VeryLightEyeRad.ShowWindow(SW_SHOW);
 	m_LightEyeRad.ShowWindow(SW_SHOW);
@@ -190,11 +188,19 @@ void CImgCptCtrlWnd::ShowGUI()
 
 	m_WhiteLEDsPowerLevelSlider.ShowWindow(SW_SHOW);
 	m_BrightnessSlider.ShowWindow(SW_SHOW);
-	m_ContrastSlider.ShowWindow(SW_SHOW);
-	m_HueSlider.ShowWindow(SW_SHOW);
-	m_SaturationSlider.ShowWindow(SW_SHOW);
 
-	Label0();
+	if (m_IsHRCamera) {
+		m_RedSlider.ShowWindow(SW_SHOW);
+		m_GreenSlider.ShowWindow(SW_SHOW);
+		m_BlueSlider.ShowWindow(SW_SHOW);
+	}
+    else {
+		m_ContrastSlider.ShowWindow(SW_SHOW);
+		m_HueSlider.ShowWindow(SW_SHOW);
+		m_SaturationSlider.ShowWindow(SW_SHOW);
+    }
+
+	Label();
 }
 
 //***************************************************************************************
@@ -211,14 +217,22 @@ void CImgCptCtrlWnd::HideGUI()
 
 	m_WhiteLEDsPowerLevelSlider.ShowWindow(SW_HIDE);
 	m_BrightnessSlider.ShowWindow(SW_HIDE);
-	m_ContrastSlider.ShowWindow(SW_HIDE);
-	m_HueSlider.ShowWindow(SW_HIDE);
-	m_SaturationSlider.ShowWindow(SW_HIDE);
+
+	if (m_IsHRCamera) {
+      m_RedSlider.ShowWindow(SW_HIDE);
+      m_GreenSlider.ShowWindow(SW_HIDE);
+      m_BlueSlider.ShowWindow(SW_HIDE);
+	 }
+	else {
+      m_ContrastSlider.ShowWindow(SW_HIDE);
+      m_HueSlider.ShowWindow(SW_HIDE);
+      m_SaturationSlider.ShowWindow(SW_HIDE);
+	}
 }
 
 //***************************************************************************************
 
-void CImgCptCtrlWnd::Label0()
+void CImgCptCtrlWnd::Label()
 {
 	CMFont Font(m_FontSize, 400, "Arial");
 
@@ -230,211 +244,76 @@ void CImgCptCtrlWnd::Label0()
 	m_MemDC.WriteText("White LEDS", m_lRect[0], Font, WHITE, 0, BLACK);
 	m_MemDC.WriteText("Brightness", m_lRect[1], Font, WHITE, 0, BLACK);
 	m_MemDC.WriteText("Contrast", m_lRect[2], Font, WHITE, 0, BLACK);
-	m_MemDC.WriteText("Hue", m_lRect[3], Font, WHITE, 0, BLACK);
-	m_MemDC.WriteText("Saturation", m_lRect[4], Font, WHITE, 0, BLACK);
 
-	CString s[5];
+	if (m_IsHRCamera) {
+      m_MemDC.WriteText("Red", m_lRect[3], Font, WHITE, 0, BLACK);
+      m_MemDC.WriteText("Green", m_lRect[4], Font, WHITE, 0, BLACK);
+      m_MemDC.WriteText("Blue", m_lRect[5], Font, WHITE, 0, BLACK);
+    }
+    else {
+      m_MemDC.WriteText("Hue", m_lRect[3], Font, WHITE, 0, BLACK);
+      m_MemDC.WriteText("Saturation", m_lRect[4], Font, WHITE, 0, BLACK);
+	}
+
 	if (m_VeryLightEyeRad.GetCheck())
 	{
-		//s[0] = "9/100";
-		//s[1] = "65/255";
-		//s[2] = "247/255";
-		//s[3] = "22/255";
-		//s[4] = "255/255";
-
-		// 7.0.0 HireCamera
-		s[0] = "30/50";
-		s[1] = "140/255";
-		s[2] = "200/255";
-		s[3] = "145/255";
-		s[4] = "90/255";
-		// 7.0.0 HireCamera
+		 SetTitle(VERYLIGHTEYE);		
 	}
 	else if (m_LightEyeRad.GetCheck())
 	{
-		//s[0] = "11/100";
-		//s[1] = "80/255";
-		//s[2] = "245/255";
-		//s[3] = "22/255";
-		//s[4] = "255/255";
-
-		// 7.0.0 HireCamera
-    s[0] = "11/50";
-    s[1] = "125/255";
-    s[2] = "200/255";
-    s[3] = "42/255";
-    s[4] = "130/255";
-    // 7.0.0 HireCamera
+		 SetTitle(LIGHTEYE);		
 	}
 	else if (m_MediumEyeRad.GetCheck())
 	{
-		//s[0] = "10/100";
-		//s[1] = "95/255";
-		//s[2] = "255/255";
-		//s[3] = "22/255";
-		//s[4] = "255/255";
-
-    // 7.0.0 HireCamera
-    s[0] = "30/50";
-    s[1] = "140/255";
-    s[2] = "200/255";
-    s[3] = "145/255";
-    s[4] = "90/255";
-    // 7.0.0 HireCamera
+		 SetTitle(MEDIUMEYE);		
 	}
 	else if (m_DarkEyeRad.GetCheck())
 	{
-		//s[0] = "10/100";
-		//s[1] = "110/255";
-		//s[2] = "255/255";
-		//s[3] = "22/255";
-		//s[4] = "255/255";
-
-
-		// 7.0.0 HireCamera
-    s[0] = "30/50";
-    s[1] = "140/255";
-    s[2] = "200/255";
-    s[3] = "145/255";
-    s[4] = "90/255";
-    // 7.0.0 HireCamera
+		 SetTitle(DARKEYE);		
 	}
 	else if (m_VeryDarkEyeRad.GetCheck())
 	{
-		//s[0] = "9/100";
-		//s[1] = "126/255";
-		//s[2] = "255/255";
-		//s[3] = "22/255";
-		//s[4] = "255/255";
-
-
-		// 7.0.0 HireCamera
-    s[0] = "30/50";
-    s[1] = "140/255";
-    s[2] = "200/255";
-    s[3] = "145/255";
-    s[4] = "90/255";
-    // 7.0.0 HireCamera
+		 SetTitle(VERYDARKEYE);		
 	}
 
-	m_MemDC.WriteText(s[0], m_rRect[0], Font, WHITE, 2, BLACK);
-	m_MemDC.WriteText(s[1], m_rRect[1], Font, WHITE, 2, BLACK);
-	m_MemDC.WriteText(s[2], m_rRect[2], Font, WHITE, 2, BLACK);
-	m_MemDC.WriteText(s[3], m_rRect[3], Font, WHITE, 2, BLACK);
-	m_MemDC.WriteText(s[4], m_rRect[4], Font, WHITE, 2, BLACK);
+    for (int i = 0; i < 6; i++) 
+    {
+        m_MemDC.FillSolidRect(m_rRect[i].left, m_rRect[i].top, m_rRect[i].right - m_rRect[i].left, m_rRect[i].bottom - m_rRect[i].top, BLACK);
 
-	for (int i = 0; i < 5; i++)
-	{
-		InvalidateRect(&m_lRect[i], FALSE);
-		InvalidateRect(&m_rRect[i], FALSE);
-	}
+        if (i != 5)      m_MemDC.WriteText(m_Titles[i], m_rRect[i], Font, WHITE, 2, BLACK);
+        else 
+        {
+          if (m_IsHRCamera)  m_MemDC.WriteText(m_Titles[5], m_rRect[5], Font, WHITE, 2, BLACK);
+        }
+
+        InvalidateRect(&m_lRect[i], FALSE);
+        InvalidateRect(&m_rRect[i], FALSE);
+    }
 }
-
 
 //***************************************************************************************
 
-void CImgCptCtrlWnd::Label1()
+void CImgCptCtrlWnd::SetTitle(int EyeType)
 {
-	CMFont Font(m_FontSize, 400, "Arial");
-
-	CString s[5];
-	if (m_VeryLightEyeRad.GetCheck())
-	{
-		//s[0] = "9/100";
-		//s[1] = "65/255";
-		//s[2] = "247/255";
-		//s[3] = "22/255";
-		//s[4] = "255/255";
-
-
-		// 7.0.0 HireCamera
-    s[0] = "30/50";
-    s[1] = "140/255";
-    s[2] = "200/255";
-    s[3] = "145/255";
-    s[4] = "90/255";
-    // 7.0.0 HireCamera
-	}
-	else if (m_LightEyeRad.GetCheck())
-	{
-		//s[0] = "11/100";
-		//s[1] = "80/255";
-		//s[2] = "245/255";
-		//s[3] = "22/255";
-		//s[4] = "255/255";
-
-
-		// 7.0.0 HireCamera
-    s[0] = "30/50";
-    s[1] = "140/255";
-    s[2] = "200/255";
-    s[3] = "145/255";
-    s[4] = "90/255";
-    // 7.0.0 HireCamera
-	}
-	else if (m_MediumEyeRad.GetCheck())
-	{
-	//	s[0] = "50/100";
-	//	s[1] = "95/255";
-	//	s[2] = "255/255";
-	//	s[3] = "22/255";
-	//	s[4] = "255/255";
-
-
-		// 7.0.0 HireCamera
-  s[0] = "30/50";
-  s[1] = "140/255";
-  s[2] = "200/255";
-  s[3] = "145/255";
-  s[4] = "90/255";
-  // 7.0.0 HireCamera
-	}
-	else if (m_DarkEyeRad.GetCheck())
-	{
-		//s[0] = "10/100";
-		//s[1] = "110/255";
-		//s[2] = "255/255";
-		//s[3] = "22/255";
-		//s[4] = "255/255";
-
-
-		// 7.0.0 HireCamera
-    s[0] = "30/50";
-    s[1] = "140/255";
-    s[2] = "200/255";
-    s[3] = "145/255";
-    s[4] = "90/255";
-    // 7.0.0 HireCamera
-	}
-	else if (m_VeryDarkEyeRad.GetCheck())
-	{
-		//s[0] = "9/100";
-		//s[1] = "126/255";
-		//s[2] = "255/255";
-		//s[3] = "22/255";
-		//s[4] = "255/255";
-
-
-		// 7.0.0 HireCamera
-    s[0] = "30/50";
-    s[1] = "140/255";
-    s[2] = "200/255";
-    s[3] = "145/255";
-    s[4] = "90/255";
-    // 7.0.0 HireCamera
-	}
-
-	ClearMemDC();
-	m_MemDC.WriteText(s[0], m_rRect[0], Font, WHITE, 2, BLACK);
-	m_MemDC.WriteText(s[1], m_rRect[1], Font, WHITE, 2, BLACK);
-	m_MemDC.WriteText(s[2], m_rRect[2], Font, WHITE, 2, BLACK);
-	m_MemDC.WriteText(s[3], m_rRect[3], Font, WHITE, 2, BLACK);
-	m_MemDC.WriteText(s[4], m_rRect[4], Font, WHITE, 2, BLACK);
-
-	for (int i = 0; i < 5; i++)
-	{
-		InvalidateRect(&m_rRect[i], FALSE);
-	}
+  for (int i = 0; i < 6; i++) {
+    switch (EyeType) {
+    case VERYLIGHTEYE:
+      m_Titles[i] = m_IsHRCamera ? S_HRVeryLight[i] : S_NormalVeryLight[i];
+      break;
+    case LIGHTEYE:
+      m_Titles[i] = m_IsHRCamera ? S_HRLight[i] : S_NormalLight[i];
+      break;
+    case MEDIUMEYE:
+      m_Titles[i] = m_IsHRCamera ? S_HRMedium[i] : S_NormalMedium[i];
+      break;
+    case DARKEYE:
+      m_Titles[i] = m_IsHRCamera ? S_HRDark[i] : S_NormalDark[i];
+      break;
+    case VERYDARKEYE:
+      m_Titles[i] = m_IsHRCamera ? S_HRVeryDark[i] : S_NormalVeryDark[i];
+      break;
+    }
+  }
 }
 
 //***************************************************************************************
@@ -445,138 +324,161 @@ void CImgCptCtrlWnd::RepaintMemDC()
 }
 
 //***************************************************************************************
+
+void CImgCptCtrlWnd::SetVideoAttributes(int EyeType)
+{
+  if (EyeType == VERYLIGHTEYE) {
+    if (m_IsHRCamera) {
+      m_WhiteLEDsPower = S_HRVeryLightVals[0];
+      m_Brightness     = S_HRVeryLightVals[1];
+      m_Contrast       = S_HRVeryLightVals[2];
+      m_Red            = S_HRVeryLightVals[3];
+      m_Green          = S_HRVeryLightVals[4];
+      m_Blue           = S_HRVeryLightVals[5];
+    }
+    else {
+      m_WhiteLEDsPower = S_NormalVeryLightVals[0];
+      m_Brightness     = S_NormalVeryLightVals[1];
+      m_Contrast       = S_NormalVeryLightVals[2];
+      m_Hue            = S_NormalVeryLightVals[3];
+      m_Saturation     = S_NormalVeryLightVals[4];
+    }
+  }
+  else if (EyeType == LIGHTEYE) {
+    if (m_IsHRCamera) {
+      m_WhiteLEDsPower = S_HRLightVals[0];
+      m_Brightness     = S_HRLightVals[1];
+      m_Contrast       = S_HRLightVals[2];
+      m_Red            = S_HRLightVals[3];
+      m_Green          = S_HRLightVals[4];
+      m_Blue           = S_HRLightVals[5];
+    }
+    else {
+      m_WhiteLEDsPower = S_NormalLightVals[0];
+      m_Brightness     = S_NormalLightVals[1];
+      m_Contrast       = S_NormalLightVals[2];
+      m_Hue            = S_NormalLightVals[3];
+      m_Saturation     = S_NormalLightVals[4];
+    }
+  }
+  else if (EyeType == MEDIUMEYE) {
+    if (m_IsHRCamera) {
+      m_WhiteLEDsPower = S_HRMediumVals[0];
+      m_Brightness     = S_HRMediumVals[1];
+      m_Contrast       = S_HRMediumVals[2];
+      m_Red            = S_HRMediumVals[3];
+      m_Green          = S_HRMediumVals[4];
+      m_Blue           = S_HRMediumVals[5];
+    }
+    else {
+      m_WhiteLEDsPower = S_NormalMediumVals[0];
+      m_Brightness     = S_NormalMediumVals[1];
+      m_Contrast       = S_NormalMediumVals[2];
+      m_Hue            = S_NormalMediumVals[3];
+      m_Saturation     = S_NormalMediumVals[4];
+    }
+  }
+  else if (EyeType == DARKEYE) {
+    if (m_IsHRCamera) {
+      m_WhiteLEDsPower = S_HRDarkVals[0];
+      m_Brightness     = S_HRDarkVals[1];
+      m_Contrast       = S_HRDarkVals[2];
+      m_Red            = S_HRDarkVals[3];
+      m_Green          = S_HRDarkVals[4];
+      m_Blue           = S_HRDarkVals[5];
+    }
+    else {
+      m_WhiteLEDsPower = S_NormalDarkVals[0];
+      m_Brightness     = S_NormalDarkVals[1];
+      m_Contrast       = S_NormalDarkVals[2];
+      m_Hue            = S_NormalDarkVals[3];
+      m_Saturation     = S_NormalDarkVals[4];
+    }
+  }
+  else if (EyeType == VERYDARKEYE) {
+    if (m_IsHRCamera) {
+      m_WhiteLEDsPower = S_HRVeryDarkVals[0];
+      m_Brightness     = S_HRVeryLightVals[1];
+      m_Contrast       = S_HRVeryLightVals[2];
+      m_Red            = S_HRVeryLightVals[3];
+      m_Green          = S_HRVeryLightVals[4];
+      m_Blue           = S_HRVeryLightVals[5];
+    }
+    else {
+      m_WhiteLEDsPower = S_NormalVeryDarkVals[0];
+      m_Brightness     = S_NormalVeryDarkVals[1];
+      m_Contrast       = S_NormalVeryDarkVals[2];
+      m_Hue            = S_NormalVeryDarkVals[3];
+      m_Saturation     = S_NormalVeryDarkVals[4];
+    }
+  }
+
+  m_WhiteLEDsPowerLevelSlider.m_Pos = real_t(m_WhiteLEDsPower) / 50.0;
+  m_BrightnessSlider.m_Pos          = real_t(m_Brightness) / 255.0;
+  m_ContrastSlider.m_Pos            = real_t(m_Contrast) / 255.0;
+
+  m_WhiteLEDsPowerLevelSlider.RePaint();
+  m_BrightnessSlider.RePaint();
+  m_ContrastSlider.RePaint();
+
+  if (m_IsHRCamera) {
+    m_RedSlider.m_Pos   = real_t(m_Red) / 255.0;
+    m_GreenSlider.m_Pos = real_t(m_Green) / 255.0;
+    m_BlueSlider.m_Pos  = real_t(m_Blue) / 255.0;
+
+	m_RedSlider.RePaint();
+    m_GreenSlider.RePaint();
+    m_BlueSlider.RePaint();
+  }
+  else {
+    m_HueSlider.m_Pos        = real_t(m_Hue) / 255.0;
+    m_SaturationSlider.m_Pos = real_t(m_Saturation) / 255.0;
+
+	m_HueSlider.RePaint();
+    m_SaturationSlider.RePaint();
+  }
+}
+
+//***************************************************************************************
 void CImgCptCtrlWnd::OnVLightEyeRadioClicked()
 {
 	if (!m_VeryLightEyeRad.GetCheck())
 	{
-		//m_WhiteLEDsPower = 9;
-		//m_Brightness = 65;
-		//m_Contrast = 247;
-		//m_Hue = 22;
-		//m_Saturation = 255;
-
-		//m_WhiteLEDsPowerLevelSlider.m_Pos = 9.0 / 100.0;
-		//m_BrightnessSlider.m_Pos = 65.0 / 255.0;
-		//m_ContrastSlider.m_Pos = 247.0 / 255.0;
-		//m_HueSlider.m_Pos = 22.0 / 255.0;
-		//m_SaturationSlider.m_Pos = 1;
-
-		//7.0.0 Hirecamera
-		m_WhiteLEDsPower = 30;
-		m_Brightness     = 140;
-		m_Contrast       = 200;
-		m_Hue            = 145;
-		m_Saturation     = 90;
-
-		m_WhiteLEDsPowerLevelSlider.m_Pos = 30 / 50.0;
-		m_BrightnessSlider.m_Pos          = 140.0 / 255.0;
-		m_ContrastSlider.m_Pos            = 200.0 / 255.0;
-		m_HueSlider.m_Pos                 = 145.0 / 255.0;
-    m_SaturationSlider.m_Pos			  = 90.0 / 255.0;
-		// 7.0.0 Hirecamera
-
-		m_WhiteLEDsPowerLevelSlider.RePaint();
-		m_BrightnessSlider.RePaint();
-		m_ContrastSlider.RePaint();
-		m_HueSlider.RePaint();
-		m_SaturationSlider.RePaint();
-
-		m_VeryLightEyeRad.SetCheck(TRUE);
-		m_VeryLightEyeRad.Repaint();
-
-		if (m_LightEyeRad.GetCheck())
-		{
-			m_LightEyeRad.SetCheck(FALSE);
-			m_LightEyeRad.Repaint();
-		}
-
-		if (m_MediumEyeRad.GetCheck())
-		{
-			m_MediumEyeRad.SetCheck(FALSE);
-			m_MediumEyeRad.Repaint();
-		}
-
-		if (m_DarkEyeRad.GetCheck())
-		{
-			m_DarkEyeRad.SetCheck(FALSE);
-			m_DarkEyeRad.Repaint();
-		}
-
-		if (m_VeryDarkEyeRad.GetCheck())
-		{
-			m_VeryDarkEyeRad.SetCheck(FALSE);
-			m_VeryDarkEyeRad.Repaint();
-		}
-
-		Label1();
+		SetVideoAttributes(VERYLIGHTEYE);
+		SetEyeChecks(m_VeryLightStatus);
+		Label();
 	}
+}
+
+//***************************************************************************************
+
+void CImgCptCtrlWnd::SetEyeChecks(BOOL CheckStatus[5])
+{
+  m_VeryLightEyeRad.SetCheck(CheckStatus[0]);
+  m_VeryLightEyeRad.Repaint();
+
+  m_LightEyeRad.SetCheck(CheckStatus[1]);
+  m_LightEyeRad.Repaint();
+
+  m_MediumEyeRad.SetCheck(CheckStatus[2]);
+  m_MediumEyeRad.Repaint();
+
+  m_DarkEyeRad.SetCheck(CheckStatus[3]);
+  m_DarkEyeRad.Repaint();
+
+  m_VeryDarkEyeRad.SetCheck(CheckStatus[4]);
+  m_VeryDarkEyeRad.Repaint();
 }
 
 //***************************************************************************************
 void CImgCptCtrlWnd::OnLightEyeRadioClicked()
 {
 	if (!m_LightEyeRad.GetCheck())
-	{
-		/*m_WhiteLEDsPower = 11;
-		m_Brightness = 80;
-		m_Contrast = 245;
-		m_Hue = 22;
-		m_Saturation = 255;
+	{ 
+		SetVideoAttributes(LIGHTEYE);		
+		SetEyeChecks(m_LightStatus);
 
-		m_WhiteLEDsPowerLevelSlider.m_Pos = 11.0 / 100.0;
-		m_BrightnessSlider.m_Pos = 80.0 / 255.0;
-		m_ContrastSlider.m_Pos = 245.0 / 255.0;
-		m_HueSlider.m_Pos = 22.0 / 255.0;
-		m_SaturationSlider.m_Pos = 1;*/
-
-		// 7.0.0 Hirecamera
-    m_WhiteLEDsPower = 30;
-    m_Brightness     = 140;
-    m_Contrast       = 200;
-    m_Hue            = 145;
-    m_Saturation     = 90;
-
-    m_WhiteLEDsPowerLevelSlider.m_Pos = 30 / 50.0;
-    m_BrightnessSlider.m_Pos          = 140.0 / 255.0;
-    m_ContrastSlider.m_Pos            = 200.0 / 255.0;
-    m_HueSlider.m_Pos                 = 145.0 / 255.0;
-    m_SaturationSlider.m_Pos          = 90.0 / 255.0;
-    // 7.0.0 Hirecamera
-
-		m_WhiteLEDsPowerLevelSlider.RePaint();
-		m_BrightnessSlider.RePaint();
-		m_ContrastSlider.RePaint();
-		m_HueSlider.RePaint();
-		m_SaturationSlider.RePaint();
-
-		m_LightEyeRad.SetCheck(TRUE);
-		m_LightEyeRad.Repaint();
-
-		if (m_VeryLightEyeRad.GetCheck())
-		{
-			m_VeryLightEyeRad.SetCheck(FALSE);
-			m_VeryLightEyeRad.Repaint();
-		}
-
-		if (m_MediumEyeRad.GetCheck())
-		{
-			m_MediumEyeRad.SetCheck(FALSE);
-			m_MediumEyeRad.Repaint();
-		}
-
-		if (m_DarkEyeRad.GetCheck())
-		{
-			m_DarkEyeRad.SetCheck(FALSE);
-			m_DarkEyeRad.Repaint();
-		}
-
-		if (m_VeryDarkEyeRad.GetCheck())
-		{
-			m_VeryDarkEyeRad.SetCheck(FALSE);
-			m_VeryDarkEyeRad.Repaint();
-		}
-
-		Label1();
+		Label();
 	}
 }
 
@@ -585,66 +487,10 @@ void CImgCptCtrlWnd::OnMediumEyeRadioClicked()
 {
 	if (!m_MediumEyeRad.GetCheck())
 	{
-		/*m_WhiteLEDsPower = 10;
-		m_Brightness = 95;
-		m_Contrast = 255;
-		m_Hue = 22;
-		m_Saturation = 255;
+		SetVideoAttributes(MEDIUMEYE);
+		SetEyeChecks(m_MediumStatus);
 
-		m_WhiteLEDsPowerLevelSlider.m_Pos = 0.1;
-		m_BrightnessSlider.m_Pos = 95.0 / 255.0;
-		m_ContrastSlider.m_Pos = 1;
-		m_HueSlider.m_Pos = 22.0 / 255.0;
-		m_SaturationSlider.m_Pos = 1;*/
-
-		// 7.0.0 Hirecamera
-    m_WhiteLEDsPower = 30;
-    m_Brightness     = 140;
-    m_Contrast       = 200;
-    m_Hue            = 145;
-    m_Saturation     = 90;
-
-    m_WhiteLEDsPowerLevelSlider.m_Pos = 30 / 50.0;
-    m_BrightnessSlider.m_Pos          = 140.0 / 255.0;
-    m_ContrastSlider.m_Pos            = 200.0 / 255.0;
-    m_HueSlider.m_Pos                 = 145.0 / 255.0;
-    m_SaturationSlider.m_Pos          = 90.0 / 255.0;
-    // 7.0.0 Hirecamera
-
-		m_WhiteLEDsPowerLevelSlider.RePaint();
-		m_BrightnessSlider.RePaint();
-		m_ContrastSlider.RePaint();
-		m_HueSlider.RePaint();
-		m_SaturationSlider.RePaint();
-
-		m_MediumEyeRad.SetCheck(TRUE);
-		m_MediumEyeRad.Repaint();
-
-		if (m_VeryLightEyeRad.GetCheck())
-		{
-			m_VeryLightEyeRad.SetCheck(FALSE);
-			m_VeryLightEyeRad.Repaint();
-		}
-
-		if (m_LightEyeRad.GetCheck())
-		{
-			m_LightEyeRad.SetCheck(FALSE);
-			m_LightEyeRad.Repaint();
-		}
-
-		if (m_DarkEyeRad.GetCheck())
-		{
-			m_DarkEyeRad.SetCheck(FALSE);
-			m_DarkEyeRad.Repaint();
-		}
-
-		if (m_VeryDarkEyeRad.GetCheck())
-		{
-			m_VeryDarkEyeRad.SetCheck(FALSE);
-			m_VeryDarkEyeRad.Repaint();
-		}
-
-		Label1();
+		Label();
 	}
 }
 
@@ -653,66 +499,10 @@ void CImgCptCtrlWnd::OnDarkEyeRadioClicked()
 {
 	if (!m_DarkEyeRad.GetCheck())
 	{
-		/*m_WhiteLEDsPower = 10;
-		m_Brightness = 110;
-		m_Contrast = 255;
-		m_Hue = 2;
-		m_Saturation = 255;
+		SetVideoAttributes(DARKEYE);
+		SetEyeChecks(m_DarkStatus);
 
-		m_WhiteLEDsPowerLevelSlider.m_Pos = 0.1;
-		m_BrightnessSlider.m_Pos = 110.0 / 255.0;
-		m_ContrastSlider.m_Pos = 1;
-		m_HueSlider.m_Pos = 22.0 / 255.0;
-		m_SaturationSlider.m_Pos = 1;*/
-
-		// 7.0.0 Hirecamera
-    m_WhiteLEDsPower = 30;
-    m_Brightness     = 140;
-    m_Contrast       = 200;
-    m_Hue            = 145;
-    m_Saturation     = 90;
-
-    m_WhiteLEDsPowerLevelSlider.m_Pos = 30.0 / 50.0;
-    m_BrightnessSlider.m_Pos          = 140.0 / 255.0;
-    m_ContrastSlider.m_Pos            = 200.0 / 255.0;
-    m_HueSlider.m_Pos                 = 145.0 / 255.0;
-    m_SaturationSlider.m_Pos          = 90.0 / 255.0;
-    // 7.0.0 Hirecamera
-
-		m_WhiteLEDsPowerLevelSlider.RePaint();
-		m_BrightnessSlider.RePaint();
-		m_ContrastSlider.RePaint();
-		m_HueSlider.RePaint();
-		m_SaturationSlider.RePaint();
-
-		m_DarkEyeRad.SetCheck(TRUE);
-		m_DarkEyeRad.Repaint();
-
-		if (m_VeryLightEyeRad.GetCheck())
-		{
-			m_VeryLightEyeRad.SetCheck(FALSE);
-			m_VeryLightEyeRad.Repaint();
-		}
-
-		if (m_LightEyeRad.GetCheck())
-		{
-			m_LightEyeRad.SetCheck(FALSE);
-			m_LightEyeRad.Repaint();
-		}
-
-		if (m_MediumEyeRad.GetCheck())
-		{
-			m_MediumEyeRad.SetCheck(FALSE);
-			m_MediumEyeRad.Repaint();
-		}
-
-		if (m_VeryDarkEyeRad.GetCheck())
-		{
-			m_VeryDarkEyeRad.SetCheck(FALSE);
-			m_VeryDarkEyeRad.Repaint();
-		}
-
-		Label1();
+		Label();
 	}
 }
 
@@ -721,173 +511,152 @@ void CImgCptCtrlWnd::OnVeryDarkEyeRadioClicked()
 {
 	if (!m_VeryDarkEyeRad.GetCheck())
 	{
-		/*m_WhiteLEDsPower = 9;
-		m_Brightness = 126;
-		m_Contrast = 255;
-		m_Hue = 22;
-		m_Saturation = 255;
+		SetVideoAttributes(VERYDARKEYE);
+		SetEyeChecks(m_VeryDarkStatus);
 
-		m_WhiteLEDsPowerLevelSlider.m_Pos = 9.0 / 100.0;
-		m_BrightnessSlider.m_Pos = 126.0 / 255.0;
-		m_ContrastSlider.m_Pos = 1;
-		m_HueSlider.m_Pos = 22.0 / 255.0;
-		m_SaturationSlider.m_Pos = 1;*/
-
-		// 7.0.0 Hirecamera
-    m_WhiteLEDsPower = 30;
-    m_Brightness     = 140;
-    m_Contrast       = 200;
-    m_Hue            = 145;
-    m_Saturation     = 90;
-
-    m_WhiteLEDsPowerLevelSlider.m_Pos = 30.0 / 50.0;
-    m_BrightnessSlider.m_Pos          = 140.0 / 255.0;
-    m_ContrastSlider.m_Pos            = 200.0 / 255.0;
-    m_HueSlider.m_Pos                 = 145.0 / 255.0;
-    m_SaturationSlider.m_Pos          = 90.0 / 255.0;
-    // 7.0.0 Hirecamera
-
-		m_WhiteLEDsPowerLevelSlider.RePaint();
-		m_BrightnessSlider.RePaint();
-		m_ContrastSlider.RePaint();
-		m_HueSlider.RePaint();
-		m_SaturationSlider.RePaint();
-
-		m_VeryDarkEyeRad.SetCheck(TRUE);
-		m_VeryDarkEyeRad.Repaint();
-
-		if (m_VeryLightEyeRad.GetCheck())
-		{
-			m_VeryLightEyeRad.SetCheck(FALSE);
-			m_VeryLightEyeRad.Repaint();
-		}
-
-		if (m_LightEyeRad.GetCheck())
-		{
-			m_LightEyeRad.SetCheck(FALSE);
-			m_LightEyeRad.Repaint();
-		}
-
-		if (m_MediumEyeRad.GetCheck())
-		{
-			m_MediumEyeRad.SetCheck(FALSE);
-			m_MediumEyeRad.Repaint();
-		}
-
-		if (m_DarkEyeRad.GetCheck())
-		{
-			m_DarkEyeRad.SetCheck(FALSE);
-			m_DarkEyeRad.Repaint();
-		}
-
-		Label1();
+		Label();
 	}
 }
 //***************************************************************************************
 
 LRESULT CImgCptCtrlWnd::OnSliderChangedPos(WPARAM wParam, LPARAM lParam)
 {
-	if (m_VeryLightEyeRad.GetCheck())
-	{
-		m_VeryLightEyeRad.SetCheck(FALSE);
-		m_VeryLightEyeRad.Repaint();
-	}
+  if (m_VeryLightEyeRad.GetCheck()) {
+    m_VeryLightEyeRad.SetCheck(FALSE);
+    m_VeryLightEyeRad.Repaint();
+  }
 
-	if (m_LightEyeRad.GetCheck())
-	{
-		m_LightEyeRad.SetCheck(FALSE);
-		m_LightEyeRad.Repaint();
-	}
+  if (m_LightEyeRad.GetCheck()) {
+    m_LightEyeRad.SetCheck(FALSE);
+    m_LightEyeRad.Repaint();
+  }
 
-	if (m_MediumEyeRad.GetCheck())
-	{
-		m_MediumEyeRad.SetCheck(FALSE);
-		m_MediumEyeRad.Repaint();
-	}
+  if (m_MediumEyeRad.GetCheck()) {
+    m_MediumEyeRad.SetCheck(FALSE);
+    m_MediumEyeRad.Repaint();
+  }
 
-	if (m_DarkEyeRad.GetCheck())
-	{
-		m_DarkEyeRad.SetCheck(FALSE);
-		m_DarkEyeRad.Repaint();
-	}
+  if (m_DarkEyeRad.GetCheck()) {
+    m_DarkEyeRad.SetCheck(FALSE);
+    m_DarkEyeRad.Repaint();
+  }
 
-	if (m_VeryDarkEyeRad.GetCheck())
-	{
-		m_VeryDarkEyeRad.SetCheck(FALSE);
-		m_VeryDarkEyeRad.Repaint();
-	}
+  if (m_VeryDarkEyeRad.GetCheck()) {
+    m_VeryDarkEyeRad.SetCheck(FALSE);
+    m_VeryDarkEyeRad.Repaint();
+  }
 
-	//
-	CPoint point;
-	GetCursorPos(&point);
+  //
+  CPoint point;
+  GetCursorPos(&point);
 
-	CString s;
-	CMFont Font(m_FontSize, 400, "Arial");
-	int y = point.y - m_ScreenTop;
+  CString s;
+  CMFont  Font(m_FontSize, 400, "Arial");
+  int     y = point.y - m_ScreenTop;
 
-	if (y >= m_sRect[5].top && y <= m_sRect[5].bottom)
-	{
-		if (m_WhiteLEDsPowerLevelSlider.m_Pos > 0.99) m_WhiteLEDsPowerLevelSlider.m_Pos = 1;
-		int val = intRound(m_WhiteLEDsPowerLevelSlider.m_Pos * 50.0);
-		s.Format(_T("%i/50"), val);
+  if (y >= m_sRect[5].top && y <= m_sRect[5].bottom) {
+    if (m_WhiteLEDsPowerLevelSlider.m_Pos > 0.99)
+      m_WhiteLEDsPowerLevelSlider.m_Pos = 1;
+    int val = intRound(m_WhiteLEDsPowerLevelSlider.m_Pos * 50.0);
+    s.Format(_T("%i/50"), val);
 
-		m_MemDC.FillSolidRect(m_rRect[0].left, m_rRect[0].top, m_rRect[0].right - m_rRect[0].left, m_rRect[0].bottom - m_rRect[0].top, BLACK);
-		m_MemDC.WriteText(s, m_rRect[0], Font, WHITE, 2, BLACK);
-		InvalidateRect(&m_rRect[0], FALSE);
+    m_MemDC.FillSolidRect(m_rRect[0].left, m_rRect[0].top, m_rRect[0].right - m_rRect[0].left, m_rRect[0].bottom - m_rRect[0].top, BLACK);
+    m_MemDC.WriteText(s, m_rRect[0], Font, WHITE, 2, BLACK);
+    InvalidateRect(&m_rRect[0], FALSE);
 
-		m_WhiteLEDsPower = val;
-	}
-	else if (y >= m_sRect[6].top && y <= m_sRect[6].bottom)
-	{
-		if (m_BrightnessSlider.m_Pos > 0.993) m_BrightnessSlider.m_Pos = 1;
-		int val = intRound(m_BrightnessSlider.m_Pos * 255.0);
-		s.Format(_T("%i/255"), val);
+    m_WhiteLEDsPower = val;
+  }
+  else if (y >= m_sRect[6].top && y <= m_sRect[6].bottom) {
+    if (m_BrightnessSlider.m_Pos > 0.993)
+      m_BrightnessSlider.m_Pos = 1;
+    int val = intRound(m_BrightnessSlider.m_Pos * 255.0);
+    s.Format(_T("%i/255"), val);
 
-		m_MemDC.FillSolidRect(m_rRect[1].left, m_rRect[1].top, m_rRect[1].right - m_rRect[1].left, m_rRect[1].bottom - m_rRect[1].top, BLACK);
-		m_MemDC.WriteText(s, m_rRect[1], Font, WHITE, 2, BLACK);
-		InvalidateRect(&m_rRect[1], FALSE);
+    m_MemDC.FillSolidRect(m_rRect[1].left, m_rRect[1].top, m_rRect[1].right - m_rRect[1].left, m_rRect[1].bottom - m_rRect[1].top, BLACK);
+    m_MemDC.WriteText(s, m_rRect[1], Font, WHITE, 2, BLACK);
+    InvalidateRect(&m_rRect[1], FALSE);
 
-		m_Brightness = val;
-	}
-	else if (y >= m_sRect[7].top && y <= m_sRect[7].bottom)
-	{
-		if (m_ContrastSlider.m_Pos > 0.993) m_ContrastSlider.m_Pos = 1;
-		int val = intRound(m_ContrastSlider.m_Pos * 255.0);
-		s.Format(_T("%i/255"), val);
+    m_Brightness = val;
+  }
+  else if (y >= m_sRect[7].top && y <= m_sRect[7].bottom) {
+    if (m_ContrastSlider.m_Pos > 0.993)
+      m_ContrastSlider.m_Pos = 1;
+    int val = intRound(m_ContrastSlider.m_Pos * 255.0);
+    s.Format(_T("%i/255"), val);
 
-		m_MemDC.FillSolidRect(m_rRect[2].left, m_rRect[2].top, m_rRect[2].right - m_rRect[2].left, m_rRect[2].bottom - m_rRect[2].top, BLACK);
-		m_MemDC.WriteText(s, m_rRect[2], Font, WHITE, 2, BLACK);
-		InvalidateRect(&m_rRect[2], FALSE);
+    m_MemDC.FillSolidRect(m_rRect[2].left, m_rRect[2].top, m_rRect[2].right - m_rRect[2].left, m_rRect[2].bottom - m_rRect[2].top, BLACK);
+    m_MemDC.WriteText(s, m_rRect[2], Font, WHITE, 2, BLACK);
+    InvalidateRect(&m_rRect[2], FALSE);
 
-		m_Contrast = val;
-	}
-	else if (y >= m_sRect[8].top && y <= m_sRect[8].bottom)
-	{
-		if (m_HueSlider.m_Pos > 0.993) m_HueSlider.m_Pos = 1;
-		int val = intRound(m_HueSlider.m_Pos * 255.0);
-		s.Format(_T("%i/255"), val);
+    m_Contrast = val;
+  }
+  else if (y >= m_sRect[8].top && y <= m_sRect[8].bottom) {
+    if (m_IsHRCamera) {
+      if (m_RedSlider.m_Pos > 0.993)
+        m_RedSlider.m_Pos = 1;
+      int val = intRound(m_RedSlider.m_Pos * 255.0);
+      s.Format(_T("%i/255"), val);
 
-		m_MemDC.FillSolidRect(m_rRect[3].left, m_rRect[3].top, m_rRect[3].right - m_rRect[3].left, m_rRect[3].bottom - m_rRect[3].top, BLACK);
-		m_MemDC.WriteText(s, m_rRect[3], Font, WHITE, 2, BLACK);
-		InvalidateRect(&m_rRect[3], FALSE);
+      m_MemDC.FillSolidRect(m_rRect[3].left, m_rRect[3].top, m_rRect[3].right - m_rRect[3].left, m_rRect[3].bottom - m_rRect[3].top, BLACK);
+      m_MemDC.WriteText(s, m_rRect[3], Font, WHITE, 2, BLACK);
+      InvalidateRect(&m_rRect[3], FALSE);
 
-		m_Hue = val;
-	}
-	else if (y >= m_sRect[9].top && y <= m_sRect[9].bottom)
-	{
-		if (m_SaturationSlider.m_Pos > 0.993) m_SaturationSlider.m_Pos = 1;
+      m_Red = val;
+    }
+    else {
+      if (m_HueSlider.m_Pos > 0.993)
+        m_HueSlider.m_Pos = 1;
+      int val = intRound(m_HueSlider.m_Pos * 255.0);
+      s.Format(_T("%i/255"), val);
 
-		int val = intRound(m_SaturationSlider.m_Pos * 255.0);
-		s.Format(_T("%i/255"), val);
+      m_MemDC.FillSolidRect(m_rRect[3].left, m_rRect[3].top, m_rRect[3].right - m_rRect[3].left, m_rRect[3].bottom - m_rRect[3].top, BLACK);
+      m_MemDC.WriteText(s, m_rRect[3], Font, WHITE, 2, BLACK);
+      InvalidateRect(&m_rRect[3], FALSE);
 
-		m_MemDC.FillSolidRect(m_rRect[4].left, m_rRect[4].top, m_rRect[4].right - m_rRect[4].left, m_rRect[4].bottom - m_rRect[4].top, BLACK);
-		m_MemDC.WriteText(s, m_rRect[4], Font, WHITE, 2, BLACK);
-		InvalidateRect(&m_rRect[4], FALSE);
+      m_Hue = val;
+    }
+  }
+  else if (y >= m_sRect[9].top && y <= m_sRect[9].bottom) {
+    if (m_IsHRCamera) {
+      if (m_GreenSlider.m_Pos > 0.993)
+        m_GreenSlider.m_Pos = 1;
+      int val = intRound(m_GreenSlider.m_Pos * 255.0);
+      s.Format(_T("%i/255"), val);
 
-		m_Saturation = val;
-	}
+      m_MemDC.FillSolidRect(m_rRect[4].left, m_rRect[4].top, m_rRect[4].right - m_rRect[4].left, m_rRect[4].bottom - m_rRect[4].top, BLACK);
+      m_MemDC.WriteText(s, m_rRect[4], Font, WHITE, 2, BLACK);
+      InvalidateRect(&m_rRect[4], FALSE);
 
-	return 0;
+      m_Green = val;
+    }
+    else {
+      if (m_SaturationSlider.m_Pos > 0.993)
+        m_SaturationSlider.m_Pos = 1;
+
+      int val = intRound(m_SaturationSlider.m_Pos * 255.0);
+      s.Format(_T("%i/255"), val);
+
+      m_MemDC.FillSolidRect(m_rRect[4].left, m_rRect[4].top, m_rRect[4].right - m_rRect[4].left, m_rRect[4].bottom - m_rRect[4].top, BLACK);
+      m_MemDC.WriteText(s, m_rRect[4], Font, WHITE, 2, BLACK);
+      InvalidateRect(&m_rRect[4], FALSE);
+
+      m_Saturation = val;
+    }
+  }
+  else if (y >= m_sRect[10].top && y <= m_sRect[10].bottom) {
+      if (m_BlueSlider.m_Pos > 0.993)
+      m_BlueSlider.m_Pos = 1;
+      int val = intRound(m_BlueSlider.m_Pos * 255.0);
+      s.Format(_T("%i/255"), val);
+
+      m_MemDC.FillSolidRect(m_rRect[5].left, m_rRect[5].top, m_rRect[5].right - m_rRect[5].left, m_rRect[5].bottom - m_rRect[5].top, BLACK);
+      m_MemDC.WriteText(s, m_rRect[5], Font, WHITE, 2, BLACK);
+      InvalidateRect(&m_rRect[5], FALSE);
+
+      m_Blue = val;
+  }
+
+  return 0;
 }
 
 //***************************************************************************************
