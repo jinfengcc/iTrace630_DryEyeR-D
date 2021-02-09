@@ -96,16 +96,12 @@ LRESULT CCTAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 		}
 
 		m_pCTAcquisition->m_WhiteLEDsPower = m_ControlWnd.GetWhiteLEDsPower();
-		m_pCTAcquisition->m_Brightness = m_ControlWnd.GetBrightness();
-		m_pCTAcquisition->m_Contrast = m_ControlWnd.GetContrast();
-		m_pCTAcquisition->m_Hue = m_ControlWnd.GetHue();
-		m_pCTAcquisition->m_Saturation = m_ControlWnd.GetSaturation();
+    m_pCTAcquisition->m_Brightness     = m_ControlWnd.GetBrightness();
+    m_pCTAcquisition->m_Contrast       = m_ControlWnd.GetContrast();
+    m_pCTAcquisition->m_Hue            = m_ControlWnd.GetHue();
+    m_pCTAcquisition->m_Saturation     = m_ControlWnd.GetSaturation();
 
-		if (!m_ControlWnd.m_ShowAcqBtn)
-		{
-			m_ControlWnd.m_ShowAcqBtn = TRUE;
-			m_ControlWnd.ShowAcqBtnGUI();
-		}
+		m_ControlWnd.ShowAcqBtnGUI();
 	}
 	else if (lParam == 0) //CT Capture
 	{
@@ -139,13 +135,9 @@ LRESULT CCTAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 	}
 	else if (lParam == 2)//Auto Color Image Capture
 	{
-		if (m_ControlWnd)//6.2.0
+		if (m_ControlWnd)
 		{
-			if (m_ControlWnd.m_ShowAcqBtn)
-			{
-				m_ControlWnd.m_ShowAcqBtn = FALSE;
-				m_ControlWnd.HideAcqBtnGUI();
-			}
+  		m_ControlWnd.HideAcqBtnGUI();
 		}
 
 		/*if(m_WFGUICtrlWnd.m_ShowWindow)

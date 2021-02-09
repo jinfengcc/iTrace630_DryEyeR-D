@@ -109,7 +109,6 @@ BOOL CAcquisitionDlg::OnInitDialog()
 				m_ControlWnd.m_ShowWindow = FALSE;
 				m_ControlWnd.HideGUI();
 
-				m_ControlWnd.m_ShowAcqBtn = FALSE;
 				m_ControlWnd.HideAcqBtnGUI();
 				//Done
 			}

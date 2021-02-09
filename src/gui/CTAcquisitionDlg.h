@@ -13,16 +13,13 @@
 class CCTAcquisitionDlg : public CAcquisitionDlg
 {
 public:
-
-	CCTAcquisitionDlg(CWnd* pParentWnd, CCTAcquisition* pCTAcquisition);
+  CCTAcquisitionDlg(CWnd *pParentWnd, CCTAcquisition *pCTAcquisition);
 
 private:
+  CCTAcquisition *m_pCTAcquisition;
 
-	CCTAcquisition* m_pCTAcquisition;
-
-	virtual afx_msg LRESULT OnUpdate(WPARAM wParam, LPARAM lParam) override;
-
-	virtual BOOL OnInitDialog() override;
+  LRESULT OnUpdate(WPARAM wParam, LPARAM lParam) override;
+  BOOL    OnInitDialog() override;
 };
 
 //***************************************************************************************
