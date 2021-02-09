@@ -20,7 +20,7 @@ public:
     return m_hCam != 0;
   }
 
-  enum class Prop { brightness, contrast, hue, saturation, exposure, gain };
+  enum class Prop { exposure, gain, red, green, blue };
   void SetProperty(Prop prop, double value);
 
   void OnCameraEvent(int id, HIDS hCam);

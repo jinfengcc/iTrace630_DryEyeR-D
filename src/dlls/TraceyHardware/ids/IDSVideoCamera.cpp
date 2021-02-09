@@ -121,23 +121,32 @@ void IDSVideoCamera::Close()
 void IDSVideoCamera::SetProperty(Prop prop, double value)
 {
   switch (prop) {
-  case Prop::brightness:
+  case Prop::exposure:
     value = m_exposureRange[0] + value * (m_exposureRange[1] - m_exposureRange[0]) / 100.0;
     value = std::clamp(value, m_exposureRange[0], m_exposureRange[1]);
     is_Exposure(m_hCam, IS_EXPOSURE_CMD_SET_EXPOSURE, (void *)&value, sizeof(value));
     break;
-  case Prop::contrast:
-    break;
-  case Prop::hue:
-    break;
-  case Prop::saturation:
-    break;
-  case Prop::exposure:
-    break;
+
   case Prop::gain:
     value = value * 100 / 255;
     is_SetHardwareGain(m_hCam, static_cast<int>(value), IS_IGNORE_PARAMETER, IS_IGNORE_PARAMETER, IS_IGNORE_PARAMETER);
     break;
+
+  case Prop::red:
+    value = value * 100 / 255;
+    is_SetHardwareGain(m_hCam, IS_IGNORE_PARAMETER, static_cast<int>(value), IS_IGNORE_PARAMETER, IS_IGNORE_PARAMETER);
+    break;
+
+  case Prop::green:
+    value = value * 100 / 255;
+    is_SetHardwareGain(m_hCam, IS_IGNORE_PARAMETER, IS_IGNORE_PARAMETER, static_cast<int>(value), IS_IGNORE_PARAMETER);
+    break;
+
+  case Prop::blue:
+    value = value * 100 / 255;
+    is_SetHardwareGain(m_hCam, IS_IGNORE_PARAMETER, IS_IGNORE_PARAMETER, IS_IGNORE_PARAMETER, static_cast<int>(value));
+    break;
+
   default:
     break;
   }

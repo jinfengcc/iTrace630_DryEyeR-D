@@ -5,8 +5,6 @@
 #include "Flash.h"
 #include "Camera.h"
 #include "ids/CameraHiresIDS.h"
-#include "std/CameraHiresStd.h"
-#include "std/CameraStdHiresProps.h"
 
 #define API __declspec(dllexport)
 
@@ -16,23 +14,14 @@ namespace {
     LocalClassFactory()
     {
       // clang-format off
-      AddCreator(__uuidof(hal::IDevice     ), &LocalClassFactory::Create<Device        >);
-      AddCreator(__uuidof(hal::IFlash      ), &LocalClassFactory::Create<Flash         >);
-      AddCreator(__uuidof(hal::ICamera     ), &LocalClassFactory::Create<Camera        >);
+      AddCreator(__uuidof(hal::IDevice     ), &LocalClassFactory::Create<Device             >);
+      AddCreator(__uuidof(hal::IFlash      ), &LocalClassFactory::Create<Flash              >);
+      AddCreator(__uuidof(hal::ICamera     ), &LocalClassFactory::Create<Camera             >);
+      AddCreator(__uuidof(hal::ICameraHires), &LocalClassFactory::CreateHires<CameraHiresIDS>);
       // clang-format on
-
-      AddHiresCamera();
     }
 
   private:
-    void AddHiresCamera()
-    {
-      if (CameraStdHiresProps::HasStdHiresCamera())
-        AddCreator(__uuidof(hal::ICameraHires), &LocalClassFactory::CreateHires<CameraHiresStd>);
-      else
-        AddCreator(__uuidof(hal::ICameraHires), &LocalClassFactory::CreateHires<CameraHiresIDS>);
-    }
-
     template <class T>
     static bool Create(REFIID riid, void **ppv)
     {

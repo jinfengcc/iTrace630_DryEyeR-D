@@ -41,12 +41,17 @@ namespace hal {
 
   TRACEYOBJ("2e50fcd1-7ad8-4bb8-a657-2ca15e5140ce") ICameraHires : public IUnknown
   {
-    inline static auto BRIGHTNESS = Guid("0e96163a-47f5-4d30-8f50-c59cf53de05e");
-    inline static auto CONTRAST   = Guid("9cc9f2f2-e56e-4093-a368-d3cd482efe13");
-    inline static auto HUE        = Guid("272378a6-ad4b-432b-844f-a4ca868b734b");
-    inline static auto SATURATION = Guid("b0c0c843-4b1b-41fd-909d-e933082ac1ac");
-    inline static auto GAIN       = Guid("1de0f978-4880-4351-ada6-61b41137316d");
     inline static auto EXPOSURE   = Guid("4f87a3ef-e690-484d-aa41-414048924ac7");
+    inline static auto GAIN       = Guid("1de0f978-4880-4351-ada6-61b41137316d");
+    inline static auto GAIN_RED   = Guid("272378a6-ad4b-432b-844f-a4ca868b734b");
+    inline static auto GAIN_GREEN = Guid("b0c0c843-4b1b-41fd-909d-e933082ac1ac");
+    inline static auto GAIN_BLUE  = Guid("b0c0c843-4b1b-41fd-909d-e933082ac1ac");
+    //inline static auto HUE        = Guid("d9a7d06f-315d-46ce-9dbc-4e6485a2bb22");  // Unused
+    //inline static auto SATURATION = Guid("80ad3417-b6f5-403f-a9a4-b2d6299908b7");  // Unused
+
+    // aliases
+    inline static auto BRIGHTNESS = EXPOSURE;
+    inline static auto CONTRAST   = GAIN;
 
     enum class Mode {
       HIRES_COLOR,
@@ -54,15 +59,14 @@ namespace hal {
       HIRES_GRAY,
       LORES_GRAY,
     };
-    enum class Exposure { _auto, _640ms = -1, _320ms = -2, _160ms = -3, _80ms = -4, _40ms = -5, _20ms = -6, _10ms = -6, _5ms = -7 };
 
     //! Initialization
-    virtual void Initialize(IUnknown * unk) = 0;
+    virtual void Initialize(IUnknown *unk) = 0;
 
     //! Connect/Disconnect (returns the previous state
     virtual bool Connect(bool yes) = 0;
 
-    //! Starts Capture
+    //! Starts/Stops Capture
     using Callback = std::function<void(unsigned)>;
 
     virtual void StartCapture(Callback notify) = 0;

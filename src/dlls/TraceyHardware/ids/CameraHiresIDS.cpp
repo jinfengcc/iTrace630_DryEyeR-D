@@ -131,12 +131,11 @@ bool CameraHiresIDS::Settings(ITraceyConfig *tc)
 
   std::array ps = {
     // clang-format off
-    std::make_pair(ICameraHires::BRIGHTNESS, Prop::brightness),
-    std::make_pair(ICameraHires::CONTRAST  , Prop::contrast  ),
-    std::make_pair(ICameraHires::SATURATION, Prop::saturation),
-    std::make_pair(ICameraHires::HUE       , Prop::hue       ),
-    std::make_pair(ICameraHires::GAIN      , Prop::gain      ),
-    //std::make_pair(ICameraHires::EXPOSURE  , cv::CAP_PROP_EXPOSURE  ),
+    std::make_pair(ICameraHires::EXPOSURE  , Prop::exposure),
+    std::make_pair(ICameraHires::GAIN      , Prop::gain    ),
+    std::make_pair(ICameraHires::GAIN_RED  , Prop::red     ),
+    std::make_pair(ICameraHires::GAIN_GREEN, Prop::green   ),
+    std::make_pair(ICameraHires::GAIN_BLUE , Prop::blue    ),
     // clang-format on
   };
 
