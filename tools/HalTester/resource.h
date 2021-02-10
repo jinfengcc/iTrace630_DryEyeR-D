@@ -46,8 +46,11 @@
 #define IDC_COUNT                       1030
 #define IDC_BRIGHTNESS                  1031
 #define IDC_CONTRAST                    1032
+#define IDC_RED                         1032
 #define IDC_HUE                         1033
+#define IDC_GREEN                       1033
 #define IDC_SATURATION                  1034
+#define IDC_BLUE                        1034
 #define IDC_EXPOSURE                    1037
 #define IDC_MORE                        1038
 #define IDC_PLACIDO                     1039

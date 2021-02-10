@@ -62,14 +62,13 @@ void CCameraHiresView::OnTerminating()
 BOOL CCameraHiresView::OnInitDialog(CWindow wndFocus, LPARAM lInitParam)
 {
   InitializeSpinners();
-  InitializeCombo();
 
   // clang-format off
-  SetDlgItemInt( IDC_BRIGHTNESS  ,  30);
-  SetDlgItemInt( IDC_CONTRAST    ,   0);
-  SetDlgItemInt( IDC_HUE         , 130);
-  SetDlgItemInt( IDC_SATURATION  ,  70);
-  SetDlgItemInt( IDC_GAIN        , 100);
+  SetDlgItemInt( IDC_EXPOSURE, 128);
+  SetDlgItemInt( IDC_GAIN    , 100);
+  SetDlgItemInt( IDC_RED     , 100);
+  SetDlgItemInt( IDC_GREEN   , 100);
+  SetDlgItemInt( IDC_BLUE    , 100);
   // clang-format on
 
   CreateObjects();
@@ -118,13 +117,13 @@ void CCameraHiresView::OnPopupMore(UINT uNotifyCode, int nID, CWindow wndCtl)
 
 void CCameraHiresView::OnEditChanged(UINT uNotifyCode, int nID, CWindow wndCtl)
 {
-  static std::map<int, Guid> map{
+  static std::map<int  , Guid> map{
     // clang-format off
-    {IDC_BRIGHTNESS  , ICameraHires::BRIGHTNESS},
-    {IDC_CONTRAST    , ICameraHires::CONTRAST  },
-    {IDC_HUE         , ICameraHires::HUE       },
-    {IDC_SATURATION  , ICameraHires::SATURATION},
-    {IDC_GAIN        , ICameraHires::GAIN      },
+    {IDC_EXPOSURE, ICameraHires::EXPOSURE  },
+    {IDC_GAIN    , ICameraHires::GAIN      },
+    {IDC_RED     , ICameraHires::GAIN_RED  },
+    {IDC_GREEN   , ICameraHires::GAIN_GREEN},
+    {IDC_BLUE    , ICameraHires::GAIN_BLUE },
     // clang-format on
   };
 
@@ -134,14 +133,6 @@ void CCameraHiresView::OnEditChanged(UINT uNotifyCode, int nID, CWindow wndCtl)
   }
   else {
     SetMsgHandled(FALSE);
-  }
-}
-
-void CCameraHiresView::OnExposureChanged(UINT uNotifyCode, int nID, CWindow wndCtl)
-{
-  if (auto cb = CComboBox(GetDlgItem(nID))) {
-    int sel = cb.GetCurSel();
-    m_config.Set(ICameraHires::EXPOSURE, -sel);
   }
 }
 
@@ -168,20 +159,6 @@ void CCameraHiresView::InitializeSpinners()
   for (auto id : cameraSpinners) {
     CUpDownCtrl w(GetDlgItem(id));
     w.SetRange(0, 255);
-  }
-}
-
-void CCameraHiresView::InitializeCombo()
-{
-  const wchar_t *exposure[] = {
-    L"Auto",  L"640 ms", L"320 ms",  L"160 ms",  L"80 ms",  L"40 ms",  L"20 ms",
-    L"10 ms", L"5 ms",   L"2.50 ms", L"1.25 ms", L"650 µs", L"312 µs", L"150 µs",
-  };
-
-  if (auto cb = CComboBox(GetDlgItem(IDC_EXPOSURE))) {
-    for (auto e : exposure)
-      cb.AddString(e);
-    cb.SetCurSel(0);
   }
 }
 
