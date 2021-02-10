@@ -211,7 +211,7 @@ LRESULT CCTAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 	COLORREF green = m_pCTAcquisition->m_ve0_ok ? 0x0000ff00 : 0x00007f00;
 	COLORREF red = m_pCTAcquisition->m_la_ok ? 0x000000ff : 0x0000009f;
 
-	// оболочка
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (!::NewSettings.m_Adjusting_CT)//[520]
 	{
 		CNode* pNode = pImage->m_hull.MoveFirst();
@@ -228,7 +228,7 @@ LRESULT CCTAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 	m_VideoWnd.m_MemDC.DrawLine(icx, icy - Y2, icx, icy + Y2 + 1, 1, YELLOW);
 	m_VideoWnd.m_MemDC.DrawLine(icx + X2, icy - Y2, icx + X2, icy + Y2 + 1, 1, YELLOW);
 
-	// отрезок от центра до вертекса
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (!::NewSettings.m_Adjusting_CT)//[520]
 	{
 		if (pImage->m_ve0_ok) {
@@ -236,7 +236,7 @@ LRESULT CCTAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 		}
 	}
 
-	// кружок вокруг лазера
+	// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	//if (pImage->m_la_ok)//
 	if (!::NewSettings.m_Adjusting_CT)//[520]
 	{
