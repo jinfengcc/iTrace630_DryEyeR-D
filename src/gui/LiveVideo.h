@@ -39,8 +39,6 @@ public:
 	void  Abort() { m_ToDo = ABORT; }
 	void  ChangeBrightness() { m_ToDo = CHANGE_BRIGHTNESS; }
 	void  ChangeContrast() { m_ToDo = CHANGE_CONTRAST; }
-	void  ChangeHue() { m_ToDo = CHANGE_HUE; }
-	void  ChangeSaturation() { m_ToDo = CHANGE_SATURATION; }
 	void  ChangeInfraredLEDsPowerLevel() { m_ToDo = CHANGE_INFRARED_LEDS_POWER_LEVEL; }
 	void  ChangeWhiteLEDsPowerLevel() { m_ToDo = CHANGE_WHITE_LEDS_POWER_LEVEL; }
 
@@ -51,6 +49,8 @@ protected:
 	virtual void Main();
 
 private:
+	void  ChangeHue() { m_ToDo = CHANGE_HUE; }
+	void  ChangeSaturation() { m_ToDo = CHANGE_SATURATION; }
 
 	void* m_Thread;
 

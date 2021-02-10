@@ -41,10 +41,13 @@ public:
 	int     m_Contrast;
 	int     m_Hue;
 	int     m_Saturation;
+  int     m_RedGain;
+  int     m_GreenGain;
+  int     m_BlueGain;
 
 private:
 
-	virtual void Main() override;
+	void Main() override;
 
 	void CheckAlignment();
 };

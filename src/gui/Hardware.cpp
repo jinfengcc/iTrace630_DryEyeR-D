@@ -947,6 +947,17 @@ void CHW::ApplyCurrentVideoBlue()
   // DllSetVideoSaturation(m_pCurrentVideoSettings->Saturation);
 }
 
+void CHW::ApplyCurrentVideoSettings()
+{
+  ApplyCurrentVideoBrightness();
+  ApplyCurrentVideoContrast();
+  ApplyCurrentVideoHue();
+  ApplyCurrentVideoSaturation();
+  ApplyCurrentVideoRed();
+  ApplyCurrentVideoGreen();
+  ApplyCurrentVideoBlue();
+}
+
 //***************************************************************************************
 
 void CHW::ClearFrames()
@@ -1064,7 +1075,7 @@ void CHW::FinishTransferringVideoFrame()
 //{
 //  if (m_hiresCamera->Connected())
 //  {
-//    switch (Type) 
+//    switch (Type)
 //	{
 //    case WFEXAM:
 //      m_pCurrentVideoSettings = &m_Calibration.WFVideoSettings;
@@ -1083,7 +1094,7 @@ void CHW::FinishTransferringVideoFrame()
 //      break;
 //
 //    case CTEXAM:
-//      break;    
+//      break;
 //	}
 //  }
 //}

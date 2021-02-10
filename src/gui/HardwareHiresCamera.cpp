@@ -66,7 +66,6 @@ void HardwareHiresCamera::InitializeConfig()
   SetContrast  ( 10);
   SetHue       (128);
   SetSaturation( 64);
-  SetExposure  (Camera::Exposure::_80ms);
   SetGain      (200);
   // clang-format on
 }

@@ -82,11 +82,8 @@ void CCTAcquisition::Main()
 	m_pHW->ClearFrames();
 
 	m_pHW->m_pCurrentVideoSettings = &m_pHW->m_Calibration.CTVideoSettings;
-	m_pHW->ApplyCurrentVideoBrightness();
-	m_pHW->ApplyCurrentVideoContrast();
-	m_pHW->ApplyCurrentVideoHue();
-	m_pHW->ApplyCurrentVideoSaturation();
 
+  m_pHW->ApplyCurrentVideoSettings();
 	m_pHW->TurnPlacidoOn();
 	m_pHW->TurnAccommodationTargetOn();
 
@@ -281,7 +278,7 @@ void CCTAcquisition::Main()
 	//color image
 	::TempSettings.Temp_ColorImgCpted = FALSE;
 
-	//::NewSettings.m_Adjust_CT is used to rings tool setting   
+	//::NewSettings.m_Adjust_CT is used to rings tool setting
 	if (::Settings.m_Cap_ColorImg && !::NewSettings.m_Adjust_CT)
 	{
 		TimeLimit = 1050 * m_pHW->m_Calibration.LaserDuration;
@@ -293,10 +290,7 @@ void CCTAcquisition::Main()
 
 			m_pHW->m_pCurrentVideoSettings = &m_pHW->m_Calibration.WFVideo2Settings;
 			m_pHW->ClearFrames();
-			m_pHW->ApplyCurrentVideoBrightness();
-			m_pHW->ApplyCurrentVideoContrast();
-			m_pHW->ApplyCurrentVideoHue();
-			m_pHW->ApplyCurrentVideoSaturation();
+			m_pHW->ApplyCurrentVideoSettings();
 			m_pHW->TurnInfraredLEDsOn();
 			m_pHW->TurnWhiteLEDsOn();
 
@@ -309,7 +303,7 @@ void CCTAcquisition::Main()
 				m_pHW->FinishTransferringVideoFrame();
 			}
 
-			//adjust the image quality		  		  
+			//adjust the image quality
 			int ST = (int)clock();
 
 			m_BackupBrightness = m_pHW->m_Calibration.WFVideo2Settings.Brightness;
@@ -432,10 +426,13 @@ void CCTAcquisition::Main()
 				m_pHW->FinishTransferringVideoFrame();
 
 				m_pHW->m_pCurrentVideoSettings->WhiteLEDsPowerLevel = m_WhiteLEDsPower;
-				m_pHW->m_pCurrentVideoSettings->Brightness = m_Brightness;
-				m_pHW->m_pCurrentVideoSettings->Contrast = m_Contrast;
-				m_pHW->m_pCurrentVideoSettings->Hue = m_Hue;
-				m_pHW->m_pCurrentVideoSettings->Saturation = m_Saturation;
+        m_pHW->m_pCurrentVideoSettings->Brightness          = m_Brightness;
+        m_pHW->m_pCurrentVideoSettings->Contrast            = m_Contrast;
+        m_pHW->m_pCurrentVideoSettings->Hue                 = m_Hue;
+        m_pHW->m_pCurrentVideoSettings->Saturation          = m_Saturation;
+        m_pHW->m_pCurrentVideoSettings->Red                 = m_RedGain;
+        m_pHW->m_pCurrentVideoSettings->Green               = m_GreenGain;
+        m_pHW->m_pCurrentVideoSettings->Blue                = m_BlueGain;
 
 				// 10262020 Can not adjust the led power
 				if (LastWhiteLEDsPower != m_WhiteLEDsPower) {
@@ -444,10 +441,7 @@ void CCTAcquisition::Main()
 				}
 				// 10262020 Can not adjust the led power
 
-				m_pHW->ApplyCurrentVideoBrightness();
-				m_pHW->ApplyCurrentVideoContrast();
-				m_pHW->ApplyCurrentVideoHue();
-				m_pHW->ApplyCurrentVideoSaturation();
+				m_pHW->ApplyCurrentVideoSettings();
 
 				//Abort
 				m_TimeLeft = TimeLimit - ((int)clock() - StartTime);

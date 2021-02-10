@@ -171,14 +171,18 @@ public:
 	BOOL HasCalibrationLoaded() { return m_Calibration.CalibrationID != GUID_NULL; }
 
 	VIDEO_SETTINGS* m_pCurrentVideoSettings;
+
+private:
+	void ApplyCurrentVideoHue();
+	void ApplyCurrentVideoSaturation();
+	void ApplyCurrentVideoRed();   //high resolution camera image capture settings
+  void ApplyCurrentVideoGreen(); //high resolution camera image capture settings
+  void ApplyCurrentVideoBlue();  //high resolution camera image capture settings
+
+public:
+  void ApplyCurrentVideoSettings();
 	void ApplyCurrentVideoBrightness();
 	void ApplyCurrentVideoContrast();
-	void ApplyCurrentVideoHue();    
-	void ApplyCurrentVideoSaturation();
-
-	void ApplyCurrentVideoRed();   //high resolution camera image capture settings
-    void ApplyCurrentVideoGreen(); //high resolution camera image capture settings
-    void ApplyCurrentVideoBlue();  //high resolution camera image capture settings
 
 	void StartTransferringVideoFrame();
 	void FinishTransferringVideoFrame();

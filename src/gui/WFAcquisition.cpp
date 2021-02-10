@@ -354,10 +354,7 @@ void CWFAcquisition::Main()
 	m_pHW->ClearFrames();
 
 	m_pHW->m_pCurrentVideoSettings = &m_pHW->m_Calibration.WFVideoSettings;
-	m_pHW->ApplyCurrentVideoBrightness();
-	m_pHW->ApplyCurrentVideoContrast();
-	m_pHW->ApplyCurrentVideoHue();
-	m_pHW->ApplyCurrentVideoSaturation();
+	m_pHW->ApplyCurrentVideoSettings();
 
 	m_pHW->TurnInfraredLEDsOn();
 
@@ -630,11 +627,11 @@ void CWFAcquisition::Main()
 
 	for (int i = 0; i <= t; i++)//Setting of the super Exams code(3 times)
 	{
-		BOOL Repeate = TRUE;//Remove goto line 11162020			
+		BOOL Repeate = TRUE;//Remove goto line 11162020
 
-		while (Repeate)//Remove goto line 11162020			
+		while (Repeate)//Remove goto line 11162020
 		{
-			Repeate = FALSE;//Remove goto line 11162020			
+			Repeate = FALSE;//Remove goto line 11162020
 
 			Aligned = FALSE;
 			m_Probing = FALSE;
@@ -724,7 +721,7 @@ void CWFAcquisition::Main()
 
 					Repeate = TRUE;
 					break;
-					//Remove goto line 11162020				
+					//Remove goto line 11162020
 				}
 
 				if (::PresbiaMode == 2 && ::PresbiaModeOrder != 2)
@@ -894,7 +891,7 @@ void CWFAcquisition::Main()
 				m_AverageCycleTime = (real_t)(clock() - StartTime) / (++m_NumFramesReceived);
 
 				::Sleep(0);
-			}		
+			}
 		}
 
 		//if (!::NewSettings.m_Super_Exam) //531//cjf1020
@@ -902,7 +899,7 @@ void CWFAcquisition::Main()
 		//	m_pHW->TurnInfraredLEDsOff();
 		//	m_pHW->TurnAccommodationTargetOff();
 		//}
-    
+
 		if (Done == 1)
 		{
 			if (::NewSettings.m_Super_Exam)
@@ -982,7 +979,7 @@ void CWFAcquisition::Main()
 		m_WFExam.m_Image.Destroy();
 		m_WFExam.m_ColorImage.Destroy();
 
-		
+
 
 		Result = FALSE;
 		//int St = (int)clock();
@@ -1001,7 +998,7 @@ void CWFAcquisition::Main()
 				Result = DownloadScanResults();
 			}
 
-			//int Ut = (int)clock() - St;  
+			//int Ut = (int)clock() - St;
 		}
 		else
 		{

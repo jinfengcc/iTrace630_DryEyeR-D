@@ -294,11 +294,7 @@ void CVideo2ToolDlg::OnStartButtonClicked()
 
 	m_pHW->ClearFrames();
 
-	m_pHW->ApplyCurrentVideoBrightness();
-	m_pHW->ApplyCurrentVideoContrast();
-	m_pHW->ApplyCurrentVideoHue();
-	m_pHW->ApplyCurrentVideoSaturation();
-
+	m_pHW->ApplyCurrentVideoSettings();
 	m_pHW->TurnInfraredLEDsOn();
 	m_pHW->TurnWhiteLEDsOn();
 	//m_pHW->TurnVideoCameraOn();comment out by [cjf***032112]

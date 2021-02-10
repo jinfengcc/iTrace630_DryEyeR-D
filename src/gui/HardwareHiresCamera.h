@@ -52,15 +52,14 @@ public:
   // clang-format off
   void SetBrightness(int value)  { SetConfig(Camera::BRIGHTNESS, value); }
   void SetContrast  (int value)  { SetConfig(Camera::CONTRAST  , value); }
-  void SetHue       (int value)  { SetConfig(Camera::HUE       , value); }
-  void SetSaturation(int value)  { SetConfig(Camera::SATURATION, value); }
   void SetGain      (int value)  { SetConfig(Camera::GAIN      , value); }
+  void SetRedGain   (int value)  { SetConfig(Camera::GAIN_RED  , value); }
+  void SetGreenGain (int value)  { SetConfig(Camera::GAIN_GREEN, value); }
+  void SetBlueGain  (int value)  { SetConfig(Camera::GAIN_BLUE , value); }
   // clang-format on
 
-  void SetExposure(Camera::Exposure value)
-  {
-    SetConfig(Camera::EXPOSURE, static_cast<int>(value));
-  }
+  void SetHue       (int)  { }
+  void SetSaturation(int)  { }
 
 private:
   void SetConfig(const Guid &id, int value);
