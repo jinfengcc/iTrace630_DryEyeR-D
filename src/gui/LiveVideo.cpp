@@ -104,10 +104,10 @@ void CLiveVideo::Main()
 			m_pHW->ApplyCurrentVideoContrast();
 			break;
 		case CHANGE_HUE:
-			m_pHW->ApplyCurrentVideoHue();
+			//m_pHW->ApplyCurrentVideoHue();
 			break;
 		case CHANGE_SATURATION:
-			m_pHW->ApplyCurrentVideoSaturation();
+			//m_pHW->ApplyCurrentVideoSaturation();
 			break;
 		case CHANGE_INFRARED_LEDS_POWER_LEVEL:
 			m_pHW->TurnInfraredLEDsOn();

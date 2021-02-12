@@ -15,8 +15,11 @@ public:
 
 	CCalDlg(CHW* pHW, CALIBRATION* pCalibration, CWnd* pParentWnd);
 
+private:
 	CHW*         m_pHW;
 	CALIBRATION* m_pCalibration;
+
+	BOOL		 m_IsHRCamera;
 
 	CButton      m_LoadButton;
 	CButton      m_SaveButton;
@@ -64,12 +67,17 @@ public:
 	CEdit        m_WFVideoBrightnessEdit;
 	CEdit        m_WFVideoContrastEdit;
 
+	CStatic      m_WFVideo2HueOrRedText;// For high resolution camera
+    CStatic      m_WFVideo2SaturationOrGreenText;// For high resolution camera
+    CStatic      m_WFVideo2BlueText;// For high resolution camera
+
 	CEdit        m_WFVideo2InfraredLEDsPowerLevelEdit;
 	CEdit        m_WFVideo2WhiteLEDsPowerLevelEdit;
 	CEdit        m_WFVideo2BrightnessEdit;
 	CEdit        m_WFVideo2ContrastEdit;
-	CEdit        m_WFVideo2HueEdit;
-	CEdit        m_WFVideo2SaturationEdit;
+	CEdit        m_WFVideo2HueOrRedEdit;// For high resolution camera
+    CEdit        m_WFVideo2SaturationOrGreenEdit;// For high resolution camera
+    CEdit        m_WFVideo2BlueEdit;// For high resolution camera
 	CEdit        m_WFVideo2DelayEdit;
 
 	CEdit        m_CTVideoBrightnessEdit;
@@ -131,6 +139,7 @@ public:
 	CEdit        m_Ball4Edit;
 	CEdit        m_NumRingsEdit;
 	CButton      m_RingsToolButton;
+
 
 	int          m_l;
 	int          m_t;

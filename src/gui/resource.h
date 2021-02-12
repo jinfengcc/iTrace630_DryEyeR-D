@@ -683,7 +683,9 @@
 #define IDC_CAL_WFVIDEO2_BRIGHTNESS_EDIT 4040
 #define IDC_CAL_WFVIDEO2_CONTRAST_EDIT  4041
 #define IDC_CAL_WFVIDEO2_HUE_EDIT       4042
+#define IDC_CAL_WFVIDEO2_HUEORRED_EDIT  4042
 #define IDC_CAL_WFVIDEO2_SATURATION_EDIT 4043
+#define IDC_CAL_WFVIDEO2_SATURATIONORGREEN_EDIT 4043
 #define IDC_CAL_WFVIDEO2_DELAY_EDIT     4044
 #define IDC_CAL_CTVIDEO_BRIGHTNESS_EDIT 4045
 #define IDC_CAL_CTVIDEO_CONTRAST_EDIT   4046
@@ -693,6 +695,7 @@
 #define IDC_CAL_VIDEO2_TOOL             4050
 #define IDC_CAL_VIDEO_MOVE              4051
 #define IDC_CAL_QUICK_WFEXAM            4052
+#define IDC_CAL_WFVIDEO2_BLUE_EDIT      4053
 #define IDC_CAL_C3_EDIT                 4060
 #define IDC_CAL_C4_EDIT                 4061
 #define IDC_CAL_C5_EDIT                 4062
@@ -765,6 +768,8 @@
 #define IDC_CAL_VIDEO_CONTRAST_SLIDER   4152
 #define IDC_CAL_VIDEO_HUE_SLIDER        4153
 #define IDC_CAL_VIDEO_SATURATION_SLIDER 4154
+#define IDC_CAL_VIDEO_BLUE_EDIT         4155
+#define IDC_CAL_VIDEO_BLUE_SLIDER       4156
 #define IDC_CAL_NUM_FRAMES_RECEIVED_EDIT 4157
 #define IDC_CAL_AVERAGE_CYCLE_TIME_EDIT 4158
 #define IDC_CAL_FIRMWARE_BUILD_EDIT     4160
@@ -1911,22 +1916,32 @@
 #define IDC_PLACIDO_CHK                 8485
 #define IDC_INCLUDE_LADS_TEXT           8486
 #define IDC_STATIC82                    8486
+#define IDC_CAL_WFVIDEO2_HUEORRED_TEXT  8486
 #define IDC_EXCEL_EXPORT_TEXT           8487
 #define IDC_STATIC83                    8487
+#define IDC_CAL_WFVIDEO2_STAORGREEN_TEXT 8487
 #define IDC_EXCEL_EXPORT_TEXT2          8488
 #define IDC_TASKSHORTCUT_TEXT           8488
 #define IDC_STATIC84                    8488
+#define IDC_CAL_WFVIDEO2_BLUE_TEXT      8488
+#define IDC_CAL_VIDEO_BLUE_TEXT         8488
 #define IDC_STATIC85                    8489
 #define IDC_WFSUM3_CHECK2               8489
 #define IDC_WF_NEARVISION_CHECK         8489
+#define IDC_CAL_VIDEO_SATORGREEN_TEXT   8489
 #define IDC_SELCTNUM_TEXT               8490
 #define IDC_STATIC86                    8490
+#define IDC_CAL_VIDEO_HUEORRED_TEXT     8490
 #define IDC_STATIC87                    8491
 #define IDC_STATIC_WF_NEARVISION        8491
+#define IDC_CAL_VIDEO_HUEORRED_SLIDER   8491
 #define IDC_NOTE_TEXT2                  8492
 #define IDC_STATIC88                    8492
+#define IDC_CAL_VIDEO_HUEORRED_EDIT     8492
 #define IDC_STATIC90                    8493
+#define IDC_CAL_VIDEO_SATORGREEN_SLIDER 8493
 #define IDC_STATIC91                    8494
+#define IDC_CAL_VIDEO_SATORGREEN_EDIT   8494
 #define IDC_NOTE_TEXT3                  8495
 #define IDC_STATIC93                    8495
 #define IDC_NOTE_TEXT4                  8496
@@ -2010,9 +2025,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        488
+#define _APS_NEXT_RESOURCE_VALUE        489
 #define _APS_NEXT_COMMAND_VALUE         32965
-#define _APS_NEXT_CONTROL_VALUE         8486
+#define _APS_NEXT_CONTROL_VALUE         8495
 #define _APS_NEXT_SYMED_VALUE           424
 #endif
 #endif

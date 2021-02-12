@@ -32,6 +32,8 @@ CVideo2ToolDlg::CVideo2ToolDlg(CHW* pHW, CWnd* pParentWnd) :
 	m_pHW->m_pCurrentVideoSettings = &m_pHW->m_Calibration.WFVideo2Settings;
 	m_pLiveVideo = new CLiveVideo(m_pHW);
 	m_pLiveVideo->m_pVideoWnd = this;
+
+	m_IsHRCamera = m_pHW->IsHRCameraConnected();
 }
 
 //***************************************************************************************
@@ -56,17 +58,27 @@ void CVideo2ToolDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CAL_VIDEO_WHITE_LEDS_POWER_LEVEL_EDIT, m_WhiteLEDsPowerLevelEdit);
 	DDX_Control(pDX, IDC_CAL_VIDEO_BRIGHTNESS_EDIT, m_BrightnessEdit);
 	DDX_Control(pDX, IDC_CAL_VIDEO_CONTRAST_EDIT, m_ContrastEdit);
-	DDX_Control(pDX, IDC_CAL_VIDEO_HUE_EDIT, m_HueEdit);
-	DDX_Control(pDX, IDC_CAL_VIDEO_SATURATION_EDIT, m_SaturationEdit);
+    DDX_Control(pDX, IDC_CAL_VIDEO_HUEORRED_EDIT, m_HueOrRedEdit);
+	DDX_Control(pDX, IDC_CAL_VIDEO_SATORGREEN_EDIT, m_SatOrGreenEdit);
+    DDX_Control(pDX, IDC_CAL_VIDEO_BLUE_EDIT, m_BlueEdit);
 	DDX_Control(pDX, IDC_CAL_VIDEO_DELAY_EDIT, m_DelayEdit);
 	DDX_Control(pDX, IDC_CAL_VIDEO_INFRARED_LEDS_POWER_LEVEL_SLIDER, m_InfraredLEDsPowerLevelSlider);
 	DDX_Control(pDX, IDC_CAL_VIDEO_WHITE_LEDS_POWER_LEVEL_SLIDER, m_WhiteLEDsPowerLevelSlider);
 	DDX_Control(pDX, IDC_CAL_VIDEO_BRIGHTNESS_SLIDER, m_BrightnessSlider);
 	DDX_Control(pDX, IDC_CAL_VIDEO_CONTRAST_SLIDER, m_ContrastSlider);
-	DDX_Control(pDX, IDC_CAL_VIDEO_HUE_SLIDER, m_HueSlider);
-	DDX_Control(pDX, IDC_CAL_VIDEO_SATURATION_SLIDER, m_SaturationSlider);
+    DDX_Control(pDX, IDC_CAL_VIDEO_HUEORRED_SLIDER, m_HueOrRedSlider);
+    DDX_Control(pDX, IDC_CAL_VIDEO_SATORGREEN_SLIDER, m_SatOrGreenSlider);
 
 	DDX_Control(pDX, IDC_PLACIDO_CHK, m_PlacdioCheck);//test cjf 10292020
+
+
+	// For high resolution camera (settings in WF color panel)
+    DDX_Control(pDX, IDC_CAL_VIDEO_HUEORRED_TEXT, m_HueOrRedSText);
+    DDX_Control(pDX, IDC_CAL_VIDEO_SATORGREEN_TEXT, m_SatOrGreenText);
+    DDX_Control(pDX, IDC_CAL_VIDEO_BLUE_TEXT, m_BlueText);
+    DDX_Control(pDX, IDC_CAL_VIDEO_BLUE_EDIT, m_BlueEdit);
+    DDX_Control(pDX, IDC_CAL_VIDEO_BLUE_SLIDER, m_BlueSlider);
+    // For high resolution camera (settings in WF color panel)
 	
 }
 
@@ -74,71 +86,114 @@ void CVideo2ToolDlg::DoDataExchange(CDataExchange* pDX)
 
 BOOL CVideo2ToolDlg::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+  CDialog::OnInitDialog();
 
-	m_w = CHW::m_VideoWidth;
-	m_h = CHW::m_VideoHeight;
-	m_w_um = m_pHW->m_Calibration.VideoWidthMicrons;
-	m_h_um = m_pHW->m_Calibration.VideoHeightMicrons;
-	m_x_px_um = m_w / m_w_um;
-	m_y_px_um = m_h / m_h_um;
-	m_cx = 0.5 * m_w;
-	m_cy = 0.5 * m_h - 1;
+  m_w       = CHW::m_VideoWidth;
+  m_h       = CHW::m_VideoHeight;
+  m_w_um    = m_pHW->m_Calibration.VideoWidthMicrons;
+  m_h_um    = m_pHW->m_Calibration.VideoHeightMicrons;
+  m_x_px_um = m_w / m_w_um;
+  m_y_px_um = m_h / m_h_um;
+  m_cx      = 0.5 * m_w;
+  m_cy      = 0.5 * m_h - 1;
 
-	VIDEO_SETTINGS* pVideoSettings = m_pHW->m_pCurrentVideoSettings;
+  VIDEO_SETTINGS *pVideoSettings = m_pHW->m_pCurrentVideoSettings;
 
-	m_BackupInfraredLEDsPowerLevel = pVideoSettings->InfraredLEDsPowerLevel;
-	m_BackupWhiteLEDsPowerLevel = pVideoSettings->WhiteLEDsPowerLevel;
-	m_BackupBrightness = pVideoSettings->Brightness;
-	m_BackupContrast = pVideoSettings->Contrast;
-	m_BackupHue = pVideoSettings->Hue;
-	m_BackupSaturation = pVideoSettings->Saturation;
+  m_BackupInfraredLEDsPowerLevel = pVideoSettings->InfraredLEDsPowerLevel;
+  m_BackupWhiteLEDsPowerLevel    = pVideoSettings->WhiteLEDsPowerLevel;
+  m_BackupBrightness             = pVideoSettings->Brightness;
+  m_BackupContrast               = pVideoSettings->Contrast;
 
-	m_BackupDelay = m_pHW->m_Calibration.ColorImageDelay;
+  // For high resolution camera
+  if (m_IsHRCamera) {
+    m_BackupHueOrRed   = pVideoSettings->Red;
+    m_BackupSatOrGreen = pVideoSettings->Green;
+    m_BackupBlue       = pVideoSettings->Blue;
+  }
+  else {
+    m_BackupHueOrRed   = pVideoSettings->Hue;
+    m_BackupSatOrGreen = pVideoSettings->Saturation;
+  }
+  // For high resolution camera
 
-	m_InfraredLEDsPowerLevelSlider.SetRange(0, 100, FALSE);
-	m_WhiteLEDsPowerLevelSlider.SetRange(0, 100, FALSE);
-	m_BrightnessSlider.SetRange(0, 255, FALSE);
-	m_ContrastSlider.SetRange(0, 255, FALSE);
-	m_HueSlider.SetRange(0, 255, FALSE);
-	m_SaturationSlider.SetRange(0, 255, FALSE);
+  m_BackupDelay = m_pHW->m_Calibration.ColorImageDelay;
 
-	m_InfraredLEDsPowerLevelSlider.SetPos(pVideoSettings->InfraredLEDsPowerLevel);
-	m_WhiteLEDsPowerLevelSlider.SetPos(pVideoSettings->WhiteLEDsPowerLevel);
-	m_BrightnessSlider.SetPos(pVideoSettings->Brightness);
-	m_ContrastSlider.SetPos(pVideoSettings->Contrast);
-	m_HueSlider.SetPos(pVideoSettings->Hue);
-	m_SaturationSlider.SetPos(pVideoSettings->Saturation);
+  m_InfraredLEDsPowerLevelSlider.SetRange(0, 100, FALSE);
+  m_WhiteLEDsPowerLevelSlider.SetRange(0, 100, FALSE);
+  m_BrightnessSlider.SetRange(0, 255, FALSE);
+  m_ContrastSlider.SetRange(0, 255, FALSE);
+  m_HueOrRedSlider.SetRange(0, 255, FALSE);
+  m_SatOrGreenSlider.SetRange(0, 255, FALSE);
+  if (m_IsHRCamera) {
+    m_BlueSlider.SetRange(0, 255, FALSE);
+  }
 
-	CString s;
+  m_InfraredLEDsPowerLevelSlider.SetPos(pVideoSettings->InfraredLEDsPowerLevel);
+  m_WhiteLEDsPowerLevelSlider.SetPos(pVideoSettings->WhiteLEDsPowerLevel);
+  m_BrightnessSlider.SetPos(pVideoSettings->Brightness);
+  m_ContrastSlider.SetPos(pVideoSettings->Contrast);
 
-	s.Format(_T("%i"), pVideoSettings->InfraredLEDsPowerLevel);
-	m_InfraredLEDsPowerLevelEdit.SetWindowText(s);
+  // For high resolution camera
+  if (m_IsHRCamera) {
+    m_HueOrRedSlider.SetPos(pVideoSettings->Red);
+    m_SatOrGreenSlider.SetPos(pVideoSettings->Green);
+    m_BlueSlider.SetPos(pVideoSettings->Blue); // For high resolution camera
 
-	s.Format(_T("%i"), pVideoSettings->WhiteLEDsPowerLevel);
-	m_WhiteLEDsPowerLevelEdit.SetWindowText(s);
+    m_HueOrRedSText.SetWindowText(_T("Red"));
+    m_SatOrGreenText.SetWindowText(_T("Green"));
+  }
+  else {
+    m_HueOrRedSlider.SetPos(pVideoSettings->Hue);
+    m_SatOrGreenSlider.SetPos(pVideoSettings->Saturation);
+    m_BlueText.ShowWindow(SW_HIDE);
+    m_BlueSlider.ShowWindow(SW_HIDE);
+    m_BlueEdit.ShowWindow(SW_HIDE);
+  }
+  // For high resolution camera
 
-	s.Format(_T("%i"), pVideoSettings->Brightness);
-	m_BrightnessEdit.SetWindowText(s);
+  CString s;
 
-	s.Format(_T("%i"), pVideoSettings->Contrast);
-	m_ContrastEdit.SetWindowText(s);
+  s.Format(_T("%i"), pVideoSettings->InfraredLEDsPowerLevel);
+  m_InfraredLEDsPowerLevelEdit.SetWindowText(s);
 
-	s.Format(_T("%i"), pVideoSettings->Hue);
-	m_HueEdit.SetWindowText(s);
+  s.Format(_T("%i"), pVideoSettings->WhiteLEDsPowerLevel);
+  m_WhiteLEDsPowerLevelEdit.SetWindowText(s);
 
-	s.Format(_T("%i"), pVideoSettings->Saturation);
-	m_SaturationEdit.SetWindowText(s);
+  s.Format(_T("%i"), pVideoSettings->Brightness);
+  m_BrightnessEdit.SetWindowText(s);
 
-	s.Format(_T("%i"), m_pHW->m_Calibration.ColorImageDelay);
-	m_DelayEdit.SetWindowText(s);
+  s.Format(_T("%i"), pVideoSettings->Contrast);
+  m_ContrastEdit.SetWindowText(s);
 
-	m_PlacdioCheck.SetCheck(FALSE);//test cjf 10292020
+  // For high resolution camera
+  if (m_IsHRCamera) {
+    s.Format(_T("%i"), pVideoSettings->Red);
+    m_HueOrRedEdit.SetWindowText(s);
 
-	RECT Rect = { 10, 10, 10 + CHW::m_VideoWidth, 10 + CHW::m_VideoHeight };
-	m_VideoWnd.CreateWnd(Rect, this);
+    s.Format(_T("%i"), pVideoSettings->Green);
+    m_SatOrGreenEdit.SetWindowText(s);
 
-	return TRUE;
+    s.Format(_T("%i"), pVideoSettings->Blue);
+    m_BlueEdit.SetWindowText(s);
+  }
+  else {
+    s.Format(_T("%i"), pVideoSettings->Hue);
+    m_HueOrRedEdit.SetWindowText(s);
+
+    s.Format(_T("%i"), pVideoSettings->Saturation);
+    m_SatOrGreenEdit.SetWindowText(s);
+  }
+  // For high resolution camera
+
+  s.Format(_T("%i"), m_pHW->m_Calibration.ColorImageDelay);
+  m_DelayEdit.SetWindowText(s);
+
+  m_PlacdioCheck.SetCheck(FALSE); // test cjf 10292020
+
+  RECT Rect = {10, 10, 10 + CHW::m_VideoWidth, 10 + CHW::m_VideoHeight};
+  m_VideoWnd.CreateWnd(Rect, this);
+
+  return TRUE;
 }
 
 //***************************************************************************************
@@ -153,8 +208,16 @@ void CVideo2ToolDlg::OnCancel()
 	pVideoSettings->WhiteLEDsPowerLevel = m_BackupWhiteLEDsPowerLevel;
 	pVideoSettings->Brightness = m_BackupBrightness;
 	pVideoSettings->Contrast = m_BackupContrast;
-	pVideoSettings->Hue = m_BackupHue;
-	pVideoSettings->Saturation = m_BackupSaturation;
+
+	if (m_IsHRCamera) {
+		pVideoSettings->Red   = m_BackupHueOrRed;
+		pVideoSettings->Green = m_BackupSatOrGreen;
+		pVideoSettings->Blue  = m_BackupBlue;
+	}
+	else {		
+		pVideoSettings->Hue         = m_BackupHueOrRed;
+		pVideoSettings->Saturation  = m_BackupSatOrGreen;
+	}
 
 	m_pHW->m_Calibration.ColorImageDelay = m_BackupDelay;
 
@@ -175,49 +238,67 @@ void CVideo2ToolDlg::OnOK()
 
 //***************************************************************************************
 
-void CVideo2ToolDlg::OnHScroll(uint nSBCode, uint nPos, CScrollBar* pScrollBar)
+void CVideo2ToolDlg::OnHScroll(uint nSBCode, uint nPos, CScrollBar *pScrollBar)
 {
-	VIDEO_SETTINGS* pVideoSettings = m_pHW->m_pCurrentVideoSettings;
-	CString s;
+  VIDEO_SETTINGS *pVideoSettings = m_pHW->m_pCurrentVideoSettings;
+  CString         s;
 
-	switch (pScrollBar->GetDlgCtrlID()) {
-	case IDC_CAL_VIDEO_INFRARED_LEDS_POWER_LEVEL_SLIDER:
-		pVideoSettings->InfraredLEDsPowerLevel = m_InfraredLEDsPowerLevelSlider.GetPos();
-		s.Format(_T("%i"), pVideoSettings->InfraredLEDsPowerLevel);
-		m_InfraredLEDsPowerLevelEdit.SetWindowText(s);
-		m_pLiveVideo->ChangeInfraredLEDsPowerLevel();
-		break;
-	case IDC_CAL_VIDEO_WHITE_LEDS_POWER_LEVEL_SLIDER:
-		pVideoSettings->WhiteLEDsPowerLevel = m_WhiteLEDsPowerLevelSlider.GetPos();
-		s.Format(_T("%i"), pVideoSettings->WhiteLEDsPowerLevel);
-		m_WhiteLEDsPowerLevelEdit.SetWindowText(s);
-		m_pLiveVideo->ChangeWhiteLEDsPowerLevel();
-		break;
-	case IDC_CAL_VIDEO_BRIGHTNESS_SLIDER:
-		pVideoSettings->Brightness = m_BrightnessSlider.GetPos();
-		s.Format(_T("%i"), pVideoSettings->Brightness);
-		m_BrightnessEdit.SetWindowText(s);
-		m_pLiveVideo->ChangeBrightness();
-		break;
-	case IDC_CAL_VIDEO_CONTRAST_SLIDER:
-		pVideoSettings->Contrast = m_ContrastSlider.GetPos();
-		s.Format(_T("%i"), pVideoSettings->Contrast);
-		m_ContrastEdit.SetWindowText(s);
-		m_pLiveVideo->ChangeContrast();
-		break;
-	case IDC_CAL_VIDEO_HUE_SLIDER:
-		pVideoSettings->Hue = m_HueSlider.GetPos();
-		s.Format(_T("%i"), pVideoSettings->Hue);
-		m_HueEdit.SetWindowText(s);
-		m_pLiveVideo->ChangeHue();
-		break;
-	case IDC_CAL_VIDEO_SATURATION_SLIDER:
-		pVideoSettings->Saturation = m_SaturationSlider.GetPos();
-		s.Format(_T("%i"), pVideoSettings->Saturation);
-		m_SaturationEdit.SetWindowText(s);
-		m_pLiveVideo->ChangeSaturation();
-		break;
-	}
+  switch (pScrollBar->GetDlgCtrlID()) {
+  case IDC_CAL_VIDEO_INFRARED_LEDS_POWER_LEVEL_SLIDER:
+    pVideoSettings->InfraredLEDsPowerLevel = m_InfraredLEDsPowerLevelSlider.GetPos();
+    s.Format(_T("%i"), pVideoSettings->InfraredLEDsPowerLevel);
+    m_InfraredLEDsPowerLevelEdit.SetWindowText(s);
+    m_pLiveVideo->ChangeInfraredLEDsPowerLevel();
+    break;
+  case IDC_CAL_VIDEO_WHITE_LEDS_POWER_LEVEL_SLIDER:
+    pVideoSettings->WhiteLEDsPowerLevel = m_WhiteLEDsPowerLevelSlider.GetPos();
+    s.Format(_T("%i"), pVideoSettings->WhiteLEDsPowerLevel);
+    m_WhiteLEDsPowerLevelEdit.SetWindowText(s);
+    m_pLiveVideo->ChangeWhiteLEDsPowerLevel();
+    break;
+  case IDC_CAL_VIDEO_BRIGHTNESS_SLIDER:
+    pVideoSettings->Brightness = m_BrightnessSlider.GetPos();
+    s.Format(_T("%i"), pVideoSettings->Brightness);
+    m_BrightnessEdit.SetWindowText(s);
+    m_pLiveVideo->ChangeBrightness();
+    break;
+  case IDC_CAL_VIDEO_CONTRAST_SLIDER:
+    pVideoSettings->Contrast = m_ContrastSlider.GetPos();
+    s.Format(_T("%i"), pVideoSettings->Contrast);
+    m_ContrastEdit.SetWindowText(s);
+    m_pLiveVideo->ChangeContrast();
+    break;
+  case IDC_CAL_VIDEO_HUEORRED_SLIDER:
+    if (m_IsHRCamera) {
+      pVideoSettings->Red = m_HueOrRedSlider.GetPos();
+      s.Format(_T("%i"), pVideoSettings->Red);
+    }
+    else {
+      pVideoSettings->Hue = m_HueOrRedSlider.GetPos();
+      s.Format(_T("%i"), pVideoSettings->Hue);
+    }
+    m_HueOrRedEdit.SetWindowText(s);
+    // m_pLiveVideo->ChangeHue();
+    break;
+  case IDC_CAL_VIDEO_SATORGREEN_SLIDER:
+    if (m_IsHRCamera) {
+      pVideoSettings->Green = m_SatOrGreenSlider.GetPos();
+      s.Format(_T("%i"), pVideoSettings->Green);
+    }
+    else {
+      pVideoSettings->Saturation = m_SatOrGreenSlider.GetPos();
+      s.Format(_T("%i"), pVideoSettings->Saturation);
+    }
+    m_SatOrGreenEdit.SetWindowText(s);
+    // m_pLiveVideo->ChangeSaturation();
+    break;
+  case IDC_CAL_VIDEO_BLUE_SLIDER:
+    pVideoSettings->Blue = m_BlueSlider.GetPos();
+    s.Format(_T("%i"), pVideoSettings->Blue);
+    m_BlueEdit.SetWindowText(s);
+    // m_pLiveVideo->ChangeBlue();
+    break;
+  }
 }
 
 //***************************************************************************************
