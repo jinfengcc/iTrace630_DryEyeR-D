@@ -2,7 +2,6 @@
 // Microsoft Visual C++ generated include file.
 // Used by TraceyDicom.rc
 //
-#define IDCANCEL2                       3
 #define IDC_SETTINGS                    3
 #define IDD_WORKLIST                    101
 #define IDD_SETTINGS                    103
@@ -12,15 +11,12 @@
 #define IDD_SETUP_OTHER                 107
 #define IDC_PATIENTS                    1001
 #define IDC_ITEMS                       1002
-#define IDC_BUTTON1                     1003
-#define IDC_UPDATE                      1003
 #define IDC_SEARCH                      1003
 #define IDC_VERIFY                      1003
 #define IDC_IPADDR                      1004
 #define IDC_CLEAR                       1004
 #define IDC_PORT                        1005
 #define IDC_CALL                        1006
-#define IDC_EDIT4                       1007
 #define IDC_CALLING                     1008
 #define IDC_DATE_RADIO                  1009
 #define IDC_RADIO2                      1010
@@ -39,9 +35,6 @@
 #define IDC_WCSU_CHECK                  8053
 #define IDC_WCVA_CHECK                  8054
 #define IDC_WCOU_CHECK                  8055
-#define IDC_WCSUMANA_CHECK              8056
-#define IDC_EXAMRES_CHECK               8057
-#define IDC_WCCORSPH_CHECK              8058
 #define IDC_DYSFUN_CHECK                8065
 #define IDC_ASTISOU_CHECK               8066
 #define IDC_DYSPTFUN_CHECK              8067
@@ -52,7 +45,6 @@
 #define IDC_STATIC1                     8265
 #define IDC_STATIC5                     8266
 #define IDC_STATIC7                     8267
-#define IDC_STATIC8                     8268
 #define IDC_WFAA_CHECK                  8370
 #define IDC_WFVA_CHECK                  8372
 #define IDC_WFRMS_CHECK                 8373

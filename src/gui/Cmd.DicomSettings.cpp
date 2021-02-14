@@ -18,11 +18,15 @@ END_MESSAGE_MAP()
 
 void CmdDicomSettings::OnSettings()
 {
-  CRect rc = GetButtonRect();
-  CCustomMenu menu(rc.Width(), rc.Height());
+  if (!m_isComboDicom) {
+    SetMsgHandled(FALSE);
+    return;
+  }
 
+  CCustomButtonMenu menu;
   menu.AddMenuItems({_T("Standard"), _T("DICOM")});
-  if (auto res = menu.TrackPopupMenu(rc.left, rc.top); res == 0) {
+
+  if (auto res = menu.TrackPopupMenu(); res == 0) {
     SetMsgHandled(FALSE);
   }
   else if (res == 1) {

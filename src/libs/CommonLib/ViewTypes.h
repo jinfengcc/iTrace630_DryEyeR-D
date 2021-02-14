@@ -19,16 +19,16 @@ enum class ViewType {
   WFCT_Summary        = 15,
   WFCT_MTF            = 16,
   WFCT_OUOverview     = 17,
-  WFCT_SumAna         = 18,
+  WFCT_SumAna         = 18, // Not in 6.x
   WFCT_Iol            = 19,
-  WFCT_AngleKA        = 20,
+  WFCT_AngleKA        = 20, // Not in 6.x
   WFCT_DysfunMD       = 21,
   WFCT_DysfunPT       = 22,
   WFCT_AstigmSrc      = 23,
   WFCT_ToricCheck     = 24,
   WFCT_Custom         = 25,
   _MISSING26          = 26,
-  WFCT_ExamResult     = 27,
+  WFCT_ExamResult     = 27, // Not in 6.x
   WFCT_CornealSphAber = 28,
   _MAX_VIEW_TYPES,
 };

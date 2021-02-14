@@ -33,8 +33,14 @@ END_MESSAGE_MAP()
 
 void CmdDicomImport::OnPatientImport()
 {
+  if (!m_isComboDicom) {
+    SetMsgHandled(FALSE);
+    return;
+  }
+
   CCustomButtonMenu menu;
   menu.AddMenuItems({_T("Standard"), _T("DICOM")});
+
   if (auto res = menu.TrackPopupMenu(); res < 0) {
     return;
   }
@@ -60,7 +66,7 @@ GUID CmdDicomImport::SaveDicomPatient(const dicom::Patient *dp)
   CPatient p;
 
   auto matching = FindMatchingPatients(dp);
-  if (matching.size() == 0) {
+  if (matching.empty()) {
     p = {};
   }
   else if (matching.size() == 1) {

@@ -42,17 +42,17 @@ BOOL CSetupPageSelection::DoDataExchange(BOOL bSaveAndValidate, UINT nCtlID)
   CheckBit(IDC_WCSU_CHECK         , ViewType::WFCT_Summary       );   // WF/CT Summary
   CheckBit(IDC_WCVA_CHECK         , ViewType::WFCT_MTF           );   // WF/CT MTF
   CheckBit(IDC_WCOU_CHECK         , ViewType::WFCT_OUOverview    );   // OU Overview
-  CheckBit(IDC_WCSUMANA_CHECK     , ViewType::WFCT_SumAna        );   // Summary & Analysis
+  //CheckBit(IDC_WCSUMANA_CHECK     , ViewType::WFCT_SumAna        );   // Summary & Analysis
   CheckBit(IDC_WCIOL_CHECK        , ViewType::WFCT_Iol           );   // IOL Selection Assistant
-  CheckBit(IDC_WCCORSPH_CHECK     , ViewType::WFCT_AngleKA       );   // IOL Selection Assistant
+  //CheckBit(IDC_WCCORSPH_CHECK     , ViewType::WFCT_AngleKA       );   // IOL Selection Assistant
   CheckBit(IDC_WFKA_CHECK         , ViewType::WFCT_DysfunMD      );   // WF/CT Angel k/a
   CheckBit(IDC_DYSFUN_CHECK       , ViewType::WFCT_DysfunPT      );   // Dysfunctional Analysis MD
   CheckBit(IDC_DYSPTFUN_CHECK     , ViewType::WFCT_AstigmSrc     );   // Dysfunctional Analysis PT
   CheckBit(IDC_ASTISOU_CHECK      , ViewType::WFCT_ToricCheck    );   // Astigmatism Source
   CheckBit(IDC_TORLI_CHECK        , ViewType::WFCT_Custom        );   // Toric Check
   //                                                                  // Check(ViewType::_MISSING26)
-  CheckBit(IDC_WCCUSTOM_CHECK     , ViewType::WFCT_ExamResult    );   // WF/CT Custom
-  CheckBit(IDC_EXAMRES_CHECK      , ViewType::WFCT_CornealSphAber);
+  //CheckBit(IDC_WCCUSTOM_CHECK     , ViewType::WFCT_ExamResult    );   // WF/CT Custom
+  //CheckBit(IDC_EXAMRES_CHECK      , ViewType::WFCT_CornealSphAber);
   // clang-format on
 
   if (bSaveAndValidate && m_cfg.selectionFlags == 0) {
@@ -91,11 +91,11 @@ void CSetupPageSelection::OnContextMenu(CWindow wnd, CPoint point)
   UINT uFlags = TPM_NONOTIFY | TPM_RETURNCMD | TPM_TOPALIGN | TPM_RIGHTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON;
   auto res    = menu.TrackPopupMenu(uFlags, point.x, point.y, *this);
 
-  const auto CT = CombineEnumFlags(ViewType::CT_Rings, ViewType::CT_Summary, ViewType::CT_Keratometry, ViewType::CT_3DElevation,
+  constexpr auto CT = CombineEnumFlags(ViewType::CT_Rings, ViewType::CT_Summary, ViewType::CT_Keratometry, ViewType::CT_3DElevation,
                                    ViewType::CT_OsherIris, ViewType::CT_Custom);
-  const auto WF = CombineEnumFlags(ViewType::WF_Point, ViewType::WF_NearVision, ViewType::WF_VisualAcuity, ViewType::WF_DepthFocus,
+  constexpr auto WF = CombineEnumFlags(ViewType::WF_Point, ViewType::WF_NearVision, ViewType::WF_VisualAcuity, ViewType::WF_DepthFocus,
                                    ViewType::WF_RMS, ViewType::WF_Aberation, ViewType::WF_Custom);
-  const auto WFCT =
+  constexpr auto WFCT =
     CombineEnumFlags(ViewType::WFCT_Change, ViewType::WFCT_Summary, ViewType::WFCT_MTF, ViewType::WFCT_OUOverview, ViewType::WFCT_SumAna,
                      ViewType::WFCT_Iol, ViewType::WFCT_AngleKA, ViewType::WFCT_DysfunMD, ViewType::WFCT_DysfunPT, ViewType::WFCT_AstigmSrc,
                      ViewType::WFCT_ToricCheck, ViewType::WFCT_Custom, ViewType::WFCT_ExamResult, ViewType::WFCT_CornealSphAber);
