@@ -106,9 +106,9 @@ BOOL CVideo2ToolDlg::OnInitDialog()
 
   // For high resolution camera
   if (m_IsHRCamera) {
-    m_BackupHueOrRed   = pVideoSettings->Red;
-    m_BackupSatOrGreen = pVideoSettings->Green;
-    m_BackupBlue       = pVideoSettings->Blue;
+    m_BackupHueOrRed   = pVideoSettings->gain.Red;
+    m_BackupSatOrGreen = pVideoSettings->gain.Green;
+    m_BackupBlue       = pVideoSettings->gain.Blue;
   }
   else {
     m_BackupHueOrRed   = pVideoSettings->Hue;
@@ -135,9 +135,9 @@ BOOL CVideo2ToolDlg::OnInitDialog()
 
   // For high resolution camera
   if (m_IsHRCamera) {
-    m_HueOrRedSlider.SetPos(pVideoSettings->Red);
-    m_SatOrGreenSlider.SetPos(pVideoSettings->Green);
-    m_BlueSlider.SetPos(pVideoSettings->Blue); // For high resolution camera
+    m_HueOrRedSlider.SetPos(pVideoSettings->gain.Red);
+    m_SatOrGreenSlider.SetPos(pVideoSettings->gain.Green);
+    m_BlueSlider.SetPos(pVideoSettings->gain.Blue); // For high resolution camera
 
     m_HueOrRedSText.SetWindowText(_T("Red"));
     m_SatOrGreenText.SetWindowText(_T("Green"));
@@ -167,13 +167,13 @@ BOOL CVideo2ToolDlg::OnInitDialog()
 
   // For high resolution camera
   if (m_IsHRCamera) {
-    s.Format(_T("%i"), pVideoSettings->Red);
+    s.Format(_T("%i"), pVideoSettings->gain.Red);
     m_HueOrRedEdit.SetWindowText(s);
 
-    s.Format(_T("%i"), pVideoSettings->Green);
+    s.Format(_T("%i"), pVideoSettings->gain.Green);
     m_SatOrGreenEdit.SetWindowText(s);
 
-    s.Format(_T("%i"), pVideoSettings->Blue);
+    s.Format(_T("%i"), pVideoSettings->gain.Blue);
     m_BlueEdit.SetWindowText(s);
   }
   else {
@@ -200,28 +200,29 @@ BOOL CVideo2ToolDlg::OnInitDialog()
 
 void CVideo2ToolDlg::OnCancel()
 {
-	if (!m_CancelButton.IsWindowEnabled()) return;
+  if (!m_CancelButton.IsWindowEnabled())
+    return;
 
-	VIDEO_SETTINGS* pVideoSettings = m_pHW->m_pCurrentVideoSettings;
+  VIDEO_SETTINGS *pVideoSettings = m_pHW->m_pCurrentVideoSettings;
 
-	pVideoSettings->InfraredLEDsPowerLevel = m_BackupInfraredLEDsPowerLevel;
-	pVideoSettings->WhiteLEDsPowerLevel = m_BackupWhiteLEDsPowerLevel;
-	pVideoSettings->Brightness = m_BackupBrightness;
-	pVideoSettings->Contrast = m_BackupContrast;
+  pVideoSettings->InfraredLEDsPowerLevel = m_BackupInfraredLEDsPowerLevel;
+  pVideoSettings->WhiteLEDsPowerLevel    = m_BackupWhiteLEDsPowerLevel;
+  pVideoSettings->Brightness             = m_BackupBrightness;
+  pVideoSettings->Contrast               = m_BackupContrast;
 
-	if (m_IsHRCamera) {
-		pVideoSettings->Red   = m_BackupHueOrRed;
-		pVideoSettings->Green = m_BackupSatOrGreen;
-		pVideoSettings->Blue  = m_BackupBlue;
-	}
-	else {		
-		pVideoSettings->Hue         = m_BackupHueOrRed;
-		pVideoSettings->Saturation  = m_BackupSatOrGreen;
-	}
+  if (m_IsHRCamera) {
+    pVideoSettings->gain.Red   = m_BackupHueOrRed;
+    pVideoSettings->gain.Green = m_BackupSatOrGreen;
+    pVideoSettings->gain.Blue  = m_BackupBlue;
+  }
+  else {
+    pVideoSettings->Hue        = m_BackupHueOrRed;
+    pVideoSettings->Saturation = m_BackupSatOrGreen;
+  }
 
-	m_pHW->m_Calibration.ColorImageDelay = m_BackupDelay;
+  m_pHW->m_Calibration.ColorImageDelay = m_BackupDelay;
 
-	CDialog::OnCancel();
+  CDialog::OnCancel();
 }
 
 //***************************************************************************************
@@ -270,33 +271,33 @@ void CVideo2ToolDlg::OnHScroll(uint nSBCode, uint nPos, CScrollBar *pScrollBar)
     break;
   case IDC_CAL_VIDEO_HUEORRED_SLIDER:
     if (m_IsHRCamera) {
-      pVideoSettings->Red = m_HueOrRedSlider.GetPos();
-      s.Format(_T("%i"), pVideoSettings->Red);
+      pVideoSettings->gain.Red = m_HueOrRedSlider.GetPos();
+      s.Format(_T("%i"), pVideoSettings->gain.Red);
     }
     else {
       pVideoSettings->Hue = m_HueOrRedSlider.GetPos();
       s.Format(_T("%i"), pVideoSettings->Hue);
     }
     m_HueOrRedEdit.SetWindowText(s);
-    // m_pLiveVideo->ChangeHue();
+    m_pLiveVideo->ChangeVideoSettings();
     break;
   case IDC_CAL_VIDEO_SATORGREEN_SLIDER:
     if (m_IsHRCamera) {
-      pVideoSettings->Green = m_SatOrGreenSlider.GetPos();
-      s.Format(_T("%i"), pVideoSettings->Green);
+      pVideoSettings->gain.Green = m_SatOrGreenSlider.GetPos();
+      s.Format(_T("%i"), pVideoSettings->gain.Green);
     }
     else {
       pVideoSettings->Saturation = m_SatOrGreenSlider.GetPos();
       s.Format(_T("%i"), pVideoSettings->Saturation);
     }
     m_SatOrGreenEdit.SetWindowText(s);
-    // m_pLiveVideo->ChangeSaturation();
+    m_pLiveVideo->ChangeVideoSettings();
     break;
   case IDC_CAL_VIDEO_BLUE_SLIDER:
-    pVideoSettings->Blue = m_BlueSlider.GetPos();
-    s.Format(_T("%i"), pVideoSettings->Blue);
+    pVideoSettings->gain.Blue = m_BlueSlider.GetPos();
+    s.Format(_T("%i"), pVideoSettings->gain.Blue);
     m_BlueEdit.SetWindowText(s);
-    // m_pLiveVideo->ChangeBlue();
+    m_pLiveVideo->ChangeVideoSettings();
     break;
   }
 }

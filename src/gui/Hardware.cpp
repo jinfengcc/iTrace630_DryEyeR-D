@@ -904,7 +904,7 @@ void CHW::ApplyCurrentVideoSaturation()
 void CHW::ApplyCurrentVideoRed()
 {
   if (m_hiresCamera->Connected()) {
-    int hdCam = m_pCurrentVideoSettings->Red;
+    int hdCam = m_pCurrentVideoSettings->gain.Red;
     m_hiresCamera->SetRedGain(hdCam);
   }
 }
@@ -915,7 +915,7 @@ void CHW::ApplyCurrentVideoRed()
 void CHW::ApplyCurrentVideoGreen()
 {
   if (m_hiresCamera->Connected()) {
-    int hdCam = m_pCurrentVideoSettings->Green;
+    int hdCam = m_pCurrentVideoSettings->gain.Green;
     m_hiresCamera->SetGreenGain(hdCam);
   }
 }
@@ -926,7 +926,7 @@ void CHW::ApplyCurrentVideoGreen()
 void CHW::ApplyCurrentVideoBlue()
 {
   if (m_hiresCamera->Connected()) {
-    int hdCam = m_pCurrentVideoSettings->Blue;
+    int hdCam = m_pCurrentVideoSettings->gain.Blue;
     m_hiresCamera->SetBlueGain(hdCam);
   }
 }

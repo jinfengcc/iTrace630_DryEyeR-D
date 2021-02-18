@@ -430,9 +430,9 @@ void CCTAcquisition::Main()
         m_pHW->m_pCurrentVideoSettings->Contrast            = m_Contrast;
         m_pHW->m_pCurrentVideoSettings->Hue                 = m_Hue;
         m_pHW->m_pCurrentVideoSettings->Saturation          = m_Saturation;
-        m_pHW->m_pCurrentVideoSettings->Red                 = m_RedGain;
-        m_pHW->m_pCurrentVideoSettings->Green               = m_GreenGain;
-        m_pHW->m_pCurrentVideoSettings->Blue                = m_BlueGain;
+        m_pHW->m_pCurrentVideoSettings->gain.Red            = m_RedGain;
+        m_pHW->m_pCurrentVideoSettings->gain.Green          = m_GreenGain;
+        m_pHW->m_pCurrentVideoSettings->gain.Blue           = m_BlueGain;
 
 				// 10262020 Can not adjust the led power
 				if (LastWhiteLEDsPower != m_WhiteLEDsPower) {

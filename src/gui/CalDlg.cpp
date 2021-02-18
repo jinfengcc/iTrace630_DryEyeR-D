@@ -476,7 +476,7 @@ void CCalDlg::SetDlgData()
 
   // WF color video hue
   if (m_IsHRCamera) {
-    s.Format(_T("%i"), m_pCalibration->WFVideo2Settings.Red);
+    s.Format(_T("%i"), m_pCalibration->WFVideo2Settings.gain.Red);
     m_WFVideo2HueOrRedEdit.SetWindowText(s);
   }
   else {
@@ -486,7 +486,7 @@ void CCalDlg::SetDlgData()
   
   // WF color video saturation
   if (m_IsHRCamera) {
-    s.Format(_T("%i"), m_pCalibration->WFVideo2Settings.Green);
+    s.Format(_T("%i"), m_pCalibration->WFVideo2Settings.gain.Green);
     m_WFVideo2SaturationOrGreenEdit.SetWindowText(s);
   }
   else {
@@ -495,7 +495,7 @@ void CCalDlg::SetDlgData()
   }
 
   if (m_IsHRCamera) {
-    s.Format(_T("%i"), m_pCalibration->WFVideo2Settings.Blue);
+    s.Format(_T("%i"), m_pCalibration->WFVideo2Settings.gain.Blue);
     m_WFVideo2BlueEdit.SetWindowText(s);
   }
 
@@ -741,7 +741,7 @@ void CCalDlg::GetDlgData()
   m_WFVideo2HueOrRedEdit.GetWindowText(s);
   strA = s;
   if (m_IsHRCamera)
-    m_pCalibration->WFVideo2Settings.Red = atoi(strA);
+    m_pCalibration->WFVideo2Settings.gain.Red = atoi(strA);
   else
     m_pCalibration->WFVideo2Settings.Hue = atoi(strA);
 
@@ -749,7 +749,7 @@ void CCalDlg::GetDlgData()
   m_WFVideo2SaturationOrGreenEdit.GetWindowText(s);
   strA = s;
   if (m_IsHRCamera)
-    m_pCalibration->WFVideo2Settings.Green = atoi(strA);
+    m_pCalibration->WFVideo2Settings.gain.Green = atoi(strA);
   else
     m_pCalibration->WFVideo2Settings.Saturation = atoi(strA);
 
@@ -758,7 +758,7 @@ void CCalDlg::GetDlgData()
     m_WFVideo2BlueEdit.GetWindowText(s);
 
     strA                                  = s;
-    m_pCalibration->WFVideo2Settings.Blue = atoi(strA);
+    m_pCalibration->WFVideo2Settings.gain.Blue = atoi(strA);
   }
 
   // WF color video delay
