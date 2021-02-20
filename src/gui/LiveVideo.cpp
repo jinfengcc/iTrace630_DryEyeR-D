@@ -91,7 +91,7 @@ void CLiveVideo::Main()
 		m_pVideoWnd->PostMessage(WM_THREAD_UPDATE, 0, 0);
 
 	// #fix
-    Sleep(1000);
+    //Sleep(1000);
 		m_pHW->FinishTransferringVideoFrame();
 
 		switch (m_ToDo)

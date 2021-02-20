@@ -112,7 +112,7 @@ void CCalDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_CAL_WFVIDEO2_HUEORRED_EDIT, m_WFVideo2HueOrRedEdit);// For high resolution camera
     DDX_Control(pDX, IDC_CAL_WFVIDEO2_SATURATIONORGREEN_EDIT, m_WFVideo2SaturationOrGreenEdit);// For high resolution camera
 	DDX_Control(pDX, IDC_CAL_WFVIDEO2_DELAY_EDIT, m_WFVideo2DelayEdit);
-	DDX_Control(pDX, IDC_CAL_CTVIDEO_BRIGHTNESS_EDIT, m_CTVideoBrightnessEdit);
+    DDX_Control(pDX, IDC_CAL_CTVIDEO_BRIGHTNESS_EDIT, m_CTVideoBrightnessEdit);
 	DDX_Control(pDX, IDC_CAL_CTVIDEO_CONTRAST_EDIT, m_CTVideoContrastEdit);
 	DDX_Control(pDX, IDC_CAL_VIDEO_TOOL, m_VideoToolButton);
 	DDX_Control(pDX, IDC_CAL_VIDEO2_TOOL, m_Video2ToolButton);
@@ -1042,21 +1042,33 @@ void CCalDlg::OnVideo2ToolButtonClicked()
 
 void CCalDlg::OnRingsToolButtonClicked()
 {
-	::NewSettings.m_Adjust_CT = TRUE;//[5.1.1]
+  ::NewSettings.m_Adjust_CT = TRUE; //[5.1.1]
 
-	GetDlgData();
+  GetDlgData();
 
-	CCTAcquisition* pCTAcquisition = new CCTAcquisition(m_pHW, 1);//[cjf***04032012]
+  CCTAcquisition *pCTAcquisition = new CCTAcquisition(m_pHW, 1); //
+    
+  int BackupVideoBrightness = m_pCalibration->CTVideoSettings.Brightness; // 6.3.0
+  int BackupVideoContrast   = m_pCalibration->CTVideoSettings.Contrast;    // 6.3.0
 
-	CRingsToolDlg* pDlg = new CRingsToolDlg(pCTAcquisition, GetSelectedBall(), this);
-	if (pDlg->DoModal() == IDOK) {
-		SetDlgData();
+  CRingsToolDlg *pDlg = new CRingsToolDlg(pCTAcquisition, GetSelectedBall(), this);
+  if (pDlg->DoModal() == IDOK) {
+    SetDlgData();
+  }
+  else //6.3.0
+  {
+	  if (BackupVideoBrightness != m_pCalibration->CTVideoSettings.Brightness ||
+        BackupVideoContrast != m_pCalibration->CTVideoSettings.Contrast) {
+      SetDlgData();
 	}
-	delete pDlg;
+  }//6.3.0
+  delete pDlg;
 
-	delete pCTAcquisition;
 
-	::NewSettings.m_Adjust_CT = FALSE;
+
+  delete pCTAcquisition;
+
+  ::NewSettings.m_Adjust_CT = FALSE;
 }
 
 //***************************************************************************************

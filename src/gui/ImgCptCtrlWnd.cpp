@@ -325,7 +325,7 @@ void CImgCptCtrlWnd::SetVideoAttributes(int EyeType)
 
 void CImgCptCtrlWnd::SetEyeChecks(int EyeType)
 {
-  if (!m_radioBtns[EyeType].GetCheck())
+  if (m_radioBtns[EyeType].GetCheck())
     return;
 
   for (unsigned i = 0; i < _countof(m_radioBtns); ++i) {

@@ -454,7 +454,7 @@ BOOL CDB::Open(const DBCONFIG &dbc)
 
 #ifndef NEVER
   if (!dbc.readOnly) {
-    static_assert(_ASSERT_LEVEL > 1);
+    //static_assert(_ASSERT_LEVEL > 1);
     // todo make sure the file and the folders are read-write
 
     fs::create_directories(dbc.examFolder);

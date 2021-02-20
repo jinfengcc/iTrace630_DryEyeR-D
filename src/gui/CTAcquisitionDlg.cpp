@@ -100,6 +100,9 @@ LRESULT CCTAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
     m_pCTAcquisition->m_Contrast       = m_ControlWnd.GetContrast();
     m_pCTAcquisition->m_Hue            = m_ControlWnd.GetHue();
     m_pCTAcquisition->m_Saturation     = m_ControlWnd.GetSaturation();
+    m_pCTAcquisition->m_RedGain        = m_ControlWnd.GetRed();
+    m_pCTAcquisition->m_GreenGain      = m_ControlWnd.GetGreen();
+    m_pCTAcquisition->m_BlueGain       = m_ControlWnd.GetBlue();
 
 		m_ControlWnd.ShowAcqBtnGUI();
 	}
