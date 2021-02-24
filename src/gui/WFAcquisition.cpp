@@ -902,12 +902,9 @@ void CWFAcquisition::Main()
 
 		if (Done == 1)
 		{
-			if (::NewSettings.m_Super_Exam)
-			{
-				m_pHW->TurnInfraredLEDsOff();
-				m_pHW->TurnAccommodationTargetOff();
-			}
-
+			m_pHW->TurnInfraredLEDsOff();
+			m_pHW->TurnAccommodationTargetOff();
+			
 			m_pVideoWnd->PostMessage(WM_THREAD_FINISH, 0, 0);
 			r_max_um = 0;
 			return;
