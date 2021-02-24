@@ -6,10 +6,11 @@ using rzdcxLib::IDCXOBJ;
 
 RZDCX::RZDCX()
 {
-  auto rzdcx = app::GetAppPath(app::Type::exeFolder) / "rzdcx.dll";
+  auto rzdcx = fs::path(R"(C:\RZDCX\rzdcx.dll)");
+  if (!fs::exists(rzdcx)) {
+    rzdcx = app::GetAppPath(app::Type::exeFolder) / "rzdcx.dll";
+  }
   m_rzdcxLib.Load(rzdcx.wstring().c_str());
-
-  //m_rzdcxLib.Load(LR"(C:\RZDCX\rzdcx.dll)");
 }
 
 void RZDCX::SetLogging(LogLevel logLevel, const fs::path &logFile)

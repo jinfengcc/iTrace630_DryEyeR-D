@@ -14,7 +14,7 @@ using rzdcxLib::IDCXOBJIterator;
 class RZDCX : public Singleton<RZDCX>
 {
 public:
-  enum LogLevel {
+  enum class LogLevel {
     None    = static_cast<int>(rzdcxLib::LOG_LEVEL_NONE),
     Fatal   = static_cast<int>(rzdcxLib::LOG_LEVEL_FATAL),
     Error   = static_cast<int>(rzdcxLib::LOG_LEVEL_ERROR),
