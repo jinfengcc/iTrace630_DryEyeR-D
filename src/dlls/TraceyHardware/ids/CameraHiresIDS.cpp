@@ -23,6 +23,13 @@ CameraHiresIDS::CameraHiresIDS()
   std::lock_guard lock(mutex);
   if (m_pimpl = camImpl.lock(); !m_pimpl) {
     m_pimpl = std::make_shared<IDSVideoCamera>([this](const cv::Mat &img) {
+      bool copyImage = false;
+      if (copyImage) {
+        static int ndx    = 0;
+        const char file[] = "C:\\1\\_ids\\ids_image_{}.png";
+        cv::imwrite(fmt::format(file, ++ndx), img);
+      }
+
       UpdateFPS();
       if (m_transferImg) {
         UpdateImages(img);

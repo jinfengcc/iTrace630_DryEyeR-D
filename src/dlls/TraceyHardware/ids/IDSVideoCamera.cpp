@@ -92,6 +92,9 @@ bool IDSVideoCamera::Open()
     m_startTime = time(nullptr);
     is_CaptureVideo(m_hCam, IS_DONT_WAIT);
 
+    // Set Lookup table
+    EnableLUT(hCam, LUT::none);
+
     // Run experiments
     Experiments();
   }
@@ -122,7 +125,7 @@ void IDSVideoCamera::SetProperty(Prop prop, double value)
 {
   switch (prop) {
   case Prop::exposure:
-    value = m_exposureRange[0] + value * (m_exposureRange[1] - m_exposureRange[0]) / 100.0;
+    value = m_exposureRange[0] + value * (m_exposureRange[1] - m_exposureRange[0]) / 255.0;
     value = std::clamp(value, m_exposureRange[0], m_exposureRange[1]);
     is_Exposure(m_hCam, IS_EXPOSURE_CMD_SET_EXPOSURE, (void *)&value, sizeof(value));
     break;
@@ -190,6 +193,51 @@ bool IDSVideoCamera::Configure(HIDS hCam)
   Check(is_SetAutoParameter(hCam, IS_GET_AUTO_SHUTTER_MAX, &maxShutter, 0));
   Check(is_Exposure(hCam, IS_EXPOSURE_CMD_GET_EXPOSURE, (void *)&dExposure, sizeof(dExposure)));
   Check(is_Exposure(hCam, IS_EXPOSURE_CMD_GET_EXPOSURE_RANGE, (void *)m_exposureRange, sizeof(m_exposureRange)));
+
+  return true;
+}
+
+bool IDSVideoCamera::EnableLUT(HIDS hCam, LUT lut)
+{
+  if (lut == LUT::none) {
+    IS_LUT_ENABLED_STATE nLutEnabled = IS_LUT_DISABLED;
+    (void)is_LUT(hCam, IS_LUT_CMD_SET_ENABLED, (void *)&nLutEnabled, sizeof(nLutEnabled));
+    return true;
+  }
+  
+  IS_LUT_SUPPORT_INFO lutSupportInfo;
+  Check(is_LUT(hCam, IS_LUT_CMD_GET_SUPPORT_INFO, (void *)&lutSupportInfo, sizeof(lutSupportInfo)));
+
+  IS_LUT_CONFIGURATION_64 userLUT;
+
+  userLUT.bAllChannelsAreEqual = true;
+  userLUT.dblValues[0][0]      = 0.0; /* Set start value to 0.0 */
+  for (INT i = 0; i < 63; i += 2) {
+    /* Start point of the next linear apporiximation segment is the end point of the previous segment. */
+    if (i > 0) {
+      userLUT.dblValues[0][i] = userLUT.dblValues[0][i - 1];
+    }
+  
+    if (lut == LUT::sigma) {
+        double dXPosWideRange       = (((i + 1) / 64.0) - 0.5) * 12.0; /* Current position in the interval [0.0,1.0] stretched to [-6.0,6.0] */
+        userLUT.dblValues[0][i + 1] = 1.0 / (1.0 + std::exp(-dXPosWideRange)); /* #include <cmath> is required */
+    }
+    else if (lut == LUT::expo2) {
+      double x                    = i / 64.0;
+      userLUT.dblValues[0][i + 1] = x * x;
+    }
+    else if (lut == LUT::expo3) {
+      double x                    = i / 64.0;
+      userLUT.dblValues[0][i + 1] = x * x * x;
+    }
+  }
+  userLUT.dblValues[0][63] = 1.0; /* Set end value to 1.0 */
+
+  /* Set the calculated LUT */
+  Check(is_LUT(hCam, IS_LUT_CMD_SET_USER_LUT, (void *)&userLUT, sizeof(userLUT)));
+
+  IS_LUT_ENABLED_STATE nLutEnabled = IS_LUT_ENABLED;
+  Check(is_LUT(hCam, IS_LUT_CMD_SET_ENABLED, (void *)&nLutEnabled, sizeof(nLutEnabled)));
 
   return true;
 }

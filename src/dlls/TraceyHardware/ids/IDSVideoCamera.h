@@ -45,7 +45,10 @@ private:
   MemVector   m_memVector;
   double      m_exposureRange[3];
 
+  enum class LUT {none, sigma, expo2, expo3};
+
   bool  Configure(HIDS hCam);
+  bool  EnableLUT(HIDS hCam, LUT lut);
   void  OnSettingsChanged();
   bool  AllocateImgMem(int sizeX, int sizeY, int bitsPerPixel = 3 * 8);
   void  FreeImgMem();
