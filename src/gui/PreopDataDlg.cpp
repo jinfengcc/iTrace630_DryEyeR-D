@@ -18,7 +18,7 @@ int angular_distance_counterclockwise1(int a1, int a2)
 	return da;
 }
 
-// distance between a1 and a2 ª [0, 180)
+// distance between a1 and a2 Â° [0, 180)
 int angular_distance1(int a1, int a2)
 {
 	int da = angular_distance_counterclockwise1(a1, a2);
@@ -176,10 +176,10 @@ void CPreopDataDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_POSTOP_ENTIRE_EYE_CYL_EDIT, m_PostopEntireEyeCylEdit);
 	DDX_Control(pDX, IDC_POSTOP_ENTIRE_EYE_AXIS_EDIT, m_PostopEntireEyeAxisEdit);
 
-	//520
+	//
 	DDX_Control(pDX, IDC_STATIC_INFO1, m_TraceyIOLInfo1);
 	DDX_Control(pDX, IDC_STATIC_INFO2, m_TraceyIOLInfo2);
-	//520
+	//
 }
 
 //***************************************************************************************
@@ -190,8 +190,8 @@ void CPreopDataDlg::SetDlgData()
 
 	CString s;
 
-	m_TraceyIOLInfo1.ShowWindow(SW_HIDE);//520
-	m_TraceyIOLInfo2.ShowWindow(SW_HIDE);//520
+	m_TraceyIOLInfo1.ShowWindow(SW_HIDE);//
+	m_TraceyIOLInfo2.ShowWindow(SW_HIDE);//
 	switch (m_OpData.m_OpType) {
 	case 1: m_OpRadio[1].SetCheck(1); break;
 	case 2: m_OpRadio[2].SetCheck(1); break;
@@ -310,9 +310,9 @@ void CPreopDataDlg::SetDlgData()
 		IDC_IOL5_STATIC, IDC_IOL6_STATIC, IDC_IOL7_STATIC, IDC_IOL8_STATIC
 	};
 
-	for (int i = 0; i < 8; i++) {
-
-		CIOL* pIOL = &m_OpData.m_IOLs[i];
+	for (int i = 0; i < 8; i++)
+	{
+		CIOL* pIOL = &m_OpData.m_NewIOLs[i];//here has some problem
 
 		s = " " + pIOL->m_Name;
 		m_IOLRadio[i].SetWindowText(s);
@@ -343,12 +343,12 @@ void CPreopDataDlg::SetDlgData()
 
 			s.Empty();
 			if (pIOL->m_EyePostopAxis != INVALID_VALUE) {
-				s.Format(_T("%i°"), pIOL->m_EyePostopAxis);
+				s.Format(_T("%iÂ°"), pIOL->m_EyePostopAxis);
 			}
 			m_IOLPostopEyeAxisEdit[i].SetWindowText(s);
 
 			s.Empty();
-			if (m_OpData.m_BestIOL == i) s = "min";
+			if (m_OpData.m_NewBestIOL == i) s = "min";
 			((CWnd*)GetDlgItem(ID[i]))->SetWindowText(s);
 		}
 
@@ -394,7 +394,7 @@ void CPreopDataDlg::SetDlgData()
 
 	m_CanChange = TRUE;
 
-	//520, show info of IOL enhancement
+	//, show info of IOL enhancement
 	if (m_OpData.m_OpType == 1)
 	{
 		CString s1, s2;
@@ -437,7 +437,7 @@ void CPreopDataDlg::SetDlgData()
 
 			if (Angel == 180) Angel = 0;
 
-			angelStr.Format(_T("%i°"), Angel);
+			angelStr.Format(_T("%iÂ°"), Angel);
 
 			s1 = angelStr + " rotation clockwise = ";
 		}
@@ -461,7 +461,7 @@ void CPreopDataDlg::SetDlgData()
 		m_TraceyIOLInfo1.ShowWindow(SW_SHOW);
 		m_TraceyIOLInfo2.ShowWindow(SW_SHOW);
 	}
-	//520
+	//
 }
 
 //***************************************************************************************
@@ -828,7 +828,7 @@ void CPreopDataDlg::OnOp3RadioClicked()
 
 	SetIncLoC_SurInAst();//[cjf***04192012]
 
-	CICLDataDlg *pDlg = new CICLDataDlg(this, &m_OpData);
+	CICLDataDlg* pDlg = new CICLDataDlg(this, &m_OpData);
 	if (pDlg->DoModal() == IDOK) {
 		m_OpData.Recalculate();
 		SetDlgData();
@@ -1013,10 +1013,10 @@ void CPreopDataDlg::OnIOLRadioClicked(const int i)
 
 	m_OpData.m_SelectedIOL = i;
 
-	m_OpData.m_InternalPostopCyl = m_OpData.m_IOLs[i].m_InternalPostopCyl;
-	m_OpData.m_InternalPostopAxis = m_OpData.m_IOLs[i].m_InternalPostopAxis;
-	m_OpData.m_EyePostopCyl = m_OpData.m_IOLs[i].m_EyePostopCyl;
-	m_OpData.m_EyePostopAxis = m_OpData.m_IOLs[i].m_EyePostopAxis;
+	m_OpData.m_InternalPostopCyl = m_OpData.m_NewIOLs[i].m_InternalPostopCyl;
+	m_OpData.m_InternalPostopAxis = m_OpData.m_NewIOLs[i].m_InternalPostopAxis;
+	m_OpData.m_EyePostopCyl = m_OpData.m_NewIOLs[i].m_EyePostopCyl;
+	m_OpData.m_EyePostopAxis = m_OpData.m_NewIOLs[i].m_EyePostopAxis;
 
 	SetDlgData();
 }

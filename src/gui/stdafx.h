@@ -130,6 +130,7 @@ namespace Gdiplus {
 #define WM_SHOW_SIMPRMS          0x8207 // Show Simplified Rms GUI
 #define WM_ONOFF_POS_CHANGED     0x8208 // Move OnOff Btn
 #define WM_SELBTN_POS_CHANGED    0x8209 // Move OnOff Btn
+#define WM_BTN_ISHOVER           0x820A // 7.0.0
 
 // T: Entire eye   C:Corneal   I:internal
 #define TYPE_TEYE 1 // CWFSingleSumWnd(Angle K/A) default

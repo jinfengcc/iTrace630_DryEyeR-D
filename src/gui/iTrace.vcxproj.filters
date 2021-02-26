@@ -878,6 +878,9 @@
     <ClCompile Include="CmdLineArgs.cpp">
       <Filter>Others</Filter>
     </ClCompile>
+    <ClCompile Include="PreBtn.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PatientDlg.h">
@@ -1443,6 +1446,9 @@
     </ClInclude>
     <ClInclude Include="CmdLineArgs.h">
       <Filter>Others</Filter>
+    </ClInclude>
+    <ClInclude Include="PreBtn.h">
+      <Filter>Controls</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
