@@ -1252,240 +1252,252 @@ real_t CEyeImage::GetLensRotationAngle()
 //***************************************************************************************
 //***************************************************************************************
 
-void CEyeImage::FindVertex0(BOOL TriLaserOn, int LaserIntensityThreshold)
+void CEyeImage::FindVertex0(BOOL TriLaserOn, int LaserIntensityThreshold, BOOL IsHRCameraConnected)
 {
-	if (m_RGBData.GetMem() == NULL) return;
+  if (m_RGBData.GetMem() == NULL)
+    return;
 
-	int icx = intRound(0.5 * m_w);
-	int icy = intRound(0.5 * m_h);
+  int icx = intRound(0.5 * m_w);
+  int icy = intRound(0.5 * m_h);
 
-	//--------------------------------------------------------------
-	// ����� ����� �������������
-	{
-		int dx = 10;
-		int dy = 10;
-		int t[64];
-		int hist[256];
-		memset(hist, 0, sizeof(hist));
-		int pavg = 0;
-		int n = 0;
-		int k = 0;
-		for (int j = -4; j < 4; j++) {
-			int y1 = icy + dy * j;
-			int y2 = y1 + dy - 1;
-			for (int i = -4; i < 4; i++) {
-				int x1 = icx + dx * i;
-				int x2 = x1 + dx - 1;
-				int s = 0;
-				for (int y = y1; y <= y2; y++) {
-					for (int x = x1; x <= x2; x++) {
-						int p = GetRAt(x, y);
-						s += p;
-						hist[p]++;
-						pavg += p;
-						n++;
-					}
-				}
-				t[k++] = s;
-			}
-		}
-		pavg /= n;
+  //--------------------------------------------------------------
+  // ����� ����� �������������
+  {
+    int dx = 10;
+    int dy = 10;
+    int t[64];
+    int hist[256];
+    memset(hist, 0, sizeof(hist));
+    int pavg = 0;
+    int n    = 0;
+    int k    = 0;
+    for (int j = -4; j < 4; j++) {
+      int y1 = icy + dy * j;
+      int y2 = y1 + dy - 1;
+      for (int i = -4; i < 4; i++) {
+        int x1 = icx + dx * i;
+        int x2 = x1 + dx - 1;
+        int s  = 0;
+        for (int y = y1; y <= y2; y++) {
+          for (int x = x1; x <= x2; x++) {
+            int p = GetRAt(x, y);
+            s += p;
+            hist[p]++;
+            pavg += p;
+            n++;
+          }
+        }
+        t[k++] = s;
+      }
+    }
+    pavg /= n;
 
-		// ����� ������� � ����������� ��������� ��������������
-		int pmin = INT_MAX;
-		for (int i = 0; i < 64; i++) {
-			if (t[i] < pmin) pmin = t[i];
-		}
-		// ��������� �� ���������� �������� � ��������
-		pmin /= (dy * dx);
+    // ����� ������� � ����������� ��������� ��������������
+    int pmin = INT_MAX;
+    for (int i = 0; i < 64; i++) {
+      if (t[i] < pmin)
+        pmin = t[i];
+    }
+    // ��������� �� ���������� �������� � ��������
+    pmin /= (dy * dx);
 
-		// ������������� �����������
-		m_hist_max = 0.0;
-		for (int i = 0; i < 256; i++) {
-			int s = 0;
-			int n = 0;
-			for (int j = -5; j <= 5; j++) {
-				int k = i + j;
-				if (k < 0) k = 0; else if (k > 255) k = 255;
-				int p = hist[k];
-				if (p > 0) {
-					s += p;
-					n++;
-				}
-			}
-			real_t v = n == 0 ? 0.0 : (real_t)s / n;
-			m_hist[i] = v;
-			if (m_hist_max < v) m_hist_max = v;
-		}
+    // ������������� �����������
+    m_hist_max = 0.0;
+    for (int i = 0; i < 256; i++) {
+      int s = 0;
+      int n = 0;
+      for (int j = -5; j <= 5; j++) {
+        int k = i + j;
+        if (k < 0)
+          k = 0;
+        else if (k > 255)
+          k = 255;
+        int p = hist[k];
+        if (p > 0) {
+          s += p;
+          n++;
+        }
+      }
+      real_t v  = n == 0 ? 0.0 : (real_t)s / n;
+      m_hist[i] = v;
+      if (m_hist_max < v)
+        m_hist_max = v;
+    }
 
-		// ����� �������
-		int imin = pmin;
-		for (int i = pmin + 1; i <= pavg; i++) {
-			if (m_hist[i] < m_hist[imin]) {
-				imin = i;
-			}
-		}
-		m_ve0_thr = imin;
-	}
+    // ����� �������
+    int imin = pmin;
+    for (int i = pmin + 1; i <= pavg; i++) {
+      if (m_hist[i] < m_hist[imin]) {
+        imin = i;
+      }
+    }
+    m_ve0_thr = imin;
+  }
 
-	//--------------------------------------------------------------
-	// ��������� ������� �����
-	m_table.Create(81, 81);
-	int Y = m_table.GetNumRows();
-	int X = m_table.GetNumCols();
-	int Y2 = Y >> 1;
-	int X2 = X >> 1;
-	for (int y = 0; y < Y; y++) {
-		int yy = y - Y2;
-		for (int x = 0; x < X; x++) {
-			int xx = x - X2;
-			int s = 0;
-			for (int j = yy - 2; j <= yy + 2; j++) {
-				for (int i = xx - 2; i <= xx + 2; i++) {
-					s += GetRAt(icx + i, icy + j);
-				}
-			}
-			m_table(y, x) = s <= 25 * m_ve0_thr ? 1 : 0;
-		}
-	}
+  //--------------------------------------------------------------
+  // ��������� ������� �����
+  m_table.Create(81, 81);
+  int Y  = m_table.GetNumRows();
+  int X  = m_table.GetNumCols();
+  int Y2 = Y >> 1;
+  int X2 = X >> 1;
+  for (int y = 0; y < Y; y++) {
+    int yy = y - Y2;
+    for (int x = 0; x < X; x++) {
+      int xx = x - X2;
+      int s  = 0;
+      for (int j = yy - 2; j <= yy + 2; j++) {
+        for (int i = xx - 2; i <= xx + 2; i++) {
+          s += GetRAt(icx + i, icy + j);
+        }
+      }
+      m_table(y, x) = s <= 25 * m_ve0_thr ? 1 : 0;
+    }
+  }
 
-	//--------------------------------------------------------------
-	if (FindLargestGroup(m_table, 1, 2) < 200) return;
+  //--------------------------------------------------------------
+  if (FindLargestGroup(m_table, 1, 2) < 200)
+    return;
 
-	//--------------------------------------------------------------
-	int s = 0, sx = 0, sy = 0;
-	for (int y = 0; y < Y; y++) {
-		for (int x = 0; x < X; x++) {
-			if (m_table(y, x) == 2) {
-				sx += x;
-				sy += y;
-				s++;
-			}
-		}
-	}
-	m_ve0_x = sx / s - X2;
-	m_ve0_y = sy / s - Y2;
+  //--------------------------------------------------------------
+  int s = 0, sx = 0, sy = 0;
+  for (int y = 0; y < Y; y++) {
+    for (int x = 0; x < X; x++) {
+      if (m_table(y, x) == 2) {
+        sx += x;
+        sy += y;
+        s++;
+      }
+    }
+  }
+  m_ve0_x = sx / s - X2;
+  m_ve0_y = sy / s - Y2;
 
-	//--------------------------------------------------------------
-	// ��������� �������� - ������ ��� ����������� �� ������
-	FindHull(m_hull, m_table, 2, 3);
+  //--------------------------------------------------------------
+  // ��������� �������� - ������ ��� ����������� �� ������
+  FindHull(m_hull, m_table, 2, 3);
 
-	//--------------------------------------------------------------
-	m_ve0_ok = TRUE;
+  //--------------------------------------------------------------
+  m_ve0_ok = TRUE;
 
-	//--------------------------------------------------------------
+  //--------------------------------------------------------------
 
-	//if (::NewSettings.m_Adjust_CT)
-	//{
-	//	//original code
-	//	if (TriLaserOn)
-	//	{
-	//		int t = 11 * 21 * LaserIntensityThreshold;
-	//		int xmax, smax = 0;
-	//		for (int x = -40; x <= 40; x++)
-	//		{
-	//			int s = 0;
-	//			for (int j = -5; j <= 5; j++)
-	//			{
-	//				for (int i = -10; i <= 10; i++)
-	//				{
-	//					s += GetRAt(icx + x + i, icy + j);
-	//				}
-	//			}
-	//			if (s > smax)
-	//			{
-	//				smax = s;
-	//				xmax = x;
-	//			}
-	//		}
-	//		if (smax >= t)
-	//		{
-	//			m_la_x = xmax;
-	//			m_la_v = smax / (11 * 21);
-	//			m_la_ok = TRUE;
-	//			m_la_RtoC_OK = TRUE;
-	//		}
-	//	}
-	//}
-	//else
-	{
-		//[cjf***04122012], tracing the first laser spot, do not allow second spot trigger capture
-		int row = intRound((m_w - 400) / 10); //[cjf06112012]
-		if (TriLaserOn)
-		{
-			int t = 11 * 11 * LaserIntensityThreshold;
-			int xmax, smax = 0;
+  // if (::NewSettings.m_Adjust_CT)
+  //{
+  //	//original code
+  //	if (TriLaserOn)
+  //	{
+  //		int t = 11 * 21 * LaserIntensityThreshold;
+  //		int xmax, smax = 0;
+  //		for (int x = -40; x <= 40; x++)
+  //		{
+  //			int s = 0;
+  //			for (int j = -5; j <= 5; j++)
+  //			{
+  //				for (int i = -10; i <= 10; i++)
+  //				{
+  //					s += GetRAt(icx + x + i, icy + j);
+  //				}
+  //			}
+  //			if (s > smax)
+  //			{
+  //				smax = s;
+  //				xmax = x;
+  //			}
+  //		}
+  //		if (smax >= t)
+  //		{
+  //			m_la_x = xmax;
+  //			m_la_v = smax / (11 * 21);
+  //			m_la_ok = TRUE;
+  //			m_la_RtoC_OK = TRUE;
+  //		}
+  //	}
+  //}
+  // else
+  {
+    //tracing the first laser spot, do not allow second spot trigger capture
+    int row = intRound((m_w - 400) / 10);
 
-			for (int i = 2; i < row; i++) {
-				int s = 0;
-				int m = i * 10 + 200;
-				if ((m > icx + 35) || (m < icx - 35)) {
-					for (int x = m; x <= m + 10; x++) {
-						for (int y = icy - 5; y <= icy + 5; y++) {
-							int R = GetRAt(x, y);
-							s += R;
-						}
-					}
+    if (TriLaserOn) {
+      int SpotWH   = IsHRCameraConnected ? 3 : 5;    // 6.3.0 If it is HR Camera, shrink the spot area to 7*7
+      int SpotArea = IsHRCameraConnected ? 49 : 121; // 6.3.0 If it is HR Camera, shrink the spot area to 7*7
 
-					if (s > smax) {
-						smax = s;
-						xmax = m + 5;
-					}
-				}
-			}
+      int LaserSpotBrightness = SpotArea * LaserIntensityThreshold;//Only brighter than this be consdiered as the laser spot
+      int xmax, smax = 0;
 
-			//m_la_xmax = xmax - icx;	
+      for (int i = 2; i < row; i++) {
+        int s = 0;
+        int m = i * 10 + 200;
+        if ((m > icx + 35) || (m < icx - 35)) {
+          for (int x = m; x <= m + SpotWH * 2; x++) {
+            for (int y = icy - SpotWH; y <= icy + SpotWH; y++) {
+              int R = GetRAt(x, y);
+              s += R;
+            }
+          }
 
-			//[cjf***04122012] 
-			int xmaxCen, smaxCen = 0;
+          if (s > smax) {
+            smax = s;
+            xmax = m + 5;
+          }
+        }
+      }
 
-			for (int x = -30; x <= 30; x++) {
-				int s = 0;
-				for (int j = -5; j <= 5; j++) {
-					for (int i = -5; i <= 5; i++) {
-						s += GetRAt(icx + x + i, icy + j);
-					}
-				}
-				if (s > smaxCen) {
-					smaxCen = s;
-					xmaxCen = x + icx;
-				}
-			}
+      // m_la_xmax = xmax - icx;
 
-			if (smaxCen >= t) {
-				m_la_x = xmaxCen - icx;
-				m_la_v = smaxCen / (11 * 11);
-				if (xmax >= (icx - 20) && smax >= t) m_Target_ok = TRUE;//[5.1.1]  
-				else m_Target_ok = FALSE;//[5.1.1]  
+      int xmaxCen, smaxCen = 0;
 
-				if (xmax >= (icx - 10) && smax >= t)
-				{
-					//sometimes it is the second light target the capture in the center since it has maxium value
-					//however it has a 'bright long tail' in its right side
-					//Let check this 'long tail'
-					int s = 0;
-					for (int j = -5; j <= 5; j++) {
-						for (int i = -5; i <= 5; i++) {
-							s += GetRAt(icx + 20 + i, icy + j);
-						}
-					}
-					if (s < t)  m_la_ok = TRUE;
-					else m_la_ok = FALSE;
-					//
-				}
+      for (int x = -30; x <= 30; x++) {
+        int s = 0;
+        for (int j = -SpotWH; j <= SpotWH; j++) {
+          for (int i = -SpotWH; i <= SpotWH; i++) {
+            s += GetRAt(icx + x + i, icy + j);
+          }
+        }
+        if (s > smaxCen) {
+          smaxCen = s;
+          xmaxCen = x + icx;
+        }
+      }
 
-				//if((xmax - icx) == -37 || (xmax - icx) == -87) // for the caliboard sphere
-				if ((xmax - icx) == -37 || (xmax - icx) == -87 || (xmax - icx) == 43) // [5.1.1]
-				{
-					m_la_ok = TRUE;
-					m_Target_ok = TRUE;
-				}
-				m_la_RtoC_OK = FindDirt(xmaxCen, icx);
-			}
-			else m_la_x = xmax;
-		}
-		//[cjf***04112012]
-	}
+      if (smaxCen >= LaserSpotBrightness) {
+        m_la_x = xmaxCen - icx;
+        m_la_v = smaxCen / SpotArea;
+        if (xmax >= (icx - 20) && smax >= LaserSpotBrightness)
+          m_Target_ok = TRUE; //[5.1.1]
+        else
+          m_Target_ok = FALSE; //[5.1.1]
+
+        if (xmax >= (icx - 10) && smax >= LaserSpotBrightness) {
+          // sometimes it is the second light target the capture in the center since it has maxium value
+          // however it has a 'bright long tail' in its right side
+          // Let check this 'long tail'
+          int s = 0;
+          for (int j = -SpotWH; j <= SpotWH; j++) {
+            for (int i = -SpotWH; i <= SpotWH; i++) {
+              s += GetRAt(icx + 20 + i, icy + j);
+            }
+          }
+          if (s < LaserSpotBrightness)
+            m_la_ok = TRUE;
+          else
+            m_la_ok = FALSE;
+          //
+        }
+
+        // if((xmax - icx) == -37 || (xmax - icx) == -87) // for the caliboard sphere
+        if ((xmax - icx) == -37 || (xmax - icx) == -87 || (xmax - icx) == 43) // [5.1.1]
+        {
+          m_la_ok     = TRUE;
+          m_Target_ok = TRUE;
+        }
+        m_la_RtoC_OK = FindDirt(xmaxCen, icx);
+      }
+      else
+        m_la_x = xmax;
+    } 
+  }
 }
 
 //***************************************************************************************
