@@ -7,6 +7,8 @@
 #include "DispWnd.h"
 #include "Data.h"
 
+#include "PreBtn.h"
+
 //***************************************************************************************
 
 class CPlanWnd : public CDispWnd
@@ -20,8 +22,8 @@ public:
 	CMap2D m_Map2D;
 	real_t m_y_px_um;
 
-	BOOL     m_ShowGrayEye;//521
-	BOOL     m_ShowColorEye;//521
+	BOOL     m_ShowGrayEye;//
+	BOOL     m_ShowColorEye;//
 
 	BOOL m_ShowEye;
 	BOOL m_ShowMap;
@@ -60,7 +62,7 @@ private:
 	int m_MousePos;
 
 	BOOL    m_SurgeonView;
-	real_t    m_StepLength;//[cjf***05022012*004*],used to adjust postioion of axes notes
+	real_t   m_StepLength;//[cjf***05022012*004*],used to adjust postioion of axes notes
 	CString m_Angular_distance;//[cjf***05022012*004*],amount of rotation of IOL enhancement
 	BOOL    m_Clock_wise;//[cjf***05022012*004*],direction of rotation of IOL enhancement
 	int     m_MoveCalipar;//[cjf***05022012*004*],moveing which caliper point
@@ -73,7 +75,7 @@ private:
 	real_t m_cx;
 	real_t m_cy;
 
-	CEyeImage*  m_pImage;
+	CEyeImage* m_pImage;
 
 	virtual void RepaintMemDC() override;
 	void Eye();
@@ -93,18 +95,18 @@ private:
 	void EyePostopAxes();
 	void Lens2();
 	void Caliper();
-	void Protractor();//531
+	void Protractor();//
 
-	void GetProAngs(int inputV, int &a0, int &a1, int &a2);//531
+	void GetProAngs(int inputV, int& a0, int& a1, int& a2);//
 
 	BOOL OverLapFun(int a0, int a1, int b0, int b1);//[cjf***05032012*005*] wether two arcs are overlap;
 	int  SmallAng(int a0, int a1);// get the samller degree difference between a0 and a1
 
 	void FindClearLimbus(CEyeImage* OriImage, real_t LastLimbuX, real_t LastLimbuY, real_t LastLimbuR);
 
-	CBtn m_ViewButton;
-	CBtn m_ZaldivarButton;// [cjf***05022012*004*] 531 from private to public for combo gray it or not
-	CBtn m_OSAlignmentButton;// [520]
+	CPreBtn m_ViewButton;
+	CPreBtn m_ZaldivarButton;// [cjf***05022012*004*] 531 from private to public for combo gray it or not
+	CPreBtn m_OSAlignmentButton;// [520]
 
 	CButton m_RecalLenButton;// [cjf***05052012*008*],the combox for the recalculation of lens placement;
 	CButton m_ReScale;// [520];

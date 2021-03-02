@@ -876,9 +876,9 @@ LRESULT CCTSingleSumWnd::OnOkulix(WPARAM wParam, LPARAM lParam)
 	CStringA AstrFileName(FlieName);
 	FILE* pFile = fopen(AstrFileName, "w");
 
-	CString Line0, Line1, Line2, Line3, Line4, Line5;
+	CStringA Line0, Line1, Line2, Line3, Line4, Line5;//fix a file writting error
 
-	CString ZeroLine = "";
+	CStringA ZeroLine = "";//fix a file writting error
 
 	for (int i = 0; i < 29; i++)
 	{

@@ -4,12 +4,13 @@
 #include "Resource.h"
 #include "PlannerWnd.h"
 #include "PreopDataDlg.h"
-#include "PreopComboDataDlg.h"//531
+#include "PreopComboDataDlg.h"//
 #include "BusyCursor.h"
 #include "ToricSelDlg.h"
-#include "ToricSelDlg2.h"//530
-#include "FolderDlg.h"//530
-#include "zip.h"//530
+#include "ToricSelDlg2.h"//
+#include "FolderDlg.h"//
+#include "GlobalFunctions.h"
+#include "zip.h"//
 
 //***************************************************************************************
 //***************************************************************************************
@@ -17,6 +18,8 @@
 //***************************************************************************************
 
 BEGIN_MESSAGE_MAP(CPlannerWnd, CSumWnd)
+
+	ON_WM_MOUSEMOVE()//7.0.0 onmousemove
 
 	ON_MESSAGE(WM_UPDATE_INFO, OnUpdateInfoMsg)
 	ON_BN_CLICKED(IDC_PREOP_DATA_BUTTON, OnDataButtonClicked)
@@ -37,6 +40,8 @@ CPlannerWnd::CPlannerWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CCTExam*
 	CSumWnd(pWnd, WndRect, pPatient, pWndSettings)
 {
 	CBusyCursor Cursor;
+
+	m_Patient = pPatient;//7.0.0
 
 	m_OD = OD;
 	m_ESDBtnCreated = 0;
@@ -279,13 +284,12 @@ void CPlannerWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	CString s;
 	int num = NumRows;
 
-	if (m_isCombo) num = num + 4;
-	real_t h = (Rect.bottom - Rect.top) / (real_t)num;
+	real_t h = (Rect.bottom - Rect.top) / ((real_t)num + 1);
 
-	CMFont Font(intRound(1.1 * h), 400, "Arial");
+	CMFont Font(intRound(1 * h), 400, "Arial");
 
 	RECT Rect1;
-	m_MemDC.MeasureRect("000° ", Rect1, Font);
+	m_MemDC.MeasureRect("000Â° ", Rect1, Font);
 	int w1 = Rect1.right - Rect1.left;
 
 	m_MemDC.MeasureRect("   Post-Op Ent Eye Ast ", Rect1, Font);
@@ -305,7 +309,7 @@ void CPlannerWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 
 	real_t t = T;
 	::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
-	if (m_pCTExam->m_OpData.m_CorneaCycliderAdj)//6.2.0 asdfa
+	if (m_pCTExam->m_OpData.m_CorneaCycliderAdj)// asdfa
 	{
 		m_MemDC.WriteText(" Pre-Op Corneal Astigmatism", Rect, Font, white, 0);
 
@@ -340,7 +344,7 @@ void CPlannerWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 		{
 			::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
 
-			s.Format(_T("%i° "), m_pCTExam->m_OpData.m_Pri_CorneaPreopAxis);
+			s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_Pri_CorneaPreopAxis);
 
 			m_MemDC.WriteText(s, Rect, Font, white, 2);
 		}
@@ -358,12 +362,12 @@ void CPlannerWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 		{
 			::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
 
-			s.Format(_T("%i° "), m_pCTExam->m_OpData.m_CorneaPreopAxis);
+			s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_CorneaPreopAxis);
 
 			m_MemDC.WriteText(s, Rect, Font, white, 2);
 		}
 	}
-	
+
 
 	t += h;
 	::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
@@ -379,7 +383,7 @@ void CPlannerWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	if (m_pCTExam->m_OpData.m_InternalPreopAxis != INVALID_VALUE)
 	{
 		::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
-		s.Format(_T("%i° "), m_pCTExam->m_OpData.m_InternalPreopAxis);
+		s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_InternalPreopAxis);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 
@@ -397,7 +401,7 @@ void CPlannerWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	if (m_pCTExam->m_OpData.m_EyePreopAxis != INVALID_VALUE)
 	{
 		::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
-		s.Format(_T("%i° "), m_pCTExam->m_OpData.m_EyePreopAxis);
+		s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_EyePreopAxis);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 
@@ -407,7 +411,7 @@ void CPlannerWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	{
 		::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
 		m_MemDC.WriteText(" Surgical Incision Location", Rect, Font, white, 0);
-		s.Format(_T("%i° "), m_pCTExam->m_OpData.m_CorneaIncisionAxis);
+		s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_CorneaIncisionAxis);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 
@@ -420,7 +424,7 @@ void CPlannerWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 		s.Format(_T("%.2f D x "), m_pCTExam->m_OpData.m_CorneaInducedCyl);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 		::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
-		s.Format(_T("%i° "), m_pCTExam->m_OpData.m_CorneaInducedAxis);
+		s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_CorneaInducedAxis);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 
@@ -438,17 +442,18 @@ void CPlannerWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	{
 		::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
 		m_MemDC.WriteText(" IOL's Placement Axis", Rect, Font, white, 0);
-		s.Format(_T("%i° "), m_pCTExam->m_OpData.m_IOLPlacementAxis);
+		s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_IOLPlacementAxis);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 	else if (m_pCTExam->m_OpData.m_OpType == 2)
 	{
 		::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
 		m_MemDC.WriteText(" ICL's Placement Axis", Rect, Font, white, 0);
-		s.Format(_T("%i° "), m_pCTExam->m_OpData.m_ICL.m_PlacementAxis);
+		s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_ICL.m_PlacementAxis);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 
+	t += h;
 	t += h;
 
 	if (m_pCTExam->m_OpData.m_OpType == 0)
@@ -479,156 +484,86 @@ void CPlannerWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 		if (m_pCTExam->m_OpData.m_ICL.m_Axis != INVALID_VALUE)
 		{
 			::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
-			s.Format(_T("%i° "), m_pCTExam->m_OpData.m_ICL.m_Axis);
+			s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_ICL.m_Axis);
 			m_MemDC.WriteText(s, Rect, Font, white, 2);
 		}
 	}
 
 	if (m_pCTExam->m_OpData.m_OpType == 0)
 	{
-		if (m_isCombo)
+		//7.0.0
+		int BestIOL = m_pCTExam->m_OpData.m_CorneaCycliderAdj != TRUE ? m_pCTExam->m_OpData.m_NewBestIOL : m_pCTExam->m_OpData.m_NewPri_BestIOL;
+
+		int FirstIOL = BestIOL - 3;
+		int LastIOL = BestIOL + 3;
+
+		if (FirstIOL < 0)
 		{
-			for (int i = 0; i < 12; i++)
-			{
-				int pos;
-
-				switch (i)
-				{
-				case 0:		//Non toric	
-					pos = 0;
-					break;
-				case 1:       //T2 (New)
-					pos = 9;
-					break;
-				case 2:       //T3
-					pos = 1;
-					break;
-				case 3:       //T3+ (New)
-					pos = 10;
-					break;
-				case 4:       //T4
-					pos = 2;
-					break;
-				case 5:       //T5
-					pos = 3;
-					break;
-				case 6:       //T5+ 
-					pos = 11;
-					break;
-				case 7:       //T6
-					pos = 4;
-					break;
-				case 8:       //T6+ 
-					pos = 8;
-					break;
-				case 9:       //T7
-					pos = 5;
-					break;
-				case 10:      //T8
-					pos = 6;
-					break;
-				case 11:      //T9
-					pos = 7;
-					break;
-				}
-
-				t += h;
-
-				CIOL* pIOL;
-				
-				//6.2.0
-				if (m_pCTExam->m_OpData.m_CorneaCycliderAdj)
-				{
-					pIOL = &m_pCTExam->m_OpData.m_Pri_IOLs[pos];
-				}
-				else
-				{
-					pIOL  = &m_pCTExam->m_OpData.m_IOLs[pos];
-				}
-				//6.2.0
-
-				BOOL IOLCalculated = pIOL->m_EyePostopCyl != INVALID_VALUE;
-
-				COLORREF Color = GRAY;
-
-				if (pos == m_pCTExam->m_OpData.m_SelectedIOL) Color = white;
-
-				::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
-				s = " " + pIOL->m_Name;
-				m_MemDC.WriteText(s, Rect, Font, Color, 0);
-
-				::SetRect(&Rect, L, intRound(t), R1, intRound(t + h + 1));
-				s.Format(_T("%.2f D "), pIOL->m_Cyl);
-				m_MemDC.WriteText(s, Rect, Font, Color, 2);
-
-				if (fabs(pIOL->m_Cyl) > 0.001)
-				{
-					::SetRect(&Rect, L, intRound(t), R2, intRound(t + h + 1));
-					s.Format(_T("%.2f D x "), pIOL->m_InternalPostopCyl);
-					m_MemDC.WriteText(s, Rect, Font, Color, 2);
-
-					::SetRect(&Rect, L, intRound(t), R3, intRound(t + h + 1));
-					s.Format(_T("%i° "), pIOL->m_InternalPostopAxis);
-					m_MemDC.WriteText(s, Rect, Font, Color, 2);
-				}
-
-				if (IOLCalculated)
-				{
-					::SetRect(&Rect, L, intRound(t), R4, intRound(t + h + 1));
-					s.Format(_T("%.2f D x "), pIOL->m_EyePostopCyl);
-					m_MemDC.WriteText(s, Rect, Font, Color, 2);
-
-					::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
-					s.Format(_T("%i° "), pIOL->m_EyePostopAxis);
-					m_MemDC.WriteText(s, Rect, Font, Color, 2);
-				}
-			}
+			LastIOL -= FirstIOL;
+			FirstIOL = 0;
 		}
-
-		else
+		else if (LastIOL > 30)
 		{
-			for (int i = 0; i < 8; i++)
+			FirstIOL -= (LastIOL - 30);
+			LastIOL = 30;
+		}
+		//7.0.0
+
+		int Order = 0;
+		for (int i = FirstIOL; i <= LastIOL; i++)
+		{
+			t += h;
+
+			CIOL* pIOL;
+
+			//
+			if (m_pCTExam->m_OpData.m_CorneaCycliderAdj)
 			{
-				t += h;
+				pIOL = &m_pCTExam->m_OpData.m_NewPri_IOLs[i];
+			}
+			else
+			{
+				pIOL = &m_pCTExam->m_OpData.m_NewIOLs[i];
+			}
+			//
 
-				CIOL* pIOL = &m_pCTExam->m_OpData.m_IOLs[i];
+			BOOL IOLCalculated = pIOL->m_EyePostopCyl != INVALID_VALUE;
 
-				BOOL IOLCalculated = pIOL->m_EyePostopCyl != INVALID_VALUE;
+			COLORREF Color = GRAY;
 
-				COLORREF Color = GRAY;
+			if (Order == m_pCTExam->m_OpData.m_SelectedIOL) Color = white;
 
-				if (i == m_pCTExam->m_OpData.m_SelectedIOL) Color = white;
+			::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
+			s = " " + pIOL->m_Name;
+			m_MemDC.WriteText(s, Rect, Font, Color, 0);
 
-				::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
-				s = " " + pIOL->m_Name;
-				m_MemDC.WriteText(s, Rect, Font, Color, 0);
+			::SetRect(&Rect, L, intRound(t), R1, intRound(t + h + 1));
+			s.Format(_T("%.2f D "), pIOL->m_Cyl);
+			m_MemDC.WriteText(s, Rect, Font, Color, 2);
 
-				::SetRect(&Rect, L, intRound(t), R1, intRound(t + h + 1));
-				s.Format(_T("%.2f D "), pIOL->m_Cyl);
+			if (fabs(pIOL->m_Cyl) > 0.001)
+			{
+				::SetRect(&Rect, L, intRound(t), R2, intRound(t + h + 1));
+				s.Format(_T("%.2f D x "), pIOL->m_InternalPostopCyl);
 				m_MemDC.WriteText(s, Rect, Font, Color, 2);
 
-				if (fabs(pIOL->m_Cyl) > 0.001)
-				{
-					::SetRect(&Rect, L, intRound(t), R2, intRound(t + h + 1));
-					s.Format(_T("%.2f D x "), pIOL->m_InternalPostopCyl);
-					m_MemDC.WriteText(s, Rect, Font, Color, 2);
-
-					::SetRect(&Rect, L, intRound(t), R3, intRound(t + h + 1));
-					s.Format(_T("%i° "), pIOL->m_InternalPostopAxis);
-					m_MemDC.WriteText(s, Rect, Font, Color, 2);
-				}
-
-				if (IOLCalculated)
-				{
-					::SetRect(&Rect, L, intRound(t), R4, intRound(t + h + 1));
-					s.Format(_T("%.2f D x "), pIOL->m_EyePostopCyl);
-					m_MemDC.WriteText(s, Rect, Font, Color, 2);
-
-					::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
-					s.Format(_T("%i° "), pIOL->m_EyePostopAxis);
-					m_MemDC.WriteText(s, Rect, Font, Color, 2);
-				}
+				::SetRect(&Rect, L, intRound(t), R3, intRound(t + h + 1));
+				s.Format(_T("%iÂ° "), pIOL->m_InternalPostopAxis);
+				m_MemDC.WriteText(s, Rect, Font, Color, 2);
 			}
+
+			if (IOLCalculated)
+			{
+				::SetRect(&Rect, L, intRound(t), R4, intRound(t + h + 1));
+				s.Format(_T("%.2f D x "), pIOL->m_EyePostopCyl);
+				m_MemDC.WriteText(s, Rect, Font, Color, 2);
+
+				::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
+				s.Format(_T("%iÂ° "), pIOL->m_EyePostopAxis);
+				m_MemDC.WriteText(s, Rect, Font, Color, 2);
+			}
+
+			Order++;
 		}
 	}
 
@@ -651,13 +586,14 @@ void CPlannerWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 		if (m_pCTExam->m_OpData.m_ICL.m_InducedAxis != INVALID_VALUE)
 		{
 			::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
-			s.Format(_T("%i° "), m_pCTExam->m_OpData.m_ICL.m_InducedAxis);
+			s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_ICL.m_InducedAxis);
 			m_MemDC.WriteText(s, Rect, Font, white, 2);
 		}
 
 		t += 7 * h;
 	}
 
+	t += h;
 	t += h;
 	::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
 
@@ -673,7 +609,7 @@ void CPlannerWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	if (m_pCTExam->m_OpData.m_CorneaPostopAxis != INVALID_VALUE)
 	{
 		::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
-		s.Format(_T("%i° "), m_pCTExam->m_OpData.m_CorneaPostopAxis);
+		s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_CorneaPostopAxis);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 
@@ -691,7 +627,7 @@ void CPlannerWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	if (m_pCTExam->m_OpData.m_InternalPostopAxis != INVALID_VALUE)
 	{
 		::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
-		s.Format(_T("%i° "), m_pCTExam->m_OpData.m_InternalPostopAxis);
+		s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_InternalPostopAxis);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 
@@ -709,7 +645,7 @@ void CPlannerWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	if (m_pCTExam->m_OpData.m_EyePostopAxis != INVALID_VALUE)
 	{
 		::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
-		s.Format(_T("%i° "), m_pCTExam->m_OpData.m_EyePostopAxis);
+		s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_EyePostopAxis);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 }
@@ -721,13 +657,16 @@ void CPlannerWnd::OnDataButtonClicked()
 	BOOL OK;
 	if (m_isCombo)
 	{
-		CPreopComboDataDlg* pDlg = new CPreopComboDataDlg(this, &m_pCTExam->m_OpData, m_OD);
+		CString PatientName = G_ReadChinese(m_Patient->m_FirstName) + "." + G_ReadChinese(m_Patient->m_LastName);
+		CString PatientAge = GetPatientAge(m_Patient);
+
+		CPreopComboDataDlg* pDlg = new CPreopComboDataDlg(this, &m_pCTExam->m_OpData, m_OD, PatientName, PatientAge);
 		OK = pDlg->DoModal() == IDOK;
 		delete pDlg;
 	}
 	else
 	{
-		CPreopDataDlg*  pDlg = new CPreopDataDlg(this, &m_pCTExam->m_OpData, m_OD);
+		CPreopDataDlg* pDlg = new CPreopDataDlg(this, &m_pCTExam->m_OpData, m_OD);
 		OK = pDlg->DoModal() == IDOK;
 		delete pDlg;
 	}
@@ -738,6 +677,35 @@ void CPlannerWnd::OnDataButtonClicked()
 
 		Repaint();
 	}
+}
+
+
+//***************************************************************************************
+
+//7.0.0
+CString CPlannerWnd::GetPatientAge(CPatient* m_Patient)
+{
+	CString res;
+
+	SYSTEMTIME CurTime;
+	::GetLocalTime(&CurTime);
+	int age = CurTime.wYear - m_Patient->m_BirthYear;
+
+	if (CurTime.wMonth < m_Patient->m_BirthMonth)
+	{
+		age--;
+	}
+	else if (CurTime.wMonth == m_Patient->m_BirthMonth)
+	{
+		if (CurTime.wDay < m_Patient->m_BirthDay)
+		{
+			age--;
+		}
+	}
+
+	res.Format(_T("%i"), age);
+
+	return res;
 }
 
 //***************************************************************************************
@@ -889,7 +857,7 @@ void CPlannerWnd::OnESDButtonClicked()
 		//Done
 		m_PatientIOL.pCTExam = *m_pCTExam;
 
-		//530
+		//
 		m_PatientIOL.pCTExam.m_ColorImage.m_LRa_ok = FALSE;
 		m_PatientIOL.pCTExam.m_ColorImage.m_LRa_x0_um = -1;
 		m_PatientIOL.pCTExam.m_ColorImage.m_LRa_y0_um = -1;
@@ -1084,3 +1052,12 @@ BOOL CPlannerWnd::DeleteDirectory(char* sDirName)
 }
 
 //*********************************************************************************************
+
+//7.0.0
+void CPlannerWnd::OnMouseMove(uint nFlags, CPoint Point)
+{
+	this->GetParent()->SendMessage(WM_BTN_ISHOVER, 0, 0);
+}
+//7.0.0
+
+//***************************************************************************************

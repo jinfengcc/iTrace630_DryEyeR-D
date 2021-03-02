@@ -185,7 +185,7 @@ public:
 
 	int  m_la_v;
 	void ClearVertex0();
-	void FindVertex0(BOOL TriLaserOn, int LaserIntensityThreshold);
+	void FindVertex0(BOOL TriLaserOn, int LaserIntensityThreshold, BOOL IsHRCameraConnected);//6.3.0 add  HR Camera connected boolean for laser spot detection 
 	int  m_ve0_thr;
 
 	BOOL m_ve_ok;
