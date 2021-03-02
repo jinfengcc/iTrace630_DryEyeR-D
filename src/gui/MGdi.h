@@ -46,10 +46,13 @@ public:
 class CMDC : public CDC
 {
 public:
+  CMDC() = default;
+  ~CMDC();
 
-	int m_w;
-	int m_h;
-	uchar* m_RGBData;
+
+	int m_w{};
+	int m_h{};
+  uchar *m_RGBData{};
 
 	void CreateTrueColorDC(int w, int h);
 
@@ -68,6 +71,10 @@ public:
 	void MeasureRect(const CString& Text, RECT& Rect, const CFont& Font);
 
 	void DrawImage(const CBasicImage& Image, int x, int y, int cx, int cy, BOOL Enabled);
+
+private:
+  HBITMAP m_bitmap{};
+  HBITMAP m_oldBitmap{};
 };
 
 //***************************************************************************************

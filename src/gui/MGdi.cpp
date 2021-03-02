@@ -52,6 +52,14 @@ void CMFont::Create(const int Height, const int Width, const char* FaceName)
 //***************************************************************************************
 //***************************************************************************************
 
+CMDC::~CMDC()
+{
+  if (m_bitmap) {
+    ::SelectObject(m_hDC, m_oldBitmap);
+    ::DeleteObject(m_bitmap);
+  }
+}
+
 void CMDC::CreateTrueColorDC(const int w, const int h)
 {
 	m_w = w;
@@ -77,10 +85,13 @@ void CMDC::CreateTrueColorDC(const int w, const int h)
 	bih.biXPelsPerMeter = 0;
 	bih.biYPelsPerMeter = 0;
 
-	void* v;
-	HBITMAP hBitmap = ::CreateDIBSection(NULL, (BITMAPINFO*)&bih, DIB_RGB_COLORS, &v, NULL, 0);
-	m_RGBData = (uchar*)v;
-	::SelectObject(m_hDC, hBitmap);
+	if (m_bitmap) {
+    ::SelectObject(m_hDC, m_oldBitmap);
+    ::DeleteObject(m_bitmap);
+  }
+
+	m_bitmap = ::CreateDIBSection(NULL, (BITMAPINFO*)&bih, DIB_RGB_COLORS, reinterpret_cast<void **>(&m_RGBData), NULL, 0);
+  m_oldBitmap = (HBITMAP)::SelectObject(m_hDC, m_bitmap);
 }
 
 //***************************************************************************************
