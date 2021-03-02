@@ -116,6 +116,13 @@ BOOL CPreopComboDataDlg::OnInitDialog()
 	SetDlgData();
 
 	SetIncLoC_SurInAst();
+
+	if (m_OpData.m_NewBestIOLPos < 0)//6.3.0 Fix the bad quality exam cause stop problem
+	{
+		::Info("The corneal coverage in this CT exam is not adequate to calculate the suggested toric lens power. Please select another CT exam.");
+		CDialog::OnCancel();
+	}
+
 	return FALSE;
 }
 
@@ -626,7 +633,7 @@ void CPreopComboDataDlg::SetDlgData()
 	m_CanChange = TRUE;
 
 	m_PreopCyclinderAdjCheck.SetCheck(m_OpData.m_CorneaCycliderAdj);// Cyclinder adjustment Branch
-
+	
 	Invalidate(FALSE);//
 }
 
@@ -1198,44 +1205,10 @@ void CPreopComboDataDlg::OnPaint()
 		BestIOL = m_OpData.m_NewPri_BestIOL;
 	}
 
-	if (m_Last_BestIOL == -1)
+	if (BestIOLPos >= 0) //6.3.0 Fix the bad quality exam cause stop problem
 	{
-		GetDlgItem(Title[BestIOLPos])->GetWindowRect(&ComponentRect);
-		GetDlgItem(ID[BestIOLPos])->GetWindowRect(&LastComRect);
-
-		ScreenToClient(&ComponentRect);
-		ScreenToClient(&LastComRect);
-
-		HihglightRect.left = ComponentRect.left - 10;
-		HihglightRect.right = LastComRect.right + 10;
-		HihglightRect.top = ComponentRect.top - 5;
-		HihglightRect.bottom = ComponentRect.bottom + 5;
-
-		PaintDC.DrawFocusRect(&HihglightRect);
-
-		m_Last_BestIOL = BestIOL;
-		m_Last_BestIOLPos = BestIOLPos;//7.0.0
-	}
-	else
-	{
-		if (BestIOL != -1 && m_Last_BestIOL != BestIOL)
+		if (m_Last_BestIOL == -1)
 		{
-			//Remove Last Rect	 
-			GetDlgItem(Title[m_Last_BestIOLPos])->GetWindowRect(&ComponentRect);
-			GetDlgItem(ID[m_Last_BestIOLPos])->GetWindowRect(&LastComRect);
-
-			ScreenToClient(&ComponentRect);
-			ScreenToClient(&LastComRect);
-
-			LastHighlightRect.left = ComponentRect.left - 10;
-			LastHighlightRect.right = LastComRect.right + 10;
-			LastHighlightRect.top = ComponentRect.top - 5;
-			LastHighlightRect.bottom = ComponentRect.bottom + 5;
-
-			COLORREF BkColor = ::GetSysColor(COLOR_BTNFACE);
-			PaintDC.FillSolidRect(&LastHighlightRect, BkColor);
-			//Remove Last Rect	 
-
 			GetDlgItem(Title[BestIOLPos])->GetWindowRect(&ComponentRect);
 			GetDlgItem(ID[BestIOLPos])->GetWindowRect(&LastComRect);
 
@@ -1250,28 +1223,65 @@ void CPreopComboDataDlg::OnPaint()
 			PaintDC.DrawFocusRect(&HihglightRect);
 
 			m_Last_BestIOL = BestIOL;
-			m_Last_BestIOLPos = BestIOLPos;//7.0.0
+			m_Last_BestIOLPos = BestIOLPos;//7.0.0		
 		}
-
-		if (BestIOL == -1)
+		else
 		{
-			//Remove Last Rect	 
-			GetDlgItem(Title[m_Last_BestIOLPos])->GetWindowRect(&ComponentRect);
-			GetDlgItem(ID[m_Last_BestIOLPos])->GetWindowRect(&LastComRect);
+			if (BestIOL != -1 && m_Last_BestIOL != BestIOL)
+			{
+				//Remove Last Rect	 
+				GetDlgItem(Title[m_Last_BestIOLPos])->GetWindowRect(&ComponentRect);
+				GetDlgItem(ID[m_Last_BestIOLPos])->GetWindowRect(&LastComRect);
 
-			ScreenToClient(&ComponentRect);
-			ScreenToClient(&LastComRect);
+				ScreenToClient(&ComponentRect);
+				ScreenToClient(&LastComRect);
 
-			LastHighlightRect.left = ComponentRect.left - 10;
-			LastHighlightRect.right = LastComRect.right + 10;
-			LastHighlightRect.top = ComponentRect.top - 5;
-			LastHighlightRect.bottom = ComponentRect.bottom + 5;
+				LastHighlightRect.left = ComponentRect.left - 10;
+				LastHighlightRect.right = LastComRect.right + 10;
+				LastHighlightRect.top = ComponentRect.top - 5;
+				LastHighlightRect.bottom = ComponentRect.bottom + 5;
 
-			COLORREF BkColor = ::GetSysColor(COLOR_BTNFACE);
-			PaintDC.FillSolidRect(&LastHighlightRect, BkColor);
-			//Remove Last Rect	 
+				COLORREF BkColor = ::GetSysColor(COLOR_BTNFACE);
+				PaintDC.FillSolidRect(&LastHighlightRect, BkColor);
+				//Remove Last Rect	 
+
+				GetDlgItem(Title[BestIOLPos])->GetWindowRect(&ComponentRect);
+				GetDlgItem(ID[BestIOLPos])->GetWindowRect(&LastComRect);
+
+				ScreenToClient(&ComponentRect);
+				ScreenToClient(&LastComRect);
+
+				HihglightRect.left = ComponentRect.left - 10;
+				HihglightRect.right = LastComRect.right + 10;
+				HihglightRect.top = ComponentRect.top - 5;
+				HihglightRect.bottom = ComponentRect.bottom + 5;
+
+				PaintDC.DrawFocusRect(&HihglightRect);
+
+				m_Last_BestIOL = BestIOL;
+				m_Last_BestIOLPos = BestIOLPos;//7.0.0
+			}
+
+			if (BestIOL == -1)
+			{
+				//Remove Last Rect	 
+				GetDlgItem(Title[m_Last_BestIOLPos])->GetWindowRect(&ComponentRect);
+				GetDlgItem(ID[m_Last_BestIOLPos])->GetWindowRect(&LastComRect);
+
+				ScreenToClient(&ComponentRect);
+				ScreenToClient(&LastComRect);
+
+				LastHighlightRect.left = ComponentRect.left - 10;
+				LastHighlightRect.right = LastComRect.right + 10;
+				LastHighlightRect.top = ComponentRect.top - 5;
+				LastHighlightRect.bottom = ComponentRect.bottom + 5;
+
+				COLORREF BkColor = ::GetSysColor(COLOR_BTNFACE);
+				PaintDC.FillSolidRect(&LastHighlightRect, BkColor);
+				//Remove Last Rect	 
+			}
 		}
-	}
+	}	
 	//Highlight the min row Done
 }
 
