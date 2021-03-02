@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="AppClassFactory.h" />
     <ClInclude Include="AppFiles.h" />
+    <ClInclude Include="AppSettings.h" />
     <ClInclude Include="AppSettingsImpl.h" />
     <ClInclude Include="JsonSettings.h" />
     <ClInclude Include="atlgdix.h" />
