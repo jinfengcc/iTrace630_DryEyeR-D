@@ -26,7 +26,7 @@ CameraHiresIDS::CameraHiresIDS()
       bool copyImage = false;
       if (copyImage) {
         static int ndx    = 0;
-        const char file[] = "C:\\1\\_ids\\ids_image_{}.png";
+        const char file[] = R"(C:\1\_ids\ids_image_{}.png)";
         cv::imwrite(fmt::format(file, ++ndx), img);
       }
 
@@ -202,19 +202,37 @@ void CameraHiresIDS::UpdateFPS()
   }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#define GRAY_MODE_BLUE  0
+#define GRAY_MODE_GREEN 1
+#define GRAY_MODE_RED   2
+#define GRAY_MODE_STD   3
+
+#define GRAY_MODE       GRAY_MODE_STD
+
 void CameraHiresIDS::GetLowResGrayImage(cv::Mat &img) const
 {
   cv::resize(m_image, img, {IMG_COLS, IMG_ROWS});
   ATLASSERT(img.type() == CV_8UC3);
+
+#if GRAY_MODE == GRAY_MODE_STD
   cv::Mat3b(img).forEach([](cv::Vec3b &pixel, const int *) {
     auto B = pixel[0];
     auto G = pixel[1];
-    auto R = pixel[1];
+    auto R = pixel[2];
 
     auto gray = 0.299 * R + 0.587 * G + 0.114 * B;
 
     pixel[0] = pixel[1] = pixel[2] = cv::saturate_cast<BYTE>(gray);
   });
+#else
+  cv::Mat3b(img).forEach([](cv::Vec3b &pixel, const int *) {
+    auto gray = pixel[GRAY_MODE];
+    pixel[0] = pixel[1] = pixel[2] = gray;
+  });
+#endif
+
 }
 
 // std::string CameraHires::GetCameraName()
