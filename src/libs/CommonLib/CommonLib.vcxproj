@@ -195,8 +195,7 @@
     <ClInclude Include="TempFile.h" />
     <ClInclude Include="TestSupport\TestDatabase.h" />
     <ClInclude Include="testSupport\TestDataFolder.h" />
-    <ClInclude Include="thread\jthread.hpp" />
-    <ClInclude Include="thread\stop_token.hpp" />
+    <ClInclude Include="thread\jthread.h" />
     <ClInclude Include="thread\ThreadPool.h" />
     <ClInclude Include="thread\ThreadPoolTimer.h" />
     <ClInclude Include="thread\TsQueue.h" />

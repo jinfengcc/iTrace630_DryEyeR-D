@@ -71,7 +71,7 @@ extern CAppModule _Module;
 
 #include <libs/CommonLib/VersionInfo.h>
 #include <libs/CommonLib/CreateObj.h>
-#include <libs/CommonLib/thread/jthread.hpp>
+#include <libs/CommonLib/thread/jthread.h>
 
 #include <interfaces/hal/IDevice.h>
 #include <interfaces/hal/ICamera.h>
