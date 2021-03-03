@@ -66,12 +66,6 @@
     <ClInclude Include="thread\TsQueue.h">
       <Filter>thread</Filter>
     </ClInclude>
-    <ClInclude Include="thread\jthread.hpp">
-      <Filter>thread</Filter>
-    </ClInclude>
-    <ClInclude Include="thread\stop_token.hpp">
-      <Filter>thread</Filter>
-    </ClInclude>
     <ClInclude Include="Benchmark.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -203,6 +197,9 @@
     </ClInclude>
     <ClInclude Include="AppSettings.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="thread\jthread.h">
+      <Filter>thread</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
