@@ -272,7 +272,7 @@ void CXPListCtrl::DrawItem(DRAWITEMSTRUCT* pDIS)
 		Column.mask = LVCF_WIDTH;
 		GetColumn(col, &Column);
 
-		// GetSubItemRect возвращает для col==0 rectangle всей строки, а не нулевой ячейки
+		// GetSubItemRect пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ col==0 rectangle пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 		GetSubItemRect(pDIS->itemID, col, LVIR_BOUNDS, Rect);
 		Rect.right = Rect.left + Column.cx - 1;
 		Rect.left += 3;

@@ -963,6 +963,11 @@ LRESULT CCTSingleSumWnd::OnOkulix(WPARAM wParam, LPARAM lParam)
 	//Get Line0
 
 	//Get Line1-Line6
+	//6.3.0 0228 a response from Prof. Pruessner.:
+	//he file structure (CORNEA.ACT) is o.k. now. But please check lines 322,323: column 19 is zero, which normally means "no more data in this semi-meridian",
+	//but columns 20 and 21 are gain non - zero.
+	//Try to change the code according to Prof. Pressner ask
+
 	CEyeImage* pImage = &m_pCTExam->m_Image;
 	CString Radial_Dis, Tangential;
 	real_t r_um, tangential_um;
@@ -980,13 +985,19 @@ LRESULT CCTSingleSumWnd::OnOkulix(WPARAM wParam, LPARAM lParam)
 			r_um = 0;
 			tangential_um = 0;
 
+			BOOL NoMoreData = FALSE;//6.3.0
+
 			for (int i = 0; i < 30; i++)
 			{
 				if (i < pImage->m_NumRings)
 					r_um = pImage->m_ri_r_um[i][a];
 				else r_um = 0;
 
-				if (r_um == 0 || r_um == INVALID_VALUE) Radial_Dis = "0.000";
+				if (r_um == 0 || r_um == INVALID_VALUE || NoMoreData)
+				{
+					Radial_Dis = "0.000";
+					NoMoreData = TRUE;//6.3.0
+				}
 				else
 				{
 					if (r_um >= 5000)
@@ -994,9 +1005,9 @@ LRESULT CCTSingleSumWnd::OnOkulix(WPARAM wParam, LPARAM lParam)
 					else
 						Radial_Dis.Format(_T("%.3f"), r_um / 1000);
 				}
+
 				if (i < 29) Line1 += Radial_Dis + " ";
 				else       Line1 += Radial_Dis;
-
 
 				//Line2 
 				real_t a_rd = _2_Pi * a / 360;
@@ -1005,7 +1016,7 @@ LRESULT CCTSingleSumWnd::OnOkulix(WPARAM wParam, LPARAM lParam)
 					tangential_um = m_pCTExam->GetTnUmAt(r_um, a_rd);
 				else tangential_um = 0;
 
-				if (tangential_um == 0 || tangential_um == INVALID_VALUE) Tangential = "0.000";
+				if (tangential_um == 0 || tangential_um == INVALID_VALUE || NoMoreData) Tangential = "0.000";
 				else
 				{
 					if (tangential_um >= 10000)
