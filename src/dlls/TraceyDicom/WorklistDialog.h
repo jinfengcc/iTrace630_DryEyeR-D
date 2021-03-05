@@ -4,11 +4,15 @@
 
 class CWorklistDialog
   : public CDialogImpl<CWorklistDialog>
+  , public CDynamicDialogLayout<CWorklistDialog>
   , public CWinDataExchange<CWorklistDialog>
 
 {
 public:
-  enum { IDD = IDD_WORKLIST };
+  enum
+  {
+    IDD = IDD_WORKLIST
+  };
 
   CWorklistDialog(ITraceyDicomConfig *cfg, dicom::Patient &p, dicom::Work &w)
     : m_cfg(cfg)
@@ -27,8 +31,10 @@ private:
   CListViewCtrl       m_patListCtrl;
   CListViewCtrl       m_itemListCtrl;
   dicom::WorkList     m_workList;
+  int                 m_clientWidth;
 
   BOOL    OnInitDialog(CWindow wndFocus, LPARAM lInitParam);
+  LRESULT OnSize(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL & /*bHandled*/);
   void    OnTimer(UINT_PTR nIDEvent);
   LRESULT OnPatientSelectionChanged(LPNMHDR pnmh);
   LRESULT OnWorkItemSelectionChanged(LPNMHDR pnmh);
@@ -42,7 +48,6 @@ private:
   void        LoadWorklist();
   void        LoadPatientList(bool initListCtrl = false);
   void        LoadWorkItems(bool initListCtrl = false);
-  static void CreateListHeader(CListViewCtrl lc, std::span<const LV_COLUMN> cols);
 
   static int GetSelection(CListViewCtrl lvc)
   {
@@ -77,6 +82,7 @@ private:
 
   BEGIN_MSG_MAP_EX(CWorklistDialog)
     MSG_WM_INITDIALOG(OnInitDialog)
+    MESSAGE_HANDLER(WM_SIZE, OnSize)
     MSG_WM_TIMER(OnTimer)
     NOTIFY_HANDLER_EX(IDC_PATIENTS, LVN_ITEMCHANGED, OnPatientSelectionChanged)
     NOTIFY_HANDLER_EX(IDC_ITEMS, LVN_ITEMCHANGED, OnWorkItemSelectionChanged)
@@ -85,6 +91,7 @@ private:
     COMMAND_ID_HANDLER_EX(IDC_SETTINGS, OnSettings)
     COMMAND_ID_HANDLER_EX(IDOK, OnOK)
     COMMAND_ID_HANDLER_EX(IDCANCEL, OnCancel)
+    CHAIN_MSG_MAP(CDynamicDialogLayout<CWorklistDialog>)
   END_MSG_MAP()
 
   BEGIN_DDX_MAP(CWorklistDialog)
