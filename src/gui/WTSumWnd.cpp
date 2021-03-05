@@ -60,6 +60,14 @@ CWTSumWnd::CWTSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFExam* pWF
 	Repaint();
 
 	ShowWindow(SW_SHOW);
+
+	//6.3.0 Popup the lens dot dialog 
+	if (m_pWFExam->m_Image.m_le_ok == FALSE)
+	{
+		m_d = 0;
+		OnEditLensDotsItemClicked();
+	}
+	//6.3.0
 }
 
 //***************************************************************************************
@@ -132,7 +140,7 @@ void CWTSumWnd::LensInfo(RECT Rect, int NumRows)
 		s += "   Cyl  --.-- D";
 	}
 	else {
-		s1.Format(_T(" x %i°"), m_pWFExam->m_WavetouchAxis);
+		s1.Format(_T(" x %iï¿½"), m_pWFExam->m_WavetouchAxis);
 		s += s1;
 	}
 	m_MemDC.WriteText(s, Rect, Font, white, 0);
@@ -245,7 +253,7 @@ void CWTSumWnd::CreateChildWnd()
 		pEyeWnd->m_MapShowSolidSurface = FALSE;
 		pEyeWnd->m_MapShowWireMesh = FALSE;
 		pEyeWnd->m_MapTranslucent = FALSE;
-		pEyeWnd->m_Unit = "µ";
+		pEyeWnd->m_Unit = "ï¿½";
 		pEyeWnd->m_Inc = pWndSettings->GetIncrement();
 		CScale* pScale = pWndSettings->GetScale();
 		pEyeWnd->m_NumColors = pScale->m_NumColors;

@@ -35,19 +35,19 @@ CCTAcquisition::CCTAcquisition(CHW *pHW, BOOL ShowRedDot)
   ::CreateDirectory(m_TestVideoFolder, NULL); 
 
    // load ct capture videos for laser spot detection
-  // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_02_26_14_54_04\\";//Works fine
+   //m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_02_26_14_54_04\\";//Works fine
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_02_26_14_54_52\\";//Works fine
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_01_15_24_10\\";//Works fine
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_01_15_24_57\\";//Works fine
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_01_15_25_34\\";//move too fast?
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_01_15_26_19\\";//no capture happen
-  // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_33_40\\";  //Works fine miss a while?
+  // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_33_40\\";  //Works fine 
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_34_28\\";//works fine very fast
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_34_55\\";//works fine very fast
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_37_48\\";//works fine very fast
-  // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_38_49\\";//Check?
-  // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_39_21\\";//Check this one
-  //m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_40_23\\"; // First works not good second works fine
+  // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_38_49\\";//Works fine
+  // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_39_21\\";//Works fine
+  //m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_40_23\\"; // Works fine
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_40_55\\";//works ok
   //// test done
 }
@@ -56,12 +56,17 @@ CCTAcquisition::CCTAcquisition(CHW *pHW, BOOL ShowRedDot)
 
 void CCTAcquisition::CheckAlignment()
 {
-    //test load ct capture video for laser spot detection check
+    ////test load ct capture video for laser spot detection check
     //CString FileName;
     //FileName.Format(_T("%s%i.jpg"), m_TestVideoFolder, m_t);
     //m_CTExam.m_Image.LoadFromFile(FileName);
     //m_t++;   
-    //test
+
+    //if (m_t == 156)
+    //{
+    //    int a = 0;
+    //}
+    ////test
 
 	m_CTExam.m_Image.m_RGBData.Attach(m_CTExam.m_Image.m_h, LINE_SIZE(m_CTExam.m_Image.m_w), m_pHW->GetRGBData());//Ori code
     m_CTExam.m_Image.ClearVertex0();
