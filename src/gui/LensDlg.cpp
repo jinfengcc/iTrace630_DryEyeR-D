@@ -26,20 +26,12 @@ END_MESSAGE_MAP()
 CLensDlg::CLensDlg(CWnd* pParentWnd, CEyeImage* pImage) : CDialog(IDD_LENS_DLG, pParentWnd)
 {
 	m_pImage = pImage;
-	if (m_pImage->m_le_ok) {
-		for (int i = 0; i < 3; i++) {
-			m_le_x_um[i] = m_pImage->m_le_x_um[i];
-			m_le_y_um[i] = m_pImage->m_le_y_um[i];
-		}
+
+	for (int i = 0; i < 3; i++) {
+		m_le_x_um[i] = m_pImage->m_le_x_um[i];
+		m_le_y_um[i] = m_pImage->m_le_y_um[i];
 	}
-	else {
-		m_le_x_um[0] = -1000.0;
-		m_le_y_um[0] = 0.0;
-		m_le_x_um[1] = 0.0;
-		m_le_y_um[1] = -1000.0;
-		m_le_x_um[2] = 1000.0;
-		m_le_y_um[2] = 0.0;
-	}
+
 	m_d = -1;
 }
 
@@ -175,11 +167,7 @@ void CLensDlg::OnOK()
 		m_pImage->m_le_y_um[i] = m_le_y_um[i];
 	}
 
-	m_pImage->ValidateLensDots();
-
-	if (!m_pImage->m_le_ok) {
-		::Error("Invalid dots placement.");
-	}
+	m_pImage->m_le_ok = TRUE;
 }
 
 //***************************************************************************************
