@@ -1464,10 +1464,12 @@ void CEyeImage::FindVertex0(BOOL TriLaserOn, int LaserIntensityThreshold, BOOL I
       if (smaxCen >= LaserSpotBrightness) {
         m_la_x = xmaxCen - icx;
         m_la_v = smaxCen / SpotArea;
-        if (xmax >= (icx - 20) && smax >= LaserSpotBrightness)
+
+       // if (xmax >= (icx - 20) && smax >= LaserSpotBrightness)
           m_Target_ok = TRUE; //[5.1.1]
-        else
-          m_Target_ok = FALSE; //[5.1.1]
+		//else
+		//	m_Target_ok = FALSE; //[5.1.1]
+		//}
 
         if (xmax >= (icx - 10) && smax >= LaserSpotBrightness) {
           // sometimes it is the second light target the capture in the center since it has maxium value
