@@ -47,6 +47,16 @@ public:
       CRegPropertyImpl<Base>::ReadWriteProp(lpstrRegValue, v, bWrite);
       prop = static_cast<TProp>(v);
     }
+    else if constexpr (std::is_same_v<TProp, std::string>) {
+      CString v(prop.c_str());
+      CRegPropertyImpl<Base>::ReadWriteProp(lpstrRegValue, v, bWrite);
+      prop = CStringA(v).GetString();
+    }
+    else if constexpr (std::is_same_v<TProp, std::wstring>) {
+      CString v(prop.c_str());
+      CRegPropertyImpl<Base>::ReadWriteProp(lpstrRegValue, v, bWrite);
+      prop = CStringW(v).GetString();
+    }
     else {
       CRegPropertyImpl<Base>::ReadWriteProp(lpstrRegValue, prop, bWrite);
     }

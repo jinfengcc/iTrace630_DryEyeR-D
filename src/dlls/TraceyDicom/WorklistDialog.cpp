@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "WorklistDialog.h"
 #include "interfaces/IProgress.h"
-#include "libs/CommonLib/TraceyRegistry.h"
+#include "WorklistDialogSettings.h"
 
 namespace {
   struct Modality
@@ -47,42 +47,6 @@ namespace {
 
 } // namespace
 
-namespace {
-  struct RegistrySettings : public TraceyRegistryImpl<RegistrySettings>
-  {
-    static inline int VERSION = 1;
-
-    RegistrySettings()
-      : TraceyRegistryImpl<RegistrySettings>(L"Dicom")
-    {
-      Load();
-    }
-
-    explicit operator bool() const
-    {
-      return m_version == VERSION &&m_winSize.cx > 100 && m_winSize.cy > 100;
-    }
-
-    void Save(CWindow w)
-    {
-      CRect rc;
-      w.GetWindowRect(rc);
-      m_winSize = rc.Size();
-      m_version = VERSION;
-      TraceyRegistryImpl<RegistrySettings>::Save();
-    }
-
-    int   m_version{0};
-    CSize m_winSize;
-
-    BEGIN_REGPROP_MAP(RegistrySettings)
-      REG_PROPERTY(L"WinSizeVer", m_version)
-      REG_PROPERTY(L"WinSizeCX", m_winSize.cx)
-      REG_PROPERTY(L"WinSizeCY", m_winSize.cy)
-    END_REGPROP_MAP()
-  };
-} // namespace
-
 BOOL CWorklistDialog::OnInitDialog(CWindow wndFocus, LPARAM lInitParam)
 {
   InitDynamicLayout();
@@ -90,8 +54,10 @@ BOOL CWorklistDialog::OnInitDialog(CWindow wndFocus, LPARAM lInitParam)
   Initialize();
   DoDataExchange(DDX_LOAD);
 
-  if (RegistrySettings rs; rs) {
+  if (WorklistDialogSettings rs; rs.Load()) {
     SetWindowPos(nullptr, 0, 0, rs.m_winSize.cx, rs.m_winSize.cy, SWP_NOMOVE | SWP_NOZORDER);
+    rs.SetListWidths(m_patListCtrl, rs.m_patListWidths);
+    rs.SetListWidths(m_workitemListCtrl, rs.m_woritemkListWidths);
   }
 
   CenterWindow();
@@ -105,7 +71,7 @@ LRESULT CWorklistDialog::OnSize(UINT msg, WPARAM wParam, LPARAM lParam, BOOL &ha
   auto ret = CDynamicDialogLayout<CWorklistDialog>::OnSize(msg, wParam, lParam, handled);
 
   ResizeListHeader(m_patListCtrl, lvcPatientList);
-  ResizeListHeader(m_itemListCtrl, lvcWorkItems);
+  ResizeListHeader(m_workitemListCtrl, lvcWorkItems);
 
   return ret;
 }
@@ -131,7 +97,7 @@ LRESULT CWorklistDialog::OnPatientSelectionChanged(LPNMHDR pnmh)
 
 LRESULT CWorklistDialog::OnWorkItemSelectionChanged(LPNMHDR pnmh)
 {
-  int nSel = GetSelection(m_itemListCtrl);
+  int nSel = GetSelection(m_workitemListCtrl);
   GetDlgItem(IDOK).EnableWindow(nSel >= 0);
 
   return LRESULT();
@@ -162,7 +128,7 @@ void CWorklistDialog::OnSettings(UINT uNotifyCode, int nID, CWindow wndCtl)
 void CWorklistDialog::OnOK(UINT uNotifyCode, int nID, CWindow wndCtl)
 {
   auto patientSel  = GetSelection(m_patListCtrl);
-  auto workItemSel = GetSelection(m_itemListCtrl);
+  auto workItemSel = GetSelection(m_workitemListCtrl);
 
   if (patientSel >= 0 && workItemSel >= 0) {
     m_patient = m_workList[patientSel].patient;
@@ -170,14 +136,12 @@ void CWorklistDialog::OnOK(UINT uNotifyCode, int nID, CWindow wndCtl)
 
     DicomSqlite().SaveWorkItem(m_patient, m_work);
 
-    RegistrySettings().Save(*this);
-    EndDialog(IDOK);
+    EndDialog(nID);
   }
 }
 
 void CWorklistDialog::OnCancel(UINT uNotifyCode, int nID, CWindow wndCtl)
 {
-  RegistrySettings().Save(*this);
   EndDialog(nID);
 }
 
@@ -200,7 +164,7 @@ void CWorklistDialog::Initialize()
 void CWorklistDialog::LoadWorklist()
 {
   m_patListCtrl.DeleteAllItems();
-  m_itemListCtrl.DeleteAllItems();
+  m_workitemListCtrl.DeleteAllItems();
 
   try {
     auto wait = CreateObj<IProgress>();
@@ -242,7 +206,7 @@ void CWorklistDialog::LoadPatientList(bool initListCtrl)
   }
 
   m_patListCtrl.DeleteAllItems();
-  m_itemListCtrl.DeleteAllItems();
+  m_workitemListCtrl.DeleteAllItems();
 
   for (const auto &wl : m_workList) {
     auto row = m_patListCtrl.GetItemCount();
@@ -261,13 +225,13 @@ void CWorklistDialog::LoadPatientList(bool initListCtrl)
 void CWorklistDialog::LoadWorkItems(bool initListCtrl)
 {
   if (initListCtrl) {
-    m_itemListCtrl = CListViewCtrl(GetDlgItem(IDC_ITEMS));
-    m_itemListCtrl.SetExtendedListViewStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES); //  | LVS_EX_CHECKBOXES);
-    CreateListHeader(m_itemListCtrl, lvcWorkItems);
+    m_workitemListCtrl = CListViewCtrl(GetDlgItem(IDC_ITEMS));
+    m_workitemListCtrl.SetExtendedListViewStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES); //  | LVS_EX_CHECKBOXES);
+    CreateListHeader(m_workitemListCtrl, lvcWorkItems);
     return;
   }
 
-  m_itemListCtrl.DeleteAllItems();
+  m_workitemListCtrl.DeleteAllItems();
 
   int nSel = GetSelection(m_patListCtrl);
   if (nSel < 0)
@@ -277,15 +241,30 @@ void CWorklistDialog::LoadWorkItems(bool initListCtrl)
   const auto &wli = m_workList[nSel].items;
 
   for (auto &i : wli) {
-    auto row = m_itemListCtrl.GetItemCount();
+    auto row = m_workitemListCtrl.GetItemCount();
     auto col = 0;
 
-    m_itemListCtrl.AddItem(row, col++, Date2Str(i.studyTime, true).c_str());
-    m_itemListCtrl.AddItem(row, col++, i.accession.GetString());
-    m_itemListCtrl.AddItem(row, col++, i.modality.GetString());
-    m_itemListCtrl.AddItem(row, col++, i.referringPhysician.GetString());
-    m_itemListCtrl.AddItem(row, col++, i.procedureDescription.GetString());
+    m_workitemListCtrl.AddItem(row, col++, Date2Str(i.studyTime, true).c_str());
+    m_workitemListCtrl.AddItem(row, col++, i.accession.GetString());
+    m_workitemListCtrl.AddItem(row, col++, i.modality.GetString());
+    m_workitemListCtrl.AddItem(row, col++, i.referringPhysician.GetString());
+    m_workitemListCtrl.AddItem(row, col++, i.procedureDescription.GetString());
   }
+}
+
+void CWorklistDialog::EndDialog(int nID)
+{
+  WorklistDialogSettings wds;
+
+  CRect rc;
+  GetWindowRect(rc);
+
+  wds.m_winSize        = rc.Size();
+  wds.m_patListWidths  = WorklistDialogSettings::GetListWidths(m_patListCtrl);
+  wds.m_woritemkListWidths = WorklistDialogSettings::GetListWidths(m_workitemListCtrl);
+
+  wds.Save();
+  CDialogImpl<CWorklistDialog>::EndDialog(nID);
 }
 
 namespace {

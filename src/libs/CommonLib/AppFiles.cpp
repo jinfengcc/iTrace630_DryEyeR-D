@@ -3,9 +3,9 @@
 #include "TraceyRegistry.h"
 
 namespace {
-  struct RegistrySettings : public TraceyRegistryImpl<RegistrySettings>
+  struct WorklistDialogSettings : public TraceyRegistryImpl<WorklistDialogSettings>
   {
-    RegistrySettings()
+    WorklistDialogSettings()
     {
       Load();
     }
@@ -14,7 +14,7 @@ namespace {
     CString m_logFolder{LR"(C:\Tracey\Log)"};
     CString m_dicomSqlFile{LR"(C:\Tracey\Data\dicom.cfg.db3)"};
 
-    BEGIN_REGPROP_MAP(RegistrySettings)
+    BEGIN_REGPROP_MAP(WorklistDialogSettings)
       REG_PROPERTY(L"DataFolder", m_dataFolder)
       REG_PROPERTY(L"DicomSqlFile", m_dicomSqlFile)
       REG_PROPERTY(L"LogFolder", m_logFolder)
@@ -44,19 +44,19 @@ namespace app {
     }
 
     case Type::mainDataFolder: {
-      auto p = fs::path(RegistrySettings().m_dataFolder.GetString());
+      auto p = fs::path(WorklistDialogSettings().m_dataFolder.GetString());
       fs::create_directories(p);
       return p;
     }
 
     case Type::dicomSqlite: {
-      auto p = fs::path(RegistrySettings().m_dicomSqlFile.GetString());
+      auto p = fs::path(WorklistDialogSettings().m_dicomSqlFile.GetString());
       fs::create_directories(p.parent_path());
       return p;
     }
 
     case Type::logFolder: {
-      auto p = fs::path(RegistrySettings().m_logFolder.GetString());
+      auto p = fs::path(WorklistDialogSettings().m_logFolder.GetString());
       fs::create_directories(p);
       return p;
     }

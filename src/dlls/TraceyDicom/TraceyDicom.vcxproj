@@ -167,6 +167,7 @@
     <ClInclude Include="TraceyDicomConfig.h" />
     <ClInclude Include="TraceyDicomSend.h" />
     <ClInclude Include="WorklistDialog.h" />
+    <ClInclude Include="WorklistDialogSettings.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AccessionDialog.cpp" />
@@ -185,6 +186,7 @@
     <ClCompile Include="TraceyDicomConfig.cpp" />
     <ClCompile Include="TraceyDicomSend.cpp" />
     <ClCompile Include="WorklistDialog.cpp" />
+    <ClCompile Include="WorklistDialogSettings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\libs\CommonLib\CommonLib.vcxproj">

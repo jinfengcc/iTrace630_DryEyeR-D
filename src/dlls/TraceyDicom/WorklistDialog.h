@@ -29,7 +29,7 @@ private:
   DicomQuery::Filter  m_filter;
   int                 m_filterModality{};
   CListViewCtrl       m_patListCtrl;
-  CListViewCtrl       m_itemListCtrl;
+  CListViewCtrl       m_workitemListCtrl;
   dicom::WorkList     m_workList;
   int                 m_clientWidth;
 
@@ -44,10 +44,11 @@ private:
   void    OnOK(UINT uNotifyCode, int nID, CWindow wndCtl);
   void    OnCancel(UINT uNotifyCode, int nID, CWindow wndCtl);
 
-  void        Initialize();
-  void        LoadWorklist();
-  void        LoadPatientList(bool initListCtrl = false);
-  void        LoadWorkItems(bool initListCtrl = false);
+  void Initialize();
+  void LoadWorklist();
+  void LoadPatientList(bool initListCtrl = false);
+  void LoadWorkItems(bool initListCtrl = false);
+  void EndDialog(int nID);
 
   static int GetSelection(CListViewCtrl lvc)
   {
