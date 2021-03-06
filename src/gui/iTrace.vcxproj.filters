@@ -2166,6 +2166,15 @@
     <Image Include="Res\iTrace6_3_Splash-About.bmp">
       <Filter>Resources</Filter>
     </Image>
+    <Image Include="Res\SaveDICOM34.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\SaveDICOM40.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\SaveDICOM48.png">
+      <Filter>Resources</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="iTrace.rc">

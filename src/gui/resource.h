@@ -189,6 +189,9 @@
 #define IDR_DEC_ZONE_4                  271
 #define IDR_DEC_ZONE_5                  272
 #define IDR_DEC_ZONE_6                  273
+#define IDR_DICOM_EXPORT_1              274
+#define IDR_DICOM_EXPORT_2              275
+#define IDR_DICOM_EXPORT_3              276
 #define IDC_REGI_TIME_BUTTON            274
 #define IDD_REGISTRATION_TIME_DLG       274
 #define IDC_SHOW_TORIC_INCISION         275

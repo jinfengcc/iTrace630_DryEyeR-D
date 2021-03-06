@@ -847,6 +847,9 @@
     <Image Include="Res\RightArrow1.png" />
     <Image Include="Res\RightArrow2.png" />
     <Image Include="Res\RightArrow3.png" />
+    <Image Include="Res\SaveDICOM34.png" />
+    <Image Include="Res\SaveDICOM40.png" />
+    <Image Include="Res\SaveDICOM48.png" />
     <Image Include="Res\SaveScreen1.png" />
     <Image Include="Res\SaveScreen2.png" />
     <Image Include="Res\SaveScreen3.png" />
