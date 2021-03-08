@@ -72,11 +72,11 @@ void CCTAcquisition::CheckAlignment()
     m_CTExam.m_Image.ClearVertex0();
 	m_CTExam.m_Image.FindVertex0(m_TriLaserOn, m_pHW->m_Calibration.LaserIntensityThreshold, ::HW.IsHRCameraConnected());
 
-	m_ve0_ok = m_CTExam.m_Image.m_ve0_ok && (sqr(m_CTExam.m_Image.m_ve0_x) + sqr(m_CTExam.m_Image.m_ve0_y) <= sqr(5));
+	m_ve0_ok = m_CTExam.m_Image.m_ve0_ok && (sqr(m_CTExam.m_Image.m_ve0_x) + sqr(m_CTExam.m_Image.m_ve0_y) <= sqr(10)); // 6.3.0 from 5 to 10
 
 	if (m_pHW->m_Calibration.ZAlignmentMethod == 0)
 	{
-		m_la_ok = m_CTExam.m_Image.m_la_ok && abs(m_CTExam.m_Image.m_la_x) <= 5 && m_CTExam.m_Image.m_la_RtoC_OK;
+		m_la_ok = m_CTExam.m_Image.m_la_ok && abs(m_CTExam.m_Image.m_la_x) <= 10 && m_CTExam.m_Image.m_la_RtoC_OK;//6.3.0 from 5 to 10 
 		m_AlignmentStatus = m_ve0_ok && m_la_ok ? 1 : 0;
 	}
 	else

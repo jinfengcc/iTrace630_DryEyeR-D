@@ -1471,6 +1471,8 @@ void CEyeImage::FindVertex0(BOOL TriLaserOn, int LaserIntensityThreshold, BOOL I
 		//	m_Target_ok = FALSE; //[5.1.1]
 		//}
 
+		 m_la_ok = TRUE;//6.3.0  
+
         if (xmax >= (icx - 10) && smax >= LaserSpotBrightness) {
           // sometimes it is the second light target the capture in the center since it has maxium value
           // however it has a 'bright long tail' in its right side
