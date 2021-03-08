@@ -1,5 +1,17 @@
 #include "stdafx.h"
 #include "AppVersion.h"
+#include <opencv2/opencv.hpp>
+
+constexpr DWORD VERSION(int major, int minor)
+{
+  return MAKELONG(minor, major);
+}
+
+constexpr int MSC_VERSION_16_8_3 = 192829335;
+constexpr int MSC_VERSION_16_9_0 = 192829910;
+
+static_assert(_MSC_FULL_VER >= MSC_VERSION_16_9_0, "You are using an older Visual Studio version. Please update");
+static_assert(VERSION(CV_MAJOR_VERSION, CV_MINOR_VERSION) >= VERSION(4, 5), "Incorrect OPENCV Version. Please run vcpkg upgrade");
 
 namespace {
   constexpr unsigned GetVVVVYMDD(unsigned MAJOR, unsigned MINOR, unsigned YEAR, unsigned DAY)
