@@ -3934,7 +3934,9 @@ IDR_PRINT_SCREEN_2      PNG                     "Res\\PrintScreen2.png"
 IDR_PRINT_SCREEN_3      PNG                     "Res\\PrintScreen3.png"
 
 IDR_DICOM_EXPORT_1      PNG                     "Res\\SaveDicom34.png"
+
 IDR_DICOM_EXPORT_2      PNG                     "Res\\SaveDicom40.png"
+
 IDR_DICOM_EXPORT_3      PNG                     "Res\\SaveDicom48.png"
 
 IDR_SHOT1_1             PNG                     "Res\\Shot11.png"

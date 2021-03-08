@@ -131,6 +131,7 @@ namespace Gdiplus {
 #define WM_ONOFF_POS_CHANGED     0x8208 // Move OnOff Btn
 #define WM_SELBTN_POS_CHANGED    0x8209 // Move OnOff Btn
 #define WM_BTN_ISHOVER           0x820A // 7.0.0
+#define WM_WTTSWITCH_LCLICK      0x8210 //6.3.0 For adjusted WTT GUI
 
 // T: Entire eye   C:Corneal   I:internal
 #define TYPE_TEYE 1 // CWFSingleSumWnd(Angle K/A) default

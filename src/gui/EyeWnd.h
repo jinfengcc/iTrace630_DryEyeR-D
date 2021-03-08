@@ -47,15 +47,15 @@ public:
 	BOOL            m_MapShowSimKAxes;
 	BOOL            m_MapShowAstigmatismAxes;
 	BOOL            m_MapTranslucent;
-	BOOL            m_ShowRadialRuler;//520
-	BOOL            m_ShowLinearRuler;//520
-	BOOL            m_ShowInlay;//520
-	BOOL            m_MapShowBLUEAstigmatismAxes;//
-	BOOL            m_MapShowREDAstigmatismAxes;//
-	BOOL            m_DonotShow90Degree;//
-	real_t            m_Cent;
-	real_t            m_Step;
-	real_t            m_Inc;
+	BOOL            m_ShowRadialRuler;
+	BOOL            m_ShowLinearRuler;
+	BOOL            m_ShowInlay;
+	BOOL            m_MapShowBLUEAstigmatismAxes;
+	BOOL            m_MapShowREDAstigmatismAxes;
+	BOOL            m_DonotShow90Degree;
+	real_t          m_Cent;
+	real_t          m_Step;
+	real_t          m_Inc;
 	int             m_NumColors;
 	COLORREF        m_Colors[21];
 	CString         m_Unit;
@@ -63,7 +63,9 @@ public:
 	void CreateCentButtons();
 	void CreateZoomButtons();
 
-	void CreateOKulixButtons();//521
+	void CreateSwitchButtons();//6.3.0 For WTT adjusted GUI
+
+	void CreateOKulixButtons();
 
 	void ChangePoint();
 
@@ -108,6 +110,8 @@ private:
 	void Cursor();
 	void SideLabels();
 
+	CBtn m_SwitchButton;//6.3.0 For WTT adjusted GUI
+
 	CBtn m_IncCentButton;
 	CBtn m_DecCentButton;
 
@@ -126,6 +130,8 @@ private:
 	afx_msg void OnLButtonDown(uint nFlags, CPoint Point);
 	afx_msg void OnLButtonDblClk(uint nFlags, CPoint Point);
 	afx_msg LRESULT OnChangePosMsg(WPARAM wParam, LPARAM lParam);
+
+	afx_msg void OnWTTSButtonClicked();//6.3.0 For WTT adjusted GUI
 
 	DECLARE_MESSAGE_MAP()
 };

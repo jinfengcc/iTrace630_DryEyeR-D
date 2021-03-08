@@ -20,8 +20,9 @@ BEGIN_MESSAGE_MAP(CEyeWnd, CDispWnd)
 	ON_BN_CLICKED(IDC_ZOOM_IN, OnZoomInButtonClicked)
 	ON_BN_CLICKED(IDC_ZOOM_OUT, OnZoomOutButtonClicked)
 
-	ON_BN_CLICKED(IDC_Okulix_Btn, OnOkulixButtonClicked)//521
+	ON_BN_CLICKED(IDC_Okulix_Btn, OnOkulixButtonClicked)
 
+	ON_BN_CLICKED(IDC_WTT_SWITCH_BTN, OnWTTSButtonClicked)//6.3.0 For WTT adjusted GUI
 
 END_MESSAGE_MAP()
 
@@ -156,6 +157,44 @@ void CEyeWnd::CreateZoomButtons()
 }
 
 //***************************************************************************************
+
+//6.3.0 For WTT adjusted GUI
+void CEyeWnd::CreateSwitchButtons()
+{
+	RECT Rect;
+	CMRgn Rgn;
+
+	int w = intRound(0.08 * m_w); if (w < 25) w = 25;
+
+	int W = ::GetSystemMetrics(SM_CXSCREEN);
+
+	int h = intRound(0.037 * m_h);
+
+	int l = m_w - w - 5;
+	int t = m_h - 4 * h - 5;
+	int B = t + 1.5 * h;
+
+	::SetRect(&Rect, l, t, m_w - 5, B);
+	m_SwitchButton.Create(_T(""), _T(""), WS_CHILD, Rect, this, IDC_WTT_SWITCH_BTN);
+	m_SwitchButton.SetBk(TRUE);
+	m_SwitchButton.SetBkColor(BLACK);
+	m_SwitchButton.SetText("Switch");
+	Rgn.SetRectRgn(&Rect);
+	m_Rgn.CombineRgn(&m_Rgn, &Rgn, RGN_DIFF);
+
+	m_SwitchButton.ShowWindow(SW_SHOW);
+}
+
+//***************************************************************************************
+
+//6.3.0 For WTT adjusted GUI
+void CEyeWnd::OnWTTSButtonClicked()
+{
+	GetParent()->PostMessage(WM_WTTSWITCH_LCLICK, 0, 0);
+}
+
+//***************************************************************************************
+
 void CEyeWnd::CreateOKulixButtons()
 {
 	RECT Rect;

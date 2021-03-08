@@ -190,12 +190,12 @@
 #define IDR_DEC_ZONE_5                  272
 #define IDR_DEC_ZONE_6                  273
 #define IDR_DICOM_EXPORT_1              274
-#define IDR_DICOM_EXPORT_2              275
-#define IDR_DICOM_EXPORT_3              276
 #define IDC_REGI_TIME_BUTTON            274
 #define IDD_REGISTRATION_TIME_DLG       274
+#define IDR_DICOM_EXPORT_2              275
 #define IDC_SHOW_TORIC_INCISION         275
 #define IDD_DELETE_DLG                  275
+#define IDR_DICOM_EXPORT_3              276
 #define IDC_SHOW_TORIC_EEYEPOSTOP       276
 #define IDC_SHOW_TORIC_EEYEPREOP        277
 #define IDC_SHOW_TORIC_CORPREOP         278
@@ -420,6 +420,7 @@
 #define IDR_NEW_SUPERWF_EXAM_3          423
 #define IDC_IMGCTRL_SLIDER              423
 #define IDR_NEW_SUPERWF_EXAM_2          424
+#define IDC_WTT_SWITCH_BTN              424
 #define IDR_NEW_SUPERWF_EXAM_1          425
 #define IDR_DOF_REL_1                   426
 #define IDR_DOF_REL_2                   427
@@ -2082,6 +2083,6 @@
 #define _APS_NEXT_RESOURCE_VALUE        489
 #define _APS_NEXT_COMMAND_VALUE         32965
 #define _APS_NEXT_CONTROL_VALUE         8525
-#define _APS_NEXT_SYMED_VALUE           424
+#define _APS_NEXT_SYMED_VALUE           425
 #endif
 #endif
