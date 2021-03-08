@@ -8,7 +8,7 @@
 
 //***************************************************************************************
 
-// distance from a1 to a2 counterclockwise ª [0, 360)
+// distance from a1 to a2 counterclockwise ï¿½ [0, 360)
 int angular_distance_counterclockwise(int a1, int a2)
 {
 	int da = (a2 - a1) % 360;
@@ -18,7 +18,7 @@ int angular_distance_counterclockwise(int a1, int a2)
 
 //***************************************************************************************
 
-// distance between a1 and a2 ª [0, 180)
+// distance between a1 and a2 Â° [0, 180)
 int angular_distance(int a1, int a2)
 {
 	int da = angular_distance_counterclockwise(a1, a2);
@@ -124,7 +124,7 @@ CPlanWnd::CPlanWnd(RECT& Rect, CWnd* pWnd) :
 	m_PrevButton.SetImage(W >= 1920 ? IDR_LEFT_ARROW_3 : W >= 1600 ? IDR_LEFT_ARROW_2 : IDR_LEFT_ARROW_1);
 	m_PrevButton.SetBk(FALSE);
 	m_PrevButton.SetBkColor(BLACK);
-	m_PrevButton.SetTip("Lens rotation at -1°");
+	m_PrevButton.SetTip("Lens rotation at -1Â°");
 	Rgn.SetRectRgn(&Rect1);
 	m_Rgn.CombineRgn(&m_Rgn, &Rgn, RGN_DIFF);
 
@@ -135,7 +135,7 @@ CPlanWnd::CPlanWnd(RECT& Rect, CWnd* pWnd) :
 	m_NextButton.SetImage(W >= 1920 ? IDR_RIGHT_ARROW_3 : W >= 1600 ? IDR_RIGHT_ARROW_2 : IDR_RIGHT_ARROW_1);
 	m_NextButton.SetBk(FALSE);
 	m_NextButton.SetBkColor(BLACK);
-	m_NextButton.SetTip("Lens roatation at +1°");
+	m_NextButton.SetTip("Lens roatation at +1Â°");
 	Rgn.SetRectRgn(&Rect1);
 	m_Rgn.CombineRgn(&m_Rgn, &Rgn, RGN_DIFF);
 
@@ -464,7 +464,7 @@ void CPlanWnd::Grid()
 
 	// numbers
 	int IncreaseDeg = 5;
-	if (m_wheel_n >= 10) IncreaseDeg = 1;//[cjf***04202012]
+	if (m_wheel_n >= 10) IncreaseDeg = 1;
 
 
 	for (int a = 0; a < 360; a += IncreaseDeg)
@@ -479,10 +479,10 @@ void CPlanWnd::Grid()
 
 		real_t r2_um = 0;
 
-		if (IncreaseDeg == 1) r2_um = r_um + ((a % 15) == 0 ? 400.0 : 150.0);//[cjf***04202012]
-		else r2_um = r_um + ((a % 15) == 0 ? 400.0 : 250.0);//[cjf***04202012]
+		if (IncreaseDeg == 1) r2_um = r_um + ((a % 15) == 0 ? 400.0 : 150.0);
+		else r2_um = r_um + ((a % 15) == 0 ? 400.0 : 250.0);
 
-		if (IncreaseDeg == 1 && (a % 5) == 0 && (a % 15) != 0)	r2_um = r_um + 250;//[cjf***04202012]
+		if (IncreaseDeg == 1 && (a % 5) == 0 && (a % 15) != 0)	r2_um = r_um + 250;
 
 		int x2 = intRound(m_cx + x_px_um * r2_um * COS[a]);
 		int y2 = intRound(m_cy - y_px_um * r2_um * SIN[a]);
@@ -502,7 +502,7 @@ void CPlanWnd::Grid()
 				if (a > 180) sa = a - 180;
 			}
 
-			s.Format(_T(" %i°"), sa);
+			s.Format(_T(" %iÂ°"), sa);
 			m_MemDC.WriteRotatedText(s, x, y, m_SurgeonView ? a + 90 : a - 90, FontSize, 400, "Arial", Color, NOCOLOR);
 		}
 	}
@@ -562,7 +562,7 @@ void CPlanWnd::CorneaPreopAxes()
 	int x = intRound(m_cx + 7200.0 * COS[b] * x_px_um);
 	int y = intRound(m_cy - 7200.0 * SIN[b] * y_px_um);
 	CString s;
-	s.Format(_T("%i°"), b);
+	s.Format(_T("%iÂ°"), b);
 	int o = CheckAngle((m_SurgeonView ? b + 90 : b - 90) - 1);
 	int fs = intRound(0.045 * m_h);
 	m_MemDC.WriteRotatedText(s, x, y, o, fs, 400, "Arial", m_CorneaAxesColor, NOCOLOR);
@@ -613,7 +613,7 @@ void CPlanWnd::CorneaPostopAxes()
 	int x = intRound(m_cx + 6600.0 * COS[b] * x_px_um);//[cjf***04202012]
 	int y = intRound(m_cy - 6600.0 * SIN[b] * y_px_um);//[cjf***04202012]
 	CString s;
-	s.Format(_T("%i°"), b);
+	s.Format(_T("%iÂ°"), b);
 	int o = CheckAngle((m_SurgeonView ? b + 90 : b - 90) - 1);
 	int fs = intRound(0.045 * m_h);
 	m_MemDC.WriteRotatedText(s, x, y, o, fs, 400, "Arial", m_CorneaAxesColor, NOCOLOR);
@@ -727,7 +727,7 @@ void CPlanWnd::Incision()
 	x = intRound(m_cx + Dis * COS[a] * x_px_um);//7200,[cjf***04202012]
 	y = intRound(m_cy - Dis * SIN[a] * y_px_um);//7200,[cjf***04202012]
 	CString s;
-	s.Format(_T("%i°"), a);
+	s.Format(_T("%iÂ°"), a);
 	int o = CheckAngle((m_SurgeonView ? a + 90 : a - 90) - 1);
 	int fs = intRound(0.045 * m_h);
 	m_MemDC.WriteRotatedText(s, x, y, o, fs, 400, "Arial", m_IncisionColor, NOCOLOR);
@@ -760,7 +760,7 @@ void CPlanWnd::EyePreopAxes()
 	int x = intRound(m_cx + 7200.0 * COS[a[0]] * x_px_um);
 	int y = intRound(m_cy - 7200.0 * SIN[a[0]] * y_px_um);
 	CString s;
-	s.Format(_T("%i°"), a[0]);
+	s.Format(_T("%iÂ°"), a[0]);
 	int o = CheckAngle((m_SurgeonView ? a[0] + 90 : a[0] - 90) - 1);
 	int fs = intRound(0.045 * m_h);
 	m_MemDC.WriteRotatedText(s, x, y, o, fs, 400, "Arial", m_EntireEyeAxesColor, NOCOLOR);
@@ -843,7 +843,7 @@ void CPlanWnd::EyePostopAxes()
 	int x = intRound(m_cx + Dis * COS[a[0]] * x_px_um);//7200,[cjf***04202012]
 	int y = intRound(m_cy - Dis * SIN[a[0]] * y_px_um);//7200,[cjf***04202012]
 	CString s;
-	s.Format(_T("%i°"), a[0]);
+	s.Format(_T("%iÂ°"), a[0]);
 	int o = CheckAngle((m_SurgeonView ? a[0] + 90 : a[0] - 90) - 1);
 	int fs = intRound(0.045 * m_h);
 	m_MemDC.WriteRotatedText(s, x, y, o, fs, 400, "Arial", m_EntireEyeAxesColor, NOCOLOR);
@@ -877,7 +877,7 @@ void CPlanWnd::InternalPreopAxes()
 	int x = intRound(m_cx + 3500.0 * COS[a[0]] * x_px_um);//[cjf***04202012]
 	int y = intRound(m_cy - 3500.0 * SIN[a[0]] * y_px_um);//[cjf***04202012]
 	CString s;
-	s.Format(_T("%i°"), a[0]);
+	s.Format(_T("%iÂ°"), a[0]);
 	int o = CheckAngle((m_SurgeonView ? a[0] + 90 : a[0] - 90) - 1);
 	int fs = intRound(0.045 * m_h);
 	m_MemDC.WriteRotatedText(s, x, y, o, fs, 400, "Arial", m_InternalAxesColor, NOCOLOR);
@@ -913,7 +913,7 @@ void CPlanWnd::InternalPostopAxes()
 	int x = intRound(m_cx + 3000.0 * COS[a[0]] * x_px_um);
 	int y = intRound(m_cy - 3000.0 * SIN[a[0]] * y_px_um);
 	CString s;
-	s.Format(_T("%i°"), a[0]);
+	s.Format(_T("%iÂ°"), a[0]);
 	int o = CheckAngle((m_SurgeonView ? a[0] + 90 : a[0] - 90) - 1);
 	int fs = intRound(0.045 * m_h);
 	m_MemDC.WriteRotatedText(s, x, y, o, fs, 400, "Arial", m_InternalAxesColor, NOCOLOR);
@@ -961,7 +961,7 @@ void CPlanWnd::ICLPostopAxes()
 		int x = intRound(m_cx + 3000.0 * COS[a[0]] * x_px_um);
 		int y = intRound(m_cy - 3000.0 * SIN[a[0]] * y_px_um);
 		CString s;
-		s.Format(_T("%i°"), a[0]);
+		s.Format(_T("%iÂ°"), a[0]);
 		int o = CheckAngle((m_SurgeonView ? a[0] + 90 : a[0] - 90) - 1);
 		int fs = intRound(0.045 * m_h);
 		m_MemDC.WriteRotatedText(s, x, y, o, fs, 400, "Arial", m_ICLSteepAxisColor, NOCOLOR);
@@ -997,7 +997,6 @@ void CPlanWnd::Lens2()
 	else return;
 	a[1][1] = a[1][0] + 180;
 
-	// êîëüöî
 	m_MemDC.DrawEllipse(intRound(m_cx), intRound(m_cy), intRound(2500.0 * m_x_px_um), intRound(2500.0 * m_y_px_um), w, m_LensColor, NOCOLOR);
 
 	for (int j = 0; j < 2; j++)
@@ -1113,12 +1112,11 @@ void CPlanWnd::Lens2()
 				m_MemDC.DrawArc(x, y, ra, w, a1, a2, m_RotationColor);
 		}
 
-		// òåêñò
 		int amin = std::min(a[0][i], a[1][i]);
 		int amax = std::max(a[0][i], a[1][i]);
 		int a0 = (amin + amax) / 2;
 
-		if (amax - amin > 180) { // ëåæàò ïî ðàçíûå ñòîðîíû íóëÿ
+		if (amax - amin > 180) { 
 			a0 = (a0 + 180) % 360;
 		}
 
@@ -1136,7 +1134,7 @@ void CPlanWnd::Lens2()
 
 		if (rotatedA == 180) rotatedA = 0;
 
-		s.Format(_T("%i°"), rotatedA);
+		s.Format(_T("%iÂ°"), rotatedA);
 		m_Angular_distance = s;
 
 		int o = CheckAngle((m_SurgeonView ? a0 + 90 : a0 - 90) - 1);
@@ -1275,13 +1273,13 @@ void CPlanWnd::Protractor()
 		//Text
 		int  ADis = SmallAng(a, aw[i]);
 		CString s;
-		s.Format(_T("%i°"), ADis);
+		s.Format(_T("%iÂ°"), ADis);
 
 		int amin = std::min(a01, a02);
 		int amax = std::max(a01, a02);
 		a03 = (amin + amax) / 2;
 
-		if (amax - amin > 180) { // ëåæàò ïî ðàçíûå ñòîðîíû íóëÿ
+		if (amax - amin > 180) { 
 			a03 = (a03 + 180) % 360;
 		}
 		x = intRound(m_cx + (r + 15) * COS[a03]);
@@ -1340,13 +1338,13 @@ void CPlanWnd::Protractor()
 			//Degree text
 			int ADis = SmallAng(a, aw[i]);
 			CString s;
-			s.Format(_T("%i°"), ADis);
+			s.Format(_T("%iÂ°"), ADis);
 
 			int amin = std::min(a01, a02);
 			int amax = std::max(a01, a02);
 			a03 = (amin + amax) / 2;
 
-			if (amax - amin > 180) { // ëåæàò ïî ðàçíûå ñòîðîíû íóëÿ
+			if (amax - amin > 180) { 
 				a03 = (a03 + 180) % 360;
 			}
 			if (a03 < 0) a03 += 360;
@@ -1493,7 +1491,7 @@ void CPlanWnd::Caliper()
 
 		x = intRound(m_cx + 7200.0 * COS[a0] * x_px_um);
 		y = intRound(m_cy - 7200.0 * SIN[a0] * y_px_um);
-		s.Format(_T("%i°"), angular_distance(aw[i], ar[i]));
+		s.Format(_T("%iÂ°"), angular_distance(aw[i], ar[i]));
 
 		int o = CheckAngle((m_SurgeonView ? a0 + 90 : a0 - 90) - 1);
 		m_MemDC.WriteRotatedText(s, x, y, o, FontSize, 400, "Arial", m_CaliperColor, NOCOLOR);
@@ -1521,7 +1519,7 @@ void CPlanWnd::Labels2()
 	CMFont Font3(FontSize3, 400, "Arial");
 
 	::SetRect(&Rect, 0, 20, m_w, 20 + FontSize3);
-	s = "Scale Range : 0° - 180°";
+	s = "Scale Range : 0Â° - 180Â°  ";
 	m_MemDC.WriteText(s, Rect, Font3, white, 2);
 
 	// left label
@@ -1703,7 +1701,7 @@ void CPlanWnd::Labels2()
 		CString s;
 		s = "Rotate " + m_Angular_distance + " ";
 
-		if (m_Angular_distance != "0°")
+		if (m_Angular_distance != "0Â°")
 			s += "clock-wise";
 		else s += "degree";
 

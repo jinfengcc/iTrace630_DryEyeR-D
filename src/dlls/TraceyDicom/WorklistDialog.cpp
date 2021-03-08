@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "WorklistDialog.h"
 #include "interfaces/IProgress.h"
+#include "WorklistDialogSettings.h"
 
 namespace {
   struct Modality
@@ -19,21 +20,72 @@ namespace {
     // clang-format on
   };
 
+#define LVC_FIXED   0x1000
+#define LVC_DYNAMIC 0x0000
+
+  // clang-format off
+  LV_COLUMN lvcPatientList[] = {
+    // Mask, Format, Width, Name
+    {LVCF_FMT | LVCF_WIDTH | LVCF_TEXT, LVCFMT_LEFT            , 55, LPTSTR(L"Patient ID")},
+    {LVCF_FMT | LVCF_WIDTH | LVCF_TEXT, LVCFMT_LEFT            , 65, LPTSTR(L"Last Name")},
+    {LVCF_FMT | LVCF_WIDTH | LVCF_TEXT, LVCFMT_LEFT            , 55, LPTSTR(L"First Name")},
+    {LVCF_FMT | LVCF_WIDTH | LVCF_TEXT, LVCFMT_LEFT | LVC_FIXED, 25, LPTSTR(L"Birthday")},
+    {LVCF_FMT | LVCF_WIDTH | LVCF_TEXT, LVCFMT_LEFT | LVC_FIXED, 16, LPTSTR(L"Gender")},
+  };
+
+  LV_COLUMN lvcWorkItems[] = {
+    // Mask, Format, Width, Name
+    {LVCF_FMT | LVCF_WIDTH | LVCF_TEXT, LVCFMT_LEFT | LVC_FIXED, 45, LPTSTR(L"Date")},
+    {LVCF_FMT | LVCF_WIDTH | LVCF_TEXT, LVCFMT_LEFT | LVC_FIXED, 45, LPTSTR(L"Accession")},
+    {LVCF_FMT | LVCF_WIDTH | LVCF_TEXT, LVCFMT_LEFT | LVC_FIXED, 25, LPTSTR(L"Modality")},
+    {LVCF_FMT | LVCF_WIDTH | LVCF_TEXT, LVCFMT_LEFT            , 65, LPTSTR(L"Physician")},
+    {LVCF_FMT | LVCF_WIDTH | LVCF_TEXT, LVCFMT_LEFT            , 70, LPTSTR(L"Procedure")},
+  };
+  // clang-format on
+  void CreateListHeader(CListViewCtrl &lc, std::span<const LV_COLUMN> cols);
+  void ResizeListHeader(CListViewCtrl &lc, gsl::span<const LV_COLUMN> lva);
+
 } // namespace
 
 BOOL CWorklistDialog::OnInitDialog(CWindow wndFocus, LPARAM lInitParam)
 {
-  CenterWindow();
+  InitDynamicLayout();
+
   Initialize();
   DoDataExchange(DDX_LOAD);
-  SetTimer(1, 100);
+
+  if (WorklistDialogSettings rs; rs.Load()) {
+    SetWindowPos(nullptr, 0, 0, rs.m_winSize.cx, rs.m_winSize.cy, SWP_NOMOVE | SWP_NOZORDER);
+    rs.SetListWidths(m_patListCtrl, rs.m_patListWidths);
+    rs.SetListWidths(m_workitemListCtrl, rs.m_woritemkListWidths);
+  }
+
+  CenterWindow();
+
+  SetTimer(1, 500);
   return TRUE; // Let the system set the focus
+}
+
+LRESULT CWorklistDialog::OnSize(UINT msg, WPARAM wParam, LPARAM lParam, BOOL &handled)
+{
+  auto ret = CDynamicDialogLayout<CWorklistDialog>::OnSize(msg, wParam, lParam, handled);
+
+  ResizeListHeader(m_patListCtrl, lvcPatientList);
+  ResizeListHeader(m_workitemListCtrl, lvcWorkItems);
+
+  return ret;
 }
 
 void CWorklistDialog::OnTimer(UINT_PTR nIDEvent)
 {
-  KillTimer(nIDEvent);
-  //PostMessage(WM_COMMAND, IDC_SEARCH);
+  // CRect rc;
+  // GetClientRect(rc);
+  // if (rc.Width() != m_clientWidth) {
+  //  m_clientWidth = rc.Width();
+
+  //  ResizeListHeader(m_patListCtrl, lvcPatientList);
+  //  ResizeListHeader(m_itemListCtrl, lvcWorkItems);
+  //}
 }
 
 LRESULT CWorklistDialog::OnPatientSelectionChanged(LPNMHDR pnmh)
@@ -45,7 +97,7 @@ LRESULT CWorklistDialog::OnPatientSelectionChanged(LPNMHDR pnmh)
 
 LRESULT CWorklistDialog::OnWorkItemSelectionChanged(LPNMHDR pnmh)
 {
-  int nSel = GetSelection(m_itemListCtrl);
+  int nSel = GetSelection(m_workitemListCtrl);
   GetDlgItem(IDOK).EnableWindow(nSel >= 0);
 
   return LRESULT();
@@ -76,14 +128,15 @@ void CWorklistDialog::OnSettings(UINT uNotifyCode, int nID, CWindow wndCtl)
 void CWorklistDialog::OnOK(UINT uNotifyCode, int nID, CWindow wndCtl)
 {
   auto patientSel  = GetSelection(m_patListCtrl);
-  auto workItemSel = GetSelection(m_itemListCtrl);
+  auto workItemSel = GetSelection(m_workitemListCtrl);
 
   if (patientSel >= 0 && workItemSel >= 0) {
     m_patient = m_workList[patientSel].patient;
     m_work    = m_workList[patientSel].items[workItemSel];
 
     DicomSqlite().SaveWorkItem(m_patient, m_work);
-    EndDialog(IDOK);
+
+    EndDialog(nID);
   }
 }
 
@@ -111,7 +164,7 @@ void CWorklistDialog::Initialize()
 void CWorklistDialog::LoadWorklist()
 {
   m_patListCtrl.DeleteAllItems();
-  m_itemListCtrl.DeleteAllItems();
+  m_workitemListCtrl.DeleteAllItems();
 
   try {
     auto wait = CreateObj<IProgress>();
@@ -146,23 +199,14 @@ void CWorklistDialog::LoadWorklist()
 void CWorklistDialog::LoadPatientList(bool initListCtrl)
 {
   if (initListCtrl) {
-    static LV_COLUMN lvc[] = {
-      // Mask, Format, Width, Name
-      {LVCF_FMT | LVCF_WIDTH | LVCF_TEXT, LVCFMT_LEFT, 55, LPTSTR(L"Patient ID")},
-      {LVCF_FMT | LVCF_WIDTH | LVCF_TEXT, LVCFMT_LEFT, 65, LPTSTR(L"Last Name")},
-      {LVCF_FMT | LVCF_WIDTH | LVCF_TEXT, LVCFMT_LEFT, 55, LPTSTR(L"First Name")},
-      {LVCF_FMT | LVCF_WIDTH | LVCF_TEXT, LVCFMT_LEFT, 25, LPTSTR(L"Birthday")},
-      {LVCF_FMT | LVCF_WIDTH | LVCF_TEXT, LVCFMT_LEFT, 16, LPTSTR(L"Gender")},
-    };
-
     m_patListCtrl = CListViewCtrl(GetDlgItem(IDC_PATIENTS));
     m_patListCtrl.SetExtendedListViewStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES | SORTLV_USESHELLBITMAPS);
-    CreateListHeader(m_patListCtrl, lvc);
+    CreateListHeader(m_patListCtrl, lvcPatientList);
     return;
   }
 
   m_patListCtrl.DeleteAllItems();
-  m_itemListCtrl.DeleteAllItems();
+  m_workitemListCtrl.DeleteAllItems();
 
   for (const auto &wl : m_workList) {
     auto row = m_patListCtrl.GetItemCount();
@@ -181,22 +225,13 @@ void CWorklistDialog::LoadPatientList(bool initListCtrl)
 void CWorklistDialog::LoadWorkItems(bool initListCtrl)
 {
   if (initListCtrl) {
-    static LV_COLUMN lvc[] = {
-      // Mask, Format, Width, Name
-      {LVCF_FMT | LVCF_WIDTH | LVCF_TEXT, LVCFMT_LEFT, 45, LPTSTR(L"Date")},
-      {LVCF_FMT | LVCF_WIDTH | LVCF_TEXT, LVCFMT_LEFT, 45, LPTSTR(L"Accession")},
-      {LVCF_FMT | LVCF_WIDTH | LVCF_TEXT, LVCFMT_LEFT, 25, LPTSTR(L"Modality")},
-      {LVCF_FMT | LVCF_WIDTH | LVCF_TEXT, LVCFMT_LEFT, 65, LPTSTR(L"Physician")},
-      {LVCF_FMT | LVCF_WIDTH | LVCF_TEXT, LVCFMT_LEFT, 70, LPTSTR(L"Procedure")},
-    };
-
-    m_itemListCtrl = CListViewCtrl(GetDlgItem(IDC_ITEMS));
-    m_itemListCtrl.SetExtendedListViewStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES); //  | LVS_EX_CHECKBOXES);
-    CreateListHeader(m_itemListCtrl, lvc);
+    m_workitemListCtrl = CListViewCtrl(GetDlgItem(IDC_ITEMS));
+    m_workitemListCtrl.SetExtendedListViewStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES); //  | LVS_EX_CHECKBOXES);
+    CreateListHeader(m_workitemListCtrl, lvcWorkItems);
     return;
   }
 
-  m_itemListCtrl.DeleteAllItems();
+  m_workitemListCtrl.DeleteAllItems();
 
   int nSel = GetSelection(m_patListCtrl);
   if (nSel < 0)
@@ -206,33 +241,107 @@ void CWorklistDialog::LoadWorkItems(bool initListCtrl)
   const auto &wli = m_workList[nSel].items;
 
   for (auto &i : wli) {
-    auto row = m_itemListCtrl.GetItemCount();
+    auto row = m_workitemListCtrl.GetItemCount();
     auto col = 0;
 
-    m_itemListCtrl.AddItem(row, col++, Date2Str(i.studyTime, true).c_str());
-    m_itemListCtrl.AddItem(row, col++, i.accession.GetString());
-    m_itemListCtrl.AddItem(row, col++, i.modality.GetString());
-    m_itemListCtrl.AddItem(row, col++, i.referringPhysician.GetString());
-    m_itemListCtrl.AddItem(row, col++, i.procedureDescription.GetString());
+    m_workitemListCtrl.AddItem(row, col++, Date2Str(i.studyTime, true).c_str());
+    m_workitemListCtrl.AddItem(row, col++, i.accession.GetString());
+    m_workitemListCtrl.AddItem(row, col++, i.modality.GetString());
+    m_workitemListCtrl.AddItem(row, col++, i.referringPhysician.GetString());
+    m_workitemListCtrl.AddItem(row, col++, i.procedureDescription.GetString());
   }
 }
 
-void CWorklistDialog::CreateListHeader(CListViewCtrl lc, std::span<const LV_COLUMN> cols)
+void CWorklistDialog::EndDialog(int nID)
 {
-  int total = 0;
-  for (auto &c : cols)
-    total += c.cx;
+  WorklistDialogSettings wds;
 
   CRect rc;
-  lc.GetClientRect(&rc);
-  rc.right -= GetSystemMetrics(SM_CXVSCROLL) + 1;
+  GetWindowRect(rc);
 
-  int cx = 0;
-  for (unsigned i = 0; i < cols.size(); ++i) {
-    auto c = cols[i];
-    c.cx   = i == cols.size() - 1 ? (rc.Width() - cx) : (c.cx * rc.Width() / total);
+  wds.m_winSize        = rc.Size();
+  wds.m_patListWidths  = WorklistDialogSettings::GetListWidths(m_patListCtrl);
+  wds.m_woritemkListWidths = WorklistDialogSettings::GetListWidths(m_workitemListCtrl);
 
-    cx += c.cx;
-    lc.InsertColumn(i, &c);
-  }
+  wds.Save();
+  CDialogImpl<CWorklistDialog>::EndDialog(nID);
 }
+
+namespace {
+  void CreateListHeader(CListViewCtrl &lc, std::span<const LV_COLUMN> cols)
+  {
+    int total = 0;
+    for (auto &c : cols)
+      total += c.cx;
+
+    CRect rc;
+    lc.GetClientRect(&rc);
+    rc.right -= GetSystemMetrics(SM_CXVSCROLL) + 1;
+
+    int cx = 0;
+    for (unsigned i = 0; i < cols.size(); ++i) {
+      auto c = cols[i];
+
+      c.fmt &= ~0xFF;
+      c.cx = i == cols.size() - 1 ? (rc.Width() - cx) : (c.cx * rc.Width() / total);
+      cx += c.cx;
+
+      lc.InsertColumn(i, &c);
+    }
+  }
+
+  void ResizeListHeader(CListViewCtrl &lc, gsl::span<const LV_COLUMN> lva)
+  {
+    CRect rc;
+    lc.GetClientRect(&rc);
+
+    auto width = rc.right - (GetSystemMetrics(SM_CXVSCROLL) + 1);
+
+    int total = 0, fixed = 0;
+    for (unsigned i = 0; i < lva.size(); i++) {
+      auto &c = lva[i];
+      if ((c.fmt & LVC_FIXED) == 0)
+        total += c.cx;
+      else
+        width -= lc.GetColumnWidth(i);
+    }
+    // for (int i = 0; i < header.GetItemCount(); i++) {
+    //  if ((lva[i].fmt & LVC_FIXED) != 0)
+    //    fixed += lc.GetColumnWidth(i);
+    //  else
+    //    total += lc.GetColumnWidth(i);
+    //}
+
+    for (unsigned i = 0; i < lva.size(); i++) {
+      if ((lva[i].fmt & LVC_FIXED) == 0) {
+        auto cx = lva[i].cx * width / total;
+        lc.SetColumnWidth(i, cx);
+      }
+    }
+  }
+
+  // void ResizeListHeader(CListViewCtrl &lc, gsl::span<LV_COLUMN> lva)
+  //{
+  //  CRect rc;
+  //  lc.GetClientRect(&rc);
+  //  rc.right -= GetSystemMetrics(SM_CXVSCROLL) + 1;
+
+  //  int total = 0;
+
+  //  for (const auto &c : lva)
+  //    total += c.cx;
+
+  //  for (unsigned i = 0; i < lva.size(); i++) {
+  //    LVCOLUMN col;
+
+  //    col.mask = LVCF_WIDTH;
+
+  //    if (lc.GetColumn(i, &col)) {
+  //      if (auto x = lva[i].cx * rc.Width() / total; x != col.cx) {
+  //        col.cx = x;
+  //        lc.SetColumn(i, &col);
+  //      }
+  //    }
+  //  }
+  //}
+} // namespace

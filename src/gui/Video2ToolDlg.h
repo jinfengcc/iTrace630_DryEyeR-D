@@ -26,19 +26,22 @@ private:
 
 	int         m_w;
 	int         m_h;
-	real_t        m_w_um;
-	real_t        m_h_um;
-	real_t        m_x_px_um;
-	real_t        m_y_px_um;
-	real_t        m_cx;
-	real_t        m_cy;
+	real_t      m_w_um;
+	real_t      m_h_um;
+	real_t      m_x_px_um;
+	real_t      m_y_px_um;
+	real_t      m_cx;
+	real_t      m_cy;
+
+	BOOL        m_IsHRCamera;
 
 	int         m_BackupInfraredLEDsPowerLevel;
 	int         m_BackupWhiteLEDsPowerLevel;
 	int         m_BackupBrightness;
 	int         m_BackupContrast;
-	int         m_BackupHue;
-	int         m_BackupSaturation;
+	int         m_BackupHueOrRed;
+	int         m_BackupSatOrGreen;
+    int         m_BackupBlue;// For high resolution camera
 	int         m_BackupDelay;
 
 	CMemWnd     m_VideoWnd;
@@ -51,15 +54,21 @@ private:
 	CEdit       m_WhiteLEDsPowerLevelEdit;
 	CEdit       m_BrightnessEdit;
 	CEdit       m_ContrastEdit;
-	CEdit       m_HueEdit;
-	CEdit       m_SaturationEdit;
+	CEdit       m_HueOrRedEdit;
+	CEdit       m_SatOrGreenEdit;
+    CEdit       m_BlueEdit;// For high resolution camera
 	CEdit       m_DelayEdit;
 	CSliderCtrl m_InfraredLEDsPowerLevelSlider;
 	CSliderCtrl m_WhiteLEDsPowerLevelSlider;
 	CSliderCtrl m_BrightnessSlider;
 	CSliderCtrl m_ContrastSlider;
-	CSliderCtrl m_HueSlider;
-	CSliderCtrl m_SaturationSlider;
+    CSliderCtrl m_HueOrRedSlider;
+    CSliderCtrl m_SatOrGreenSlider;// For high resolution camera
+    CSliderCtrl m_BlueSlider;// For high resolution camera
+
+	CStatic     m_HueOrRedSText; // For high resolution camera
+    CStatic     m_SatOrGreenText; // For high resolution camera
+	CStatic     m_BlueText;// For high resolution camera
 
 	CButton     m_PlacdioCheck;//test cjf 10292020
 

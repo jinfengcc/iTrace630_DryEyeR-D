@@ -878,6 +878,9 @@
     <ClCompile Include="CmdLineArgs.cpp">
       <Filter>Others</Filter>
     </ClCompile>
+    <ClCompile Include="PreBtn.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PatientDlg.h">
@@ -1443,6 +1446,9 @@
     </ClInclude>
     <ClInclude Include="CmdLineArgs.h">
       <Filter>Others</Filter>
+    </ClInclude>
+    <ClInclude Include="PreBtn.h">
+      <Filter>Controls</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2158,6 +2164,15 @@
       <Filter>Resources</Filter>
     </Image>
     <Image Include="Res\iTrace6_3_Splash-About.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\SaveDICOM34.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\SaveDICOM40.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Res\SaveDICOM48.png">
       <Filter>Resources</Filter>
     </Image>
   </ItemGroup>

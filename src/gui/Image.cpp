@@ -1252,240 +1252,254 @@ real_t CEyeImage::GetLensRotationAngle()
 //***************************************************************************************
 //***************************************************************************************
 
-void CEyeImage::FindVertex0(BOOL TriLaserOn, int LaserIntensityThreshold)
+void CEyeImage::FindVertex0(BOOL TriLaserOn, int LaserIntensityThreshold, BOOL IsHRCameraConnected)
 {
-	if (m_RGBData.GetMem() == NULL) return;
+  if (m_RGBData.GetMem() == NULL)
+    return;
 
-	int icx = intRound(0.5 * m_w);
-	int icy = intRound(0.5 * m_h);
+  int icx = intRound(0.5 * m_w);
+  int icy = intRound(0.5 * m_h);
 
-	//--------------------------------------------------------------
-	// найти порог интенсивности
-	{
-		int dx = 10;
-		int dy = 10;
-		int t[64];
-		int hist[256];
-		memset(hist, 0, sizeof(hist));
-		int pavg = 0;
-		int n = 0;
-		int k = 0;
-		for (int j = -4; j < 4; j++) {
-			int y1 = icy + dy * j;
-			int y2 = y1 + dy - 1;
-			for (int i = -4; i < 4; i++) {
-				int x1 = icx + dx * i;
-				int x2 = x1 + dx - 1;
-				int s = 0;
-				for (int y = y1; y <= y2; y++) {
-					for (int x = x1; x <= x2; x++) {
-						int p = GetRAt(x, y);
-						s += p;
-						hist[p]++;
-						pavg += p;
-						n++;
-					}
-				}
-				t[k++] = s;
-			}
-		}
-		pavg /= n;
+  //--------------------------------------------------------------
+  // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  {
+    int dx = 10;
+    int dy = 10;
+    int t[64];
+    int hist[256];
+    memset(hist, 0, sizeof(hist));
+    int pavg = 0;
+    int n    = 0;
+    int k    = 0;
+    for (int j = -4; j < 4; j++) {
+      int y1 = icy + dy * j;
+      int y2 = y1 + dy - 1;
+      for (int i = -4; i < 4; i++) {
+        int x1 = icx + dx * i;
+        int x2 = x1 + dx - 1;
+        int s  = 0;
+        for (int y = y1; y <= y2; y++) {
+          for (int x = x1; x <= x2; x++) {
+            int p = GetRAt(x, y);
+            s += p;
+            hist[p]++;
+            pavg += p;
+            n++;
+          }
+        }
+        t[k++] = s;
+      }
+    }
+    pavg /= n;
 
-		// найти квадрат с минимальной суммарной интенсивностью
-		int pmin = INT_MAX;
-		for (int i = 0; i < 64; i++) {
-			if (t[i] < pmin) pmin = t[i];
-		}
-		// разделить на количество пикселов в квадрате
-		pmin /= (dy * dx);
+    // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    int pmin = INT_MAX;
+    for (int i = 0; i < 64; i++) {
+      if (t[i] < pmin)
+        pmin = t[i];
+    }
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    pmin /= (dy * dx);
 
-		// отфильтровать гистограмму
-		m_hist_max = 0.0;
-		for (int i = 0; i < 256; i++) {
-			int s = 0;
-			int n = 0;
-			for (int j = -5; j <= 5; j++) {
-				int k = i + j;
-				if (k < 0) k = 0; else if (k > 255) k = 255;
-				int p = hist[k];
-				if (p > 0) {
-					s += p;
-					n++;
-				}
-			}
-			real_t v = n == 0 ? 0.0 : (real_t)s / n;
-			m_hist[i] = v;
-			if (m_hist_max < v) m_hist_max = v;
-		}
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    m_hist_max = 0.0;
+    for (int i = 0; i < 256; i++) {
+      int s = 0;
+      int n = 0;
+      for (int j = -5; j <= 5; j++) {
+        int k = i + j;
+        if (k < 0)
+          k = 0;
+        else if (k > 255)
+          k = 255;
+        int p = hist[k];
+        if (p > 0) {
+          s += p;
+          n++;
+        }
+      }
+      real_t v  = n == 0 ? 0.0 : (real_t)s / n;
+      m_hist[i] = v;
+      if (m_hist_max < v)
+        m_hist_max = v;
+    }
 
-		// найти минимум
-		int imin = pmin;
-		for (int i = pmin + 1; i <= pavg; i++) {
-			if (m_hist[i] < m_hist[imin]) {
-				imin = i;
-			}
-		}
-		m_ve0_thr = imin;
-	}
+    // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    int imin = pmin;
+    for (int i = pmin + 1; i <= pavg; i++) {
+      if (m_hist[i] < m_hist[imin]) {
+        imin = i;
+      }
+    }
+    m_ve0_thr = imin;
+  }
 
-	//--------------------------------------------------------------
-	// построить таблицу узлов
-	m_table.Create(81, 81);
-	int Y = m_table.GetNumRows();
-	int X = m_table.GetNumCols();
-	int Y2 = Y >> 1;
-	int X2 = X >> 1;
-	for (int y = 0; y < Y; y++) {
-		int yy = y - Y2;
-		for (int x = 0; x < X; x++) {
-			int xx = x - X2;
-			int s = 0;
-			for (int j = yy - 2; j <= yy + 2; j++) {
-				for (int i = xx - 2; i <= xx + 2; i++) {
-					s += GetRAt(icx + i, icy + j);
-				}
-			}
-			m_table(y, x) = s <= 25 * m_ve0_thr ? 1 : 0;
-		}
-	}
+  //--------------------------------------------------------------
+  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+  m_table.Create(81, 81);
+  int Y  = m_table.GetNumRows();
+  int X  = m_table.GetNumCols();
+  int Y2 = Y >> 1;
+  int X2 = X >> 1;
+  for (int y = 0; y < Y; y++) {
+    int yy = y - Y2;
+    for (int x = 0; x < X; x++) {
+      int xx = x - X2;
+      int s  = 0;
+      for (int j = yy - 2; j <= yy + 2; j++) {
+        for (int i = xx - 2; i <= xx + 2; i++) {
+          s += GetRAt(icx + i, icy + j);
+        }
+      }
+      m_table(y, x) = s <= 25 * m_ve0_thr ? 1 : 0;
+    }
+  }
 
-	//--------------------------------------------------------------
-	if (FindLargestGroup(m_table, 1, 2) < 200) return;
+  //--------------------------------------------------------------
+  if (FindLargestGroup(m_table, 1, 2) < 200)
+    return;
 
-	//--------------------------------------------------------------
-	int s = 0, sx = 0, sy = 0;
-	for (int y = 0; y < Y; y++) {
-		for (int x = 0; x < X; x++) {
-			if (m_table(y, x) == 2) {
-				sx += x;
-				sy += y;
-				s++;
-			}
-		}
-	}
-	m_ve0_x = sx / s - X2;
-	m_ve0_y = sy / s - Y2;
+  //--------------------------------------------------------------
+  int s = 0, sx = 0, sy = 0;
+  for (int y = 0; y < Y; y++) {
+    for (int x = 0; x < X; x++) {
+      if (m_table(y, x) == 2) {
+        sx += x;
+        sy += y;
+        s++;
+      }
+    }
+  }
+  m_ve0_x = sx / s - X2;
+  m_ve0_y = sy / s - Y2;
 
-	//--------------------------------------------------------------
-	// построить оболочку - только для отображения на экране
-	FindHull(m_hull, m_table, 2, 3);
+  //--------------------------------------------------------------
+  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+  FindHull(m_hull, m_table, 2, 3);
 
-	//--------------------------------------------------------------
-	m_ve0_ok = TRUE;
+  //--------------------------------------------------------------
+  m_ve0_ok = TRUE;
 
-	//--------------------------------------------------------------
+  //--------------------------------------------------------------
 
-	//if (::NewSettings.m_Adjust_CT)
-	//{
-	//	//original code
-	//	if (TriLaserOn)
-	//	{
-	//		int t = 11 * 21 * LaserIntensityThreshold;
-	//		int xmax, smax = 0;
-	//		for (int x = -40; x <= 40; x++)
-	//		{
-	//			int s = 0;
-	//			for (int j = -5; j <= 5; j++)
-	//			{
-	//				for (int i = -10; i <= 10; i++)
-	//				{
-	//					s += GetRAt(icx + x + i, icy + j);
-	//				}
-	//			}
-	//			if (s > smax)
-	//			{
-	//				smax = s;
-	//				xmax = x;
-	//			}
-	//		}
-	//		if (smax >= t)
-	//		{
-	//			m_la_x = xmax;
-	//			m_la_v = smax / (11 * 21);
-	//			m_la_ok = TRUE;
-	//			m_la_RtoC_OK = TRUE;
-	//		}
-	//	}
-	//}
-	//else
-	{
-		//[cjf***04122012], tracing the first laser spot, do not allow second spot trigger capture
-		int row = intRound((m_w - 400) / 10); //[cjf06112012]
-		if (TriLaserOn)
-		{
-			int t = 11 * 11 * LaserIntensityThreshold;
-			int xmax, smax = 0;
+  // if (::NewSettings.m_Adjust_CT)
+  //{
+  //	//original code
+  //	if (TriLaserOn)
+  //	{
+  //		int t = 11 * 21 * LaserIntensityThreshold;
+  //		int xmax, smax = 0;
+  //		for (int x = -40; x <= 40; x++)
+  //		{
+  //			int s = 0;
+  //			for (int j = -5; j <= 5; j++)
+  //			{
+  //				for (int i = -10; i <= 10; i++)
+  //				{
+  //					s += GetRAt(icx + x + i, icy + j);
+  //				}
+  //			}
+  //			if (s > smax)
+  //			{
+  //				smax = s;
+  //				xmax = x;
+  //			}
+  //		}
+  //		if (smax >= t)
+  //		{
+  //			m_la_x = xmax;
+  //			m_la_v = smax / (11 * 21);
+  //			m_la_ok = TRUE;
+  //			m_la_RtoC_OK = TRUE;
+  //		}
+  //	}
+  //}
+  // else
+  {
+    //tracing the first laser spot, do not allow second spot trigger capture
+    int row = intRound((m_w - 400) / 10);
 
-			for (int i = 2; i < row; i++) {
-				int s = 0;
-				int m = i * 10 + 200;
-				if ((m > icx + 35) || (m < icx - 35)) {
-					for (int x = m; x <= m + 10; x++) {
-						for (int y = icy - 5; y <= icy + 5; y++) {
-							int R = GetRAt(x, y);
-							s += R;
-						}
-					}
+    if (TriLaserOn) {
+      int SpotWH   = IsHRCameraConnected ? 3 : 5;    // 6.3.0 If it is HR Camera, shrink the spot area to 7*7
+      int SpotArea = IsHRCameraConnected ? 49 : 121; // 6.3.0 If it is HR Camera, shrink the spot area to 7*7
 
-					if (s > smax) {
-						smax = s;
-						xmax = m + 5;
-					}
-				}
-			}
+      int LaserSpotBrightness = SpotArea * LaserIntensityThreshold;//Only brighter than this be consdiered as the laser spot
+      int xmax, smax = 0;
 
-			//m_la_xmax = xmax - icx;	
+      for (int i = 2; i < row; i++) {
+        int s = 0;
+        int m = i * 10 + 200;
+        if ((m > icx + 35) || (m < icx - 35)) {
+          for (int x = m; x <= m + SpotWH * 2; x++) {
+            for (int y = icy - SpotWH; y <= icy + SpotWH; y++) {
+              int R = GetRAt(x, y);
+              s += R;
+            }
+          }
 
-			//[cjf***04122012] 
-			int xmaxCen, smaxCen = 0;
+          if (s > smax) {
+            smax = s;
+            xmax = m + 5;
+          }
+        }
+      }
 
-			for (int x = -30; x <= 30; x++) {
-				int s = 0;
-				for (int j = -5; j <= 5; j++) {
-					for (int i = -5; i <= 5; i++) {
-						s += GetRAt(icx + x + i, icy + j);
-					}
-				}
-				if (s > smaxCen) {
-					smaxCen = s;
-					xmaxCen = x + icx;
-				}
-			}
+      // m_la_xmax = xmax - icx;
 
-			if (smaxCen >= t) {
-				m_la_x = xmaxCen - icx;
-				m_la_v = smaxCen / (11 * 11);
-				if (xmax >= (icx - 20) && smax >= t) m_Target_ok = TRUE;//[5.1.1]  
-				else m_Target_ok = FALSE;//[5.1.1]  
+      int xmaxCen, smaxCen = 0;
 
-				if (xmax >= (icx - 10) && smax >= t)
-				{
-					//sometimes it is the second light target the capture in the center since it has maxium value
-					//however it has a 'bright long tail' in its right side
-					//Let check this 'long tail'
-					int s = 0;
-					for (int j = -5; j <= 5; j++) {
-						for (int i = -5; i <= 5; i++) {
-							s += GetRAt(icx + 20 + i, icy + j);
-						}
-					}
-					if (s < t)  m_la_ok = TRUE;
-					else m_la_ok = FALSE;
-					//
-				}
+      for (int x = -30; x <= 30; x++) {
+        int s = 0;
+        for (int j = -SpotWH; j <= SpotWH; j++) {
+          for (int i = -SpotWH; i <= SpotWH; i++) {
+            s += GetRAt(icx + x + i, icy + j);
+          }
+        }
+        if (s > smaxCen) {
+          smaxCen = s;
+          xmaxCen = x + icx;
+        }
+      }
 
-				//if((xmax - icx) == -37 || (xmax - icx) == -87) // for the caliboard sphere
-				if ((xmax - icx) == -37 || (xmax - icx) == -87 || (xmax - icx) == 43) // [5.1.1]
-				{
-					m_la_ok = TRUE;
-					m_Target_ok = TRUE;
-				}
-				m_la_RtoC_OK = FindDirt(xmaxCen, icx);
-			}
-			else m_la_x = xmax;
-		}
-		//[cjf***04112012]
-	}
+      if (smaxCen >= LaserSpotBrightness) {
+        m_la_x = xmaxCen - icx;
+        m_la_v = smaxCen / SpotArea;
+
+       // if (xmax >= (icx - 20) && smax >= LaserSpotBrightness)
+          m_Target_ok = TRUE; //[5.1.1]
+		//else
+		//	m_Target_ok = FALSE; //[5.1.1]
+		//}
+
+        if (xmax >= (icx - 10) && smax >= LaserSpotBrightness) {
+          // sometimes it is the second light target the capture in the center since it has maxium value
+          // however it has a 'bright long tail' in its right side
+          // Let check this 'long tail'
+          int s = 0;
+          for (int j = -SpotWH; j <= SpotWH; j++) {
+            for (int i = -SpotWH; i <= SpotWH; i++) {
+              s += GetRAt(icx + 20 + i, icy + j);
+            }
+          }
+          if (s < LaserSpotBrightness)
+            m_la_ok = TRUE;
+          else
+            m_la_ok = FALSE;
+          //
+        }
+
+        // if((xmax - icx) == -37 || (xmax - icx) == -87) // for the caliboard sphere
+        if ((xmax - icx) == -37 || (xmax - icx) == -87 || (xmax - icx) == 43) // [5.1.1]
+        {
+          m_la_ok     = TRUE;
+          m_Target_ok = TRUE;
+        }
+        m_la_RtoC_OK = FindDirt(xmaxCen, icx);
+      }
+      else
+        m_la_x = xmax;
+    } 
+  }
 }
 
 //***************************************************************************************
@@ -1536,7 +1550,7 @@ int CEyeImage::FindLargestGroup(Matrix<int>& table, int index_to_look, int index
 {
 	const int dx[8] = { 1,  1,  0, -1, -1, -1,  0,  1 };
 	const int dy[8] = { 0,  1,  1,  1,  0, -1, -1, -1 };
-	const int nn = 4; // nn - количество соседей которые необходимо иметь
+	const int nn = 4; // nn - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 
 	int Y = table.GetNumRows();
 	int X = table.GetNumCols();
@@ -1573,19 +1587,19 @@ int CEyeImage::FindLargestGroup(Matrix<int>& table, int index_to_look, int index
 		}
 	}
 
-	// из узлов отмеченных индексои index_to_look создать группы (игнорировать узлы с индексом index_bad)
+	// пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ index_to_look пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ index_bad)
 	int new_group_index = index_to_look;
 	int num_group_nodes_max = 0;
-	int group_index_max = index_bad - 1; // index_bad нельзя
+	int group_index_max = index_bad - 1; // index_bad пїЅпїЅпїЅпїЅпїЅпїЅ
 	for (int y = 0; y < Y; y++) {
 		for (int x = 0; x < X; x++) {
 			if (table2(y, x) == index_to_look) {
-				// начинаем новую группу
+				// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 				//-------------------------------------------------------------------------------------
 				int num_new_group_nodes = CreateNewGroup(table2, x, y, index_to_look, ++new_group_index);
 				//-------------------------------------------------------------------------------------
-				// закончили построение новой группы, теперь проверить, не содержит ли только
-				// что построенная группа наибольшее число узлов so far
+				// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+				// пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ so far
 				if (num_new_group_nodes > num_group_nodes_max) {
 					num_group_nodes_max = num_new_group_nodes;
 					group_index_max = new_group_index;
@@ -1616,8 +1630,8 @@ int CEyeImage::CreateNewGroup(Matrix<int>& table, int x0, int y0, int index_to_l
 	int X = table.GetNumCols();
 
 	List<CNode> L[2];
-	List<CNode>* pL1 = &L[0]; // текущий уровень удалённости от начальной точки группы
-	List<CNode>* pL2 = &L[1]; // следующий уровень
+	List<CNode>* pL1 = &L[0]; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+	List<CNode>* pL2 = &L[1]; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 	table(y0, x0) = index_to_set;
 
@@ -1746,480 +1760,494 @@ L:
 //***************************************************************************************
 //***************************************************************************************
 //***************************************************************************************
-
+// New rings detection code works better in old and hres camera
 void CEyeImage::FindVertexAndRings()
 {
-	ClearVertexAndRings();
+  ClearVertexAndRings();
 
-	if (m_RGBData.GetMem() == NULL) return;
+  if (m_RGBData.GetMem() == NULL)
+    return;
 
-	real_t cx = 0.5 * m_w;
-	real_t cy = 0.5 * m_h;
-	real_t x_px_um = m_w / m_w_um;
-	real_t y_px_um = m_h / m_h_um;
+  // Take the center of the image
+  real_t cx = 0.5 * m_w;
+  real_t cy = 0.5 * m_h;
 
-	BOOL ve_ok;
-	real_t ve_x_um;
-	real_t ve_y_um;
-	real_t ri0_um[360];
+  // Get pixel -> micron ratio
+  real_t x_px_um = m_w / m_w_um;
+  real_t y_px_um = m_h / m_h_um;
 
-	int kl1[5] = { 30, 25, 20, 15, 10 };
-	for (int l1 = 0; l1 < 5; l1++) {
+  BOOL ve_ok;
+  real_t ve_x_um;
+  real_t ve_y_um;
+  real_t ri0_um[360];
 
-		ve_ok = FALSE;
-		ve_x_um = 0.0;
-		ve_y_um = 0.0;
+  int kl1[5] = {30, 25, 20, 15, 10};
+  // For each kl1 factor
+  for (int l1 = 0; l1 < 5; l1++) {
+    ve_ok   = FALSE;
+    ve_x_um = 0.0;
+    ve_y_um = 0.0;
 
-		const int nl2 = 3;
-		for (int l2 = 0; l2 < nl2; l2++) {
-			int edge[360];
-			memset(edge, 0, sizeof(edge));
-			for (int a = 0; a < 360; a++) {
-				// построить профиль в 101 шаг через 10 микрон, начиная с 200 микрон и заканчивая 1000 микрон
-				real_t t[101];
-				for (int r = 0; r <= 100; r++) {
-					real_t r_um = 200.0 + r * 10.0;
-					real_t x_um = ve_x_um + r_um * COS[a];
-					real_t y_um = ve_y_um + r_um * SIN[a];
-					int x = intRound(cx + x_um * x_px_um);
-					int y = intRound(cy + y_um * y_px_um);
-					t[r] = GetRAt(x, y);
-				}
-				// фильтрация вдоль угла и поиск минимума и максимума
-				real_t p[101];
-				real_t min = DBL_MAX;
-				real_t max = -DBL_MAX;
-				int k = kl1[l1];
-				for (int r = 10; r <= 90; r++) {
-					real_t s = 0.0;
-					for (int i = -10; i <= 10; i++) {
-						int q = k - abs(i);
-						s += q * t[r + i];
-					}
-					p[r] = s;
-					if (s < min) min = s;
-					if (s > max) max = s;
-				}
+    const int nl2 = 3;
+    for (int l2 = 0; l2 < nl2; l2++) {
+      int edge[360];
+      memset(edge, 0, sizeof(edge));
 
-				if (max - min <= 0.000000001) return;
+      // For each angle 0 to 360 degrees
+      for (int a = 0; a < 360; a++) {
+        // t[] contains 101 R values from image along spoke originating at (cx,cy) + ve factor
+        // in same direction at 10um intervals
+        real_t t[101];
+        for (int r = 0; r <= 100; r++) {
+          real_t r_um = 200.0 + r * 10.0;
+          real_t x_um = ve_x_um + r_um * COS[a];
+          real_t y_um = ve_y_um + r_um * SIN[a];
+          int  x    = intRound(cx + x_um * x_px_um);
+          int  y    = intRound(cy + y_um * y_px_um);
+          t[r]      = GetRAt(x, y);
+        }
 
-				// нормировка от 0 до 1
-				for (int r = 10; r <= 90; r++) {
-					p[r] = (p[r] - min) / (max - min);
-				}
-				// поиск первого экстремума изнутри - середины первого белого кольца
-				int rmax = 0;
-				for (int r = 11; r <= 89; r++) {
-					if (p[r] > 0.25 && p[r - 1] < p[r] && p[r] > p[r + 1]) {
-						rmax = r;
-						break;
-					}
-				}
-				// поиск границы назад от экстремума внутрь - первого перехода от белого к чёрному
-				real_t dmax = -DBL_MAX;
-				for (int r = rmax - 1; r >= 11; r--) {
-					real_t d = p[r] - p[r - 1];
-					if (dmax < d) {
-						dmax = d;
-						edge[a] = r;
-					}
-				}
-			}
-			// выбросить всплески
-			int z[360];
-			memcpy(z, edge, sizeof(z));
-			sort_asc(z, 360, 45);
-			int z1 = z[44];
-			memcpy(z, edge, sizeof(z));
-			sort_des(z, 360, 45);
-			int z2 = z[44];
-			for (int a = 0; a < 360; a++) {
-				if (edge[a] < z1 || edge[a] > z2) edge[a] = INVALID_VALUE;
-			}
-			// фильтрация
-			for (int a = 0; a < 360; a++) {
-				int s = 0;
-				int k = 0;
-				for (int i = -30; i <= 30; i++) {
-					int v = edge[CheckAngle(a + i)];
-					if (v != INVALID_VALUE) {
-						int q = 31 - abs(i);
-						s += q * v;
-						k += q;
-					}
-				}
-				ri0_um[a] = k != 0 ? (200.0 + ((real_t)s / (real_t)k) * 10.0 - 5.0) : INVALID_VALUE;
-			}
-			// уточнение положения вёртекса
-			if (l2 < nl2 - 1) {
-				real_t x_min_um = DBL_MAX;
-				real_t x_max_um = -DBL_MAX;
-				real_t y_min_um = DBL_MAX;
-				real_t y_max_um = -DBL_MAX;
-				for (int a = 0; a < 360; a++) {
-					if (ri0_um[a] != INVALID_VALUE) {
-						real_t x_um = ve_x_um + ri0_um[a] * COS[a];
-						real_t y_um = ve_y_um + ri0_um[a] * SIN[a];
-						if (x_min_um > x_um) x_min_um = x_um;
-						if (x_max_um < x_um) x_max_um = x_um;
-						if (y_min_um > y_um) y_min_um = y_um;
-						if (y_max_um < y_um) y_max_um = y_um;
-					}
-				}
-				ve_x_um = (x_min_um + x_max_um) * 0.5;
-				ve_y_um = (y_min_um + y_max_um) * 0.5;
-			}
-		}
+        // p[] contains an averaged R value for each pixel on spoke
+        real_t p[101];
+        real_t min = DBL_MAX;
+        real_t max = -DBL_MAX;
+        int  k   = kl1[l1];
 
-		// на первом кольце не должно быть ни одного разрыва
-		BOOL Broken = FALSE;
-		real_t min = DBL_MAX;
-		real_t max = -DBL_MAX;
-		for (int a = 0; a < 360; a++) {
-			if (ri0_um[a] == INVALID_VALUE) {
-				Broken = TRUE;
-				break;
-			}
-			else {
-				if (ri0_um[a] < min) min = ri0_um[a];
-				if (ri0_um[a] > max) max = ri0_um[a];
-			}
-		}
+        for (int r = 10; r <= 90; r++) {
+          real_t s = 0.0;
+          // Compute a weighted R value total of each pixel on spoke
+          for (int i = -10; i <= 10; i++) {
+            int q = k - abs(i); // Weighting q scales on how far from target pixel we're looking at
+            s += q * t[r + i];
+          }
+          p[r] = s;
+          if (s < min)
+            min = s;
+          if (s > max)
+            max = s;
+        }
 
-		if (!Broken && (max - min < 200.0)) {
-			// производная не должна выходить за некоторый предел
-			BOOL Smooth = TRUE;
-			for (int a = 0; a < 359; a++) {
-				if (fabs(ri0_um[a + 1] - ri0_um[a]) > 4.0) { // 2009-03-15 changed from 3.0 to 4.0
-					Smooth = FALSE;
-					break;
-				}
-			}
-			ve_ok = Smooth;
-		}
+        // If the highest and lowest R values on spoke are effectively equal, return.
+        // Normalising the value is impossible if the range is effectively 0
+        if (max - min <= 0.000000001)
+          return;
 
-		if (ve_ok) break;
-	}
+        // Normalise the R value to range [0,1]
+        for (int r = 10; r <= 90; r++) {
+          p[r] = (p[r] - min) / (max - min);
+        }
 
-	if (!ve_ok) return;
+        // Find the radius value (r) with normalised value > 0.25 that is strictly decreasing
+        // i.e. p[rmax - 1] > p[rmax] > p[rmax + 1]
+        int rmax = 0;
+        for (int r = 11; r <= 89; r++) {
+          // ori code
+          /*			if (p[r] > 0.25 && p[r - 1] < p[r] && p[r] > p[r + 1])
+                {
+                  rmax = r;
+                  break;
+                }*/
 
-	// ==================================================================
+          // New code by cjf 12-18-2019
+          if (p[r] > 0.35 && p[r - 1] < p[r]) // for test
+          {
+            rmax = r;
+            break;
+          }
+          // New code by cjf
+        }
 
-	m_ve_ok = TRUE;
-	m_ve_x_um = ve_x_um;
-	m_ve_y_um = ve_y_um;
+        // Search through pixels [0,rmax) to find the point with the biggest pixel gradient
+        real_t dmax = -DBL_MAX;
+        for (int r = rmax - 1; r >= 11; r--) {
+          real_t d = p[r] - p[r - 1];
+          if (dmax < d) {
+            dmax    = d;
+            edge[a] = r; // Store the edge for this angle
+          }
+        }
+      } // end for(int a = 0; a < 360; a++)
 
-	for (int a = 0; a < 360; a++) {
-		m_ri_r_um[0][a] = ri0_um[a];
-	}
+      int z[360];
+      memcpy(z, edge, sizeof(z)); // Copy out the edge data
+      sort_asc(z, 360, 45);       // Sort so the lowest 45 are in correct position (nth element, n = 45, ascending order)
 
-	// ==================================================================
+      int z1 = z[44]; // z1 = 45th smallest value
+      memcpy(z, edge, sizeof(z));
+      sort_des(z, 360, 45); // Sort so the highest 45 are in correct position (nth element, n = 45, descending order)
 
-	int NumSteps = 512;
-	real_t UmStep = 5200.0 / (NumSteps - 1);
-	Matrix<real_t> P(360, NumSteps);
-	P.Fill(INVALID_VALUE);
-	for (int a = 0; a < 360; a++)
-	{
-		for (int s = 0; s < NumSteps; s++) 
-		{
-			real_t r_um = s * UmStep;
-			real_t x_um = m_ve_x_um + r_um * COS[a];
-			real_t y_um = m_ve_y_um + r_um * SIN[a];
-			real_t p;
-			if (!GetRGBAtUm(x_um, y_um, &p, NULL, NULL)) break;
-			P(a, s) = p;
-		}
-	}
+      int z2 = z[44]; // z2 = 45th largest value
 
-	// ==================================================================
+      for (int a = 0; a < 360; a++) {
+        if (edge[a] < z1 || edge[a] > z2) {
+          edge[a] = INVALID_VALUE; // Edges outside of [z1,z2] are labelled invalid
+        }
+      }
 
-	{
-		real_t t[360];
-		const int m = 10;
-		for (int p = 0; p < NumSteps; p++)
-		{
-			for (int a = 0; a < 360; a++) 
-			{
-				real_t s = 0.0;
-				int k = 0;
+      // For each angle (spoke) get averaged (weighted) edge position
+      for (int a = 0; a < 360; a++) {
+        int s = 0;
+        int k = 0;
+        for (int i = -30; i <= 30; i++) {
+          int v = edge[CheckAngle(a + i)];
+          if (v != INVALID_VALUE) {
+            int q = 31 - abs(i);
+            s += q * v;
+            k += q;
+          }
+        }
 
-				for (int i = -m; i <= m; i++)
-				{
-					real_t v = P(CheckAngle(a + i), p);
-					if (v != INVALID_VALUE)
-					{
-						int q = m + 1 - abs(i);
-						s += q * v;
-						k += q;
-					}
-				}
+        // Weighted average edge position in microns stored in ri0_um.
+        ri0_um[a] = k != 0 ? (200.0 + ((real_t)s / (real_t)k) * 10.0 - 5.0) : INVALID_VALUE;
+      }
 
-				t[a] = k != 0 ? s / k : INVALID_VALUE;
-			}
+      // If this is not the last l2 loop.
+      // Push ve_x/y values out to get the next ring
+      if (l2 < nl2 - 1) {
+        real_t x_min_um = DBL_MAX;
+        real_t x_max_um = -DBL_MAX;
+        real_t y_min_um = DBL_MAX;
+        real_t y_max_um = -DBL_MAX;
+        for (int a = 0; a < 360; a++) {
+          if (ri0_um[a] != INVALID_VALUE) {
+            real_t x_um = ve_x_um + ri0_um[a] * COS[a];
+            real_t y_um = ve_y_um + ri0_um[a] * SIN[a];
+            if (x_min_um > x_um)
+              x_min_um = x_um;
+            if (x_max_um < x_um)
+              x_max_um = x_um;
+            if (y_min_um > y_um)
+              y_min_um = y_um;
+            if (y_max_um < y_um)
+              y_max_um = y_um;
+          }
+        }
+        ve_x_um = (x_min_um + x_max_um) * 0.5;
+        ve_y_um = (y_min_um + y_max_um) * 0.5;
+      }
+    } // End for(int l2 = 0; l2 < nl2; l2++)
 
-			for (int a = 0; a < 360; a++) 
-			{
-				P(a, p) = t[a];
-			}
-		}
-	}
+    // Check if the ring data has any breaks in it
+    BOOL Broken = FALSE;
+    real_t min    = DBL_MAX;
+    real_t max    = -DBL_MAX;
+    for (int a = 0; a < 360; a++) {
+      if (ri0_um[a] == INVALID_VALUE) {
+        Broken = TRUE;
+        break;
+      }
+      else {
+        if (ri0_um[a] < min)
+          min = ri0_um[a];
+        if (ri0_um[a] > max)
+          max = ri0_um[a];
+      }
+    }
 
-	// ==================================================================
+    // Check for smoothness of the ring data
+    // Smoothness => No invalid values && Range < 200 && delta between spokes < 4.0
+    if (!Broken && (max - min < 200.0)) {
+      BOOL Smooth = TRUE;
+      for (int a = 0; a < 359; a++) {
+        if (fabs(ri0_um[a + 1] - ri0_um[a]) > 4.0) { // 2009-03-15 changed from 3.0 to 4.0
+          Smooth = FALSE;
+          break;
+        }
+      }
+      ve_ok = Smooth;
+    }
 
-	{
-		Matrix<real_t> t(2, NumSteps);
-		for (int a = 0; a < 360; a++) 
-		{
-			for (int j = 0; j < 2; j++)
-			{
-				int m = j == 0 ? 10 : 50;
+    if (ve_ok)
+      break; // Iterate on k waiting value until smooth ring data is found
+  }          // end for(int l1 = 0; l1 < 5; l1++)
 
-				for (int p = 0; p < NumSteps; p++) 
-				{
-					real_t s = 0.0;
-					int k = 0;
+  if (!ve_ok)
+    return; // If no smooth ring data could be managed, return.
 
-					for (int i = -m; i <= m; i++)
-					{
-						if (p + i >= 0 && p + i < NumSteps) 
-						{
-							real_t v = P(a, p + i);
-							if (v != INVALID_VALUE)
-							{
-								int q = m + 1 - abs(i);
-								s += q * v;
-								k += q;
-							}
-						}
-					}
+  // ==================================================================
 
-					t(j, p) = k != 0 ? s / k : INVALID_VALUE;
-				}
-			}
+  m_ve_ok   = TRUE;
+  m_ve_x_um = ve_x_um;
+  m_ve_y_um = ve_y_um;
 
-			for (int p = 0; p < NumSteps; p++) 
-			{
-				real_t v0 = t(0, p);
-				real_t v1 = t(1, p);
+  for (int a = 0; a < 360; a++) {
+    // m_ri_r_um[0][a] = ri0_um[a];//Ori code
+    m_ri_r_um[0][a] = ri0_um[a] + 40; // New code from +20 to +40 based on observation
+  }
 
-				if (v0 != INVALID_VALUE && v1 != INVALID_VALUE) 
-				{
-					P(a, p) = v0 - v1;
-				}
-			}
-		}
-	}
+  // ==================================================================
 
-	// ==================================================================
+  // Create matrix P filled with R values along 360 spokes
 
-	for (int a = 0; a < 360; a++) 
-	{
-		Matrix<int> Extrema(m_NumRings - 1);
+  int          NumSteps = 512;
+  real_t         UmStep   = 5200.0 / (NumSteps - 1);
+  Matrix<real_t> P(360, NumSteps);
+  P.Fill(INVALID_VALUE);
+  for (int a = 0; a < 360; a++) {
+    for (int s = 0; s < NumSteps; s++) {
+      real_t r_um = s * UmStep;
+      real_t x_um = m_ve_x_um + r_um * COS[a];
+      real_t y_um = m_ve_y_um + r_um * SIN[a];
+      real_t p;
+      if (!GetRGBAtUm(x_um, y_um, &p, NULL, NULL))
+        break;
+      P(a, s) = p;
+    }
+  }
 
-		int f = __min((int)(m_ri_r_um[0][a] / UmStep) + 3, NumSteps - 1);
+  // ==================================================================
 
-		// find extrema
-		int NumExtrema = 0;
-		for (int p = f; p < NumSteps - 1 && NumExtrema < m_NumRings - 1; p++) 
-		{
-			real_t p1 = P(a, p - 1);
-			real_t p2 = P(a, p);
-			real_t p3 = P(a, p + 1);
+  {
+    // Average the R values between spokes
 
-			if (p3 == INVALID_VALUE || p2 == INVALID_VALUE || p1 == INVALID_VALUE) break;
+    real_t      t[360];
+    const int m = 10;
+    for (int p = 0; p < NumSteps; p++) {
+      for (int a = 0; a < 360; a++) {
+        real_t s = 0.0;
+        int  k = 0;
 
-			BOOL OddExtremum = NumExtrema & 1;
+        for (int i = -m; i <= m; i++) {
+          real_t v = P(CheckAngle(a + i), p);
+          if (v != INVALID_VALUE) {
+            int q = m + 1 - abs(i);
+            s += q * v;
+            k += q;
+          }
+        }
 
-			if ((!OddExtremum && p1 < p2 && p2 > p3) || (OddExtremum && p1 > p2 && p2 < p3))
-			{
-				Extrema[NumExtrema++] = p;
-			}
-		}
+        t[a] = k != 0 ? s / k : INVALID_VALUE;
+      }
 
-		if (NumExtrema < 2) continue;
+      for (int a = 0; a < 360; a++) {
+        P(a, p) = t[a];
+      }
+    }
+  }
 
-		// find edges
-		Matrix<int> Edges(m_NumRings);
-		Edges.Fill(INVALID_VALUE);
+  // ==================================================================
 
-		// all edges except for first and last one
-		for (int r = 1; r < NumExtrema; r++)
-		{
-			for (int p = Extrema[r - 1] + 1; p <= Extrema[r] - 1; p++) 
-			{
-				if (fabs(P(a, p) - P(a, p - 1)) > fabs(P(a, p) - P(a, p + 1))) 
-				{
-					Edges[r] = p - 1;
-					break;
-				}
-			}
-		}
+  {
+    // Set the values in P equal to the difference between a small and large neighbourhood average
+    Matrix<real_t> t(2, NumSteps);
+    for (int a = 0; a < 360; a++) {
+      for (int j = 0; j < 2; j++) {
+        int m = j == 0 ? 10 : 50;
 
-		// last edge
-		for (int p = Extrema[NumExtrema - 1] + 1; p < NumSteps - 1; p++)
-		{
-			real_t p1 = P(a, p - 1);
-			real_t p2 = P(a, p);
-			real_t p3 = P(a, p + 1);
+        for (int p = 0; p < NumSteps; p++) {
+          real_t s = 0.0;
+          int  k = 0;
 
-			if (p3 == INVALID_VALUE || p2 == INVALID_VALUE || p1 == INVALID_VALUE) break;
+          for (int i = -m; i <= m; i++) {
+            if (p + i >= 0 && p + i < NumSteps) {
+              real_t v = P(a, p + i);
+              if (v != INVALID_VALUE) {
+                int q = m + 1 - abs(i);
+                s += q * v;
+                k += q;
+              }
+            }
+          }
 
-			if (fabs(p2 - p1) > fabs(p2 - p3))
-			{
-				Edges[NumExtrema++] = p - 1;
-				break;
-			}
-		}
+          t(j, p) = k != 0 ? s / k : INVALID_VALUE;
+        }
+      }
 
-		for (int r = 1; r < NumExtrema; r++) 
-		{
-			m_ri_r_um[r][a] = Edges[r] == INVALID_VALUE ? INVALID_VALUE : Edges[r] * UmStep;
-		}
+      for (int p = 0; p < NumSteps; p++) {
+        real_t v0 = t(0, p);
+        real_t v1 = t(1, p);
 
-	}
+        if (v0 != INVALID_VALUE && v1 != INVALID_VALUE) {
+          P(a, p) = v0 - v1;
+        }
+      }
+    }
+  }
 
-	// ==================================================================
+  // ==================================================================
 
-	for (int r = m_NumRings - 2; r < m_NumRings; r++)
-	{
-		int da = 10;
+  for (int a = 0; a < 360; a++) {
+    Matrix<int> Extrema(m_NumRings - 1);
 
-		for (int a = -da; a <= da; a++)
-		{
-			m_ri_r_um[r][CheckAngle(a)] = INVALID_VALUE;
-		}
+    int f = __min((int)(m_ri_r_um[0][a] / UmStep) + 3, NumSteps - 1);
 
-		for (int a = 180 - da; a <= 180 + da; a++)
-		{
-			m_ri_r_um[r][a] = INVALID_VALUE;
-		}
+    // find extrema
+    int NumExtrema = 0;
+    for (int p = f; p < NumSteps - 1 && NumExtrema < m_NumRings - 1; p++) {
+      real_t p1 = P(a, p - 1);
+      real_t p2 = P(a, p);
+      real_t p3 = P(a, p + 1);
 
-		int a1 = -da - 1;
-		int a2 = da + 1;
-		real_t t1 = m_ri_r_um[r][a1 + 360];
-		real_t t2 = m_ri_r_um[r][a2];
+      if (p3 == INVALID_VALUE || p2 == INVALID_VALUE || p1 == INVALID_VALUE)
+        break;
 
-		if (t1 != INVALID_VALUE && t2 != INVALID_VALUE && fabs(t2 - t1) <= 100.0)
-		{
-			for (int a = a1 + 1; a <= a2 - 1; a++)
-			{
-				m_ri_r_um[r][CheckAngle(a)] = t1 + (a - a1) * (t2 - t1) / (a2 - a1);
-			}
-		}
+      BOOL OddExtremum = NumExtrema & 1;
 
+      if ((!OddExtremum && p1 < p2 && p2 > p3) || (OddExtremum && p1 > p2 && p2 < p3)) {
+        Extrema[NumExtrema++] = p;
+      }
+    }
 
-		a1 = 180 - da - 1;
-		a2 = 180 + da + 1;
-		t1 = m_ri_r_um[r][a1];
-		t2 = m_ri_r_um[r][a2];
+    if (NumExtrema < 2)
+      continue;
 
-		if (t1 != INVALID_VALUE && t2 != INVALID_VALUE && fabs(t2 - t1) <= 100.0)
-		{
-			for (int a = a1 + 1; a <= a2 - 1; a++) {
-				m_ri_r_um[r][a] = t1 + (a - a1) * (t2 - t1) / (a2 - a1);
-			}
-		}
-	}
+    // find edges
+    Matrix<int> Edges(m_NumRings);
+    Edges.Fill(INVALID_VALUE);
 
-	// ==================================================================
+    // all edges except for first and last one
+    for (int r = 1; r < NumExtrema; r++) {
+      for (int p = Extrema[r - 1] + 1; p <= Extrema[r] - 1; p++) {
+        if (fabs(P(a, p) - P(a, p - 1)) > fabs(P(a, p) - P(a, p + 1))) {
+          Edges[r] = p - 1;
+          break;
+        }
+      }
+    }
 
-	for (int r = 0; r < m_NumRings; r++)
-	{
-		struct { int f, l; } Chains[360];
-		int NumChains = 0;
-		BOOL LookForBeginning = TRUE;
-		int f;
+    // last edge
+    for (int p = Extrema[NumExtrema - 1] + 1; p < NumSteps - 1; p++) {
+      real_t p1 = P(a, p - 1);
+      real_t p2 = P(a, p);
+      real_t p3 = P(a, p + 1);
 
-		for (int a = 0; a <= 360; a++) 
-		{
-			if (LookForBeginning)
-			{
-				if (m_ri_r_um[r][a == 360 ? 0 : a] != INVALID_VALUE)
-				{
-					f = a;
-					LookForBeginning = FALSE;
-				}
-			}
-			else 
-			{
-				if (a == 360) 
-				{
-					Chains[NumChains].f = f;
-					Chains[NumChains].l = 359;
-					NumChains++;
-				}
-				else if (m_ri_r_um[r][a] == INVALID_VALUE || intRound(fabs(m_ri_r_um[r][a] - m_ri_r_um[r][a - 1])) > 2.0 * UmStep)
-				{
-					Chains[NumChains].f = f;
-					Chains[NumChains].l = a - 1;
-					NumChains++;
-					LookForBeginning = TRUE;
-					if (m_ri_r_um[r][a] != INVALID_VALUE) a--;
-				}
-			}
-		}
+      if (p3 == INVALID_VALUE || p2 == INVALID_VALUE || p1 == INVALID_VALUE)
+        break;
 
-		if (NumChains > 1) 
-		{
-			if (Chains[0].f == 0 && Chains[NumChains - 1].l == 359) 
-			{
-				Chains[0].f = Chains[NumChains - 1].f - 360;
-				NumChains--;
-			}
-		}
+      if (fabs(p2 - p1) > fabs(p2 - p3)) {
+        Edges[NumExtrema++] = p - 1;
+        break;
+      }
+    }
 
-		for (int c = 0; c < NumChains; c++) 
-		{
-			if (Chains[c].l - Chains[c].f + 1 < 90) 
-			{
-				for (int a = Chains[c].f; a <= Chains[c].l; a++) 
-				{
-					m_ri_r_um[r][CheckAngle(a)] = INVALID_VALUE;
-				}
-			}
-		}
-	}
+    for (int r = 1; r < NumExtrema; r++) {
+      m_ri_r_um[r][a] = Edges[r] == INVALID_VALUE ? INVALID_VALUE : Edges[r] * UmStep;
+    }
+  }
 
-	// ==================================================================
+  // ==================================================================
 
-	{
-		real_t t[360];
-		int m = 3;
-		for (int r = 0; r < m_NumRings; r++) 
-		{
-			for (int a = 0; a < 360; a++)
-			{
-				if (m_ri_r_um[r][a] != INVALID_VALUE)
-				{
-					real_t s = 0.0;
-					int k = 0;
-					for (int i = -m; i <= m; i++) 
-					{
-						real_t v = m_ri_r_um[r][CheckAngle(a + i)];
-						if (v != INVALID_VALUE) 
-						{
-							int q = m + 1 - abs(i);
-							s += q * v;
-							k += q;
-						}
-					}
-					t[a] = s / k;
-				}
-				else 
-				{
-					t[a] = INVALID_VALUE;
-				}
-			}
+  // Specially correct for 2 20 degree wedges around 0 and 180 degree spokes, only for the last 2 rings
+  for (int r = m_NumRings - 2; r < m_NumRings; r++) {
+    int da = 10;
 
-			for (int a = 0; a < 360; a++) 
-			{
-				m_ri_r_um[r][a] = t[a];
-			}
-		}
-	}
+    for (int a = -da; a <= da; a++) {
+      m_ri_r_um[r][CheckAngle(a)] = INVALID_VALUE;
+    }
 
-	m_ri_ok = TRUE;
+    for (int a = 180 - da; a <= 180 + da; a++) {
+      m_ri_r_um[r][a] = INVALID_VALUE;
+    }
+
+    int  a1 = -da - 1;
+    int  a2 = da + 1;
+    real_t t1 = m_ri_r_um[r][a1 + 360];
+    real_t t2 = m_ri_r_um[r][a2];
+
+    if (t1 != INVALID_VALUE && t2 != INVALID_VALUE && fabs(t2 - t1) <= 100.0) {
+      for (int a = a1 + 1; a <= a2 - 1; a++) {
+        m_ri_r_um[r][CheckAngle(a)] = t1 + (a - a1) * (t2 - t1) / (a2 - a1);
+      }
+    }
+
+    a1 = 180 - da - 1;
+    a2 = 180 + da + 1;
+    t1 = m_ri_r_um[r][a1];
+    t2 = m_ri_r_um[r][a2];
+
+    if (t1 != INVALID_VALUE && t2 != INVALID_VALUE && fabs(t2 - t1) <= 100.0) {
+      for (int a = a1 + 1; a <= a2 - 1; a++) {
+        m_ri_r_um[r][a] = t1 + (a - a1) * (t2 - t1) / (a2 - a1);
+      }
+    }
+  }
+
+  // ==================================================================
+
+  // Searches for continuous ring measurement segments
+  for (int r = 0; r < m_NumRings; r++) {
+    struct
+    {
+      int f, l;
+    } Chains[360]; // f-first, l-last spoke angles for each chain. 360 reserved as worst case
+    int  NumChains        = 0;
+    BOOL LookForBeginning = TRUE;
+    int  f;
+
+    for (int a = 0; a <= 360; a++) {
+      if (LookForBeginning) {
+        if (m_ri_r_um[r][a == 360 ? 0 : a] != INVALID_VALUE) {
+          f                = a;
+          LookForBeginning = FALSE;
+        }
+      }
+      else {
+        if (a == 360) {
+          Chains[NumChains].f = f;
+          Chains[NumChains].l = 359;
+          NumChains++;
+        }
+        else if (m_ri_r_um[r][a] == INVALID_VALUE || intRound(fabs(m_ri_r_um[r][a] - m_ri_r_um[r][a - 1])) > 2.0 * UmStep) {
+          Chains[NumChains].f = f;
+          Chains[NumChains].l = a - 1;
+          NumChains++;
+          LookForBeginning = TRUE;
+          if (m_ri_r_um[r][a] != INVALID_VALUE)
+            a--;
+        }
+      }
+    }
+
+    if (NumChains > 1) {
+      if (Chains[0].f == 0 && Chains[NumChains - 1].l == 359) {
+        Chains[0].f = Chains[NumChains - 1].f - 360;
+        NumChains--;
+      }
+    }
+
+    // Invalidate any short chains (<90 continuous degrees)
+    for (int c = 0; c < NumChains; c++) {
+      if (Chains[c].l - Chains[c].f + 1 < 90) {
+        for (int a = Chains[c].f; a <= Chains[c].l; a++) {
+          m_ri_r_um[r][CheckAngle(a)] = INVALID_VALUE;
+        }
+      }
+    }
+  }
+
+  // ==================================================================
+
+  {
+    // An additional smoothing
+    real_t t[360];
+    int  m = 3;
+    for (int r = 0; r < m_NumRings; r++) {
+      for (int a = 0; a < 360; a++) {
+        if (m_ri_r_um[r][a] != INVALID_VALUE) {
+          real_t s = 0.0;
+          int  k = 0;
+          for (int i = -m; i <= m; i++) {
+            real_t v = m_ri_r_um[r][CheckAngle(a + i)];
+            if (v != INVALID_VALUE) {
+              int q = m + 1 - abs(i);
+              s += q * v;
+              k += q;
+            }
+          }
+          t[a] = s / k;
+        }
+        else {
+          t[a] = INVALID_VALUE;
+        }
+      }
+
+      for (int a = 0; a < 360; a++) {
+        m_ri_r_um[r][a] = t[a];
+      }
+    }
+  }
+
+  m_ri_ok = TRUE;
 }
 
 //***************************************************************************************

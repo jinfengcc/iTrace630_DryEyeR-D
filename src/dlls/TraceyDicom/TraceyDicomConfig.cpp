@@ -4,17 +4,17 @@
 #include "libs/DicomLib/DicomLog.h"
 
 namespace {
-  struct RegistrySettings : public TraceyRegistryImpl<RegistrySettings>
+  struct WorklistDialogSettings : public TraceyRegistryImpl<WorklistDialogSettings>
   {
-    RegistrySettings()
-      : TraceyRegistryImpl<RegistrySettings>(L"Dicom")
+    WorklistDialogSettings()
+      : TraceyRegistryImpl<WorklistDialogSettings>(L"Dicom")
     {
       Load();
     }
 
     void Load()
     {
-      TraceyRegistryImpl<RegistrySettings>::Load();
+      TraceyRegistryImpl<WorklistDialogSettings>::Load();
 
       DicomLog::Instance()->SetLevel(m_cfg.loggingLevel);
 
@@ -23,14 +23,14 @@ namespace {
     }
     void Save()
     {
-      TraceyRegistryImpl<RegistrySettings>::Save();
+      TraceyRegistryImpl<WorklistDialogSettings>::Save();
     }
 
     ITraceyDicomConfig::Data m_cfg;
 
 
     // clang-format off
-    BEGIN_REGPROP_MAP(RegistrySettings                             )
+    BEGIN_REGPROP_MAP(WorklistDialogSettings                             )
       REG_PROPERTY(L"MWLhost"           , m_cfg.mwl.host           )
       REG_PROPERTY(L"MWLport"           , m_cfg.mwl.port           )
       REG_PROPERTY(L"MWLcallAETitle"    , m_cfg.mwl.remoteAETitle  )
@@ -48,13 +48,13 @@ namespace {
 
 auto TraceyDicomConfig::Get() const -> Data
 {
-  RegistrySettings s;
+  WorklistDialogSettings s;
   return s.m_cfg;
 }
 
 void TraceyDicomConfig::Set(const Data &d)
 {
-  RegistrySettings s;
+  WorklistDialogSettings s;
   s.m_cfg = d;
   s.Save();
 }

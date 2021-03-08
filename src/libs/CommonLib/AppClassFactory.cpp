@@ -86,13 +86,14 @@ auto AppClassFactory::GetDllList() -> DataList
 {
   DataList pv;
 
-  auto append = [&](fs::path &&p) {
+  auto append = [&](fs::path p) {
     if (auto d = CreateData(std::move(p)); d.factory != nullptr)
       pv.push_back(std::move(d));
   };
 
-  auto folder = app::GetAppPath(app::Type::exeFolder);
+  append(app::GetAppPath(app::Type::exe));
 
+  const auto& folder = app::GetAppPath(app::Type::exeFolder);
   if (auto js = JsonSettings().Get("dll"); js.is_null()) {
     for (fs::directory_iterator b(folder), e; b != e; ++b) {
       fs::path p = *b;

@@ -4,19 +4,18 @@
 void DicomBase::SetLogging(LogLevel logLevel)
 {
   RZDCX::LogLevel rzll;
-
   switch (logLevel) {
   case LogLevel::None:
-    rzll = RZDCX::None;
+    rzll = RZDCX::LogLevel::None;
     break;
   case LogLevel::Info:
-    rzll = RZDCX::Info;
+    rzll = RZDCX::LogLevel::Info;
     break;
   case LogLevel::Warn:
-    rzll = RZDCX::Warning;
+    rzll = RZDCX::LogLevel::Warning;
     break;
   default:
-    rzll = RZDCX::Error;
+    rzll = RZDCX::LogLevel::Error;
     break;
   }
 

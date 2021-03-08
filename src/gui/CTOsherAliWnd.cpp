@@ -294,6 +294,11 @@ CCTOsherAliWnd::CCTOsherAliWnd(CWnd *pParentWnd, RECT &Rect, CCTExam *pCTExam, i
 	ShowWindow(show);
 }
 
+CCTOsherAliWnd::~CCTOsherAliWnd()
+{
+  RealseMem();
+}
+
 void CCTOsherAliWnd::RealseMem()
 {
 	for (int t = 0; t < 15; t++)

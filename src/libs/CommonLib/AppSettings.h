@@ -5,16 +5,9 @@
 #include <optional>
 #include "AppSettingsImpl.h"
 
-class AppSettings // : public Singleton<AppSettings>
+class AppSettings
 {
 public:
-  // template <class Func>
-  // AppSettings(Func &&func)
-  //  : AppSettings()
-  //{
-  //  SetCallback(func);
-  //}
-
   AppSettings();
   AppSettings(const fs::path &jsonfile);
   AppSettings(std::string_view jsonfile);

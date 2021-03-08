@@ -30,20 +30,23 @@ public:
   bool Connected(double *fps) const override;
 
 private:
-#if USE_OLD_PATIENT_GROUP
-  cv::Mat                           m_images[5]; // Hires-color, lores-color, hires-gray, lores-gray, temp
+#if CAM_HIRES_PRECALC
+  cv::Mat m_images[5]; // Hires-color, lores-color, hires-gray, lores-gray, temp
 #else
   cv::Mat m_image;
 #endif
 
-  std::shared_ptr<IDSVideoCamera>   m_pimpl;
-  wil::com_ptr<ITraceyConfig>       m_config;
-  Callback                          m_callback;
-  sig::SignalId                     m_configSignalId{};
-  bool                              m_transferImg{true};
-  double                            m_framesPerSecond{};
-  int                               m_frameCount{};
-  std::int64_t                      m_frameTimer{};
+  std::shared_ptr<IDSVideoCamera> m_pimpl;
+  wil::com_ptr<ITraceyConfig>     m_config;
+  Callback                        m_callback;
+  sig::SignalId                   m_configSignalId{};
+  bool                            m_transferImg{true};
+  double                          m_framesPerSecond{};
+  std::uint32_t                   m_captureCount{};
+  int                             m_frameCount{};
+  std::int64_t                    m_frameTimer{};
+  std::mutex                      m_transferMutex;
+  std::condition_variable         m_transferCondition;
 
   bool Settings(ITraceyConfig *tc);
   void UpdateImages(const cv::Mat &orig);

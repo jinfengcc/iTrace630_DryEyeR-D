@@ -239,7 +239,7 @@ BOOL Decompress(const void *pZip, const int ZipSize, void *pData)
       Result = TRUE;
     }
     else {
-      static_assert(_ASSERT_LEVEL > 0);
+      //static_assert(_ASSERT_LEVEL > 0);
       // ::Error("Checksum verification failed.");
     }
   }

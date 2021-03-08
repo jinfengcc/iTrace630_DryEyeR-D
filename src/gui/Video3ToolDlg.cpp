@@ -188,13 +188,13 @@ void CVideo3ToolDlg::OnHScroll(uint nSBCode, uint nPos, CScrollBar* pScrollBar)
 		pVideoSettings->Hue = m_HueSlider.GetPos();
 		s.Format(_T("%i"), pVideoSettings->Hue);
 		m_HueEdit.SetWindowText(s);
-		m_pLiveVideo->ChangeHue();
+		//m_pLiveVideo->ChangeHue();
 		break;
 	case IDC_CAL_VIDEO_SATURATION_SLIDER:
 		pVideoSettings->Saturation = m_SaturationSlider.GetPos();
 		s.Format(_T("%i"), pVideoSettings->Saturation);
 		m_SaturationEdit.SetWindowText(s);
-		m_pLiveVideo->ChangeSaturation();
+		//m_pLiveVideo->ChangeSaturation();
 		break;
 	}
 }

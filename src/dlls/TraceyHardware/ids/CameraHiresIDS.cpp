@@ -5,7 +5,7 @@
 namespace {
   enum { IMG_ROWS = 468, IMG_COLS = 624 };
 
-#if USE_OLD_PATIENT_GROUP
+#if CAM_HIRES_PRECALC
   const int HIRES_COLOR_ = static_cast<int>(ICameraHires::Mode::HIRES_COLOR);
   const int LORES_COLOR_ = static_cast<int>(ICameraHires::Mode::LORES_COLOR);
   const int HIRES_GRAY3_ = static_cast<int>(ICameraHires::Mode::HIRES_GRAY);
@@ -23,11 +23,24 @@ CameraHiresIDS::CameraHiresIDS()
   std::lock_guard lock(mutex);
   if (m_pimpl = camImpl.lock(); !m_pimpl) {
     m_pimpl = std::make_shared<IDSVideoCamera>([this](const cv::Mat &img) {
+      bool copyImage = false;
+      if (copyImage) {
+        static int ndx    = 0;
+        const char file[] = R"(C:\1\_ids\ids_image_{}.png)";
+        cv::imwrite(fmt::format(file, ++ndx), img);
+      }
+
       UpdateFPS();
       if (m_transferImg) {
         UpdateImages(img);
         if (m_callback)
           m_callback(0);
+
+        {
+          std::unique_lock lock(m_transferMutex);
+          ++m_captureCount;
+        }
+        m_transferCondition.notify_one();
       }
     });
     camImpl = m_pimpl;
@@ -77,12 +90,22 @@ void CameraHiresIDS::StartFrameTransfer()
 
 void CameraHiresIDS::StopFrameTransfer()
 {
-  m_transferImg = false;
+  if (m_transferImg) {
+    std::unique_lock locker(m_transferMutex);
+    auto             capture = m_captureCount;
+    m_transferCondition.wait(locker, [&, this]() { return m_captureCount != capture; });
+
+    m_transferImg = false;
+#ifdef _DEBUG
+    // We need to slow down for miguel's machine
+    Sleep(500);
+#endif
+  }
 }
 
 bool CameraHiresIDS::GetImage(cv::Mat &img, Mode mode) const
 {
-#if USE_OLD_PATIENT_GROUP
+#if CAM_HIRES_PRECALC
   if (auto &i = m_images[static_cast<int>(mode)]; i.empty())
     return false;
   else {
@@ -151,7 +174,7 @@ bool CameraHiresIDS::Settings(ITraceyConfig *tc)
 
 void CameraHiresIDS::UpdateImages(const cv::Mat &orig)
 {
-#if USE_OLD_PATIENT_GROUP
+#if CAM_HIRES_PRECALC
   auto &colorImg = m_images[HIRES_COLOR_];
   auto &grayImg3 = m_images[HIRES_GRAY3_];
   auto &grayImg1 = m_images[HIRES_GRAY1_];
@@ -179,19 +202,37 @@ void CameraHiresIDS::UpdateFPS()
   }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#define GRAY_MODE_BLUE  0
+#define GRAY_MODE_GREEN 1
+#define GRAY_MODE_RED   2
+#define GRAY_MODE_STD   3
+
+#define GRAY_MODE       GRAY_MODE_STD
+
 void CameraHiresIDS::GetLowResGrayImage(cv::Mat &img) const
 {
   cv::resize(m_image, img, {IMG_COLS, IMG_ROWS});
   ATLASSERT(img.type() == CV_8UC3);
+
+#if GRAY_MODE == GRAY_MODE_STD
   cv::Mat3b(img).forEach([](cv::Vec3b &pixel, const int *) {
     auto B = pixel[0];
     auto G = pixel[1];
-    auto R = pixel[1];
+    auto R = pixel[2];
 
     auto gray = 0.299 * R + 0.587 * G + 0.114 * B;
 
     pixel[0] = pixel[1] = pixel[2] = cv::saturate_cast<BYTE>(gray);
   });
+#else
+  cv::Mat3b(img).forEach([](cv::Vec3b &pixel, const int *) {
+    auto gray = pixel[GRAY_MODE];
+    pixel[0] = pixel[1] = pixel[2] = gray;
+  });
+#endif
+
 }
 
 // std::string CameraHires::GetCameraName()

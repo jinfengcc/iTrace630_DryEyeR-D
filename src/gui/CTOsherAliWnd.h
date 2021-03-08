@@ -16,6 +16,7 @@ class CCTOsherAliWnd : public CMemWnd
 public:
 
 	CCTOsherAliWnd(CWnd* pParentWnd, RECT& Rect, CCTExam* pCTExam, int ThisMain, int show = SW_SHOW, bool colorImg = false);
+   ~CCTOsherAliWnd();
 
 	void RealseMem();
 

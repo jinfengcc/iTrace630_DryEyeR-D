@@ -88,8 +88,10 @@ void CLiveVideo::Main()
 	{
 		m_pHW->StartTransferringVideoFrame();
 
-		m_pVideoWnd->SendMessage(WM_THREAD_UPDATE, 0, 0);
+		m_pVideoWnd->PostMessage(WM_THREAD_UPDATE, 0, 0);
 
+	// #fix
+    //Sleep(1000);
 		m_pHW->FinishTransferringVideoFrame();
 
 		switch (m_ToDo)
@@ -97,6 +99,10 @@ void CLiveVideo::Main()
 		case ABORT:
 			Done = TRUE;
 			break;
+		case CHANGE_VIDEO_SETTINGS:
+			m_pHW->ApplyCurrentVideoSettings();
+			break;
+
 		case CHANGE_BRIGHTNESS:
 			m_pHW->ApplyCurrentVideoBrightness();
 			break;
@@ -104,10 +110,10 @@ void CLiveVideo::Main()
 			m_pHW->ApplyCurrentVideoContrast();
 			break;
 		case CHANGE_HUE:
-			m_pHW->ApplyCurrentVideoHue();
+			//m_pHW->ApplyCurrentVideoHue();
 			break;
 		case CHANGE_SATURATION:
-			m_pHW->ApplyCurrentVideoSaturation();
+			//m_pHW->ApplyCurrentVideoSaturation();
 			break;
 		case CHANGE_INFRARED_LEDS_POWER_LEVEL:
 			m_pHW->TurnInfraredLEDsOn();

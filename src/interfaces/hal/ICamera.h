@@ -45,7 +45,7 @@ namespace hal {
     inline static auto GAIN       = Guid("1de0f978-4880-4351-ada6-61b41137316d");
     inline static auto GAIN_RED   = Guid("272378a6-ad4b-432b-844f-a4ca868b734b");
     inline static auto GAIN_GREEN = Guid("b0c0c843-4b1b-41fd-909d-e933082ac1ac");
-    inline static auto GAIN_BLUE  = Guid("b0c0c843-4b1b-41fd-909d-e933082ac1ac");
+    inline static auto GAIN_BLUE  = Guid("dd12e1e9-35e6-45bc-8e09-afc532493a9b");
     //inline static auto HUE        = Guid("d9a7d06f-315d-46ce-9dbc-4e6485a2bb22");  // Unused
     //inline static auto SATURATION = Guid("80ad3417-b6f5-403f-a9a4-b2d6299908b7");  // Unused
 

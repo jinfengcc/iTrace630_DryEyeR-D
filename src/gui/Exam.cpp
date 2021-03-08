@@ -18,7 +18,7 @@ void CExam::CalcAngles()
 		m_Header.m_AngleKappaRUm = hyp(m_Header.m_AngleKappaYUm, m_Header.m_AngleKappaXUm);
 		m_Header.m_AngleKappaADg = intRound(_180_Pi * angle(m_Header.m_AngleKappaYUm, m_Header.m_AngleKappaXUm)) % 360;
 		CString s;
-		s.Format(_T("\nAngle Kappa Distance:   %.3f mm @ %i°"), m_Header.m_AngleKappaRUm * 0.001, m_Header.m_AngleKappaADg);
+		s.Format(_T("\nAngle Kappa Distance:   %.3f mm @ %iÂ°"), m_Header.m_AngleKappaRUm * 0.001, m_Header.m_AngleKappaADg);
 		m_Header.m_AutoNote += s;
 	}
 	else
@@ -34,7 +34,7 @@ void CExam::CalcAngles()
 		m_Header.m_AngleAlphaRUm = hyp(m_Header.m_AngleAlphaYUm, m_Header.m_AngleAlphaXUm);
 		m_Header.m_AngleAlphaADg = intRound(_180_Pi * angle(m_Header.m_AngleAlphaYUm, m_Header.m_AngleAlphaXUm)) % 360;
 		CString s;
-		s.Format(_T("\nAngle Alpha Distance:    %.3f mm @ %i°"), m_Header.m_AngleAlphaRUm * 0.001, m_Header.m_AngleAlphaADg);
+		s.Format(_T("\nAngle Alpha Distance:    %.3f mm @ %iÂ°"), m_Header.m_AngleAlphaRUm * 0.001, m_Header.m_AngleAlphaADg);
 		m_Header.m_AutoNote += s;
 	}
 	else
@@ -115,7 +115,191 @@ COpData::COpData()
 	m_IOLSph = INVALID_VALUE;
 	m_IOLPlacementAxis = INVALID_VALUE;
 
-	m_IOLs[0].m_Name = "Non-toric";
+	InitIOLs();//7.0.0	
+
+
+	// ICL
+	m_ICL.m_Cyl = INVALID_VALUE;
+	m_ICL.m_Axis = INVALID_VALUE;
+	m_ICL.m_PlacementAxis = INVALID_VALUE;
+
+	ResetCalculatedStuff();
+
+	//
+	// Pre-op
+	m_Pri_CorneaPreopCylSimK = INVALID_VALUE;
+	m_Pri_CorneaPreopAxisSimK = INVALID_VALUE;
+	m_Pri_CorneaPreopCylWF = INVALID_VALUE;
+	m_Pri_CorneaPreopAxisWF = INVALID_VALUE;
+	m_Pri_CorneaPreopCyl = INVALID_VALUE;
+	m_Pri_CorneaPreopAxis = INVALID_VALUE;
+	m_Pri_EyePreopCylWF = INVALID_VALUE;
+	m_Pri_EyePreopAxisWF = INVALID_VALUE;
+	m_Pri_EyePreopCyl = INVALID_VALUE;
+	m_Pri_EyePreopAxis = INVALID_VALUE;
+
+	// IOL
+	m_Pri_CorneaIncisionAxis = INVALID_VALUE;
+
+	m_Pri_CorneaInducedCyl = INVALID_VALUE;
+	m_Pri_CorneaInducedAxis = INVALID_VALUE;
+
+	m_Pri_IOLSph = INVALID_VALUE;
+	m_Pri_IOLPlacementAxis = INVALID_VALUE;
+	
+	// ICL
+	m_Pri_ICL.m_Cyl = INVALID_VALUE;
+	m_Pri_ICL.m_Axis = INVALID_VALUE;
+	m_Pri_ICL.m_PlacementAxis = INVALID_VALUE;
+
+	Reset_Pri_CalculatedStuff();
+	//
+}
+
+//***************************************************************************************
+
+//7.0.0
+void COpData::InitIOLs()
+{
+	m_SelectedIOL = -1;
+	m_Pri_SelectedIOL = -1;
+
+	//7.0.0
+	m_NewIOLs[0].m_Name = "Non-toric";
+	m_NewIOLs[0].m_Cyl = 0.00;
+	m_NewIOLs[0].m_InternalPostopCyl = 0.00;
+
+	m_NewIOLs[1].m_Name = "T2";
+	m_NewIOLs[1].m_Cyl = 1.00;
+	m_NewIOLs[1].m_InternalPostopCyl = 0.68;
+
+	m_NewIOLs[2].m_Name = "T2+";
+	m_NewIOLs[2].m_Cyl = 1.25;
+	m_NewIOLs[2].m_InternalPostopCyl = 0.90;
+
+	m_NewIOLs[3].m_Name = "T3";
+	m_NewIOLs[3].m_Cyl = 1.50;
+	m_NewIOLs[3].m_InternalPostopCyl = 1.03;
+
+	m_NewIOLs[4].m_Name = "T3+";
+	m_NewIOLs[4].m_Cyl = 2.00;
+	m_NewIOLs[4].m_InternalPostopCyl = 1.38;
+
+	m_NewIOLs[5].m_Name = "T4";
+	m_NewIOLs[5].m_Cyl = 2.25;
+	m_NewIOLs[5].m_InternalPostopCyl = 1.55;
+
+	m_NewIOLs[6].m_Name = "T4+";
+	m_NewIOLs[6].m_Cyl = 2.50;
+	m_NewIOLs[6].m_InternalPostopCyl = 1.75;
+
+	m_NewIOLs[7].m_Name = "T4++";
+	m_NewIOLs[7].m_Cyl = 2.75;
+	m_NewIOLs[7].m_InternalPostopCyl = 1.93;
+
+	m_NewIOLs[8].m_Name = "T5";
+	m_NewIOLs[8].m_Cyl = 3.00;
+	m_NewIOLs[8].m_InternalPostopCyl = 2.06;
+
+	m_NewIOLs[9].m_Name = "T5+";
+	m_NewIOLs[9].m_Cyl = 3.50;
+	m_NewIOLs[9].m_InternalPostopCyl = 2.41;
+
+	m_NewIOLs[10].m_Name = "T6";
+	m_NewIOLs[10].m_Cyl = 3.75;
+	m_NewIOLs[10].m_InternalPostopCyl = 2.58;
+
+	m_NewIOLs[11].m_Name = "T6+";
+	m_NewIOLs[11].m_Cyl = 4.00;
+	m_NewIOLs[11].m_InternalPostopCyl = 2.74;
+
+	m_NewIOLs[12].m_Name = "T6++";
+	m_NewIOLs[12].m_Cyl = 4.25;
+	m_NewIOLs[12].m_InternalPostopCyl = 2.98;
+
+	m_NewIOLs[13].m_Name = "T7";
+	m_NewIOLs[13].m_Cyl = 4.50;
+	m_NewIOLs[13].m_InternalPostopCyl = 3.09;
+
+	m_NewIOLs[14].m_Name = "T7+";
+	m_NewIOLs[14].m_Cyl = 5.00;
+	m_NewIOLs[14].m_InternalPostopCyl = 3.50;
+
+	m_NewIOLs[15].m_Name = "T8";
+	m_NewIOLs[15].m_Cyl = 5.25;
+	m_NewIOLs[15].m_InternalPostopCyl = 3.61;
+
+	m_NewIOLs[16].m_Name = "T8+";
+	m_NewIOLs[16].m_Cyl = 5.50;
+	m_NewIOLs[16].m_InternalPostopCyl = 3.85;
+
+	m_NewIOLs[17].m_Name = "T8++";
+	m_NewIOLs[17].m_Cyl = 5.75;
+	m_NewIOLs[17].m_InternalPostopCyl = 4.03;
+
+	m_NewIOLs[18].m_Name = "T9";
+	m_NewIOLs[18].m_Cyl = 6.00;
+	m_NewIOLs[18].m_InternalPostopCyl = 4.12;
+
+	m_NewIOLs[19].m_Name = "T10";
+	m_NewIOLs[19].m_Cyl = 6.50;
+	m_NewIOLs[19].m_InternalPostopCyl = 4.55;
+
+	m_NewIOLs[20].m_Name = "T11";
+	m_NewIOLs[20].m_Cyl = 7.00;
+	m_NewIOLs[20].m_InternalPostopCyl = 4.90;
+
+	m_NewIOLs[21].m_Name = "T12";
+	m_NewIOLs[21].m_Cyl = 7.50;
+	m_NewIOLs[21].m_InternalPostopCyl = 5.25;
+
+	m_NewIOLs[22].m_Name = "T13";
+	m_NewIOLs[22].m_Cyl = 8.00;
+	m_NewIOLs[22].m_InternalPostopCyl = 5.60;
+
+	m_NewIOLs[23].m_Name = "T14";
+	m_NewIOLs[23].m_Cyl = 8.50;
+	m_NewIOLs[23].m_InternalPostopCyl = 5.95;
+
+	m_NewIOLs[24].m_Name = "T15";
+	m_NewIOLs[24].m_Cyl = 9.00;
+	m_NewIOLs[24].m_InternalPostopCyl = 6.30;
+
+	m_NewIOLs[25].m_Name = "T16";
+	m_NewIOLs[25].m_Cyl = 9.50;
+	m_NewIOLs[25].m_InternalPostopCyl = 6.65;
+
+	m_NewIOLs[26].m_Name = "T17";
+	m_NewIOLs[26].m_Cyl = 10.00;
+	m_NewIOLs[26].m_InternalPostopCyl = 7.00;
+
+	m_NewIOLs[27].m_Name = "T18";
+	m_NewIOLs[27].m_Cyl = 10.50;
+	m_NewIOLs[27].m_InternalPostopCyl = 7.35;
+
+	m_NewIOLs[28].m_Name = "T19";
+	m_NewIOLs[28].m_Cyl = 11.00;
+	m_NewIOLs[28].m_InternalPostopCyl = 7.70;
+
+	m_NewIOLs[29].m_Name = "T20";
+	m_NewIOLs[29].m_Cyl = 11.50;
+	m_NewIOLs[29].m_InternalPostopCyl = 8.05;
+
+	m_NewIOLs[30].m_Name = "T21";
+	m_NewIOLs[30].m_Cyl = 12.50;
+	m_NewIOLs[30].m_InternalPostopCyl = 8.40;
+
+	for (int i = 0; i < 31; i++)
+	{
+		m_NewPri_IOLs[i].m_Name = m_NewIOLs[i].m_Name;
+		m_NewPri_IOLs[i].m_Cyl = m_NewIOLs[i].m_Cyl;
+		m_NewPri_IOLs[i].m_InternalPostopCyl = m_NewIOLs[i].m_InternalPostopCyl;
+	}
+	//7.0.0
+
+
+
+	/*m_IOLs[0].m_Name = "Non-toric";
 	m_IOLs[0].m_Cyl = 0.00;
 	m_IOLs[0].m_InternalPostopCyl = 0.00;
 
@@ -161,40 +345,9 @@ COpData::COpData()
 
 	m_IOLs[11].m_Name = "T5+";
 	m_IOLs[11].m_Cyl = 3.50;
-	m_IOLs[11].m_InternalPostopCyl = 2.41;
+	m_IOLs[11].m_InternalPostopCyl = 2.41;*/
 
-	m_SelectedIOL = -1;
-
-	// ICL
-	m_ICL.m_Cyl = INVALID_VALUE;
-	m_ICL.m_Axis = INVALID_VALUE;
-	m_ICL.m_PlacementAxis = INVALID_VALUE;
-
-	ResetCalculatedStuff();
-
-	//6.2.0
-	// Pre-op
-	m_Pri_CorneaPreopCylSimK = INVALID_VALUE;
-	m_Pri_CorneaPreopAxisSimK = INVALID_VALUE;
-	m_Pri_CorneaPreopCylWF = INVALID_VALUE;
-	m_Pri_CorneaPreopAxisWF = INVALID_VALUE;
-	m_Pri_CorneaPreopCyl = INVALID_VALUE;
-	m_Pri_CorneaPreopAxis = INVALID_VALUE;
-	m_Pri_EyePreopCylWF = INVALID_VALUE;
-	m_Pri_EyePreopAxisWF = INVALID_VALUE;
-	m_Pri_EyePreopCyl = INVALID_VALUE;
-	m_Pri_EyePreopAxis = INVALID_VALUE;
-
-	// IOL
-	m_Pri_CorneaIncisionAxis = INVALID_VALUE;
-
-	m_Pri_CorneaInducedCyl = INVALID_VALUE;
-	m_Pri_CorneaInducedAxis = INVALID_VALUE;
-
-	m_Pri_IOLSph = INVALID_VALUE;
-	m_Pri_IOLPlacementAxis = INVALID_VALUE;
-
-	m_Pri_IOLs[0].m_Name = "Non-toric";
+	/*m_Pri_IOLs[0].m_Name = "Non-toric";
 	m_Pri_IOLs[0].m_Cyl = 0.00;
 	m_Pri_IOLs[0].m_InternalPostopCyl = 0.00;
 
@@ -240,17 +393,7 @@ COpData::COpData()
 
 	m_Pri_IOLs[11].m_Name = "T5+";
 	m_Pri_IOLs[11].m_Cyl = 3.50;
-	m_Pri_IOLs[11].m_InternalPostopCyl = 2.41;
-
-	m_Pri_SelectedIOL = -1;
-
-	// ICL
-	m_Pri_ICL.m_Cyl = INVALID_VALUE;
-	m_Pri_ICL.m_Axis = INVALID_VALUE;
-	m_Pri_ICL.m_PlacementAxis = INVALID_VALUE;
-
-	Reset_Pri_CalculatedStuff();
-	//6.2.0
+	m_Pri_IOLs[11].m_InternalPostopCyl = 2.41;*/
 }
 
 //***************************************************************************************
@@ -264,14 +407,21 @@ void COpData::ResetCalculatedStuff()
 	m_InternalPreopCyl = INVALID_VALUE;
 	m_InternalPreopAxis = INVALID_VALUE;
 
-	for (int i = 0; i < 12; i++)
+	for (int i = 0; i < 31; i++)
 	{
-		m_IOLs[i].m_InternalPostopAxis = INVALID_VALUE;
-		m_IOLs[i].m_EyePostopCyl = INVALID_VALUE;
-		m_IOLs[i].m_EyePostopAxis = INVALID_VALUE;
+		/*if (i < 12)
+		{
+			m_IOLs[i].m_InternalPostopAxis = INVALID_VALUE;
+			m_IOLs[i].m_EyePostopCyl = INVALID_VALUE;
+			m_IOLs[i].m_EyePostopAxis = INVALID_VALUE;
+		}*/
+
+		m_NewIOLs[i].m_InternalPostopAxis = INVALID_VALUE;
+		m_NewIOLs[i].m_EyePostopCyl = INVALID_VALUE;
+		m_NewIOLs[i].m_EyePostopAxis = INVALID_VALUE;
 	}
 
-	m_BestIOL = -1;
+	m_NewBestIOL = -1;
 
 	m_ICL.m_InducedCyl = INVALID_VALUE;
 	m_ICL.m_InducedAxis = INVALID_VALUE;
@@ -286,7 +436,7 @@ void COpData::ResetCalculatedStuff()
 
 
 //***************************************************************************************
-//6.2.0 For cyclinderadjustment
+// For cyclinderadjustment
 void COpData::Reset_Pri_CalculatedStuff()
 {
 	m_Pri_OK = FALSE;
@@ -296,14 +446,21 @@ void COpData::Reset_Pri_CalculatedStuff()
 	m_Pri_InternalPreopCyl = INVALID_VALUE;
 	m_Pri_InternalPreopAxis = INVALID_VALUE;
 
-	for (int i = 0; i < 12; i++)
+	for (int i = 0; i < 31; i++)
 	{
-		m_Pri_IOLs[i].m_InternalPostopAxis = INVALID_VALUE;
-		m_Pri_IOLs[i].m_EyePostopCyl = INVALID_VALUE;
-		m_Pri_IOLs[i].m_EyePostopAxis = INVALID_VALUE;
+		m_NewPri_IOLs[i].m_InternalPostopAxis = INVALID_VALUE;
+		m_NewPri_IOLs[i].m_EyePostopCyl = INVALID_VALUE;
+		m_NewPri_IOLs[i].m_EyePostopAxis = INVALID_VALUE;
+
+		/*if (i < 12)
+		{
+			m_Pri_IOLs[i].m_InternalPostopAxis = INVALID_VALUE;
+			m_Pri_IOLs[i].m_EyePostopCyl = INVALID_VALUE;
+			m_Pri_IOLs[i].m_EyePostopAxis = INVALID_VALUE;
+		}*/
 	}
 
-	m_Pri_BestIOL = -1;
+	m_NewPri_BestIOL = -1;
 
 	m_Pri_ICL.m_InducedCyl = INVALID_VALUE;
 	m_Pri_ICL.m_InducedAxis = INVALID_VALUE;
@@ -317,7 +474,7 @@ void COpData::Reset_Pri_CalculatedStuff()
 }
 //***************************************************************************************
 
-//6.2.0 For cyclinderadjustment
+// For cyclinderadjustment
 void COpData::CalNewCorneaPreop()
 {
 	real_t PostopCyl;
@@ -357,7 +514,7 @@ void COpData::CalNewCorneaPreop()
 	m_Pri_CorneaPreopCyl = hyp(CylX, CylY);
 	m_Pri_CorneaPreopAxis = intRound(_180_Pi * 0.5 * angle(CylY, CylX)) % 180;
 }
-//6.2.0 For cyclinderadjustment
+// For cyclinderadjustment
 
 //***************************************************************************************
 
@@ -417,29 +574,55 @@ void COpData::Recalculate()
 		}
 
 		real_t BestCyl = DBL_MAX;
+		real_t NewBestCyl = DBL_MAX;//7.0.0
 
-		for (int i = 0; i < 12; i++)
+		for (int i = 0; i < 31; i++)
 		{
-			m_IOLs[i].m_InternalPostopAxis = (m_IOLPlacementAxis + 90) % 180;
+			//7.0.0
+			m_NewIOLs[i].m_InternalPostopAxis = (m_IOLPlacementAxis + 90) % 180;
 
 			::CalculateCrossedAstigmatism(
 				m_CorneaPostopCyl, m_CorneaPostopAxis,
-				m_IOLs[i].m_InternalPostopCyl, m_IOLs[i].m_InternalPostopAxis,
-				m_IOLs[i].m_EyePostopCyl, m_IOLs[i].m_EyePostopAxis);
+				m_NewIOLs[i].m_InternalPostopCyl, m_NewIOLs[i].m_InternalPostopAxis,
+				m_NewIOLs[i].m_EyePostopCyl, m_NewIOLs[i].m_EyePostopAxis);
 
-			if (BestCyl > m_IOLs[i].m_EyePostopCyl)
+			if (NewBestCyl > m_NewIOLs[i].m_EyePostopCyl)
 			{
-				BestCyl = m_IOLs[i].m_EyePostopCyl;
-				m_BestIOL = i;
+				NewBestCyl = m_NewIOLs[i].m_EyePostopCyl;
+				m_NewBestIOL = i;
 			}
+
+			/*if (i < 12)
+			{
+				m_IOLs[i].m_InternalPostopAxis = (m_IOLPlacementAxis + 90) % 180;
+
+				::CalculateCrossedAstigmatism(
+					m_CorneaPostopCyl, m_CorneaPostopAxis,
+					m_IOLs[i].m_InternalPostopCyl, m_IOLs[i].m_InternalPostopAxis,
+					m_IOLs[i].m_EyePostopCyl, m_IOLs[i].m_EyePostopAxis);
+
+				if (BestCyl > m_IOLs[i].m_EyePostopCyl)
+				{
+					BestCyl = m_IOLs[i].m_EyePostopCyl;
+					m_BestIOL = i;
+				}
+			}*/
 		}
 
-		if (m_SelectedIOL >= 0 && m_SelectedIOL < 12)
+		//if (m_SelectedIOL >= 0 && m_SelectedIOL < 12)
+		//{
+		//	m_InternalPostopCyl = m_IOLs[m_SelectedIOL].m_InternalPostopCyl;
+		//	m_InternalPostopAxis = m_IOLs[m_SelectedIOL].m_InternalPostopAxis;
+		//	m_EyePostopCyl = m_IOLs[m_SelectedIOL].m_EyePostopCyl;
+		//	m_EyePostopAxis = m_IOLs[m_SelectedIOL].m_EyePostopAxis;
+		//}
+
+		if (m_SelectedIOL >= 0 && m_SelectedIOL < 31)
 		{
-			m_InternalPostopCyl = m_IOLs[m_SelectedIOL].m_InternalPostopCyl;
-			m_InternalPostopAxis = m_IOLs[m_SelectedIOL].m_InternalPostopAxis;
-			m_EyePostopCyl = m_IOLs[m_SelectedIOL].m_EyePostopCyl;
-			m_EyePostopAxis = m_IOLs[m_SelectedIOL].m_EyePostopAxis;
+			m_InternalPostopCyl = m_NewIOLs[m_SelectedIOL].m_InternalPostopCyl;
+			m_InternalPostopAxis = m_NewIOLs[m_SelectedIOL].m_InternalPostopAxis;
+			m_EyePostopCyl = m_NewIOLs[m_SelectedIOL].m_EyePostopCyl;
+			m_EyePostopAxis = m_NewIOLs[m_SelectedIOL].m_EyePostopAxis;
 		}
 	}
 	else if (m_OpType == 1)
@@ -484,7 +667,7 @@ void COpData::Recalculate()
 
 void COpData::Pri_Recalculate()
 {
-	//6.2.0 Cyclinder adjustment Branch
+	// Cyclinder adjustment Branch
 	if (m_CorneaCycliderAdj)
 	{
 		if (m_CorneaCycliderAdjCaled != TRUE)
@@ -494,7 +677,7 @@ void COpData::Pri_Recalculate()
 		}
 	}
 	else return;
-	//6.2.0 Cyclinder adjustment Branch
+	// Cyclinder adjustment Branch
 
 	Reset_Pri_CalculatedStuff();
 
@@ -552,29 +735,46 @@ void COpData::Pri_Recalculate()
 		}
 
 		real_t Pri_BestCyl = DBL_MAX;
+		real_t NewPri_BestCyl = DBL_MAX;//7.0.0
 
-		for (int i = 0; i < 12; i++)
+		for (int i = 0; i < 31; i++)
 		{
-			m_Pri_IOLs[i].m_InternalPostopAxis = (m_Pri_IOLPlacementAxis + 90) % 180;
+			m_NewPri_IOLs[i].m_InternalPostopAxis = (m_Pri_IOLPlacementAxis + 90) % 180;
 
 			::CalculateCrossedAstigmatism(
 				m_Pri_CorneaPostopCyl, m_Pri_CorneaPostopAxis,
-				m_Pri_IOLs[i].m_InternalPostopCyl, m_Pri_IOLs[i].m_InternalPostopAxis,
-				m_Pri_IOLs[i].m_EyePostopCyl, m_Pri_IOLs[i].m_EyePostopAxis);
+				m_NewPri_IOLs[i].m_InternalPostopCyl, m_NewPri_IOLs[i].m_InternalPostopAxis,
+				m_NewPri_IOLs[i].m_EyePostopCyl, m_NewPri_IOLs[i].m_EyePostopAxis);
 
-			if (Pri_BestCyl > m_Pri_IOLs[i].m_EyePostopCyl)
+			if (NewPri_BestCyl > m_NewPri_IOLs[i].m_EyePostopCyl)
 			{
-				Pri_BestCyl = m_Pri_IOLs[i].m_EyePostopCyl;
-				m_Pri_BestIOL = i;
+				NewPri_BestCyl = m_NewPri_IOLs[i].m_EyePostopCyl;
+				m_NewPri_BestIOL = i;
 			}
+
+		/*	if (i < 12)
+			{
+				m_Pri_IOLs[i].m_InternalPostopAxis = (m_Pri_IOLPlacementAxis + 90) % 180;
+
+				::CalculateCrossedAstigmatism(
+					m_Pri_CorneaPostopCyl, m_Pri_CorneaPostopAxis,
+					m_Pri_IOLs[i].m_InternalPostopCyl, m_Pri_IOLs[i].m_InternalPostopAxis,
+					m_Pri_IOLs[i].m_EyePostopCyl, m_Pri_IOLs[i].m_EyePostopAxis);
+
+				if (Pri_BestCyl > m_Pri_IOLs[i].m_EyePostopCyl)
+				{
+					Pri_BestCyl = m_Pri_IOLs[i].m_EyePostopCyl;
+					m_Pri_BestIOL = i;
+				}
+			}*/
 		}
 
-		if (m_Pri_SelectedIOL >= 0 && m_Pri_SelectedIOL < 12)
+		if (m_Pri_SelectedIOL >= 0 && m_Pri_SelectedIOL < 31)
 		{
-			m_Pri_InternalPostopCyl = m_Pri_IOLs[m_SelectedIOL].m_InternalPostopCyl;
-			m_Pri_InternalPostopAxis = m_Pri_IOLs[m_SelectedIOL].m_InternalPostopAxis;
-			m_Pri_EyePostopCyl = m_Pri_IOLs[m_SelectedIOL].m_EyePostopCyl;
-			m_Pri_EyePostopAxis = m_Pri_IOLs[m_SelectedIOL].m_EyePostopAxis;
+			m_Pri_InternalPostopCyl = m_NewPri_IOLs[m_SelectedIOL].m_InternalPostopCyl;
+			m_Pri_InternalPostopAxis = m_NewPri_IOLs[m_SelectedIOL].m_InternalPostopAxis;
+			m_Pri_EyePostopCyl = m_NewPri_IOLs[m_SelectedIOL].m_EyePostopCyl;
+			m_Pri_EyePostopAxis = m_NewPri_IOLs[m_SelectedIOL].m_EyePostopAxis;
 		}
 	}
 	else if (m_OpType == 1)
@@ -604,7 +804,7 @@ void COpData::Pri_Recalculate()
 			m_Pri_ICL.m_PlacementAxis = (m_Pri_ICL.m_InducedAxis - m_Pri_ICL.m_Axis) % 180;
 			if (m_Pri_ICL.m_PlacementAxis < 0) m_Pri_ICL.m_PlacementAxis += 180;
 		}
-		else
+		else  
 		{
 			if (m_Pri_ICL.m_PlacementAxis < 0 || m_Pri_ICL.m_PlacementAxis >= 180) return;
 			m_Pri_ICL.m_InducedAxis = (m_Pri_ICL.m_Axis + m_Pri_ICL.m_PlacementAxis) % 180;

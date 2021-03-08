@@ -14,7 +14,7 @@
 
 #define ASSERT  ATLASSERT
 
-static_assert(_ASSERT_LEVEL > 0);
+//static_assert(_ASSERT_LEVEL > 0);
 
 #pragma warning(disable: 5033) // 'register' is no longer a supported storage class
 #pragma warning(disable: 4456) // declaration of 'res' hides previous local declaration

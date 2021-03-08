@@ -480,6 +480,9 @@ private:
 	int  SaveCTExamToExcel(CCTExam *CTExam, CString FileName);// For exporting the CT exam to spreadsheet
 	int  SaveWFCTExamToExcel(CWFExam *WFExam, CCTExam *CTExam, CString FileName);// For exporting the WF and CT exams to spreadsheet
 
+
+	CString GetPatientAge(CPatient m_Patient);//6.3.0
+
 	void OnTimer(UINT_PTR nIDEvent);
 	void SaveMultWFCTExams();
 

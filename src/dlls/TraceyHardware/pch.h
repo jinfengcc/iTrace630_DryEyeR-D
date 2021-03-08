@@ -9,7 +9,7 @@
 
 #include <libs/CommonLib/CommonIncl.h>
 #include <libs/CommonLib/Implements.h>
-#include <libs/CommonLib/thread/jthread.hpp>
+#include <libs/CommonLib/thread/jthread.h>
 #include <libs/LoggingLib/Logger.h>
 #include <libs/CommonLib/Signal.h>
 

@@ -1637,7 +1637,7 @@ void CWFExam::GetSpheqSphCylAxis(const CZernikeSurface& Surface, const int Verte
 	if (!PositiveCylinder) cyl = -cyl;
 
 	// AXIS
-	axis = intRound(0.5 * angle(Surface.m_c[3], Surface.m_c[5]) * _180_Pi); // this yields axis ª [0, 180]
+	axis = intRound(0.5 * angle(Surface.m_c[3], Surface.m_c[5]) * _180_Pi); // this yields axis ï¿½ [0, 180]
 	if (!PositiveCylinder) axis += 90; // rotate by 90 degrees
 	if (axis > 179) axis -= 180;
 

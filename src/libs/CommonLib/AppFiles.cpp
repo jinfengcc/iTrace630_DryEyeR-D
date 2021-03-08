@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "AppFiles.h"
 #include "TraceyRegistry.h"
+#include "TempFile.h"
 
 namespace {
   struct RegistrySettings : public TraceyRegistryImpl<RegistrySettings>
@@ -63,6 +64,9 @@ namespace app {
 
     case Type::dicomLogFile:
       return GetAppPath(Type::logFolder) / "dicom.log";
+
+    case Type::tempFolder:
+      return util::GetTempFolder();
 
     default:
       return {};

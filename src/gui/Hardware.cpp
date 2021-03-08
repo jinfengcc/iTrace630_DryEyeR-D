@@ -898,21 +898,15 @@ void CHW::ApplyCurrentVideoSaturation()
 }
 
 
-
 //***************************************************************************************
 
 // high resolution camera image capture setting
 void CHW::ApplyCurrentVideoRed()
 {
   if (m_hiresCamera->Connected()) {
-    int hdCam = m_pCurrentVideoSettings->Saturation;
-   // m_hiresCamera->SetRed(hdCam);
+    int hdCam = m_pCurrentVideoSettings->gain.Red;
+    m_hiresCamera->SetRedGain(hdCam);
   }
-
-  if (m_hDLL == NULL)
-    return;
-
-  //DllSetVideoSaturation(m_pCurrentVideoSettings->Saturation);
 }
 
 //***************************************************************************************
@@ -921,14 +915,9 @@ void CHW::ApplyCurrentVideoRed()
 void CHW::ApplyCurrentVideoGreen()
 {
   if (m_hiresCamera->Connected()) {
-    int hdCam = m_pCurrentVideoSettings->Saturation;
-    // m_hiresCamera->SetGreen(hdCam);
+    int hdCam = m_pCurrentVideoSettings->gain.Green;
+    m_hiresCamera->SetGreenGain(hdCam);
   }
-
-  if (m_hDLL == NULL)
-    return;
-
-  // DllSetVideoSaturation(m_pCurrentVideoSettings->Saturation);
 }
 
 //***************************************************************************************
@@ -937,14 +926,9 @@ void CHW::ApplyCurrentVideoGreen()
 void CHW::ApplyCurrentVideoBlue()
 {
   if (m_hiresCamera->Connected()) {
-    int hdCam = m_pCurrentVideoSettings->Saturation;
-    // m_hiresCamera->SetBlue(hdCam);
+    int hdCam = m_pCurrentVideoSettings->gain.Blue;
+    m_hiresCamera->SetBlueGain(hdCam);
   }
-
-  if (m_hDLL == NULL)
-    return;
-
-  // DllSetVideoSaturation(m_pCurrentVideoSettings->Saturation);
 }
 
 void CHW::ApplyCurrentVideoSettings()

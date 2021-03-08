@@ -42,8 +42,8 @@ private:
 
 
 
-	CStatic m_TraceyIOLInfo1;//520;IDC_STATIC
-	CStatic m_TraceyIOLInfo2;//520;IDC_STATIC
+	CStatic m_TraceyIOLInfo1;//;IDC_STATIC
+	CStatic m_TraceyIOLInfo2;//;IDC_STATIC
 
 	CEdit m_PreopEntireEyeCylEdit;
 	BOOL m_PreopEntireEyeCyl_DontChange;

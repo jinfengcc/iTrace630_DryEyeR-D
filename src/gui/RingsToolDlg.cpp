@@ -47,108 +47,131 @@ CRingsToolDlg::CRingsToolDlg(CCTAcquisition* pCTAcquisition, int b, CWnd* pParen
 
 //***************************************************************************************
 
-void CRingsToolDlg::DoDataExchange(CDataExchange* pDX)
+void CRingsToolDlg::DoDataExchange(CDataExchange *pDX)
 {
-	CDialog::DoDataExchange(pDX);
+  CDialog::DoDataExchange(pDX);
 
-	DDX_Control(pDX, IDOK, m_OKButton);
-	DDX_Control(pDX, IDCANCEL, m_CancelButton);
-	DDX_Control(pDX, IDC_CAL_EXAM1_RADIO, m_Exam1Radio);
-	DDX_Control(pDX, IDC_CAL_EXAM2_RADIO, m_Exam2Radio);
-	DDX_Control(pDX, IDC_CAL_EXAM3_RADIO, m_Exam3Radio);
-	DDX_Control(pDX, IDC_CAL_EXAM4_RADIO, m_Exam4Radio);
-	DDX_Control(pDX, IDC_CAL_START_EXAM, m_StartExamButton);
-	DDX_Control(pDX, IDC_CAL_ACQUIRE_EXAM, m_AcquireExamButton);
-	DDX_Control(pDX, IDC_CAL_ABORT_EXAM, m_AbortExamButton);
+  DDX_Control(pDX, IDOK, m_OKButton);
+  DDX_Control(pDX, IDCANCEL, m_CancelButton);
+  DDX_Control(pDX, IDC_CAL_EXAM1_RADIO, m_Exam1Radio);
+  DDX_Control(pDX, IDC_CAL_EXAM2_RADIO, m_Exam2Radio);
+  DDX_Control(pDX, IDC_CAL_EXAM3_RADIO, m_Exam3Radio);
+  DDX_Control(pDX, IDC_CAL_EXAM4_RADIO, m_Exam4Radio);
+  DDX_Control(pDX, IDC_CAL_START_EXAM, m_StartExamButton);
+  DDX_Control(pDX, IDC_CAL_ACQUIRE_EXAM, m_AcquireExamButton);
+  DDX_Control(pDX, IDC_CAL_ABORT_EXAM, m_AbortExamButton);
 
-	//
-	DDX_Control(pDX, IDC_CAL_BALL1_RADIO, m_Ball1Radio);
-	DDX_Control(pDX, IDC_CAL_BALL2_RADIO, m_Ball2Radio);
-	DDX_Control(pDX, IDC_CAL_BALL3_RADIO, m_Ball3Radio);
-	DDX_Control(pDX, IDC_CAL_BALL4_RADIO, m_Ball4Radio);
-	DDX_Control(pDX, IDC_CAL_BALL1_EDIT, m_Ball1Edit);
-	DDX_Control(pDX, IDC_CAL_BALL2_EDIT, m_Ball2Edit);
-	DDX_Control(pDX, IDC_CAL_BALL3_EDIT, m_Ball3Edit);
-	DDX_Control(pDX, IDC_CAL_BALL4_EDIT, m_Ball4Edit);
+  //
+  DDX_Control(pDX, IDC_CAL_BALL1_RADIO, m_Ball1Radio);
+  DDX_Control(pDX, IDC_CAL_BALL2_RADIO, m_Ball2Radio);
+  DDX_Control(pDX, IDC_CAL_BALL3_RADIO, m_Ball3Radio);
+  DDX_Control(pDX, IDC_CAL_BALL4_RADIO, m_Ball4Radio);
+  DDX_Control(pDX, IDC_CAL_BALL1_EDIT, m_Ball1Edit);
+  DDX_Control(pDX, IDC_CAL_BALL2_EDIT, m_Ball2Edit);
+  DDX_Control(pDX, IDC_CAL_BALL3_EDIT, m_Ball3Edit);
+  DDX_Control(pDX, IDC_CAL_BALL4_EDIT, m_Ball4Edit);
 
-	DDX_Control(pDX, IDC_CAL_SAVE2, m_CalSaveButton);
-	//
+  DDX_Control(pDX, IDC_CAL_SAVE2, m_CalSaveButton);
+  //
+
+  // 6.3.0
+  DDX_Control(pDX, IDC_CAL_VIDEO_BRIGHTNESS_EDIT, m_VideoBrightnessEdit);
+  DDX_Control(pDX, IDC_CAL_VIDEO_CONTRAST_EDIT, m_VideoContrastEdit);
+  DDX_Control(pDX, IDC_CAL_VIDEO_BRIGHTNESS_SLIDER, m_VideoBrightnessSlider);
+  DDX_Control(pDX, IDC_CAL_VIDEO_CONTRAST_SLIDER, m_VideoContrastSlider);
+  // 6.3.0
 }
 
 //***************************************************************************************
 
 BOOL CRingsToolDlg::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+  CDialog::OnInitDialog();
 
-	m_pCTAcquisition->m_TriLaserShutoffOn = FALSE;
+  m_pCTAcquisition->m_TriLaserShutoffOn = FALSE;
 
-	CALIBRATION* pCalibration = &m_pCTAcquisition->m_pHW->m_Calibration;
-	VIDEO_SETTINGS* pVideoSettings = &pCalibration->CTVideoSettings;
+  CALIBRATION *   pCalibration   = &m_pCTAcquisition->m_pHW->m_Calibration;
+  VIDEO_SETTINGS *pVideoSettings = &pCalibration->CTVideoSettings;
 
-	m_BackupVideoBrightness = pVideoSettings->Brightness;
-	m_BackupVideoContrast = pVideoSettings->Contrast;
+  m_BackupVideoBrightness = pVideoSettings->Brightness;
+  m_BackupVideoContrast   = pVideoSettings->Contrast;
 
-	m_Exam1Radio.SetCheck(1);
+  m_Exam1Radio.SetCheck(1);
 
-	m_w = CHW::m_VideoWidth;
-	m_h = CHW::m_VideoHeight;
-	m_w_um = pCalibration->VideoWidthMicrons;
-	m_h_um = pCalibration->VideoHeightMicrons;
-	m_x_px_um = m_w / m_w_um;
-	m_y_px_um = m_h / m_h_um;
-	m_cx = 0.5 * m_w;
-	m_cy = 0.5 * m_h - 1;
+  m_w       = CHW::m_VideoWidth;
+  m_h       = CHW::m_VideoHeight;
+  m_w_um    = pCalibration->VideoWidthMicrons;
+  m_h_um    = pCalibration->VideoHeightMicrons;
+  m_x_px_um = m_w / m_w_um;
+  m_y_px_um = m_h / m_h_um;
+  m_cx      = 0.5 * m_w;
+  m_cy      = 0.5 * m_h - 1;
 
-	RECT Rect = { 10, 10, 10 + m_w, 10 + m_h };
-	m_Video1Wnd.CreateWnd(Rect, this);
+  RECT Rect = {10, 10, 10 + m_w, 10 + m_h};
+  m_Video1Wnd.CreateWnd(Rect, this);
 
-	::SetRect(&Rect, 10 + m_w + 10, 10 + m_h - 324, 10 + m_w + 10 + 324, 10 + m_h);
-	m_Video2Wnd.CreateWnd(Rect, this);
+  ::SetRect(&Rect, 10 + m_w + 10, 10 + m_h - 324, 10 + m_w + 10 + 324, 10 + m_h);
+  m_Video2Wnd.CreateWnd(Rect, this);
 
-	// Set Ball selection
-	if (m_b == 0)
-		m_Ball1Radio.SetCheck(1);
-	else  if (m_b == 1)
-		m_Ball2Radio.SetCheck(1);
-	else  if (m_b == 2)
-		m_Ball3Radio.SetCheck(1);
-	else  if (m_b == 3)
-		m_Ball4Radio.SetCheck(1);
+  // Set Ball selection
+  if (m_b == 0)
+    m_Ball1Radio.SetCheck(1);
+  else if (m_b == 1)
+    m_Ball2Radio.SetCheck(1);
+  else if (m_b == 2)
+    m_Ball3Radio.SetCheck(1);
+  else if (m_b == 3)
+    m_Ball4Radio.SetCheck(1);
 
-	CString s;
-	// Ball 1 radius
-	s.Format(_T("%.0f"), m_pCTAcquisition->m_pHW->m_Calibration.BallsAx[0]);
-	m_Ball1Edit.SetWindowText(s);
-	// Ball 2 radius
-	s.Format(_T("%.0f"), m_pCTAcquisition->m_pHW->m_Calibration.BallsAx[1]);
-	m_Ball2Edit.SetWindowText(s);
-	// Ball 3 radius
-	s.Format(_T("%.0f"), m_pCTAcquisition->m_pHW->m_Calibration.BallsAx[2]);
-	m_Ball3Edit.SetWindowText(s);
-	// Ball 4 radius
-	s.Format(_T("%.0f"), m_pCTAcquisition->m_pHW->m_Calibration.BallsAx[3]);
-	m_Ball4Edit.SetWindowText(s);
-	//
+  CString s;
+  // Ball 1 radius
+  s.Format(_T("%.0f"), m_pCTAcquisition->m_pHW->m_Calibration.BallsAx[0]);
+  m_Ball1Edit.SetWindowText(s);
+  // Ball 2 radius
+  s.Format(_T("%.0f"), m_pCTAcquisition->m_pHW->m_Calibration.BallsAx[1]);
+  m_Ball2Edit.SetWindowText(s);
+  // Ball 3 radius
+  s.Format(_T("%.0f"), m_pCTAcquisition->m_pHW->m_Calibration.BallsAx[2]);
+  m_Ball3Edit.SetWindowText(s);
+  // Ball 4 radius
+  s.Format(_T("%.0f"), m_pCTAcquisition->m_pHW->m_Calibration.BallsAx[3]);
+  m_Ball4Edit.SetWindowText(s);
+  //
 
-	OnRadioClicked();
+  // 6.3.0
+  m_VideoBrightnessSlider.SetRange(0, 255, FALSE);
+  m_VideoContrastSlider.SetRange(0, 255, FALSE);
 
-	m_Start = FALSE;//[5.1.1]
+  m_VideoBrightnessSlider.SetPos(pVideoSettings->Brightness);
+  m_VideoContrastSlider.SetPos(pVideoSettings->Contrast);
 
-	return TRUE;
+  s.Format(_T("%i"), pVideoSettings->Brightness);
+  m_VideoBrightnessEdit.SetWindowText(s);
+
+  s.Format(_T("%i"), pVideoSettings->Contrast);
+  m_VideoContrastEdit.SetWindowText(s);
+  // 6.3.0
+
+  OnRadioClicked();
+
+  m_Start = FALSE; //[5.1.1]
+
+  return TRUE;
 }
 
 //***************************************************************************************
 
 void CRingsToolDlg::OnCancel()
 {
-	if (!m_CancelButton.IsWindowEnabled()) return;
+  if (!m_CancelButton.IsWindowEnabled())
+    return;
 
-	VIDEO_SETTINGS* pVideoSettings = &m_pCTAcquisition->m_pHW->m_Calibration.CTVideoSettings;
-	pVideoSettings->Brightness = m_BackupVideoBrightness;
-	pVideoSettings->Contrast = m_BackupVideoContrast;
+  VIDEO_SETTINGS *pVideoSettings = &m_pCTAcquisition->m_pHW->m_Calibration.CTVideoSettings;
 
-	CDialog::OnCancel();
+  pVideoSettings->Brightness = m_BackupVideoBrightness;
+  pVideoSettings->Contrast   = m_BackupVideoContrast;
+
+  CDialog::OnCancel();
 }
 
 //***************************************************************************************
@@ -201,7 +224,7 @@ void CRingsToolDlg::OnOK()
 
 void CRingsToolDlg::OnHScroll(uint nSBCode, uint nPos, CScrollBar* pScrollBar)
 {
-	if (!m_Start) return;//[5.1.1]
+	//if (!m_Start) return;//[5.1.1]
 	VIDEO_SETTINGS* pVideoSettings = &m_pCTAcquisition->m_pHW->m_Calibration.CTVideoSettings;
 	CString s;
 	switch (pScrollBar->GetDlgCtrlID()) {
@@ -216,7 +239,7 @@ void CRingsToolDlg::OnHScroll(uint nSBCode, uint nPos, CScrollBar* pScrollBar)
 		s.Format(_T("%i"), pVideoSettings->Contrast);
 		m_VideoContrastEdit.SetWindowText(s);
 		m_pCTAcquisition->ChangeContrast();
-		break;
+		break;  
 	}
 }
 
@@ -313,31 +336,44 @@ void CRingsToolDlg::OnBallRadioClicked()
 // Save the cal values to Exporm
 void CRingsToolDlg::OnCalSaveBtnClicked()
 {
-	CBusyCursor Cursor;
+  CBusyCursor Cursor;
 
-	CString s;
+  CString s;
 
-	// Ball 1 radius
-	m_Ball1Edit.GetWindowText(s);
-	G_As = s;
-	m_pCTAcquisition->m_pHW->m_Calibration.BallsAx[0] = atof(G_As);
+  // Ball 1 radius
+  m_Ball1Edit.GetWindowText(s);
+  G_As                                              = s;
+  m_pCTAcquisition->m_pHW->m_Calibration.BallsAx[0] = atof(G_As);
 
-	// Ball 2 radius
-	m_Ball2Edit.GetWindowText(s);
-	G_As = s;
-	m_pCTAcquisition->m_pHW->m_Calibration.BallsAx[1] = atof(G_As);
+  // Ball 2 radius
+  m_Ball2Edit.GetWindowText(s);
+  G_As                                              = s;
+  m_pCTAcquisition->m_pHW->m_Calibration.BallsAx[1] = atof(G_As);
 
-	// Ball 3 radius
-	m_Ball3Edit.GetWindowText(s);
-	G_As = s;
-	m_pCTAcquisition->m_pHW->m_Calibration.BallsAx[2] = atof(G_As);
+  // Ball 3 radius
+  m_Ball3Edit.GetWindowText(s);
+  G_As                                              = s;
+  m_pCTAcquisition->m_pHW->m_Calibration.BallsAx[2] = atof(G_As);
 
-	// Ball 4 radius
-	m_Ball4Edit.GetWindowText(s);
-	G_As = s;
-	m_pCTAcquisition->m_pHW->m_Calibration.BallsAx[3] = atof(G_As);
+  // Ball 4 radius
+  m_Ball4Edit.GetWindowText(s);
+  G_As                                              = s;
+  m_pCTAcquisition->m_pHW->m_Calibration.BallsAx[3] = atof(G_As);
 
-	m_pCTAcquisition->m_pHW->SaveCalibrationIntoFlash();
+  // 6.3.0
+  m_VideoBrightnessEdit.GetWindowText(s);
+  G_As                                              = s;
+  m_pCTAcquisition->m_pHW->m_Calibration.CTVideoSettings.Brightness= atof(G_As);
+
+  m_VideoContrastEdit.GetWindowText(s);
+  G_As                                                              = s;
+  m_pCTAcquisition->m_pHW->m_Calibration.CTVideoSettings.Contrast = atof(G_As);
+
+  m_BackupVideoBrightness = m_pCTAcquisition->m_pHW->m_Calibration.CTVideoSettings.Brightness;
+  m_BackupVideoContrast   = m_pCTAcquisition->m_pHW->m_Calibration.CTVideoSettings.Contrast;
+  // 6.3.0
+
+  m_pCTAcquisition->m_pHW->SaveCalibrationIntoFlash();
 }
 //***************************************************************************************
 

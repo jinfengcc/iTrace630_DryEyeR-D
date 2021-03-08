@@ -33,16 +33,10 @@ BOOL CCTAcquisitionDlg::OnInitDialog()
 
 LRESULT CCTAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
 {
-	////cjf 10222020 test for slow gain
- // if (wParam != 0) {
- //   memcpy(m_VideoWnd.m_MemDC.m_RGBData, m_pCTAcquisition->m_pHW->GetRGBData(), CHW::m_VideoSize);
- //   m_VideoWnd.Invalidate(FALSE);
- //   m_VideoWnd.UpdateWindow();
-
- //   return 0;
- // }
- // //cjf 10222020 test for slow gain
-
+	//if (m_pCTAcquisition->m_NumFramesReceived > 30)
+	//{
+	//	memcpy(m_VideoWnd.m_MemDC.m_RGBData, m_pCTAcquisition->m_CTExam.m_Image.m_RGBData, CHW::m_VideoSize);//test load ct capture video for laser spot detection check
+	//}
 	memcpy(m_VideoWnd.m_MemDC.m_RGBData, m_pCTAcquisition->m_pHW->GetRGBData(), CHW::m_VideoSize);
 
 	//530
@@ -100,6 +94,9 @@ LRESULT CCTAcquisitionDlg::OnUpdate(WPARAM wParam, LPARAM lParam)
     m_pCTAcquisition->m_Contrast       = m_ControlWnd.GetContrast();
     m_pCTAcquisition->m_Hue            = m_ControlWnd.GetHue();
     m_pCTAcquisition->m_Saturation     = m_ControlWnd.GetSaturation();
+    m_pCTAcquisition->m_RedGain        = m_ControlWnd.GetRed();
+    m_pCTAcquisition->m_GreenGain      = m_ControlWnd.GetGreen();
+    m_pCTAcquisition->m_BlueGain       = m_ControlWnd.GetBlue();
 
 		m_ControlWnd.ShowAcqBtnGUI();
 	}

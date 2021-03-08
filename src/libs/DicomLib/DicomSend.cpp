@@ -14,7 +14,7 @@ namespace {
 } // namespace
 
 DicomSend::DicomSend(const dicom::Config &cfg)
-  : DicomBase(LogLevel::Warn)
+  : DicomBase(cfg.loggingLevel)
   , m_cfg(cfg.store)
 {
   m_obj = RZDCX::Instance()->CreateInstance<IDCXOBJ>();
