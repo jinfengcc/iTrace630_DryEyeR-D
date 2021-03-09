@@ -17,6 +17,7 @@
 
 BEGIN_MESSAGE_MAP(CWTSumWnd, CSumWnd)
 
+	//test degree error °
 	ON_COMMAND(IDC_EDIT_LENS_DOTS_ITEM, OnEditLensDotsItemClicked)
 	ON_COMMAND(IDC_EDIT_LIMBUS_ITEM, OnEditLimbusItemClicked)
 
