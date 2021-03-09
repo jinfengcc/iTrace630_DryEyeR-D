@@ -32,7 +32,13 @@ void CSplashScreenImpl::Initialize()
     m_size.cx = maxw;
   }
 
-  SetWindowPos(HWND_TOPMOST, 0, 0, m_size.cx, m_size.cy, SWP_NOMOVE);
+#ifdef _DEBUG
+  HWND hWnd = nullptr;
+#else
+  HWND hWnd = IsDebuggerPresent() ? nullptr : HWND_TOPMOST;
+#endif
+  SetWindowPos(hWnd, 0, 0, m_size.cx, m_size.cy, SWP_NOMOVE);
+
   CenterWindow();
 }
 
