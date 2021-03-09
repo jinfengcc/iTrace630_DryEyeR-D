@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SolutionItems", "_Solution
 	ProjectSection(SolutionItems) = preProject
 		.clang-format = .clang-format
 		.gitignore = .gitignore
+		build630.bat = build630.bat
 		src\ProjProps.props = src\ProjProps.props
 		Readme.md = Readme.md
 		vs-chromium-project.txt = vs-chromium-project.txt
@@ -31,13 +32,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SharedUI", "tools\SharedUI\SharedUI.vcxitems", "{448E43E4-7C07-408F-8D61-AE1A69EA9DFD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LegacyLib", "src\libs\LegacyLib\LegacyLib.vcxproj", "{903470EB-776F-48D6-B163-0CC6C1C560D5}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E11760C6-C9C1-43D1-82B0-1CB55795FB7D}"
-	ProjectSection(SolutionItems) = preProject
-		tests\TestProps.props = tests\TestProps.props
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCommonLib", "tests\TestCommonLib\TestCommonLib.vcxproj", "{7A7033CE-4050-445A-BD81-64EAA08693A0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CalcLib", "src\libs\CalcLib\CalcLib.vcxproj", "{FE883FA5-BD68-49D8-9B77-0211817DD014}"
 EndProject
@@ -118,14 +112,6 @@ Global
 		{903470EB-776F-48D6-B163-0CC6C1C560D5}.Release|x64.Build.0 = Release|x64
 		{903470EB-776F-48D6-B163-0CC6C1C560D5}.Release|x86.ActiveCfg = Release|Win32
 		{903470EB-776F-48D6-B163-0CC6C1C560D5}.Release|x86.Build.0 = Release|Win32
-		{7A7033CE-4050-445A-BD81-64EAA08693A0}.Debug|x64.ActiveCfg = Debug|x64
-		{7A7033CE-4050-445A-BD81-64EAA08693A0}.Debug|x64.Build.0 = Debug|x64
-		{7A7033CE-4050-445A-BD81-64EAA08693A0}.Debug|x86.ActiveCfg = Debug|Win32
-		{7A7033CE-4050-445A-BD81-64EAA08693A0}.Debug|x86.Build.0 = Debug|Win32
-		{7A7033CE-4050-445A-BD81-64EAA08693A0}.Release|x64.ActiveCfg = Release|x64
-		{7A7033CE-4050-445A-BD81-64EAA08693A0}.Release|x64.Build.0 = Release|x64
-		{7A7033CE-4050-445A-BD81-64EAA08693A0}.Release|x86.ActiveCfg = Release|Win32
-		{7A7033CE-4050-445A-BD81-64EAA08693A0}.Release|x86.Build.0 = Release|Win32
 		{FE883FA5-BD68-49D8-9B77-0211817DD014}.Debug|x64.ActiveCfg = Debug|x64
 		{FE883FA5-BD68-49D8-9B77-0211817DD014}.Debug|x64.Build.0 = Debug|x64
 		{FE883FA5-BD68-49D8-9B77-0211817DD014}.Debug|x86.ActiveCfg = Debug|Win32
@@ -193,7 +179,6 @@ Global
 		{E389E737-D28C-442F-A417-D2962FAF16D2} = {D2ADC48A-2854-4C5E-8E27-2100CA1B9B46}
 		{448E43E4-7C07-408F-8D61-AE1A69EA9DFD} = {D2ADC48A-2854-4C5E-8E27-2100CA1B9B46}
 		{903470EB-776F-48D6-B163-0CC6C1C560D5} = {4B2E1044-2F63-40D6-A660-2B31664ED146}
-		{7A7033CE-4050-445A-BD81-64EAA08693A0} = {E11760C6-C9C1-43D1-82B0-1CB55795FB7D}
 		{FE883FA5-BD68-49D8-9B77-0211817DD014} = {4B2E1044-2F63-40D6-A660-2B31664ED146}
 		{41C9C7BC-1C0D-4239-8A8F-A078B2EB1BF1} = {4B2E1044-2F63-40D6-A660-2B31664ED146}
 		{E2934127-B412-408F-8E28-6A80DEF48956} = {546007DA-FBF4-4AA2-912D-C578B5B089B2}

@@ -3,7 +3,7 @@
   <ImportGroup Label="PropertySheets" />
 
   <ImportGroup Label="PropertySheets">
-    <Import Project="$(SolutionDir)ProjProps.props" />
+    <Import Project="$(SolutionDir)src\ProjProps.props" />
   </ImportGroup>
 
   <ItemDefinitionGroup Label="PostBuildEvents">
