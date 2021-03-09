@@ -104,6 +104,12 @@ void DicomSend::Insert(const cv::Mat &image)
   const int   height                     = image.rows;
   const void *pData                      = image.ptr<BYTE *>(0);
 
+  cv::Mat temp;
+  cv::cvtColor(image, temp, cv::COLOR_BGR2RGB);
+
+  pData = temp.ptr<BYTE *>(0);
+
+
   DCMLOG_Info("DicomSend: Inserting image ({}x{})", image.cols, image.rows);
 
   // clang-format off
