@@ -923,8 +923,14 @@
     <None Include="Res\settings" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\dlls\TraceyDicom\TraceyDicom.vcxproj">
+      <Project>{e2934127-b412-408f-8e28-6a80def48956}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\dlls\TraceyHardware\TraceyHardware.vcxproj">
       <Project>{c7034b3f-11a5-4f1b-bf5d-a7da69431855}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\dlls\TraceyServices\TraceyServices.vcxproj">
+      <Project>{070776b9-1b36-4153-ba7b-474c2ca1ce56}</Project>
     </ProjectReference>
     <ProjectReference Include="..\libs\CalcLib\CalcLib.vcxproj">
       <Project>{fe883fa5-bd68-49d8-9b77-0211817dd014}</Project>
