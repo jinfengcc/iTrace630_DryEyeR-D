@@ -4,7 +4,7 @@
 
 #include <libs/CommonLib/ClassFactoryImpl.h>
 #include "Calibration.h"
-
+#include "Services.h"
 #include "Progress.h"
 
 namespace {
@@ -16,6 +16,7 @@ namespace {
       AddCreator(__uuidof(ILogger        ), &LocalClassFactory::CreateLogger);
       AddCreator(__uuidof(ILoggerSettings), &LocalClassFactory::CreateLogger);
       AddCreator(__uuidof(ICalibration   ), &LocalClassFactory::Create<Calibration>);
+      AddCreator(__uuidof(IServices      ), &LocalClassFactory::Create<Services>);
       AddCreator(__uuidof(IProgress      ), &LocalClassFactory::Create<Progress>);
       // clang-format on
     }

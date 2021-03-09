@@ -18,6 +18,7 @@
 #include <wtl/atlapp.h>
 #include <wtl/atlctrls.h>
 #include <wtl/atlcrack.h>
+#include <wtl/atlddx.h>
 
 #include <interfaces/ICalibration.h>
 #include <interfaces/IDatabase.h>

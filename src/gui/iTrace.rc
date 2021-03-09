@@ -997,7 +997,7 @@ FONT 10, "Microsoft Sans Serif", 400, 0, 0xCC
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,65,30,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,10,30,50,14
-    EDITTEXT        IDC_PASSWORD_EDIT,10,10,105,14,ES_PASSWORD | ES_AUTOHSCROLL
+    EDITTEXT        IDC_PASSWORD,10,10,105,14,ES_PASSWORD | ES_AUTOHSCROLL
 END
 
 IDD_IMAGE_DLG DIALOGEX 0, 0, 498, 335
@@ -3934,7 +3934,9 @@ IDR_PRINT_SCREEN_2      PNG                     "Res\\PrintScreen2.png"
 IDR_PRINT_SCREEN_3      PNG                     "Res\\PrintScreen3.png"
 
 IDR_DICOM_EXPORT_1      PNG                     "Res\\SaveDicom34.png"
+
 IDR_DICOM_EXPORT_2      PNG                     "Res\\SaveDicom40.png"
+
 IDR_DICOM_EXPORT_3      PNG                     "Res\\SaveDicom48.png"
 
 IDR_SHOT1_1             PNG                     "Res\\Shot11.png"
@@ -4265,6 +4267,11 @@ BEGIN
 END
 
 IDD_CAL_DLG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_PASSWORD_DLG AFX_DIALOG_LAYOUT
 BEGIN
     0
 END

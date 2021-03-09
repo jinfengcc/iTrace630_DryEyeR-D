@@ -159,16 +159,19 @@
     <ClInclude Include="Calibration.h" />
     <ClInclude Include="CalibrationJson.h" />
     <ClInclude Include="ExamHelper.h" />
+    <ClInclude Include="PasswordDlg.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Progress.h" />
     <ClInclude Include="ProgressDlg.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Services.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Calibration.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="ExamHelper.cpp" />
     <ClCompile Include="LocalClassFactory.cpp" />
+    <ClCompile Include="PasswordDlg.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -177,6 +180,7 @@
     </ClCompile>
     <ClCompile Include="Progress.cpp" />
     <ClCompile Include="ProgressDlg.cpp" />
+    <ClCompile Include="Services.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\libs\CommonLib\CommonLib.vcxproj">

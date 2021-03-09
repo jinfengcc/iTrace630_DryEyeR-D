@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "SetupSheet.h"
+#include "interfaces/IServices.h"
 
 CDicomSetup::CDicomSetup(ITraceyDicomConfig *obj)
   : CPropertySheetImpl<CDicomSetup>(_T("DICOM Setup"))
@@ -19,6 +20,12 @@ CDicomSetup::CDicomSetup(ITraceyDicomConfig *obj)
 
 int CDicomSetup::DoModal(HWND hWndParent /*= ::GetActiveWindow()*/)
 {
+  if (m_obj->IsValid()) {
+    auto pwd = CreateObj<IServices>();
+    if (!pwd->CheckPassword())
+      return IDCANCEL;
+  }
+
   hWndParent = ::GetActiveWindow();
 
   if (int res = CPropertySheetImpl<CDicomSetup>::DoModal(hWndParent); res != IDOK)

@@ -190,12 +190,12 @@
 #define IDR_DEC_ZONE_5                  272
 #define IDR_DEC_ZONE_6                  273
 #define IDR_DICOM_EXPORT_1              274
-#define IDR_DICOM_EXPORT_2              275
-#define IDR_DICOM_EXPORT_3              276
 #define IDC_REGI_TIME_BUTTON            274
 #define IDD_REGISTRATION_TIME_DLG       274
+#define IDR_DICOM_EXPORT_2              275
 #define IDC_SHOW_TORIC_INCISION         275
 #define IDD_DELETE_DLG                  275
+#define IDR_DICOM_EXPORT_3              276
 #define IDC_SHOW_TORIC_EEYEPOSTOP       276
 #define IDC_SHOW_TORIC_EEYEPREOP        277
 #define IDC_SHOW_TORIC_CORPREOP         278
@@ -1011,6 +1011,7 @@
 #define IDC_FILE_BROWSE                 7068
 #define IDC_FILENAME_EDIT               7069
 #define IDC_PASSWORD_EDIT               7070
+#define IDC_PASSWORD                    7070
 #define IDC_FOLDERNAME_EDIT             7071
 #define IDC_FOLDER_BROWSE               7072
 #define IDC_REINIT                      7073
@@ -2079,7 +2080,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        489
+#define _APS_NEXT_RESOURCE_VALUE        490
 #define _APS_NEXT_COMMAND_VALUE         32965
 #define _APS_NEXT_CONTROL_VALUE         8525
 #define _APS_NEXT_SYMED_VALUE           424

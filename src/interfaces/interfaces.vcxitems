@@ -24,6 +24,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)IDatabaseServices.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ILogger.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ILoggerSettings.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IProgress.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IServices.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ISettingsStorage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ITraceyConfig.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TraceyObj.h" />

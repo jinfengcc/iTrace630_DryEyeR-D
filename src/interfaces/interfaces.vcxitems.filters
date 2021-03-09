@@ -14,5 +14,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TraceyObj.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IDatabase.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IDatabaseServices.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IProgress.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IServices.h" />
   </ItemGroup>
 </Project>
