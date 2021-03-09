@@ -17,7 +17,6 @@
 
 BEGIN_MESSAGE_MAP(CWTSumWnd, CSumWnd)
 
-	//test degree error Â°
 	ON_COMMAND(IDC_EDIT_LENS_DOTS_ITEM, OnEditLensDotsItemClicked)
 	ON_COMMAND(IDC_EDIT_LIMBUS_ITEM, OnEditLimbusItemClicked)
 
@@ -49,12 +48,12 @@ CWTSumWnd::CWTSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFExam* pWF
 	m_pWFExam = pWFExam;
 	m_pCTExam = pCTExam;
 
-	//*007*[cjf***05052012],record the increase and decrease range
+	//record the increase and decrease range
 	if (m_pCTExam == NULL)
 		::TempSettings.Com_r_max_um = m_pWFExam->m_WfSurface.m_r_max_um;
 	else
 		::TempSettings.Com_r_max_um = ((m_pWFExam->m_WfSurface.m_r_max_um) < (m_pCTExam->m_WfSurface.m_r_max_um) ? m_pWFExam->m_WfSurface.m_r_max_um : m_pCTExam->m_WfSurface.m_r_max_um);
-	//*007*[cjf***05052012]
+	//
 
 	for (m_d = 0; m_d < (m_pCTExam ? 3 : 2); m_d++) {
 		CreateChildWnd();
@@ -143,7 +142,7 @@ void CWTSumWnd::LensInfo(RECT Rect, int NumRows)
 		s += "   Cyl  --.-- D";
 	}
 	else {
-		s1.Format(_T(" x %iÂ°"), m_pWFExam->m_WavetouchAxis);
+		s1.Format(_T(" x %i°"), m_pWFExam->m_WavetouchAxis);
 		s += s1;
 	}
 	m_MemDC.WriteText(s, Rect, Font, white, 0);
@@ -253,12 +252,12 @@ void CWTSumWnd::CreateChildWnd()
 			}
 
 			m_Ang = intRound(m_pWFExam->m_Image.GetLensRotationAngle());
-
-			m_labels[4].Format(_T("(Angel of Lens : %iÂ°)"), m_Ang);
+		
+			m_labels[4].Format(_T("(Angel of Lens : %i°)"), m_Ang);
 
 			for (int i = 3; i < 5; i++)
 			{
-				pEyeWnd->m_RBLabel[i + 1] = m_labels[i];
+				pEyeWnd->m_RBLabel[i + 1] =  m_labels[i];
 				pEyeWnd->m_RBLabelColor[i + 1] = RED;
 			}
 		}
@@ -304,7 +303,7 @@ void CWTSumWnd::CreateChildWnd()
 		pEyeWnd->m_MapShowSolidSurface = FALSE;
 		pEyeWnd->m_MapShowWireMesh = FALSE;
 		pEyeWnd->m_MapTranslucent = FALSE;
-		pEyeWnd->m_Unit = "Âµ";
+		pEyeWnd->m_Unit = "µ";
 		pEyeWnd->m_Inc = pWndSettings->GetIncrement();
 		CScale* pScale = pWndSettings->GetScale();
 		pEyeWnd->m_NumColors = pScale->m_NumColors;
@@ -417,7 +416,6 @@ void CWTSumWnd::CreateChildWnd()
 	break;
 
 	}
-
 }
 
 //***************************************************************************************

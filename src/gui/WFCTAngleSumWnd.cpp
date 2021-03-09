@@ -47,9 +47,9 @@ END_MESSAGE_MAP()
 
 //***************************************************************************************
 
-CWFCTAngleSumWnd::CWFCTAngleSumWnd(CWnd *pWnd, RECT &WndRect, CPatient *pPatient, CWFExam *pWFExam, CCTExam *pCTExam,
-                                   CWndSettings *pWndSettings, int k, int show)
-  :
+CWFCTAngleSumWnd::CWFCTAngleSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFExam* pWFExam, CCTExam* pCTExam,
+	CWndSettings* pWndSettings, int k, int show)
+	:
 	CSumWnd(pWnd, WndRect, pPatient, pWndSettings)
 {
 	CBusyCursor Cursor;
@@ -327,7 +327,7 @@ void CWFCTAngleSumWnd::CreateChildWnd()
 			pWndSettings->m_LtrOrientation = 0;
 		}
 	}
-		
+
 	m_Surfaces[m_d] = m_pWFExam->m_WfSurface;
 	real_t r_max_um = 5000.0;
 	r_max_um = __min(r_max_um, m_Surfaces[m_d].m_r_max_um);
@@ -416,14 +416,14 @@ void CWFCTAngleSumWnd::CreateChildWnd()
 			if (m_pWFExam->m_Header.m_LinearRulerOK)
 			{
 				pEyeWnd->m_LBLabel[0] = "Linear Ruler";
-				real_t dis = hyp(m_pWFExam->m_Image.m_LRa_x0_um - m_pWFExam->m_Image.m_LRa_x1_um, m_pWFExam->m_Image.m_LRa_y0_um - m_pWFExam->m_Image.m_LRa_y1_um)*0.001;
+				real_t dis = hyp(m_pWFExam->m_Image.m_LRa_x0_um - m_pWFExam->m_Image.m_LRa_x1_um, m_pWFExam->m_Image.m_LRa_y0_um - m_pWFExam->m_Image.m_LRa_y1_um) * 0.001;
 				pEyeWnd->m_LBLabel[1].Format(_T("(D) = (%.3f)"), dis);
 			}
 
 			if (m_pWFExam->m_Header.m_AngleRulerOK)
 			{
 				pEyeWnd->m_LBLabel[2] = "Radial Ruler";
-				pEyeWnd->m_LBLabel[3].Format(_T("(D) = (%.3f)"), m_pWFExam->m_Image.m_Ra_r_um*0.002);
+				pEyeWnd->m_LBLabel[3].Format(_T("(D) = (%.3f)"), m_pWFExam->m_Image.m_Ra_r_um * 0.002);
 
 				pEyeWnd->m_LBLabel[4].Format(_T("(X, Y) = (%.3f, %.3f)"),
 					m_pWFExam->m_Header.m_AngleRulerXUm * 0.001,
@@ -444,9 +444,9 @@ void CWFCTAngleSumWnd::CreateChildWnd()
 			{
 				pEyeWnd->m_LBLabel[6] = "Disk";
 
-				pEyeWnd->m_LBLabel[7].Format(_T("(D) = (%.3f)"), m_pWFExam->m_Image.m_In_r_um*0.002);
+				pEyeWnd->m_LBLabel[7].Format(_T("(D) = (%.3f)"), m_pWFExam->m_Image.m_In_r_um * 0.002);
 				if (m_pWFExam->m_Image.m_In_In_r_um < 0) m_pWFExam->m_Image.m_In_In_r_um = 0;
-				pEyeWnd->m_LBLabel[8].Format(_T("(Inner_D) = (%.3f)"), m_pWFExam->m_Image.m_In_In_r_um*0.002);
+				pEyeWnd->m_LBLabel[8].Format(_T("(Inner_D) = (%.3f)"), m_pWFExam->m_Image.m_In_In_r_um * 0.002);
 
 				pEyeWnd->m_LBLabel[9].Format(_T("(X, Y) = (%.3f, %.3f)"),
 					m_pWFExam->m_Header.m_InlayXUm * 0.001,
@@ -791,10 +791,10 @@ void CWFCTAngleSumWnd::CreateChildWnd()
 		{
 			pAZRWnd->m_LTLabel[2] = "Presbia 2.4mm";
 		}
-	
+
 		real_t dr_um = 100.0;
 		int n = (int)(r_max_um / dr_um) + 1;
-	
+
 		pAZRWnd->m_MainLabels.Create(2);
 		pAZRWnd->m_MainLabels[0] = "Annular Refraction";
 		pAZRWnd->m_MainLabels[1] = "Zonal Refraction";
@@ -812,7 +812,7 @@ void CWFCTAngleSumWnd::CreateChildWnd()
 		for (int i = 0; i < n; i++)
 		{
 			real_t d_mm = 0.002 * i * dr_um;
-			if (fabs(d_mm - (int)d_mm) < 0.001) 
+			if (fabs(d_mm - (int)d_mm) < 0.001)
 			{
 				pAZRWnd->m_BLabels[i].Format(_T("%i"), (int)d_mm);
 			}
@@ -826,7 +826,7 @@ void CWFCTAngleSumWnd::CreateChildWnd()
 			pAZRWnd->m_Values(i, 0) = CWFExam::GetAnnularRfAt(m_Surfaces[m_d], r_um);
 			pAZRWnd->m_Values(i, 1) = CWFExam::GetAverageRfAt(m_Surfaces[m_d], r_um);
 		}
-	
+
 		if (m_InsideZone[m_d] != TRUE)
 		{
 			pAZRWnd->CreateZoneButtons();
@@ -1260,7 +1260,7 @@ void CWFCTAngleSumWnd::OnEditLimbusItemClicked()
 		if (m_pWFExam->m_Header.m_LinearRulerOK)
 		{
 			m_pDispWnd[m_d]->m_LBLabel[0] = "Linear Ruler";
-			real_t dis = hyp(m_pWFExam->m_Image.m_LRa_x0_um - m_pWFExam->m_Image.m_LRa_x1_um, m_pWFExam->m_Image.m_LRa_y0_um - m_pWFExam->m_Image.m_LRa_y1_um)*0.001;
+			real_t dis = hyp(m_pWFExam->m_Image.m_LRa_x0_um - m_pWFExam->m_Image.m_LRa_x1_um, m_pWFExam->m_Image.m_LRa_y0_um - m_pWFExam->m_Image.m_LRa_y1_um) * 0.001;
 			m_pDispWnd[m_d]->m_LBLabel[1].Format(_T("(D) = (%.3f)"), dis);
 		}
 		else
@@ -1272,7 +1272,7 @@ void CWFCTAngleSumWnd::OnEditLimbusItemClicked()
 		if (m_pWFExam->m_Header.m_AngleRulerOK)
 		{
 			m_pDispWnd[m_d]->m_LBLabel[2] = "Radial Ruler";
-			m_pDispWnd[m_d]->m_LBLabel[3].Format(_T("(D) = (%.3f)"), m_pWFExam->m_Image.m_Ra_r_um*0.002);
+			m_pDispWnd[m_d]->m_LBLabel[3].Format(_T("(D) = (%.3f)"), m_pWFExam->m_Image.m_Ra_r_um * 0.002);
 			m_pDispWnd[m_d]->m_LBLabel[4].Format(_T("(X, Y) = (%.3f, %.3f)"),
 				m_pWFExam->m_Header.m_AngleRulerXUm * 0.001,
 				m_pWFExam->m_Header.m_AngleRulerYUm * 0.001);
@@ -1293,8 +1293,8 @@ void CWFCTAngleSumWnd::OnEditLimbusItemClicked()
 		if (m_pWFExam->m_Header.m_InlayOK)
 		{
 			m_pDispWnd[m_d]->m_LBLabel[6] = "Disk";
-			m_pDispWnd[m_d]->m_LBLabel[7].Format(_T("(D) = (%.3f)"), m_pWFExam->m_Image.m_In_r_um*0.002);
-			m_pDispWnd[m_d]->m_LBLabel[8].Format(_T("(Inner_D) = (%.3f)"), m_pWFExam->m_Image.m_In_In_r_um*0.002);
+			m_pDispWnd[m_d]->m_LBLabel[7].Format(_T("(D) = (%.3f)"), m_pWFExam->m_Image.m_In_r_um * 0.002);
+			m_pDispWnd[m_d]->m_LBLabel[8].Format(_T("(Inner_D) = (%.3f)"), m_pWFExam->m_Image.m_In_In_r_um * 0.002);
 
 			m_pDispWnd[m_d]->m_LBLabel[9].Format(_T("(X, Y) = (%.3f, %.3f)"),
 				m_pWFExam->m_Header.m_InlayXUm * 0.001,

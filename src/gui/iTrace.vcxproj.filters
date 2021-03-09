@@ -530,9 +530,6 @@
     <ClCompile Include="CubicSpline.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="Exam.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
     <ClCompile Include="FT.cpp">
       <Filter>Math</Filter>
     </ClCompile>
@@ -671,14 +668,8 @@
     <ClCompile Include="SumWnd.cpp">
       <Filter>Windows\TypeWindows\BasicWindows</Filter>
     </ClCompile>
-    <ClCompile Include="SumWndInfo.cpp">
-      <Filter>Windows\TypeWindows\BasicWindows</Filter>
-    </ClCompile>
     <ClCompile Include="MainWnd.cpp">
       <Filter>Windows\MainWindow</Filter>
-    </ClCompile>
-    <ClCompile Include="WFCTAngleSumWnd.cpp">
-      <Filter>Windows\WFCTWindows</Filter>
     </ClCompile>
     <ClCompile Include="WFCTDysPtWnd.cpp">
       <Filter>Windows\WFCTWindows</Filter>
@@ -752,20 +743,11 @@
     <ClCompile Include="ImgInfoWnd.cpp">
       <Filter>Windows\MainWindow</Filter>
     </ClCompile>
-    <ClCompile Include="PlannerWnd.cpp">
-      <Filter>Windows\ToricPlanner</Filter>
-    </ClCompile>
-    <ClCompile Include="PlanWnd.cpp">
-      <Filter>Windows\ToricPlanner</Filter>
-    </ClCompile>
     <ClCompile Include="Settings.cpp">
       <Filter>Others</Filter>
     </ClCompile>
     <ClCompile Include="StdAfx.cpp">
       <Filter>Others</Filter>
-    </ClCompile>
-    <ClCompile Include="WTSumWnd.cpp">
-      <Filter>Windows\WaveTouchWindow</Filter>
     </ClCompile>
     <ClCompile Include="ChartWnd.cpp">
       <Filter>Windows\OtherWindows</Filter>
@@ -880,6 +862,24 @@
     </ClCompile>
     <ClCompile Include="PreBtn.cpp">
       <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="WTSumWnd.cpp">
+      <Filter>Windows\WaveTouchWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="PlanWnd.cpp">
+      <Filter>Windows\ToricPlanner</Filter>
+    </ClCompile>
+    <ClCompile Include="PlannerWnd.cpp">
+      <Filter>Windows\ToricPlanner</Filter>
+    </ClCompile>
+    <ClCompile Include="WFCTAngleSumWnd.cpp">
+      <Filter>Windows\WFCTWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="SumWndInfo.cpp">
+      <Filter>Windows\TypeWindows\BasicWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="Exam.cpp">
+      <Filter>Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

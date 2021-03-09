@@ -1,4 +1,4 @@
-﻿//***************************************************************************************
+//***************************************************************************************
 
 #include "StdAfx.h"
 #include "Resource.h"
@@ -119,7 +119,7 @@ CPlanWnd::CPlanWnd(RECT& Rect, CWnd* pWnd) :
 	//move lens at 1 degree
 	int s = intRound(0.035 * ::GetSystemMetrics(SM_CXSCREEN));
 
-	::SetRect(&Rect1, m_w - intRound(w), m_l - 2 - intRound(2.0 * h), m_w - intRound(w) + s, m_l - 10);
+	::SetRect(&Rect1, m_w - intRound(w), m_l - 2 - intRound(2.0*h), m_w - intRound(w) + s, m_l - 10);
 	m_PrevButton.Create(_T(""), _T(""), 0, Rect1, this, IDC_PREV);
 	m_PrevButton.SetImage(W >= 1920 ? IDR_LEFT_ARROW_3 : W >= 1600 ? IDR_LEFT_ARROW_2 : IDR_LEFT_ARROW_1);
 	m_PrevButton.SetBk(FALSE);
@@ -130,7 +130,7 @@ CPlanWnd::CPlanWnd(RECT& Rect, CWnd* pWnd) :
 
 
 	//::SetRect(&Rect1, m_w - 2 - intRound(0.5*w), m_h - 2 - intRound(2.4*h), m_w - 2 - intRound(0.5*w) + s, m_h - 2 - intRound(1.4*h));
-	::SetRect(&Rect1, m_w - intRound(0.5 * w), m_l - 2 - intRound(2.0 * h), m_w - intRound(0.5 * w) + s, m_l - 10);
+	::SetRect(&Rect1, m_w - intRound(0.5*w), m_l - 2 - intRound(2.0*h), m_w - intRound(0.5*w) + s, m_l - 10);
 	m_NextButton.Create(_T(""), _T(""), 0, Rect1, this, IDC_NEXT);
 	m_NextButton.SetImage(W >= 1920 ? IDR_RIGHT_ARROW_3 : W >= 1600 ? IDR_RIGHT_ARROW_2 : IDR_RIGHT_ARROW_1);
 	m_NextButton.SetBk(FALSE);
@@ -140,7 +140,7 @@ CPlanWnd::CPlanWnd(RECT& Rect, CWnd* pWnd) :
 	m_Rgn.CombineRgn(&m_Rgn, &Rgn, RGN_DIFF);
 
 	//Recalculate Lens placement Combox
-	::SetRect(&Rect1, m_w - intRound(1.4 * w), 3, m_w - intRound(1.4 * w) + 13, 16);
+	::SetRect(&Rect1, m_w - intRound(1.4*w), 3, m_w - intRound(1.4*w) + 13, 16);
 	m_RecalLenButton.Create(_T(""), WS_CHILD | BS_CHECKBOX, Rect1, this, IDC_REC_LENS_ITEM);//Recalculate Lens placement
 	m_MemDC.FillSolidRect(&Rect1, BLACK);
 	m_RecalLenButton.ShowWindow(SW_HIDE);
@@ -149,7 +149,7 @@ CPlanWnd::CPlanWnd(RECT& Rect, CWnd* pWnd) :
 	Rgn.SetRectRgn(&Rect1);
 	m_Rgn.CombineRgn(&m_Rgn, &Rgn, RGN_DIFF);
 
-	::SetRect(&Rect1, m_w - intRound(1.4 * w), 20, m_w - intRound(1.4 * w) + 13, 33);
+	::SetRect(&Rect1, m_w - intRound(1.4*w), 20, m_w - intRound(1.4*w) + 13, 33);
 	m_ReScale.Create(_T(""), WS_CHILD | BS_CHECKBOX, Rect1, this, IDC_RE_SCALE_ITEM);
 	m_MemDC.FillSolidRect(&Rect1, BLACK);
 	m_ReScale.ShowWindow(SW_SHOW);
@@ -228,7 +228,7 @@ void CPlanWnd::RepaintMemDC()
 		}
 		else
 		{
-			if (m_pCTExam->m_OpData.m_RefAxis[0] < 0)
+			if (m_pCTExam->m_OpData.m_RefAxis[0]< 0)
 			{
 				if (!m_ZaldivarButton.IsWindowVisible())
 				{
@@ -595,7 +595,7 @@ void CPlanWnd::CorneaPostopAxes()
 	}
 
 	//darw a arrow line point to the degree text[cjf***04202012]
-	for (int i = 0; i < 14; i++)
+	for (int i = 0; i<14; i++)
 	{
 		int re = i % 2;
 		if (re == 0)
@@ -639,7 +639,7 @@ void CPlanWnd::Incision()
 
 		m_RecalLenButton.ShowWindow(SW_SHOW);
 
-		::SetRect(&Rect, m_w - intRound(1.3 * w), 0, m_w, FontSize);
+		::SetRect(&Rect, m_w - intRound(1.3*w), 0, m_w, FontSize);
 		CString s("Recalculate Lens Placement");
 		m_MemDC.WriteText(s, Rect, Font, white, 1);
 	}
@@ -705,7 +705,7 @@ void CPlanWnd::Incision()
 	m_MemDC.DrawArc(x, y, r, w, a1, a2, m_IncisionColor);
 
 	//darw a arrow line point to the degree text[cjf***04202012]
-	for (int i = 0; i < 25; i++)
+	for (int i = 0; i<25; i++)
 	{
 		int re = i % 2;
 		if (re == 0)
@@ -821,7 +821,7 @@ void CPlanWnd::EyePostopAxes()
 	}
 
 	//darw a arrow line point to the degree text[cjf***04202012]
-	for (int i = 0; i < 25; i++)
+	for (int i = 0; i<25; i++)
 	{
 		int re = i % 2;
 		if (re == 0)
@@ -1116,7 +1116,7 @@ void CPlanWnd::Lens2()
 		int amax = std::max(a[0][i], a[1][i]);
 		int a0 = (amin + amax) / 2;
 
-		if (amax - amin > 180) {
+		if (amax - amin > 180) { 
 			a0 = (a0 + 180) % 360;
 		}
 
@@ -1179,7 +1179,7 @@ void CPlanWnd::Protractor()
 		/*int x2 = intRound(m_cx + 6400.0 * COS[aw[i]] * x_px_um);
 		int y2 = intRound(m_cy - 6400.0 * SIN[aw[i]] * y_px_um);*/
 
-		int x2 = intRound(m_cx + m_pCTExam->m_OpData.m_RefLength[i + 1] * COS[aw[i]] * x_px_um);//6.2.0
+		int x2 = intRound(m_cx + m_pCTExam->m_OpData.m_RefLength[i+1]* COS[aw[i]] * x_px_um);//6.2.0
 		int y2 = intRound(m_cy - m_pCTExam->m_OpData.m_RefLength[i + 1] * SIN[aw[i]] * y_px_um);//6.2.0
 
 		m_MemDC.DrawLine(x1, y1, x2, y2, w, CYAN);
@@ -1279,7 +1279,7 @@ void CPlanWnd::Protractor()
 		int amax = std::max(a01, a02);
 		a03 = (amin + amax) / 2;
 
-		if (amax - amin > 180) {
+		if (amax - amin > 180) { 
 			a03 = (a03 + 180) % 360;
 		}
 		x = intRound(m_cx + (r + 15) * COS[a03]);
@@ -1344,7 +1344,7 @@ void CPlanWnd::Protractor()
 			int amax = std::max(a01, a02);
 			a03 = (amin + amax) / 2;
 
-			if (amax - amin > 180) {
+			if (amax - amin > 180) { 
 				a03 = (a03 + 180) % 360;
 			}
 			if (a03 < 0) a03 += 360;
@@ -1361,7 +1361,7 @@ void CPlanWnd::Protractor()
 
 //***************************************************************************************
 
-void CPlanWnd::GetProAngs(int inputV, int& a0, int& a1, int& a2)
+void CPlanWnd::GetProAngs(int inputV, int &a0, int &a1, int &a2)
 {
 	CString inputS;
 	inputS.Format(_T("%i"), inputV);
@@ -1977,9 +1977,9 @@ BOOL CPlanWnd::OverLapFun(int a0, int a1, int b0, int b1)
 	int rangMin = 0;
 	int rangMax = 0;
 
-	b1 = ((b1 - a0) < 0 ? 360 + (b1 - a0) : (b1 - a0));
-	b0 = ((b0 - a0) < 0 ? 360 + (b0 - a0) : (b0 - a0));
-	a1 = ((a1 - a0) < 0 ? 360 + (a1 - a0) : (a1 - a0));
+	b1 = ((b1 - a0)<0 ? 360 + (b1 - a0) : (b1 - a0));
+	b0 = ((b0 - a0)<0 ? 360 + (b0 - a0) : (b0 - a0));
+	a1 = ((a1 - a0)<0 ? 360 + (a1 - a0) : (a1 - a0));
 
 
 	if (b0 > 180) {
@@ -2191,7 +2191,7 @@ void CPlanWnd::FindClearLimbus(CEyeImage* OriImage, real_t LastLimbuX, real_t La
 
 	if (TestImage->m_RGBData.GetMem() == NULL) return;
 
-	int num = w * h;
+	int num = w*h;
 	int AveG = 0;
 
 	for (int i = 0; i < w; i++)
@@ -2201,7 +2201,7 @@ void CPlanWnd::FindClearLimbus(CEyeImage* OriImage, real_t LastLimbuX, real_t La
 			int R0 = TestImage->GetRAt(i, j);
 			int G0 = TestImage->GetGAt(i, j);
 			int B0 = TestImage->GetBAt(i, j);
-			int Gray0 = intRound(0.3 * R0 + 0.59 * G0 + 0.11 * B0);
+			int Gray0 = intRound(0.3*R0 + 0.59*G0 + 0.11*B0);
 			AveG += Gray0;
 		}
 	}
@@ -2215,7 +2215,7 @@ void CPlanWnd::FindClearLimbus(CEyeImage* OriImage, real_t LastLimbuX, real_t La
 			int R0 = TestImage->GetRAt(i, j);
 			int G0 = TestImage->GetGAt(i, j);
 			int B0 = TestImage->GetBAt(i, j);
-			int Gray0 = intRound(0.3 * R0 + 0.59 * G0 + 0.11 * B0);
+			int Gray0 = intRound(0.3*R0 + 0.59*G0 + 0.11*B0);
 
 			int NewGray = AveG + 2 * (Gray0 - AveG);
 
