@@ -923,6 +923,9 @@
     <None Include="Res\settings" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\dlls\TraceyDatabaseJet\TraceyDatabaseJet.vcxproj">
+      <Project>{d222a1af-25d3-4a2b-8395-f6af9cde505d}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\dlls\TraceyDicom\TraceyDicom.vcxproj">
       <Project>{e2934127-b412-408f-8e28-6a80def48956}</Project>
     </ProjectReference>

@@ -8,7 +8,6 @@
 #define IDC_STATUS                      1002
 #define IDC_PROGRESS1                   1003
 #define IDC_PROGRESS                    1003
-#define IDC_PASSWORD_EDIT               7070
 #define IDC_PASSWORD                    7070
 
 // Next default values for new objects
