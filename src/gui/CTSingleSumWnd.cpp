@@ -26,8 +26,8 @@ BEGIN_MESSAGE_MAP(CCTSingleSumWnd, CSumWnd)
 END_MESSAGE_MAP()
 //***************************************************************************************
 
-CCTSingleSumWnd::CCTSingleSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CCTExam* pCTExam, CWndSettings* pWndSettings, int i) :
-	CSumWnd(pWnd, WndRect, pPatient, pWndSettings)
+CCTSingleSumWnd::CCTSingleSumWnd(CWnd *pWnd, RECT &WndRect, CPatient *pPatient, CCTExam *pCTExam, CWndSettings *pWndSettings, int i, int show)
+  : CSumWnd(pWnd, WndRect, pPatient, pWndSettings)
 {
 	CBusyCursor Cursor;
 
@@ -69,7 +69,7 @@ CCTSingleSumWnd::CCTSingleSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, 
 
 	Repaint();
 
-	ShowWindow(SW_SHOW);
+	ShowWindow(show);
 }
 
 //***************************************************************************************
@@ -137,7 +137,7 @@ void CCTSingleSumWnd::CreateChildWnd()//[520], add 'int Type'
 		pWndSettings->m_Method3D = FALSE;
 	}
 
-	// if (!::Licensing.IsWorkstation() && !::Licensing.IsViewer() && !::Licensing.IsCombo() && !::Licensing.IsPresbia() && !::Licensing.IsDemo()) 
+	// if (!::Licensing.IsWorkstation() && !::Licensing.IsViewer() && !::Licensing.IsCombo() && !::Licensing.IsPresbia() && !::Licensing.IsDemo())
 	// {
 	//// method
 	//if (m_i == 2) { // 3D Z-Elev
@@ -289,7 +289,7 @@ void CCTSingleSumWnd::CreateChildWnd()//[520], add 'int Type'
 		pEyeWnd->m_MapShowSolidSurface = pWndSettings->m_MapShowSolidSurface;
 		pEyeWnd->m_MapShowWireMesh = pWndSettings->m_MapShowWireMesh;
 		pEyeWnd->m_MapTranslucent = pWndSettings->m_MapTranslucent;
-		pEyeWnd->m_Unit = "�";
+			pEyeWnd->m_Unit = "µ";
 		pEyeWnd->m_Inc = pWndSettings->GetIncrement();
 		CScale* pScale = pWndSettings->GetScale();
 		pEyeWnd->m_NumColors = pScale->m_NumColors;
@@ -326,7 +326,7 @@ void CCTSingleSumWnd::CreateChildWnd()//[520], add 'int Type'
 		pEyeWnd->m_MapShowSolidSurface = pWndSettings->m_MapShowSolidSurface;
 		pEyeWnd->m_MapShowWireMesh = pWndSettings->m_MapShowWireMesh;
 		pEyeWnd->m_MapTranslucent = pWndSettings->m_MapTranslucent;
-		pEyeWnd->m_Unit = "�";
+	  pEyeWnd->m_Unit = "µ";
 		pEyeWnd->m_Inc = pWndSettings->GetIncrement();
 		CScale* pScale = pWndSettings->GetScale();
 		pEyeWnd->m_NumColors = pScale->m_NumColors;
@@ -409,7 +409,7 @@ void CCTSingleSumWnd::CreateChildWnd()//[520], add 'int Type'
 		pLtrWnd->m_LTLabel[0] = "Letter";
 		pWndSettings->m_Mask.GetName(pLtrWnd->m_LTLabel[1]);
 		pLtrWnd->m_LTLabel[2].Format(_T("%.2f mm"), r_max_um * 0.002);
-		pLtrWnd->CreateSoloMaskButtons(pWndSettings->m_Mask.GetType(), 1);//531		  
+		pLtrWnd->CreateSoloMaskButtons(pWndSettings->m_Mask.GetType(), 1);//531
 		pLtrWnd->CreateZoneButtons();
 
 		m_pDispWnd[m_d] = pLtrWnd;
@@ -480,7 +480,7 @@ void CCTSingleSumWnd::CreateChildWnd()//[520], add 'int Type'
 		if (Max < 1) Max = 1;
 		pRMSWnd->m_Max = Max;*/
 
-		//531 RMS Set scale to 1		
+		//531 RMS Set scale to 1
 		CRMSWnd* pRMSWnd = (CRMSWnd*)m_pDispWnd[m_d];
 		pRMSWnd->m_Max = 1;
 
@@ -489,7 +489,7 @@ void CCTSingleSumWnd::CreateChildWnd()//[520], add 'int Type'
 		//531 Done
 	}
 
-	//521 
+	//521
 	if (pWndSettings->m_Type == TYPE_CWFM || pWndSettings->m_Type == TYPE_CRMS)
 	{
 		m_pDispWnd[m_d]->m_IncZoneButton.SetEnabled(TRUE);
@@ -720,7 +720,7 @@ void CCTSingleSumWnd::OnShowDefaultItemClicked()
 		pWndSettings->m_MapShowPupil = 0;
 		pWndSettings->m_MapShowLimbus = 0;
 		pWndSettings->m_MapShowCornealVertex = 0;
-		pWndSettings->m_MapTranslucent = 0;	
+		pWndSettings->m_MapTranslucent = 0;
 
 		CScale* pScale = pWndSettings->GetScale();
 		pScale->m_Step = 0.5;
@@ -746,7 +746,7 @@ void CCTSingleSumWnd::OnShowDefaultItemClicked()
 		//{
 		//	OneOsherAlignmentClicked();
 		//}
-		//else 
+		//else
 		{
 			for (int i = 0; i < 4; i++) SAFE_DELETE(m_pDispWnd[i]);
 			m_pWndSettings[m_d].m_Type = 34;
@@ -1009,7 +1009,7 @@ LRESULT CCTSingleSumWnd::OnOkulix(WPARAM wParam, LPARAM lParam)
 				if (i < 29) Line1 += Radial_Dis + " ";
 				else       Line1 += Radial_Dis;
 
-				//Line2 
+				//Line2
 				real_t a_rd = _2_Pi * a / 360;
 
 				if (i < pImage->m_NumRings)
@@ -1029,19 +1029,19 @@ LRESULT CCTSingleSumWnd::OnOkulix(WPARAM wParam, LPARAM lParam)
 				else       Line2 += Tangential;
 			}
 			fprintf(pFile, "%s\n", Line1);
-			fprintf(pFile, "%s\n", Line2); //test for Line2	    	
+			fprintf(pFile, "%s\n", Line2); //test for Line2
 										   //Get Line1
 
-										   //Get Line3 / reserved for Okulix	
+										   //Get Line3 / reserved for Okulix
 			fprintf(pFile, "%s\n", ZeroLine); //Line3
 											  //Line3
 
-											  //Get Line4 	
+											  //Get Line4
 			fprintf(pFile, "%s\n", ZeroLine); //Line4
 											  //Line4
 
-											  //Get Line5 	
-			fprintf(pFile, "%s\n", ZeroLine); //Line5			
+											  //Get Line5
+			fprintf(pFile, "%s\n", ZeroLine); //Line5
 											  //Line5
 		}
 	}
@@ -1050,7 +1050,7 @@ LRESULT CCTSingleSumWnd::OnOkulix(WPARAM wParam, LPARAM lParam)
 	//Done
 
 
-	//3. Invoke Okulix 
+	//3. Invoke Okulix
 	char buf[256];
 	GetCurrentDirectory(256, LPWSTR(buf));
 	SetCurrentDirectory(LPWSTR("C:\\Tracey\\OKULIX"));
@@ -1061,11 +1061,11 @@ LRESULT CCTSingleSumWnd::OnOkulix(WPARAM wParam, LPARAM lParam)
 	//if(hDllInst)
 	//{
 	//	 ::Info("hERE");
-	//	 typedef void (WINAPI *TDLLaugtom)(short, short, short, float); 
+	//	 typedef void (WINAPI *TDLLaugtom)(short, short, short, float);
 
-	//	 TDLLaugtom   fun   =   NULL;   
-	//	 fun = (TDLLaugtom)GetProcAddress(hDllInst,"augtom"); 
-	//  
+	//	 TDLLaugtom   fun   =   NULL;
+	//	 fun = (TDLLaugtom)GetProcAddress(hDllInst,"augtom");
+	//
 	//	 if(fun)
 	//	 {
 	//	   short isp;      // language, 1 for German, 2 for English
@@ -1079,7 +1079,7 @@ LRESULT CCTSingleSumWnd::OnOkulix(WPARAM wParam, LPARAM lParam)
 	//		fun(isp, ixa, iya, fag);
 	//	 }
 	//}
-	//FreeLibrary(hDllInst);  
+	//FreeLibrary(hDllInst);
 
 	//Done
 	return S_OK;

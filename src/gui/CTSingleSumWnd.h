@@ -12,7 +12,7 @@ class CCTSingleSumWnd : public CSumWnd
 {
 public:
 
-	CCTSingleSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CCTExam* pCTExam, CWndSettings* pWndSettings, int i);
+	CCTSingleSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CCTExam* pCTExam, CWndSettings* pWndSettings, int i, int show = SW_SHOW);
 
 private:
 
