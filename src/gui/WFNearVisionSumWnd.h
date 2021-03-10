@@ -18,10 +18,12 @@ Description:   Generate a new WF Display which shows the Near and Far vision com
 class CWFNearVisionSumWnd : public CSumWnd
 {
 public:
-
+	
 	void  PaintSlider();//6.2.1 20181218
 
 	CWFNearVisionSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFExam* pWFExamFar, CWFExam* pWFExamNear, int ExamAmount, int ExamOrder, int show = SW_SHOW);
+
+	~CWFNearVisionSumWnd();//6.3.0 for fix leak memory pWFExamFar and pWFExamNear
 
 private:
 
