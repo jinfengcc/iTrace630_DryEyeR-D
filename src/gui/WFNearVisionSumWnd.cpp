@@ -189,7 +189,7 @@ CWFNearVisionSumWnd::CWFNearVisionSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pP
 //***************************************************************************************
 
 // 6.3.0 for fix leak memory pWFExamFar and pWFExamNear
-~CWFNearVisionSumWnd()
+CWFNearVisionSumWnd::~CWFNearVisionSumWnd()
 {
   delete m_pWFExamFar;
   delete m_pWFExamNear;
