@@ -54,6 +54,9 @@ void AppClassFactory::CreateDataList()
 
 auto AppClassFactory::CreateData(fs::path &&p) -> Data
 {
+  if (p.filename().string() == "thw.dll")
+    return {};
+
   if (auto module = LoadLibraryA(p.string().c_str())) {
     using FUNC = IClassFactory *(*)();
     if (auto f = reinterpret_cast<FUNC>(GetProcAddress(module, "CreateClassFactory")))
@@ -86,6 +89,24 @@ auto AppClassFactory::GetDllList() -> DataList
 {
   DataList pv;
 
+  // clang-format off
+  static const std::array excludeList = {
+    "opencv_core.dll",
+    "opencv_imgproc.dll",
+    "rzdcx.dll",
+    "sqlite3.dll",
+    "tdbmsjet62.dll",
+    "thw.dll",
+    "ueye_api.dll",
+    "zlib1.dll",
+  };
+  // clang-format on
+
+  auto exclude = [&](std::string_view s) {
+    auto i = std::ranges::find_if(excludeList, [&](const auto *x) { return _stricmp(s.data(), x) == 0; });
+    return i != excludeList.end();
+  };
+
   auto append = [&](fs::path p) {
     if (auto d = CreateData(std::move(p)); d.factory != nullptr)
       pv.push_back(std::move(d));
@@ -97,9 +118,13 @@ auto AppClassFactory::GetDllList() -> DataList
   if (auto js = JsonSettings().Get("dll"); js.is_null()) {
     for (fs::directory_iterator b(folder), e; b != e; ++b) {
       fs::path p = *b;
-      if (_stricmp(p.extension().string().c_str(), ".dll") == 0) {
-        append(std::move(p));
-      }
+      if (_stricmp(p.extension().string().c_str(), ".dll") != 0)
+        continue;
+
+      if (exclude(p.filename().string()))
+        continue;
+
+      append(std::move(p));
     }
   }
   else {

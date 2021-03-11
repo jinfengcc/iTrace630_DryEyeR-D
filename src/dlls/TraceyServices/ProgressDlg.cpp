@@ -11,9 +11,12 @@ CProgressDlg::CProgressDlg(HWND hParent, const Options &options)
     m_parent = hParent;
   }
   GetDlgItem(IDCANCEL).ShowWindow(options.showCancel ? SW_SHOW : SW_HIDE);
-  GetDlgItem(IDC_PROGRESS).ShowWindow(options.showProgress ? SW_SHOW : SW_HIDE);
+
   SetTitle(options.title);
   SetStatus(options.status);
+
+  m_Progress.ShowWindow(options.progType == IProgress::ProgType::off ? SW_HIDE : SW_SHOW);
+  m_Progress.SetMarquee(options.progType == IProgress::ProgType::marquee ? TRUE : FALSE);
 
   CenterWindow(hParent);
   ShowWindow(SW_SHOW);

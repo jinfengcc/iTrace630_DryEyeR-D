@@ -32,7 +32,7 @@ bool BatchExport::Export()
   try {
     auto progress = CreateObj<IProgress>();
 
-    progress->Initialize(AfxGetMainWnd()->GetSafeHwnd(), {.showCancel = true, .showProgress = true});
+    progress->Initialize(AfxGetMainWnd()->GetSafeHwnd(), {.showCancel = true, .progType = IProgress::ProgType::marquee});
 
     for (auto &e : m_exams) {
       nExams += (e.wfe == nullptr ? 0 : 1);
@@ -45,7 +45,7 @@ bool BatchExport::Export()
     auto settings = Settings();
 
     auto types = settings.BatchEnabled();
-    progress->SetProgressRange(0, m_exams.size() * types.size());
+    //progress->SetProgressRange(0, m_exams.size() * types.size());
 
     int n = 0;
     if (settings.BatchEnabled(ViewType::WFCT_OUOverview)) {
@@ -60,7 +60,7 @@ bool BatchExport::Export()
 
       for (auto vt : types) {
         SetStatus(progress, L"Exporting {}...", BatchSettings::BatchLabel(vt, false));
-        progress->SetProgress(++n);
+        //progress->SetProgress(++n);
 
         auto headers = MakeVector(e.wfe, e.cte);
         OnExport(vs, vt, patient, {headers});

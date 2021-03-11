@@ -19,49 +19,43 @@ class CWFNearVisionSumWnd : public CSumWnd
 {
 public:
 
-	void  PaintSlider();//6.2.1 20181218
-
-	CWFNearVisionSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFExam* pWFExamFar, CWFExam* pWFExamNear, int ExamAmount, int ExamOrder, int show = SW_SHOW);
+  CWFNearVisionSumWnd(CWnd *pWnd, RECT &WndRect, CPatient *pPatient, CWFExam *pWFExamFar, CWFExam *pWFExamNear, int ExamAmount, int ExamOrder,
+                      int show = SW_SHOW);
 
 private:
+  void PaintSlider(); // 6.2.1 20181218
 
+  virtual CString GetName() override
+  {
+    return "Simulated Near Vision Display";
+  }
 
-	virtual CString GetName() override
-	{
-		return "Simulated Near Vision Display";
-	}
+  virtual CWndSettings *GetWndSettings() override
+  {
+    return &m_ThisWndSetting;
+  }
 
-	virtual CWndSettings* GetWndSettings() override { return &m_ThisWndSetting; }
-	
-	RECT     m_OutlineRect[2];
+  RECT                            m_OutlineRect[2];
+  int                             m_ExamAmount;
+  int                             m_ExamOrder;
+  real_t                          m_OriMc4; // Original mc[4]
+  real_t                          m_ShiftVal;
+  CWFExam *                       m_pWFExamFar;
+  CWFExam *                       m_pWFExamNear;
+  CBtn                            m_CompareBtn;
+  std::unique_ptr<CHorSliderCtrl> m_Slider;
 
-	int      m_ExamAmount;
+  virtual void PaintControls() override; // 6.2.1
 
-	int      m_ExamOrder;
+  virtual void RepaintMemDC() override;
+  virtual void CreateChildWnd() override;
 
-	real_t     m_OriMc4;//Original mc[4]
+  afx_msg void OnComBtnClicked();
 
-	real_t     m_ShiftVal;
+  afx_msg LRESULT OnSliderClick(WPARAM wParam, LPARAM lParam);
+  afx_msg LRESULT OnSliderChangedPos(WPARAM wParam, LPARAM lParam);
 
-	CWFExam *m_pWFExamFar;
-
-	CWFExam *m_pWFExamNear;
-
-	CBtn     m_CompareBtn;
-
-	CHorSliderCtrl * m_Slider;
-
-	virtual void PaintControls() override;//6.2.1
-
-	virtual void RepaintMemDC() override;
-	virtual void CreateChildWnd() override;
-
-	afx_msg void OnComBtnClicked();
-
-	afx_msg LRESULT OnSliderClick(WPARAM wParam, LPARAM lParam);
-	afx_msg LRESULT OnSliderChangedPos(WPARAM wParam, LPARAM lParam);
-
-	DECLARE_MESSAGE_MAP()
+  DECLARE_MESSAGE_MAP()
 };
 
 //***************************************************************************************

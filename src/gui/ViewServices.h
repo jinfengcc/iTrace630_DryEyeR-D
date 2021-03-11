@@ -17,7 +17,7 @@ public:
   using ViewPtr = std::unique_ptr<CMemWnd>;
 
   cv::Mat  Save(ViewType type) const;
-  ViewPtr  CreateView(ViewType type, const RECT *rc = nullptr) const;
+  ViewPtr  CreateView(ViewType type, const RECT *rc = nullptr, int show = SW_HIDE) const;
 
 private:
   CPatient *m_patient{};

@@ -115,14 +115,12 @@ CWFNearVisionSumWnd::CWFNearVisionSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pP
 	SliderPars.OutlineHighlight[2] = 1;
 	SliderPars.OutlineHighlight[3] = 1;
 
-	m_Slider = new CHorSliderCtrl();
-
-	m_Slider->Create(_T(""), _T(""), WS_CHILD | WS_VISIBLE, m_Rect[5], this, IDC_WFNEARVISION_SLIDER);
-
-	m_Slider->m_Printing = m_Printing;
-
-	m_Slider->SetParameters(SliderPars);
-
+  if (show == SW_SHOW) {
+    m_Slider = std::make_unique<CHorSliderCtrl>();
+    m_Slider->Create(_T(""), _T(""), WS_CHILD | WS_VISIBLE, m_Rect[5], this, IDC_WFNEARVISION_SLIDER);
+    m_Slider->m_Printing = m_Printing;
+    m_Slider->SetParameters(SliderPars);
+  }
 
 	//----------------------------------------------------
 

@@ -39,7 +39,11 @@ public:
 	CPatient* m_pPatient;
 	CWndSettings* m_pWndSettings;
 	CWndSettings m_ThisWndSetting;// WFCTTorAliWnd and WF NEAR Vision
-	CDispWnd* m_pDispWnd[6];
+protected:
+  // std::vector<std::unique_ptr<CDispWnd>> m_pDispWnd;
+  CDispWnd *m_pDispWnd[NUM_CHILDWND_MAX];
+
+public:
 	CZernikeSurface m_Surfaces[6];
 	CZernikeSurface m_DysSuface[3];// surfaces for correct dysfunctional function;
 	CZernikeSurface m_ReMTF_Surfaces;// surface for correct dysfunctional function;
@@ -57,7 +61,7 @@ public:
 	CBtn m_WFShowFullInfoButton3;//530
 	CBtn m_CTShowFullInfoButton;//530
 	CBtn m_CTShowFullInfoButton2;//530
-	
+
 	virtual CWndSettings* GetWndSettings() { return NULL; }
 	virtual void CreateChildWnd() {}
 
@@ -105,11 +109,11 @@ public:
 	void CTExamLargeInfo(CCTExam* pExam, RECT Rect, int NumRows, BOOL* Rows);
 	void ChangCTExamInfo(CCTExam* pExam, RECT Rect);// To show simplied ct info for Chang Analysis
 	void OUWFExamInfo(CWFExam* pExam, RECT Rect);// For show the WF info of OU overview Window
-	void OUCTExamInfo(CCTExam* pExam, RECT Rect);// For show the CT info of OU overview Window  
+	void OUCTExamInfo(CCTExam* pExam, RECT Rect);// For show the CT info of OU overview Window
 	void VisualComplaints(CWFExam* pExam, RECT Rect, int NumRows);
 	void SoloVisualComplaints(CWFExam* pExam, RECT Rect, int NumRows, BOOL HighLight);//521
 
-	void VisualCTComplaints(CWFExam* pExam, RECT Rect, int NumRows);//show the complain 
+	void VisualCTComplaints(CWFExam* pExam, RECT Rect, int NumRows);//show the complain
 
 	int  GetFontSize(int w, CString inputStr, int OriFontSize);//Get the biggest fontsize of a string in a specified Rect
 
@@ -128,7 +132,7 @@ public:
 	afx_msg void OnTypeTPsfItemClicked() { OnType(TYPE_TPSF); }
 	afx_msg void OnTypeTEefItemClicked() { OnType(TYPE_TEEF); }
 	afx_msg void OnTypeTLtrItemClicked() { OnType(TYPE_TLTR); }
-	
+
 
 	afx_msg void OnTypeTMtfItemClicked() { OnType(TYPE_TMTF); }
 	afx_msg void OnTypeTRmsItemClicked() { OnType(TYPE_TRMS); }

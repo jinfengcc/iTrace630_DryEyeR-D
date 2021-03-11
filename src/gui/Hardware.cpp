@@ -190,12 +190,10 @@ CHW::~CHW()
 
 //***************************************************************************************
 
-
+__declspec(no_sanitize_address)
 void CHW::LoadDLL()
 {
-#ifdef _DEBUG
-	m_hDLL = ::LoadLibrary(_T("C:\\Tracey\\thw.dll"));
-#else
+#ifndef __SANITIZE_ADDRESS__
 	m_hDLL = ::LoadLibrary(_T("thw.dll"));
 #endif
 

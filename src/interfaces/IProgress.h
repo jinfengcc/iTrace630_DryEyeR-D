@@ -4,11 +4,18 @@
 
 TRACEYOBJ("7e1772da-3719-46e9-8b35-30abd11deb47") IProgress : public IUnknown
 {
+  enum class ProgType
+  {
+    off,
+    marquee,
+    normal
+  };
+
   struct Options
   {
     const char *title;
     bool        showCancel;
-    bool        showProgress;
+    ProgType    progType;
     const char *status;
   };
 

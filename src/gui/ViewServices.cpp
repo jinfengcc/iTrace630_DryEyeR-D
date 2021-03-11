@@ -75,39 +75,72 @@ cv::Mat ViewServices::SaveImpl(CMemWnd *w)
   return img;
 }
 
-auto ViewServices::CreateView(ViewType type, const RECT *rc) const -> ViewPtr
+auto ViewServices::CreateView(ViewType type, const RECT *rc1, int show) const -> ViewPtr
 {
   extern CRect GetSummaryRect();
 
-  CRect rct = rc ? CRect(*rc) : GetSummaryRect();
+  CRect rct = rc1 ? CRect(*rc1) : GetSummaryRect();
+
+  enum WF
+  {
+    WF_VisualAcuity = 0,
+    WF_RMS          = 1,
+    WF_DepthOfFocus = 3,
+  };
+
+  enum CT
+  {
+    CT_SUMMARY       = 0,
+    CT_KERATOMETRY   = 1,
+    CT_3D_ZELEVATION = 2,
+    CT_OSHER_IRIS    = 3,
+    CT_CUSTOM        = 4,
+  };
+
+  enum WFCT
+  {
+    WFCT_Change  = 0,
+    WFCT_Summary = 1,
+    WFCT_MTF     = 2,
+  };
 
   ViewPtr vp;
   switch (type) {
   case ViewType::WF_Point:
-    vp = CreateImpl<CWFSingleVrfWnd>(rct, Settings.m_TSvrSettings[0]);
+    if (m_wfExam)
+      vp = std::make_unique<CWFSingleVrfWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, &Settings.m_TSvrSettings[0], show);
     break;
 
   case ViewType::WF_NearVision:
-    vp = CreateImpl<CWFNearVisionSumWnd>(rct, nullptr);
+    if (m_wfExam) {
+      // #todo fix this (it needs 2 copies of the wf exam)
+      m_duplicateWfExam = CDB::Instance()->LoadWFExam(m_wfExam->m_Header.m_ExamID);
+      m_duplicateWfExam->Process();
+      vp = std::make_unique<CWFNearVisionSumWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_duplicateWfExam.get(), 2, 0, show);
+    }
     break;
 
-  //case ViewType::WF_VisualAcuity:
-  //  vp = CreateImpl<CWFSingleSumWnd, WF_VISUALACUITY_GUI>(rct, Settings.m_TSsmSettings[0][0]);
-  //  break;
+  case ViewType::WF_VisualAcuity:
+    if (m_wfExam)
+      vp = std::make_unique<CWFSingleSumWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, &Settings.m_TSsmSettings[0][0], WF_VisualAcuity, show);
+    break;
 
-  //case ViewType::WF_DepthFocus:
-  //  vp = CreateImpl<CWFSingleSumWnd, WF_DEPFOCUS_GUI>(rct, NewSettings.m_TSsm5Settings[0]);
-  //  break;
+  case ViewType::WF_DepthFocus:
+    if (m_wfExam)
+      vp = std::make_unique<CWFSingleSumWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, &NewSettings.m_TSsm5Settings[0], WF_DepthOfFocus, show);
+    break;
 
-  //case ViewType::WF_RMS:
-  //  vp = CreateImpl<CWFSingleSumWnd, WF_WFRMS_GUI>(rct, Settings.m_TSsmSettings[1][0]);
-  //  break;
+  case ViewType::WF_RMS:
+    if (m_wfExam)
+      vp = std::make_unique<CWFSingleSumWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, &Settings.m_TSsmSettings[1][0], WF_RMS, show);
+    break;
 
   case ViewType::_MISSING5:
     break;
 
   case ViewType::WF_Aberation:
-    vp = CreateImpl<CWFSingleSoloWnd>(rct, Settings.m_TSsmSettings[1][0]);
+    if (m_wfExam)
+      vp = std::make_unique<CWFSingleSoloWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, &Settings.m_TSsmSettings[1][0], show);
     break;
 
   //case ViewType::WF_Custom:
@@ -115,23 +148,28 @@ auto ViewServices::CreateView(ViewType type, const RECT *rc) const -> ViewPtr
   //  break;
 
   case ViewType::CT_Rings:
-    vp = CreateImpl<CCTSingleVrfWnd>(rct, Settings.m_CSvrSettings);
+    if (m_ctExam)
+      vp = std::make_unique<CCTSingleVrfWnd>(AfxGetMainWnd(), rct, m_patient, m_ctExam, &Settings.m_CSvrSettings, show);
     break;
 
-  //case ViewType::CT_Summary:
-  //  vp = CreateImpl<CCTSingleSumWnd, CT_SUMMARY_GUI>(rct, Settings.m_CSsmSettings[0][0]);
-  //  break;
+  case ViewType::CT_Summary:
+    if (m_ctExam)
+      vp = std::make_unique<CCTSingleSumWnd>(AfxGetMainWnd(), rct, m_patient, m_ctExam, &Settings.m_CSsmSettings[0][0], CT_SUMMARY, show);
+    break;
 
-  //case ViewType::CT_Keratometry:
-  //  vp = CreateImpl<CCTSingleSumWnd, CT_KERATOMETRY_GUI>(rct, Settings.m_CSsmSettings[1][0]);
-  //  break;
+  case ViewType::CT_Keratometry:
+    if (m_ctExam)
+      vp = std::make_unique<CCTSingleSumWnd>(AfxGetMainWnd(), rct, m_patient, m_ctExam, &Settings.m_CSsmSettings[1][0], CT_KERATOMETRY, show);
+    break;
 
-  //case ViewType::CT_3DElevation:
-  //  vp = CreateImpl<CCTSingleSumWnd, CT_3DELEVATION_GUI>(rct, Settings.m_CSsmSettings[2][0]);
-  //  break;
+  case ViewType::CT_3DElevation:
+    if (m_ctExam)
+      vp = std::make_unique<CCTSingleSumWnd>(AfxGetMainWnd(), rct, m_patient, m_ctExam, &Settings.m_CSsmSettings[2][0], CT_3D_ZELEVATION, show);
+    break;
 
   case ViewType::CT_OsherIris:
-    vp = CreateImpl<CCTOsherAliWnd>(rct, Settings.m_CSsmSettings[2][0]);
+    if (m_ctExam)
+      vp = std::make_unique<CCTOsherAliWnd>(AfxGetMainWnd(), rct, m_ctExam, TRUE, show);
     break;
 
   //case ViewType::CT_Custom:
@@ -140,19 +178,22 @@ auto ViewServices::CreateView(ViewType type, const RECT *rc) const -> ViewPtr
 
   case ViewType::WFCT_Change:
     if (m_wfExam != nullptr && m_ctExam != nullptr)
-      vp = CreateImpl<CWFCTSumWnd, 0>(rct, Settings.m_IDsmSettings[0][0]);
+      return std::make_unique<CWFCTSumWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_ctExam, &Settings.m_IDsmSettings[0][0], WFCT_Change, "", show);
     break;
 
   case ViewType::WFCT_Summary:
-    vp = CreateImpl<CWFCTSumWnd, 1>(rct, Settings.m_IDsmSettings[1][0]);
+    if (m_wfExam != nullptr && m_ctExam != nullptr)
+      vp = std::make_unique<CWFCTSumWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_ctExam, &Settings.m_IDsmSettings[1][0], WFCT_Summary, "", show);
     break;
 
   case ViewType::WFCT_MTF:
-    vp = CreateImpl<CWFCTSumWnd, 2>(rct, Settings.m_IDsmSettings[2][0]);
+    if (m_wfExam != nullptr && m_ctExam != nullptr)
+      vp = std::make_unique<CWFCTSumWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_ctExam, &Settings.m_IDsmSettings[2][0], WFCT_MTF, "", show);
     break;
 
   case ViewType::WFCT_OUOverview:
-    vp = CreateImpl<CWFCTOUSumWnd>(rct, NewSettings.m_OWFCTSettings[0]);
+    if (m_wfExam && m_wfExam2 && m_ctExam && m_ctExam2)
+      vp = std::make_unique<CWFCTOUSumWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_wfExam, m_ctExam2, m_ctExam2, &NewSettings.m_OWFCTSettings[0], show);
     break;
 
   //case ViewType::WFCT_SumAna:
@@ -160,23 +201,28 @@ auto ViewServices::CreateView(ViewType type, const RECT *rc) const -> ViewPtr
   //  break;
 
   case ViewType::WFCT_Iol:
-    vp = CreateImpl<CWFCTIolWnd>(rct, NewSettings.m_IOLSelSettings[0]);
+    if (m_wfExam != nullptr && m_ctExam != nullptr)
+      vp = std::make_unique<CWFCTIolWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_ctExam, &NewSettings.m_IOLSelSettings[0], show);
     break;
 
   case ViewType::WFCT_AngleKA:
-    vp = CreateImpl<CWFCTAngleSumWnd, 2>(rct, Settings.m_TSsmSettings[2][0]);
+    if (m_wfExam != nullptr && m_ctExam != nullptr)
+      vp = std::make_unique<CWFCTAngleSumWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_ctExam, &Settings.m_TSsmSettings[2][0], 2, "", show);
     break;
 
   case ViewType::WFCT_DysfunMD:
-    vp = CreateImpl<CWFCTDysWnd, 6>(rct, NewSettings.m_DysfuncSettings[0]);
+    if (m_wfExam != nullptr && m_ctExam != nullptr)
+      return std::make_unique<CWFCTDysWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_ctExam, &NewSettings.m_DysfuncSettings[0], 6, show);
     break;
 
   case ViewType::WFCT_DysfunPT:
-    vp = CreateImpl<CWFCTDysPtWnd, 0>(rct, NewSettings.m_DysPtSettings[0]);
+    if (m_wfExam != nullptr && m_ctExam != nullptr)
+      return std::make_unique<CWFCTDysPtWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_ctExam, &NewSettings.m_DysPtSettings[0], 0, show);
     break;
 
   case ViewType::WFCT_AstigmSrc:
-    vp = CreateImpl<CWFCTSumWnd, 6>(rct, NewSettings.m_InAstigSettings[0]);
+    if (m_wfExam != nullptr && m_ctExam != nullptr)
+      vp = std::make_unique<CWFCTSumWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_ctExam, &NewSettings.m_InAstigSettings[0], 6, "", show);
     break;
 
   case ViewType::WFCT_ToricCheck:
@@ -184,7 +230,8 @@ auto ViewServices::CreateView(ViewType type, const RECT *rc) const -> ViewPtr
     break;
 
   case ViewType::WFCT_Custom:
-    vp = CreateImpl<CWFCTSumWnd, 3>(rct, Settings.m_IDsmSettings[3][0]);
+    if (m_wfExam != nullptr && m_ctExam != nullptr)
+      vp = std::make_unique<CWFCTSumWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_ctExam, &Settings.m_IDsmSettings[3][0], 3, "", show);
     break;
 
   case ViewType::_MISSING26:
@@ -203,94 +250,6 @@ auto ViewServices::CreateView(ViewType type, const RECT *rc) const -> ViewPtr
   }
 
   return vp;
-}
-
-template <class T, class... Ts>
-struct is_any : std::disjunction<std::is_same<T, Ts>...>
-{
-};
-
-template <class T, class... Ts>
-constexpr bool is_any_v = is_any<T, Ts...>::value;
-
-template <class T, int type>
-auto ViewServices::CreateImpl(RECT rc, CWndSettings *ws) const -> ViewPtr
-{
-  constexpr bool WFSUM    = std::is_same_v<T, CWFSingleSumWnd>;
-  constexpr bool WFOTHER  = is_any_v<T, CWFSingleVrfWnd, CWFSingleSoloWnd>;
-  constexpr bool CTSUM    = std::is_same_v<T, CCTSingleSumWnd>;
-  constexpr bool CTOTHER  = std::is_same_v<T, CCTSingleVrfWnd>;
-  constexpr bool WFCTSUM1 = std::is_same_v<T, CWFCTSumWnd> || std::is_same_v<T, CWFCTAngleSumWnd>;
-  constexpr bool WFCTSUM2 = std::is_same_v<T, CWFCTDysWnd> || std::is_same_v<T, CWFCTDysPtWnd>;
-
-  if constexpr (WFSUM || CTSUM)
-    static_assert(type != 0);
-  else if constexpr (WFCTSUM1 || WFCTSUM2)
-    static_assert(type >= 0);
-  else
-    static_assert(type == -1);
-
-  constexpr bool CT   = CTSUM || CTOTHER || std::is_same_v<T, CCTOsherAliWnd>;
-  constexpr bool WF   = WFSUM || WFOTHER || std::is_same_v<T, CWFNearVisionSumWnd>;
-  constexpr bool WFCT = WFCTSUM1 || WFCTSUM2 || is_any_v<T, CWFCTIolWnd>;
-
-  if constexpr (CT) {
-    if (m_ctExam == nullptr)
-      return {};
-  }
-  else if constexpr (WF) {
-    if (m_wfExam == nullptr)
-      return {};
-  }
-  else if constexpr (WFCT) {
-    if (m_wfExam == nullptr || m_ctExam == nullptr)
-      return {};
-  }
-
-  if constexpr (std::is_same_v<T, CWFCTOUSumWnd>) {
-    if (m_wfExam == nullptr || m_wfExam2 == nullptr)
-      return {};
-    if (m_ctExam == nullptr || m_ctExam2 == nullptr)
-      return {};
-
-    return std::make_unique<T>(AfxGetMainWnd(), rc, m_patient, m_wfExam, m_wfExam, m_ctExam2, m_ctExam2, ws, SW_HIDE);
-  }
-
-  if constexpr (WFSUM)
-    return std::make_unique<T>(AfxGetMainWnd(), rc, m_patient, m_wfExam, ws, type, "", SW_HIDE);
-
-  if constexpr (WFOTHER)
-    return std::make_unique<T>(AfxGetMainWnd(), rc, m_patient, m_wfExam, ws, SW_HIDE);
-
-  if constexpr (CTSUM)
-    return std::make_unique<T>(AfxGetMainWnd(), rc, m_patient, m_ctExam, ws, 2, type, "", SW_HIDE);
-
-  if constexpr (CTOTHER)
-    return std::make_unique<T>(AfxGetMainWnd(), rc, m_patient, m_ctExam, ws, SW_HIDE);
-
-  if constexpr (std::is_same_v<T, CCTOsherAliWnd>)
-    return std::make_unique<T>(AfxGetMainWnd(), rc, m_ctExam, TRUE, SW_HIDE, FALSE);
-
-  if constexpr (std::is_same_v<T, CWFNearVisionSumWnd>) {
-    // #todo fix this (it needs 2 copies of the wf exam)
-    m_duplicateWfExam = CDB::Instance()->LoadWFExam(m_wfExam->m_Header.m_ExamID);
-    return std::make_unique<T>(AfxGetMainWnd(), rc, m_patient, m_wfExam, m_duplicateWfExam.get(), 1, 0, SW_HIDE);
-  }
-
-  if constexpr (WFCTSUM1)
-    return std::make_unique<T>(AfxGetMainWnd(), rc, m_patient, m_wfExam, m_ctExam, ws, type, "", SW_HIDE);
-
-  if constexpr (WFCTSUM2)
-    return std::make_unique<T>(AfxGetMainWnd(), rc, m_patient, m_wfExam, m_ctExam, ws, type, SW_HIDE);
-
-  if constexpr (std::is_same_v<T, CWFCTIolWnd>)
-    return std::make_unique<T>(AfxGetMainWnd(), rc, m_patient, m_wfExam, m_ctExam, ws, SW_HIDE);
-
-  //if constexpr (std::is_same_v<T, CWFCTCorSphWnd>)
-  //  return std::make_unique<T>(AfxGetMainWnd(), rc, m_patient, m_wfExam, m_ctExam, "", SW_HIDE);
-
-  //if constexpr (std::is_same_v<T, CWFCTAcqSumWnd>)
-  //  return std::make_unique<T>(AfxGetMainWnd(), rc, m_patient, m_wfExam, m_ctExam, ws, SW_HIDE, FALSE, 0, 0, FALSE, FALSE, 0);
 }
 
 auto ViewServices::CreateWFCTToricCheck(RECT rc) const -> ViewPtr

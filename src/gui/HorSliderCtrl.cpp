@@ -60,7 +60,7 @@ void CHorSliderCtrl::SetParameters(HSliderParameters Pars)
 
 	m_Pars.Title = Pars.Title;
 
-	//m_Pars.SliderRect = Pars.SliderRect;	
+	//m_Pars.SliderRect = Pars.SliderRect;
 
 	m_SliderWidth = -1.0;
 
@@ -70,7 +70,7 @@ void CHorSliderCtrl::SetParameters(HSliderParameters Pars)
 	}
 
 	m_Draw = FALSE;
-	
+
 }
 
 //***************************************************************************************
@@ -146,7 +146,7 @@ void CHorSliderCtrl::OnPaint()
 
 		if (x0 > m_Right) x0 = m_Right;
 
-		//Draw the scales	
+		//Draw the scales
 		int xPos;
 		int yPos1, yPos2;
 		int ScaleFontSize = 1;
@@ -226,7 +226,7 @@ void CHorSliderCtrl::OnPaint()
 		}
 
 		m_HalfWidth = m_halfScale*w;
-		
+
 		m_Draw = TRUE;
 
 		memcpy(m_MemBackup, DC.m_RGBData, m_RGBSize);
@@ -274,7 +274,7 @@ void CHorSliderCtrl::OnPaint()
 		DC.DrawLine(x1, y0, x2, y0, 2, white);
 
 		DC.DrawCircle(x0, y0, intRound(0.2*d), 1, YELLOW, YELLOW);
-		
+
 		m_LastDownX = x0;
 		//----------------------------------------------------
 	}
@@ -300,7 +300,7 @@ void CHorSliderCtrl::OnLButtonDown(uint nFlags, CPoint Point)
 //***************************************************************************************
 
 void CHorSliderCtrl::OnLButtonUp(uint nFlags, CPoint Point)
-{	
+{
 	//::Info("1");
 
 	if (m_Mousemove)
@@ -348,7 +348,7 @@ void CHorSliderCtrl::OnLButtonUp(uint nFlags, CPoint Point)
 		)
 	{
 		real_t SelxPos = 1 - (real_t)(Point.x - m_Pars.SliderRect.left) / m_SliderWidth;
-				
+
 		for (int i = 0; i <= m_Pars.scaleNum; i++)
 		{
 			real_t  ScalePos = (real_t)(i) / (real_t)m_Pars.scaleNum;
@@ -403,7 +403,7 @@ void CHorSliderCtrl::OnMouseMove(uint nFlags, CPoint Point)
 			m_Mousemove = TRUE;
 
 			m_Pars.Pos = 1 - (real_t)(Point.x - m_Pars.SliderRect.left) / w;
-					
+
 
 			real_t D = m_Pars.Pos*0.25;
 
