@@ -61,22 +61,21 @@ void CCTAcquisition::CheckAlignment()
     //FileName.Format(_T("%s%i.jpg"), m_TestVideoFolder, m_t);
     //m_CTExam.m_Image.LoadFromFile(FileName);
     //m_t++;   
-
-    //if (m_t == 156)
-    //{
-    //    int a = 0;
-    //}
     ////test
+    
+    // Version before 6.3 had this value at 5
+    // Changed to 10 for 6.3 to improve the performance of the new camera
+    TWEAKABLE const LIMIT = 10;
 
 	m_CTExam.m_Image.m_RGBData.Attach(m_CTExam.m_Image.m_h, LINE_SIZE(m_CTExam.m_Image.m_w), m_pHW->GetRGBData());//Ori code
     m_CTExam.m_Image.ClearVertex0();
 	m_CTExam.m_Image.FindVertex0(m_TriLaserOn, m_pHW->m_Calibration.LaserIntensityThreshold, ::HW.IsHRCameraConnected());
 
-	m_ve0_ok = m_CTExam.m_Image.m_ve0_ok && (sqr(m_CTExam.m_Image.m_ve0_x) + sqr(m_CTExam.m_Image.m_ve0_y) <= sqr(5));
+	m_ve0_ok = m_CTExam.m_Image.m_ve0_ok && (sqr(m_CTExam.m_Image.m_ve0_x) + sqr(m_CTExam.m_Image.m_ve0_y) <= sqr(LIMIT));
 
 	if (m_pHW->m_Calibration.ZAlignmentMethod == 0)
 	{
-		m_la_ok = m_CTExam.m_Image.m_la_ok && abs(m_CTExam.m_Image.m_la_x) <= 5 && m_CTExam.m_Image.m_la_RtoC_OK;
+		m_la_ok = m_CTExam.m_Image.m_la_ok && abs(m_CTExam.m_Image.m_la_x) <= LIMIT && m_CTExam.m_Image.m_la_RtoC_OK;
 		m_AlignmentStatus = m_ve0_ok && m_la_ok ? 1 : 0;
 	}
 	else
