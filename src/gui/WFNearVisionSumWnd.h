@@ -26,7 +26,7 @@ private:
 
   virtual CString GetName() override
   {
-    return "Simulated Near Vision Display";
+    return "WF Simulated Near Vision Display";
   }
 
   virtual CWndSettings *GetWndSettings() override

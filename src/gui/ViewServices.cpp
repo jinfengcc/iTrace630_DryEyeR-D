@@ -86,7 +86,7 @@ auto ViewServices::CreateView(ViewType type, const RECT *rc1, int show) const ->
   {
     WF_VisualAcuity = 0,
     WF_RMS          = 1,
-    WF_DepthOfFocus = 3,
+    WF_DepthOfFocus = 4,//6.3.0 from 3 to 4 Fix inconsistency
   };
 
   enum CT
@@ -139,10 +139,12 @@ auto ViewServices::CreateView(ViewType type, const RECT *rc1, int show) const ->
   case ViewType::_MISSING5:
     break;
 
-  case ViewType::WF_Aberation:
-    if (m_wfExam)
-      vp = std::make_unique<CWFSingleSoloWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, &Settings.m_TSsmSettings[1][0], show);
-    break;
+  ////6.3.0 Do no provide CWFSingleSoloWnd 
+  //case ViewType::WF_Aberation:
+  //  if (m_wfExam)
+  //    vp = std::make_unique<CWFSingleSoloWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, &Settings.m_TSsmSettings[1][0], show);
+  //  break;
+  ////6.3.0 Do no provide CWFSingleSoloWnd 
 
   //case ViewType::WF_Custom:
   //  vp = CreateImpl<CWFSingleSumWnd, WF_WFCUSTOM_GUI>(rct, Settings.m_TSsmSettings[3][0]);
