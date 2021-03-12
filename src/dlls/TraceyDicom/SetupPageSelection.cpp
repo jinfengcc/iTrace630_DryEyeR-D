@@ -96,9 +96,9 @@ void CSetupPageSelection::OnContextMenu(CWindow wnd, CPoint point)
   constexpr auto WF = CombineEnumFlags(ViewType::WF_Point, ViewType::WF_NearVision, ViewType::WF_VisualAcuity, ViewType::WF_DepthFocus,
                                    ViewType::WF_RMS, ViewType::WF_Aberation, ViewType::WF_Custom);
   constexpr auto WFCT =
-    CombineEnumFlags(ViewType::WFCT_Change, ViewType::WFCT_Summary, ViewType::WFCT_MTF, ViewType::WFCT_OUOverview, ViewType::WFCT_SumAna,
-                     ViewType::WFCT_Iol, ViewType::WFCT_AngleKA, ViewType::WFCT_DysfunMD, ViewType::WFCT_DysfunPT, ViewType::WFCT_AstigmSrc,
-                     ViewType::WFCT_ToricCheck, ViewType::WFCT_Custom, ViewType::WFCT_ExamResult, ViewType::WFCT_CornealSphAber);
+    CombineEnumFlags(ViewType::WFCT_Change, ViewType::WFCT_Summary, ViewType::WFCT_MTF, ViewType::WFCT_OUOverview,
+                     ViewType::WFCT_Iol, ViewType::WFCT_DysfunMD, ViewType::WFCT_DysfunPT, ViewType::WFCT_AstigmSrc,
+                     ViewType::WFCT_ToricCheck, ViewType::WFCT_Custom, ViewType::WFCT_CornealSphAber);
 
   switch (res) {
   case all_ct:
