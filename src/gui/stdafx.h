@@ -1,6 +1,7 @@
-//***************************************************************************************
-// libcmtd.lib; uafxcwd.lib
 #pragma once
+
+// A marker for configurable data (easy to search for)
+#define TWEAKABLE
 
 //***************************************************************************************
 
@@ -237,12 +238,12 @@ namespace Gdiplus {
 //***************************************************************************************
 
 // For merge dicom
-typedef enum { SAMP_SUCCESS = 1, SAMP_FAILURE = 0 } SAMP_STATUS;
+// typedef enum { SAMP_SUCCESS = 1, SAMP_FAILURE = 0 } SAMP_STATUS;
 
 //***************************************************************************************
 
 // For merge dicom
-typedef enum { SAMP_TRUE = 1, SAMP_FALSE = 0 } SAMP_BOOLEAN;
+// typedef enum { SAMP_TRUE = 1, SAMP_FALSE = 0 } SAMP_BOOLEAN;
 
 //***************************************************************************************
 

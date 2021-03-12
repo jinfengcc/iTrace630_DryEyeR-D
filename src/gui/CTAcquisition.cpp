@@ -32,7 +32,7 @@ CCTAcquisition::CCTAcquisition(CHW *pHW, BOOL ShowRedDot)
   ::GetLocalTime(&Time);
   m_TestVideoFolder.Format( _T("C:\\1\\TestCTVideo\\%i_%02i_%02i_%02i_%02i_%02i\\"),Time.wYear, Time.wMonth, Time.wDay,Time.wHour, Time.wMinute, Time.wSecond);
 
-  ::CreateDirectory(m_TestVideoFolder, NULL); 
+  ::CreateDirectory(m_TestVideoFolder, NULL);
 
    // load ct capture videos for laser spot detection
    //m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_02_26_14_54_04\\";//Works fine
@@ -41,7 +41,7 @@ CCTAcquisition::CCTAcquisition(CHW *pHW, BOOL ShowRedDot)
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_01_15_24_57\\";//Works fine
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_01_15_25_34\\";//move too fast?
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_01_15_26_19\\";//no capture happen
-  // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_33_40\\";  //Works fine 
+  // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_33_40\\";  //Works fine
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_34_28\\";//works fine very fast
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_34_55\\";//works fine very fast
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_37_48\\";//works fine very fast
@@ -60,12 +60,13 @@ void CCTAcquisition::CheckAlignment()
     //CString FileName;
     //FileName.Format(_T("%s%i.jpg"), m_TestVideoFolder, m_t);
     //m_CTExam.m_Image.LoadFromFile(FileName);
-    //m_t++;   
+    //m_t++;
     ////test
-    
+
+
     // Version before 6.3 had this value at 5
     // Changed to 10 for 6.3 to improve the performance of the new camera
-    TWEAKABLE const LIMIT = 10;
+    TWEAKABLE const int LIMIT = 10;
 
 	m_CTExam.m_Image.m_RGBData.Attach(m_CTExam.m_Image.m_h, LINE_SIZE(m_CTExam.m_Image.m_w), m_pHW->GetRGBData());//Ori code
     m_CTExam.m_Image.ClearVertex0();
