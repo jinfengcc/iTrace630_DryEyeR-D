@@ -34,8 +34,11 @@ END_MESSAGE_MAP()
 
 //***************************************************************************************
 
-CWFNearVisionSumWnd::CWFNearVisionSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFExam* pWFExamFar, CWFExam* pWFExamNear, int ExamAmount, int ExamOrder, int show) :
-	CSumWnd(pWnd, WndRect, pPatient, NULL)
+CWFNearVisionSumWnd::CWFNearVisionSumWnd(CWnd *pWnd, RECT &WndRect, CPatient *pPatient, CWFExam *pWFExamFar, CWFExam *pWFExamNear, int ExamAmount,
+                                         int ExamOrder, int show)
+  : CSumWnd(pWnd, WndRect, pPatient, NULL)
+  , m_pWFExamFar(pWFExamFar)
+  , m_pWFExamNear(pWFExamNear)
 {
 	CBusyCursor Cursor;
 
@@ -125,8 +128,6 @@ CWFNearVisionSumWnd::CWFNearVisionSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pP
 	//----------------------------------------------------
 
 
-	m_pWFExamFar = pWFExamFar;
-	m_pWFExamNear = pWFExamNear;
 
 	real_t r_max_umFar = m_pWFExamFar->m_WfSurface.m_r_max_um;
 	real_t r_max_umNear = m_pWFExamNear->m_WfSurface.m_r_max_um;
@@ -192,8 +193,8 @@ void CWFNearVisionSumWnd::RepaintMemDC()
 	CSumWnd::RepaintMemDC();
 
 
-	WFNearVisionInfo(m_pWFExamFar, m_Rect[3]);
-	WFNearVisionInfo2(m_pWFExamNear, m_Rect[4]);
+	WFNearVisionInfo(m_pWFExamFar.get(), m_Rect[3]);
+	WFNearVisionInfo2(m_pWFExamNear.get(), m_Rect[4]);
 
 	COLORREF white = m_Printing ? BLACK : WHITE;
 	m_MemDC.DrawRectangle(m_OutlineRect[0], white, NOCOLOR);
@@ -582,22 +583,29 @@ void CWFNearVisionSumWnd::OnComBtnClicked()
 	CMFont Font;
 	Font.Create(FontSize, 400, "Arial");
 
-	int           NumImages[NUM_EXAMS_MAX];//image number of exam (if color imgage has been taken, this values is 2)
+	int           NumImages[NUM_EXAMS_MAX];//image number of exam (if color image has been taken, this values is 2)
 
 	CSelectExamDlg* pDlg = new CSelectExamDlg(this, PatientID, m_ExamOrder, EXAM_TYPE_WF, EYE_BOTH, &Font, NumImages);
 
 	if (pDlg->DoModal() == IDOK)
 	{
+#if 0
 		if (m_pWFExamFar != NULL)
 		{
 			delete m_pWFExamFar;
 			m_pWFExamFar = NULL;
 		}
 
+
 		m_pWFExamFar = new CWFExam;
 
 		::DB.LoadWFExam(pDlg->m_ExamID, m_pWFExamFar);
-		m_pWFExamFar->Process();
+
+#else
+    m_pWFExamFar = DB.LoadWFExam(pDlg->m_ExamID);
+#endif
+
+    m_pWFExamFar->Process();
 
 		real_t r_max_umFar = m_pWFExamFar->m_WfSurface.m_r_max_um;
 
