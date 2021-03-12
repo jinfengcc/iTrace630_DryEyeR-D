@@ -64,7 +64,7 @@ private:
 		// WFCT Angle k/a
 		if (m_k == 2)//Angle K/A
 		{
-			return "Angle Kappa/Alpha";
+			return "WF&&CT Angle Kappa/Alpha";
 		}
 		else// WFCT Angle k/a
 		{
