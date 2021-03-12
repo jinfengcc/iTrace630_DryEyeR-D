@@ -193,8 +193,8 @@ void CWFNearVisionSumWnd::RepaintMemDC()
 	CSumWnd::RepaintMemDC();
 
 
-	WFNearVisionInfo(m_pWFExamFar.get(), m_Rect[3]);
-	WFNearVisionInfo2(m_pWFExamNear.get(), m_Rect[4]);
+	WFNearVisionInfo(m_pWFExamFar, m_Rect[3]);
+	WFNearVisionInfo2(m_pWFExamNear, m_Rect[4]);
 
 	COLORREF white = m_Printing ? BLACK : WHITE;
 	m_MemDC.DrawRectangle(m_OutlineRect[0], white, NOCOLOR);
@@ -589,18 +589,11 @@ void CWFNearVisionSumWnd::OnComBtnClicked()
 
 	if (pDlg->DoModal() == IDOK)
 	{
-#if 0
-		if (m_pWFExamFar != NULL)
-		{
-			delete m_pWFExamFar;
-			m_pWFExamFar = NULL;
-		}
-
-
+#if 1
+	  delete m_pWFExamFar;
 		m_pWFExamFar = new CWFExam;
 
 		::DB.LoadWFExam(pDlg->m_ExamID, m_pWFExamFar);
-
 #else
     m_pWFExamFar = DB.LoadWFExam(pDlg->m_ExamID);
 #endif

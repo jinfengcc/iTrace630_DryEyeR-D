@@ -39,8 +39,8 @@ private:
   int                             m_ExamOrder;
   real_t                          m_OriMc4; // Original mc[4]
   real_t                          m_ShiftVal;
-  std::unique_ptr<CWFExam>        m_pWFExamFar;
-  std::unique_ptr<CWFExam>        m_pWFExamNear;
+  CWFExam *                       m_pWFExamFar;
+  CWFExam *                       m_pWFExamNear;
   CBtn                            m_CompareBtn;
   std::unique_ptr<CHorSliderCtrl> m_Slider;
 
@@ -48,7 +48,7 @@ private:
   virtual void RepaintMemDC() override;
   virtual void CreateChildWnd() override;
 
-  afx_msg void OnComBtnClicked();
+  afx_msg void    OnComBtnClicked();
   afx_msg LRESULT OnSliderClick(WPARAM wParam, LPARAM lParam);
   afx_msg LRESULT OnSliderChangedPos(WPARAM wParam, LPARAM lParam);
 
