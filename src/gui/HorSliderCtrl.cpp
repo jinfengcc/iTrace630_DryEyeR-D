@@ -64,7 +64,7 @@ void CHorSliderCtrl::SetParameters(HSliderParameters Pars)
 
 	m_SliderWidth = -1.0;
 
-	for (int i = 0; i <= m_Pars.scaleNum; i++)
+	for (int i = 0; i < _countof(m_Pars.OutlineHighlight); i++)
 	{
 		m_Pars.OutlineHighlight[i] = Pars.OutlineHighlight[i];
 	}
