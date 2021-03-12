@@ -89,6 +89,7 @@ public:
 
 	void WFExamSmallInfo(CWFExam* pExam, RECT Rect, int type, int ColorType);
 	void WFExamInfo(CWFExam* pExam, RECT Rect, int NumRows, BOOL* Rows);
+	void WFWTTExamInfo(CWFExam* pExam, int ExamOrder, RECT Rect, int NumRows, BOOL* Rows);//6.3.0 for adjusted WTT GUI
 	void WFExamLargeInfo(CWFExam* pExam, RECT Rect, int type);
 	void WFCTExamLargeInfo(CWFExam* pExam, RECT Rect);// WFCT Angle K/A
 	void ChangWFExamInfo(CWFExam* pExam, RECT Rect, int type, BOOL Show_Alpha);// To show simplied wf info for Chang Analysis

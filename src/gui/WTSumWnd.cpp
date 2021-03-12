@@ -20,6 +20,8 @@ BEGIN_MESSAGE_MAP(CWTSumWnd, CSumWnd)
 	ON_COMMAND(IDC_EDIT_LENS_DOTS_ITEM, OnEditLensDotsItemClicked)
 	ON_COMMAND(IDC_EDIT_LIMBUS_ITEM, OnEditLimbusItemClicked)
 
+	ON_MESSAGE(WM_WTTSWITCH_LCLICK, OnSwitch)//6.3.0
+
 END_MESSAGE_MAP()
 
 //***************************************************************************************
@@ -46,12 +48,12 @@ CWTSumWnd::CWTSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFExam* pWF
 	m_pWFExam = pWFExam;
 	m_pCTExam = pCTExam;
 
-	//*007*[cjf***05052012],record the increase and decrease range
+	//record the increase and decrease range
 	if (m_pCTExam == NULL)
 		::TempSettings.Com_r_max_um = m_pWFExam->m_WfSurface.m_r_max_um;
 	else
 		::TempSettings.Com_r_max_um = ((m_pWFExam->m_WfSurface.m_r_max_um) < (m_pCTExam->m_WfSurface.m_r_max_um) ? m_pWFExam->m_WfSurface.m_r_max_um : m_pCTExam->m_WfSurface.m_r_max_um);
-	//*007*[cjf***05052012]
+	//
 
 	for (m_d = 0; m_d < (m_pCTExam ? 3 : 2); m_d++) {
 		CreateChildWnd();
@@ -61,7 +63,7 @@ CWTSumWnd::CWTSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFExam* pWF
 
 	ShowWindow(SW_SHOW);
 
-	//6.3.0 Popup the lens dot dialog 
+	//6.3.0
 	if (m_pWFExam->m_Image.m_le_ok == FALSE)
 	{
 		m_d = 0;
@@ -140,7 +142,7 @@ void CWTSumWnd::LensInfo(RECT Rect, int NumRows)
 		s += "   Cyl  --.-- D";
 	}
 	else {
-		s1.Format(_T(" x %iï¿½"), m_pWFExam->m_WavetouchAxis);
+		s1.Format(_T(" x %i°"), m_pWFExam->m_WavetouchAxis);
 		s += s1;
 	}
 	m_MemDC.WriteText(s, Rect, Font, white, 0);
@@ -186,8 +188,26 @@ void CWTSumWnd::RepaintMemDC()
 
 	BOOL Rows[22] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
-	if (m_pWFExam) {
-		WFExamInfo(m_pWFExam, m_Rect[4], 22, Rows);
+	if (m_pWFExam)
+	{
+		//6.3.0 For WTT adjusted GUI
+		int Order = 0;
+		::DB.LoadExamHeaders(m_pWFExam->m_Header.m_PatientID);
+
+		for (int e = 0; e < ::DB.m_ExamHeaders.GetSize(); e++)
+		{
+			CExamHeader* pExamHeader = &::DB.m_ExamHeaders[e];
+
+			if (pExamHeader->m_ExamID == m_pWFExam->m_Header.m_ExamID)
+			{
+				Order = e + 1;
+				break;
+			}
+		}
+
+		WFWTTExamInfo(m_pWFExam, Order, m_Rect[4], 22, Rows);
+		//6.3.0 For WTT adjusted GUI
+
 		LensInfo(m_Rect[3], 22);
 	}
 
@@ -216,12 +236,42 @@ void CWTSumWnd::CreateChildWnd()
 		pEyeWnd->m_SizeSmall = TRUE;
 		pEyeWnd->m_Method3D = FALSE;
 		pEyeWnd->m_MapShowEye = TRUE;
+
+		//6.3.0
+		//pEyeWnd->m_LBBigFont = TRUE;		
+
+		if (m_pWFExam->m_Image.m_le_ok)
+		{
+			if (m_Pupil)
+			{
+				m_labels[3].Format(_T("(Center to pupil : %.2f um, %.2f um)"), m_pWFExam->m_Image.GetLensX0Um() - m_pWFExam->m_Image.m_pu_x0_um, m_pWFExam->m_Image.GetLensY0Um() - m_pWFExam->m_Image.m_pu_y0_um);
+			}
+			else
+			{
+				m_labels[3].Format(_T("(Center to Visual Axis : %.2f um, %.2f um)"), m_pWFExam->m_Image.GetLensX0Um() - m_pWFExam->m_Image.m_ve_x_um, m_pWFExam->m_Image.GetLensY0Um() - m_pWFExam->m_Image.m_ve_y_um);
+			}
+
+			m_Ang = intRound(m_pWFExam->m_Image.GetLensRotationAngle());
+		
+			m_labels[4].Format(_T("(Angel of Lens : %i°)"), m_Ang);
+
+			for (int i = 3; i < 5; i++)
+			{
+				pEyeWnd->m_RBLabel[i + 1] =  m_labels[i];
+				pEyeWnd->m_RBLabelColor[i + 1] = RED;
+			}
+		}
+		//6.3.0
+
 		pEyeWnd->m_MapShowPupil = pWndSettings->m_MapShowPupil;
 		pEyeWnd->m_MapShowCornealVertex = pWndSettings->m_MapShowCornealVertex;
 		pEyeWnd->m_MapShowPoints = pWndSettings->m_MapShowPoints;
 		pEyeWnd->m_MapShowLimbus = pWndSettings->m_MapShowLimbus;
 		pEyeWnd->m_MapShowWavetouchLens = pWndSettings->m_MapShowWavetouchLens;
 		pEyeWnd->m_pWFExam = m_pWFExam;
+
+		pEyeWnd->CreateSwitchButtons();//6.3.0
+
 		m_pDispWnd[0] = pEyeWnd;
 	}
 	break;
@@ -253,7 +303,7 @@ void CWTSumWnd::CreateChildWnd()
 		pEyeWnd->m_MapShowSolidSurface = FALSE;
 		pEyeWnd->m_MapShowWireMesh = FALSE;
 		pEyeWnd->m_MapTranslucent = FALSE;
-		pEyeWnd->m_Unit = "ï¿½";
+		pEyeWnd->m_Unit = "µ";
 		pEyeWnd->m_Inc = pWndSettings->GetIncrement();
 		CScale* pScale = pWndSettings->GetScale();
 		pEyeWnd->m_NumColors = pScale->m_NumColors;
@@ -366,7 +416,6 @@ void CWTSumWnd::CreateChildWnd()
 	break;
 
 	}
-
 }
 
 //***************************************************************************************
@@ -477,12 +526,35 @@ void CWTSumWnd::OnEditLensDotsItemClicked()
 
 		CBusyCursor Cursor;
 
+		CreateChildWnd();
+		//20181129 for this branch
+
 		Repaint();
 
 		::DB.SaveWFExam(m_pWFExam);
 	}
 
 	delete pDlg;
+}
+
+//***************************************************************************************
+
+//521, Invoke Okulix function
+LRESULT CWTSumWnd::OnSwitch(WPARAM wParam, LPARAM lParam)
+{
+	if (m_Ang != -1)
+	{
+		m_Pupil = !m_Pupil;
+
+		m_d = 0;
+
+		CreateChildWnd();
+		//20181129 for this branch
+
+		Repaint();
+	}
+
+	return S_OK;
 }
 
 //***************************************************************************************
