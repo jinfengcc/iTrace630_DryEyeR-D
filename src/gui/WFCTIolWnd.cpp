@@ -559,7 +559,7 @@ void CWFCTIolWnd::CreateChildWnd()
 		pEyeWnd->m_MapShowSolidSurface = m_pWndSettings[0].m_MapShowSolidSurface;
 		pEyeWnd->m_MapShowWireMesh = m_pWndSettings[0].m_MapShowWireMesh;
 		pEyeWnd->m_MapTranslucent = m_pWndSettings[0].m_MapTranslucent;
-		pEyeWnd->m_MapShowKeratometry = m_pWndSettings[0].m_MapShowKeratometry;
+		pEyeWnd->m_MapShowKeratometry = TRUE;// m_pWndSettings[0].m_MapShowKeratometry; // 6.3.0 bug fix
 		pEyeWnd->m_MapShowSimKAxes = m_pWndSettings[0].m_MapShowSimKAxes;
 		pEyeWnd->m_Unit = MapUnit == DIOPTERS ? "D" : "mm";
 		pEyeWnd->m_Inc = m_pWndSettings[0].GetIncrement();
