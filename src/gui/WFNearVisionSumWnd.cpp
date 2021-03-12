@@ -42,6 +42,8 @@ CWFNearVisionSumWnd::CWFNearVisionSumWnd(CWnd* pWnd, RECT& WndRect, CPatient* pP
 	m_ExamAmount = ExamAmount;
 	m_ExamOrder = ExamOrder;
 
+	m_ShowWin = show;//6.3.0 for dicom export
+
 	//----------------------------------------------------
 	RECT Rect;
 	GetWindowRect(&Rect);
@@ -209,12 +211,10 @@ void CWFNearVisionSumWnd::RepaintMemDC()
 	m_MemDC.DrawRectangle(m_OutlineRect[0], white, NOCOLOR);
 	m_MemDC.DrawRectangle(m_OutlineRect[1], white, NOCOLOR);
 
-	//6.2.1
-	if (m_Printing)
+	if (m_Printing || !m_ShowWin)//6.3.0 for dicom export
 	{
 		PaintSlider();
 	}
-	//6.2.1
 }
 
 //***************************************************************************************

@@ -41,6 +41,8 @@ private:
 
 	int      m_ExamOrder;
 
+	BOOL     m_ShowWin; //6.3.0 for dicom export
+
 	real_t     m_OriMc4;//Original mc[4]
 
 	real_t     m_ShiftVal;
