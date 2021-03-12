@@ -8,10 +8,10 @@ template<typename T>
 void Swap(T& x, T& y) { T t = x; x = y, y = t; }
 
 template<typename T>
-T sqr(const T& x) { return x * x; }
+constexpr T sqr(const T& x) { return x * x; }
 
 template<typename T>
-T cube(const T& x) { return x * x * x; }
+constexpr T cube(const T& x) { return x * x * x; }
 
 int intRound(const real_t v);
 real_t RealRound(const real_t v, const real_t d);

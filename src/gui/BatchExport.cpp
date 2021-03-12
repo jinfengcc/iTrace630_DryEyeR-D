@@ -45,7 +45,7 @@ bool BatchExport::Export()
     auto settings = Settings();
 
     auto types = settings.BatchEnabled();
-    //progress->SetProgressRange(0, m_exams.size() * types.size());
+    progress->SetProgressRange(0, m_exams.size() * types.size() - 1);
 
     int n = 0;
     if (settings.BatchEnabled(ViewType::WFCT_OUOverview)) {
@@ -60,7 +60,7 @@ bool BatchExport::Export()
 
       for (auto vt : types) {
         SetStatus(progress, L"Exporting {}...", BatchSettings::BatchLabel(vt, false));
-        //progress->SetProgress(++n);
+        progress->SetProgress(++n);
 
         auto headers = MakeVector(e.wfe, e.cte);
         OnExport(vs, vt, patient, {headers});

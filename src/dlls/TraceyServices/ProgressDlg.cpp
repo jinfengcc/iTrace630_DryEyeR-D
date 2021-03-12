@@ -16,7 +16,10 @@ CProgressDlg::CProgressDlg(HWND hParent, const Options &options)
   SetStatus(options.status);
 
   m_Progress.ShowWindow(options.progType == IProgress::ProgType::off ? SW_HIDE : SW_SHOW);
-  m_Progress.SetMarquee(options.progType == IProgress::ProgType::marquee ? TRUE : FALSE);
+  if (options.progType == IProgress::ProgType::marquee) {
+    m_Progress.ModifyStyleEx(0, PBS_MARQUEE);
+    m_Progress.SetMarquee(TRUE);
+  }
 
   CenterWindow(hParent);
   ShowWindow(SW_SHOW);
