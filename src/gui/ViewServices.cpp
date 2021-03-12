@@ -52,7 +52,8 @@ ViewServices::ViewServices(CWFExam *wfExam, CWFExam *wfExam2, CCTExam *ctExam, C
 
 cv::Mat ViewServices::Save(ViewType type) const
 {
-  if (auto w = CreateView(type))
+  TWEAKABLE const RECT rc{0, 0, 1462, 858};
+  if (auto w = CreateView(type, &rc))
     return SaveImpl(w.get());
 
   return {};
@@ -62,7 +63,7 @@ cv::Mat ViewServices::Save(ViewType type) const
 
 cv::Mat ViewServices::SaveImpl(CMemWnd *w)
 {
-  const int W = 1464;
+  const int W = 1462;
   const int H = w->m_MemDC.m_h * W / w->m_MemDC.m_w;
 
   auto img = cv::Mat(w->m_MemDC.m_h, w->m_MemDC.m_w, CV_8UC3, w->m_MemDC.m_RGBData).clone();
@@ -205,10 +206,10 @@ auto ViewServices::CreateView(ViewType type, const RECT *rc1, int show) const ->
       vp = std::make_unique<CWFCTIolWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_ctExam, &NewSettings.m_IOLSelSettings[0], show);
     break;
 
-  case ViewType::WFCT_AngleKA:
-    if (m_wfExam != nullptr && m_ctExam != nullptr)
-      vp = std::make_unique<CWFCTAngleSumWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_ctExam, &Settings.m_TSsmSettings[2][0], 2, "", show);
-    break;
+  //case ViewType::WFCT_AngleKA:
+  //  if (m_wfExam != nullptr && m_ctExam != nullptr)
+  //    vp = std::make_unique<CWFCTAngleSumWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_ctExam, &Settings.m_TSsmSettings[2][0], 2, "", show);
+  //  break;
 
   case ViewType::WFCT_DysfunMD:
     if (m_wfExam != nullptr && m_ctExam != nullptr)
