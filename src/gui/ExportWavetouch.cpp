@@ -39,7 +39,27 @@ void ExportWavetouch(CWFExam* pWFExam, const Matrix<uchar>& Mem)
 
 	CString ShortFileName(pPatient->m_LastName + pPatient->m_FirstName.Left(1) + pWFExam->m_Header.Eye());
 	CString s;
-	s.Format(_T("%02i%02i%i"), pWFExam->m_Header.m_Month, pWFExam->m_Header.m_Day, pWFExam->m_Header.m_Year);
+
+	//6.3.0 For WTT adjusted GUI
+	::DB.LoadExamHeaders(pWFExam->m_Header.m_PatientID);
+
+	int order = 0;
+	for (int e = 0; e < ::DB.m_ExamHeaders.GetSize(); e++)
+	{
+		CExamHeader* pExamHeader = &::DB.m_ExamHeaders[e];
+
+		if (pExamHeader->m_ExamID == pWFExam->m_Header.m_ExamID)
+		{
+			order = e + 1;
+			break;
+		}
+	}
+
+	s.Format(_T("_%02i%02i%i_%02i%02i%02i_%04i"),
+		pWFExam->m_Header.m_Month, pWFExam->m_Header.m_Day, pWFExam->m_Header.m_Year,
+		pWFExam->m_Header.m_Hour, pWFExam->m_Header.m_Minute, pWFExam->m_Header.m_Second, order);
+	//6.3.0 For WTT adjusted GUI
+
 	ShortFileName += s;
 
 	ShortFileName.Replace(_T("\\"), _T("_"));
@@ -171,10 +191,11 @@ void ExportWavetouch(CWFExam* pWFExam, const Matrix<uchar>& Mem)
 	//Dots
 
 
-	k += sprintf(Txt + k, "Lens Power: %.2f", pWFExam->m_WavetouchLensPower);
+	//k += sprintf(Txt + k, "Lens Power: %.2f", pWFExam->m_WavetouchLensPower);
+	k += sprintf(Txt + k, "Lens Power: ?????");
 	Txt[k++] = CR; Txt[k++] = LF;
 	Txt[k++] = CR; Txt[k++] = LF;
-	k += sprintf(Txt + k, "Lens Base Curve: %i", pWFExam->m_WavetouchLensBaseCurve);
+	k += sprintf(Txt + k, "Lens Base Curve: ?????");
 	Txt[k++] = CR; Txt[k++] = LF;
 	Txt[k++] = CR; Txt[k++] = LF;
 
