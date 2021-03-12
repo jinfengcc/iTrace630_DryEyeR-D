@@ -420,6 +420,7 @@
 #define IDR_NEW_SUPERWF_EXAM_3          423
 #define IDC_IMGCTRL_SLIDER              423
 #define IDR_NEW_SUPERWF_EXAM_2          424
+#define IDC_WTT_SWITCH_BTN              424
 #define IDR_NEW_SUPERWF_EXAM_1          425
 #define IDR_DOF_REL_1                   426
 #define IDR_DOF_REL_2                   427
