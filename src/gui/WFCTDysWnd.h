@@ -32,7 +32,7 @@ private:
 	void CreateAdjustedUm(real_t um1, real_t um2, real_t um3, real_t um4, real_t um5, real_t um6, real_t& newum1, real_t& newum2);
 	real_t CalDysVal(int d, real_t pupilSize);
 
-	virtual CString GetName() override { return "WF&&CT Dysfunctional Lens Analysis"; }
+	virtual CString GetNameImpl() const override { return "Dysfunctional Lens Analysis"; }
 	virtual CWndSettings* GetWndSettings() override { return m_pWndSettings + m_d; }
 
 	virtual void OnSizeLargeItemClicked() override;

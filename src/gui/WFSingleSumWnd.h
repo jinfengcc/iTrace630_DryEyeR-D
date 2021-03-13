@@ -40,37 +40,19 @@ private:
 	BOOL    SameAngleKA();
 	BOOL    SameDepthFocus();
 							 
-	//6.3.0 Fix WF Displays/dicom export inconsistenc
-	// 0: Visual Acuity; 1: WF/RMS ; 2:Angle K/A ;3 : Custom 4 :Depth of focus; 
-	virtual CString GetName() override
+
+	virtual CString GetNameImpl() const override
 	{
-		if (m_k == 0)
-		{
-			return "WF Visual Acuity Display";
-		}
-		else if (m_k == 1)
-		{
-			return "WF/RMS Display";
-		}
-		else if (m_k == 2)//Angle K/A
+		// WFCT Angle k/a
+		if (m_k == 2)//Angle K/A
 		{
 			return "Angle Kappa/Alpha";
 		}
-		else if (m_k == 3)
-		{
-			return "WF Custom Display";
-		}
-		else if (m_k == 4)
-		{
-			return "WF Depth of Focus Display";
-		}
-		else
+		else// WFCT Angle k/a
 		{
 			return "WF Summary Display";
 		}
 	}
-	//6.3.0 Fix WF Displays/dicom export inconsistenc
-
 	virtual CWndSettings* GetWndSettings() override { return m_pWndSettings + m_d; }
 
 	virtual void OnSizeLargeItemClicked() override;

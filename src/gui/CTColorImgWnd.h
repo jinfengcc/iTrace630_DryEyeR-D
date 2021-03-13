@@ -19,6 +19,11 @@ private:
 	CCTExam* m_pCTExam;
 
 	virtual void RepaintMemDC() override;
+  virtual CString GetNameImpl() const override
+  {
+    return "???";
+  }
+
 
 	DECLARE_MESSAGE_MAP()
 };

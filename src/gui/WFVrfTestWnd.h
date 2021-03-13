@@ -28,7 +28,7 @@ public:
 
 	CWFExam* m_pWFExam;
 
-	virtual CString GetName() override { return "WF Verification Display"; }
+	virtual CString GetNameImpl() const override { return "WF Verification Display"; }
 	virtual CWndSettings* GetWndSettings() override { return m_pWndSettings + m_d; }
 
 	virtual void OnSizeLargeItemClicked() override;

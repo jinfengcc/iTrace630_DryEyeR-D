@@ -24,9 +24,9 @@ public:
 private:
   void PaintSlider(); // 6.2.1 20181218
 
-  virtual CString GetName() override
+  virtual CString GetNameImpl() const override
   {
-    return "WF Simulated Near Vision Display";
+    return "Simulated Near Vision Display";
   }
 
   virtual CWndSettings *GetWndSettings() override

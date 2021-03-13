@@ -40,7 +40,7 @@ private:
 	
 	void     PreopData(RECT Rect, int NumRows, BOOL* Rows);//6.2.0 Show the planner text info
 
-	virtual CString GetName() override { return "Toric Alignment Check"; }
+	virtual CString GetNameImpl() const override { return "Toric Alignment Check"; }
 	virtual CWndSettings* GetWndSettings() override { return m_pWndSettings + m_d; }
 
 	virtual void CreateMenu() override;//6.2.0

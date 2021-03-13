@@ -43,6 +43,10 @@ protected:
   // std::vector<std::unique_ptr<CDispWnd>> m_pDispWnd;
   CDispWnd *m_pDispWnd[NUM_CHILDWND_MAX];
 
+  CString         m_name;
+
+	virtual CString GetNameImpl() const = 0;
+
 public:
 	CZernikeSurface m_Surfaces[6];
 	CZernikeSurface m_DysSuface[3];// surfaces for correct dysfunctional function;
@@ -56,6 +60,16 @@ public:
 
 	int m_SW;// Screen Width
 
+  template <class T>
+  void SetName(const T *name)
+  {
+    m_name = name;
+  }
+  CString GetName() const
+  {
+    return m_name.IsEmpty() ? GetNameImpl() : m_name;
+  }
+
 	CBtn m_WFShowFullInfoButton;//530
 	CBtn m_WFShowFullInfoButton2;//530
 	CBtn m_WFShowFullInfoButton3;//530
@@ -66,7 +80,6 @@ public:
 	virtual void CreateChildWnd() {}
 
 
-	virtual CString GetName() { return ""; }
 
 	int GetClosePos(int inputVal, int maxVal);//521 Used for solo vertical splider
 

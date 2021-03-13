@@ -22,7 +22,7 @@ private:
 	CCTExam* m_pCTExam1;
 	CCTExam* m_pCTExam2;
 
-	virtual CString GetName() override { return "OD/OS CT Summary Display"; }
+	virtual CString GetNameImpl() const override { return "OD/OS CT Summary Display"; }
 	virtual CWndSettings* GetWndSettings() override { return m_pWndSettings + (m_d >> 1); }
 
 	virtual void CreateMenu() override;

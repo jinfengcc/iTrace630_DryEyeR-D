@@ -57,7 +57,7 @@ private:
 
 	BOOL    SameRefSet();//new
 
-	virtual CString GetName() override { return "Refraction Analysis Display"; }
+	virtual CString GetNameImpl() const override { return "Refraction Analysis Display"; }
 	virtual CWndSettings* GetWndSettings() override
 	{
 		return m_pWndSettings + m_d;

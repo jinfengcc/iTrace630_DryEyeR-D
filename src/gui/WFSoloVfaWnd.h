@@ -49,7 +49,7 @@ private:
 
 	BOOL    SameSoloVfa();//new
 
-	virtual CString GetName() override { return "Visual Function Analysis Display"; }
+	virtual CString GetNameImpl() const override { return "Visual Function Analysis Display"; }
 	virtual CWndSettings* GetWndSettings() override
 	{
 		int a = (m_d % 3);

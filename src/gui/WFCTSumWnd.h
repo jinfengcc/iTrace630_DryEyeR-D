@@ -31,36 +31,7 @@ private:
 	BOOL m_ShowLargeMap;//530 show large map?
 	RECT m_OutLineRect[8];//530 For outline of Chang Analysis
 
-	//6.3.0 Fix wf/ct and dicom export diplay title inconsistency
-	virtual CString GetName() override
-	{
-		if (m_i == 0)
-		{
-			return "WF&&CT Chang Analysis Display";
-		}
-		else if (m_i == 1)
-		{
-			return "WF&&CT Summary Display";
-		}
-		else if (m_i == 2)
-		{
-			return "WF&&CT MTF Display";
-		}
-		else if (m_i == 3)
-		{
-			return "WF&&CT Custom Display";
-		}
-		else if (m_i == 6)
-		{
-			return "WF&&CT Astigmatism Source Display";
-		}
-		else
-		{
-			return "WF&&CT Summary Display";
-		}
-	}
-	//6.3.0 Fix wf/ct and dicom export diplay title inconsistency
-
+	virtual CString GetNameImpl() const override { return "WF and CT Summary Display"; }
 	virtual CWndSettings* GetWndSettings() override { return m_pWndSettings + m_d; }
 
 	virtual void OnSizeLargeItemClicked() override;

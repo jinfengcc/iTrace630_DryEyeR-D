@@ -38,7 +38,7 @@ private:
 	int      m_OD;
 	BOOL     m_ESDBtnCreated;// whether the  m_Export SurDate Button created?
 
-	virtual CString GetName() override { return "Toric Planner"; }
+	virtual CString GetNameImpl() const override { return "Toric Planner"; }
 	virtual CWndSettings* GetWndSettings() override { return m_pWndSettings; }
 
 	virtual void RepaintMemDC() override;

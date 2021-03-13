@@ -23,7 +23,7 @@ private:
 	real_t m_r_um;
 	int m_series;
 
-	virtual CString GetName() override { return "Multi-Exam Summary Display"; }
+	virtual CString GetNameImpl() const override { return "Multi-Exam Summary Display"; }
 	virtual CWndSettings* GetWndSettings() override { return m_pWndSettings; }
 
 	virtual void CreateMenu() override;

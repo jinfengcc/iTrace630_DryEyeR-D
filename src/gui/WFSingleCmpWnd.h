@@ -25,7 +25,7 @@ private:
 	CWFExam* m_pWFExam1;
 	CWFExam* m_pWFExam2;
 
-	virtual CString GetName() override { return "WF Comparison Display"; }
+	virtual CString GetNameImpl() const override { return "WF Comparison Display"; }
 	virtual CWndSettings* GetWndSettings() override { return m_pWndSettings; }
 
 	virtual void CreateMenu() override;

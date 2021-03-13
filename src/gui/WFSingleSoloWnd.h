@@ -42,7 +42,7 @@ private:
 
 	BOOL    SameAbeSet();//new
 
-	virtual CString GetName() override { return "Aberration Analysis Display"; }
+	virtual CString GetNameImpl() const override { return "Aberration Analysis Display"; }
 	virtual CWndSettings* GetWndSettings() override { return m_pWndSettings + m_d; }
 
 	virtual void OnSizeLargeItemClicked() override;

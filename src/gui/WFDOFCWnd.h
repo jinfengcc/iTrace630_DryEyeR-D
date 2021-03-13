@@ -32,7 +32,7 @@ private:
 	real_t    m_fraction1;
 	real_t    m_fraction2;
 
-	virtual CString GetName() override { return "WF Summary Display"; }
+	virtual CString GetNameImpl() const override { return "WF Summary Display"; }
 	virtual CWndSettings* GetWndSettings() override { return m_pWndSettings + m_d; }
 
 	virtual void CreateMenu() override;

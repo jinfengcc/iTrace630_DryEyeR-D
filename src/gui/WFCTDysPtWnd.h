@@ -33,7 +33,7 @@ private:
 	void CreateAdjustedUm(real_t Corneal7, real_t Internal7, real_t Corneal8, real_t Internal8, real_t Total7, real_t Total8, real_t& newum1, real_t& newum2);//05292015 for DLI Branch
 	real_t CalDysVal(int d, real_t pupilSize);
 
-	virtual CString GetName() override { return "WF&&CT Dysfunctional Lens Patient Display"; }
+	virtual CString GetNameImpl() const override { return "Dysfunctional Lens Patient Display"; }
 	virtual CWndSettings* GetWndSettings() override { return m_pWndSettings + m_d; }
 
 	virtual void OnSizeLargeItemClicked() override;

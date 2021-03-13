@@ -63,7 +63,7 @@ private:
 
 	void    GetConRes();
 
-	virtual CString GetName() override { return "WF&&CT IOL Selection Analysis"; }
+	virtual CString GetNameImpl() const override { return "IOL Selection Analysis"; }
 	virtual CWndSettings* GetWndSettings() override { return m_pWndSettings + (m_d % 3); }
 
 	virtual void CreateMenu() override;

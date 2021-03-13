@@ -34,7 +34,7 @@ private:
 	CCTExam* m_pCTExam1;
 	CCTExam* m_pCTExam2;
 
-	virtual CString GetName() override { return "OU WF and CT Overview"; }
+	virtual CString GetNameImpl() const override { return "OU WF and CT Overview"; }
 	virtual CWndSettings* GetWndSettings() override { return m_pWndSettings + (m_d % 3); }
 
 	virtual void CreateMenu() override;

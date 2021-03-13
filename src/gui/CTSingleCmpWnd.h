@@ -24,7 +24,7 @@ private:
 	CCTExam* m_pCTExam1;
 	CCTExam* m_pCTExam2;
 
-	virtual CString GetName() override { return "CT Comparison Display"; }
+	virtual CString GetNameImpl() const override { return "CT Comparison Display"; }
 	virtual CWndSettings* GetWndSettings() override { return m_pWndSettings; }
 
 	virtual void CreateMenu() override;

@@ -19,7 +19,7 @@ private:
 
 	CCTExam* m_pCTExam;
 
-	virtual CString GetName() override { return "CT Verification Display"; }
+	virtual CString GetNameImpl() const override { return "CT Verification Display"; }
 	virtual CWndSettings* GetWndSettings() override { return m_pWndSettings; }
 
 	virtual void CreateMenu() override;

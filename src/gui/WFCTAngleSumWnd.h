@@ -59,12 +59,12 @@ private:
 							 //521
 
 
-	virtual CString GetName() override
+	virtual CString GetNameImpl() const override
 	{
 		// WFCT Angle k/a
 		if (m_k == 2)//Angle K/A
 		{
-			return "WF&&CT Angle Kappa/Alpha";
+			return "Angle Kappa/Alpha";
 		}
 		else// WFCT Angle k/a
 		{

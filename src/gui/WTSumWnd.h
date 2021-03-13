@@ -31,7 +31,7 @@ private:
 
 	void LensInfo(RECT Rect, int NumRows);
 
-	virtual CString GetName() override { return "WaveTouch Lens Order Display"; }
+	virtual CString GetNameImpl() const override { return "WaveTouch Lens Order Display"; }
 	virtual CWndSettings* GetWndSettings() override { return m_pWndSettings + m_d; }
 
 	virtual void CreateMenu() override;
