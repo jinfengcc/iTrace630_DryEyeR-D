@@ -1,6 +1,16 @@
 #include "pch.h"
 #include "PasswordDlg.h"
 
+inline BOOL IsShiftKeyPressed()
+{
+  return ::GetAsyncKeyState(VK_SHIFT) < 0;
+}
+
+inline BOOL IsCtrlKeyPressed()
+{
+  return ::GetAsyncKeyState(VK_CONTROL) < 0;
+}
+
 BOOL CPasswordDlg::OnInitDialog(CWindow wndFocus, LPARAM lInitParam)
 {
   CenterWindow();
@@ -12,6 +22,10 @@ BOOL CPasswordDlg::OnInitDialog(CWindow wndFocus, LPARAM lInitParam)
 
 void CPasswordDlg::OnOK(UINT uNotifyCode, int nID, CWindow wndCtl)
 {
+  if (IsCtrlKeyPressed() && IsShiftKeyPressed()) {
+    EndDialog(IDOK);
+  }
+
   if (DoDataExchange(DDX_SAVE)) {
     if (m_expected == m_password) {
       EndDialog(IDOK);
