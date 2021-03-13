@@ -83,7 +83,7 @@ dicom::Work BatchDicomHelper::DcmWork(ViewType vt) const
     work.imageLaterality   = exam->IsOD() ? "R" : "L";
     work.softwareVersion  = fmt::format("{}.{}.{}.{}", VERSION_MAJOR_STR, VERSION_MINOR_STR, VERSION_YEAR_STR, VERSION_DAY_STR).c_str();
 
-    if (vt == ViewType::WFCT_OUOverview)
+    if (vt == ViewType::_WFCT_OUOverview)
       work.imageLaterality = "B";
 
     work.modality             = "OPM";

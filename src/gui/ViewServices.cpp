@@ -86,7 +86,7 @@ auto ViewServices::CreateView(ViewType type, const RECT *rc1, int show) const ->
   {
     WF_VisualAcuity = 0,
     WF_RMS          = 1,
-    WF_DepthOfFocus = 4,//6.3.0 from 3 to 4 Fix inconsistency
+    WF_DepthOfFocus = 4,
   };
 
   enum CT
@@ -139,16 +139,11 @@ auto ViewServices::CreateView(ViewType type, const RECT *rc1, int show) const ->
   case ViewType::_MISSING5:
     break;
 
-  ////6.3.0 Do no provide CWFSingleSoloWnd 
-  //case ViewType::WF_Aberation:
-  //  if (m_wfExam)
-  //    vp = std::make_unique<CWFSingleSoloWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, &Settings.m_TSsmSettings[1][0], show);
-  //  break;
-  ////6.3.0 Do no provide CWFSingleSoloWnd 
+  case ViewType::_WF_Aberation:
+    break;
 
-  //case ViewType::WF_Custom:
-  //  vp = CreateImpl<CWFSingleSumWnd, WF_WFCUSTOM_GUI>(rct, Settings.m_TSsmSettings[3][0]);
-  //  break;
+  case ViewType::_WF_Custom:
+    break;
 
   case ViewType::CT_Rings:
     if (m_ctExam)
@@ -175,9 +170,8 @@ auto ViewServices::CreateView(ViewType type, const RECT *rc1, int show) const ->
       vp = std::make_unique<CCTOsherAliWnd>(AfxGetMainWnd(), rct, m_ctExam, TRUE, show);
     break;
 
-  //case ViewType::CT_Custom:
-  //  vp = CreateImpl<CCTSingleSumWnd, CT_CUSTOM_GUI>(rct, Settings.m_CSsmSettings[1][0]);
-  //  break;
+  case ViewType::_CT_Custom:
+    break;
 
   case ViewType::WFCT_Change:
     if (m_wfExam != nullptr && m_ctExam != nullptr)
@@ -194,24 +188,21 @@ auto ViewServices::CreateView(ViewType type, const RECT *rc1, int show) const ->
       vp = std::make_unique<CWFCTSumWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_ctExam, &Settings.m_IDsmSettings[2][0], WFCT_MTF, "", show);
     break;
 
-  case ViewType::WFCT_OUOverview:
-    if (m_wfExam && m_wfExam2 && m_ctExam && m_ctExam2)
-      vp = std::make_unique<CWFCTOUSumWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_wfExam, m_ctExam2, m_ctExam2, &NewSettings.m_OWFCTSettings[0], show);
+  case ViewType::_WFCT_OUOverview:
+    //if (m_wfExam && m_wfExam2 && m_ctExam && m_ctExam2)
+    //  vp = std::make_unique<CWFCTOUSumWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_wfExam, m_ctExam2, m_ctExam2, &NewSettings.m_OWFCTSettings[0], show);
     break;
 
-  //case ViewType::WFCT_SumAna:
-  //  vp = CreateImpl<CWFCTSumAnaWnd, 0>(rct, NewSettings.m_WFCTSumAnaSettings[0]);
-  //  break;
+  case ViewType::_WFCT_SumAna:
+    break;
 
   case ViewType::WFCT_Iol:
     if (m_wfExam != nullptr && m_ctExam != nullptr)
       vp = std::make_unique<CWFCTIolWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_ctExam, &NewSettings.m_IOLSelSettings[0], show);
     break;
 
-  //case ViewType::WFCT_AngleKA:
-  //  if (m_wfExam != nullptr && m_ctExam != nullptr)
-  //    vp = std::make_unique<CWFCTAngleSumWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_ctExam, &Settings.m_TSsmSettings[2][0], 2, "", show);
-  //  break;
+  case ViewType::_WFCT_AngleKA:
+    break;
 
   case ViewType::WFCT_DysfunMD:
     if (m_wfExam != nullptr && m_ctExam != nullptr)
@@ -240,13 +231,11 @@ auto ViewServices::CreateView(ViewType type, const RECT *rc1, int show) const ->
   case ViewType::_MISSING26:
     break;
 
-  //case ViewType::WFCT_ExamResult:
-  //  vp = CreateImpl<CWFCTAcqSumWnd>(rct, Settings.m_TSvrSettings[0]);
-  //  break;
+  case ViewType::_WFCT_ExamResult:
+    break;
 
-  //case ViewType::WFCT_CornealSphAber:
-  //  vp = CreateImpl<CWFCTCorSphWnd>(rct, nullptr);
-  //  break;
+  case ViewType::_WFCT_CornealSphAber:
+    break;
 
   default:
     break;

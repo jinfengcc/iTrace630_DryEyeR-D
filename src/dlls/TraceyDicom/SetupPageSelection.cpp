@@ -27,32 +27,22 @@ BOOL CSetupPageSelection::DoDataExchange(BOOL bSaveAndValidate, UINT nCtlID)
   CheckBit(IDC_WFVA_CHECK         , ViewType::WF_VisualAcuity    );   // WF Visual Acuity
   CheckBit(IDC_DEPTHFOCUS_CHECK   , ViewType::WF_DepthFocus      );   // WF Depth of Focus
   CheckBit(IDC_WFRMS_CHECK        , ViewType::WF_RMS             );   // WF/RMS
-  //                                                                  // Check(ViewType::_MISSING5)
-  CheckBit(IDC_WFAA_CHECK         , ViewType::WF_Aberation       );   // Aberration Analysis
-  CheckBit(IDC_WFCUSTOM_CHECK     , ViewType::WF_Custom          );   // WF Custom
 
   CheckBit(IDC_CTRINGS_CHECK      , ViewType::CT_Rings           );   // CT Summary
   CheckBit(IDC_CTSU_CHECK         , ViewType::CT_Summary         );   // CT Summary
   CheckBit(IDC_CTKE_CHECK         , ViewType::CT_Keratometry     );   // Keratometry
   CheckBit(IDC_CT3D_CHECK         , ViewType::CT_3DElevation     );   // 3D Z-Elevation
   CheckBit(IDC_CTOSHER_CHECK      , ViewType::CT_OsherIris       );   // CT Osher
-  CheckBit(IDC_CTCUSTOM_CHECK     , ViewType::CT_Custom          );   // WF Custom
 
   CheckBit(IDC_WCCH_CHECK         , ViewType::WFCT_Change        );   // Chang Analysis
   CheckBit(IDC_WCSU_CHECK         , ViewType::WFCT_Summary       );   // WF/CT Summary
   CheckBit(IDC_WCVA_CHECK         , ViewType::WFCT_MTF           );   // WF/CT MTF
-  CheckBit(IDC_WCOU_CHECK         , ViewType::WFCT_OUOverview    );   // OU Overview
-  //CheckBit(IDC_WCSUMANA_CHECK     , ViewType::WFCT_SumAna        );   // Summary & Analysis
   CheckBit(IDC_WCIOL_CHECK        , ViewType::WFCT_Iol           );   // IOL Selection Assistant
-  //CheckBit(IDC_WFKA_CHECK       , ViewType::WFCT_AngleKA       );   // IOL Selection Assistant
-  CheckBit(IDC_DYSFUN_CHECK       , ViewType::WFCT_DysfunMD      );   // WF/CT Angel k/a
-  CheckBit(IDC_DYSPTFUN_CHECK     , ViewType::WFCT_DysfunPT      );   // Dysfunctional Analysis MD
-  CheckBit(IDC_ASTISOU_CHECK      , ViewType::WFCT_AstigmSrc     );   // Dysfunctional Analysis PT
-  CheckBit(IDC_TORLI_CHECK        , ViewType::WFCT_ToricCheck    );   // Astigmatism Source
-  CheckBit(IDC_WCCUSTOM_CHECK     , ViewType::WFCT_Custom        );   // Toric Check
-  //                                                                  // Check(ViewType::_MISSING26)
-  //CheckBit(IDC_WCCUSTOM_CHECK     , ViewType::WFCT_ExamResult    );   // WF/CT Custom
-  //CheckBit(IDC_EXAMRES_CHECK      , ViewType::WFCT_CornealSphAber);
+  CheckBit(IDC_DYSFUN_CHECK       , ViewType::WFCT_DysfunMD      );   // Dysfunctional Analysis MD
+  CheckBit(IDC_DYSPTFUN_CHECK     , ViewType::WFCT_DysfunPT      );   // Dysfunctional Analysis PT
+  CheckBit(IDC_ASTISOU_CHECK      , ViewType::WFCT_AstigmSrc     );   // Astigmatism Source
+  CheckBit(IDC_TORLI_CHECK        , ViewType::WFCT_ToricCheck    );   // Toric Check
+  CheckBit(IDC_WCCUSTOM_CHECK     , ViewType::WFCT_Custom        );
   // clang-format on
 
   if (bSaveAndValidate && m_cfg.selectionFlags == 0) {
@@ -74,7 +64,17 @@ void CSetupPageSelection::OnContextMenu(CWindow wnd, CPoint point)
   CMenu menu;
   menu.CreatePopupMenu();
 
-  enum { all_ct = 1001, no_ct, all_wf, no_wf, all_ctwf, no_ctwf, all, none };
+  enum
+  {
+    all_ct = 1001,
+    no_ct,
+    all_wf,
+    no_wf,
+    all_ctwf,
+    no_ctwf,
+    all,
+    none
+  };
 
   menu.AppendMenu(MF_STRING, all_ct, L"CT (All)");
   menu.AppendMenu(MF_STRING, no_ct, L"CT (None)");
@@ -91,14 +91,33 @@ void CSetupPageSelection::OnContextMenu(CWindow wnd, CPoint point)
   UINT uFlags = TPM_NONOTIFY | TPM_RETURNCMD | TPM_TOPALIGN | TPM_RIGHTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON;
   auto res    = menu.TrackPopupMenu(uFlags, point.x, point.y, *this);
 
-  constexpr auto CT = CombineEnumFlags(ViewType::CT_Rings, ViewType::CT_Summary, ViewType::CT_Keratometry, ViewType::CT_3DElevation,
-                                   ViewType::CT_OsherIris, ViewType::CT_Custom);
-  constexpr auto WF = CombineEnumFlags(ViewType::WF_Point, ViewType::WF_NearVision, ViewType::WF_VisualAcuity, ViewType::WF_DepthFocus,
-                                   ViewType::WF_RMS, ViewType::WF_Aberation, ViewType::WF_Custom);
-  constexpr auto WFCT =
-    CombineEnumFlags(ViewType::WFCT_Change, ViewType::WFCT_Summary, ViewType::WFCT_MTF, ViewType::WFCT_OUOverview,
-                     ViewType::WFCT_Iol, ViewType::WFCT_DysfunMD, ViewType::WFCT_DysfunPT, ViewType::WFCT_AstigmSrc,
-                     ViewType::WFCT_ToricCheck, ViewType::WFCT_Custom, ViewType::WFCT_CornealSphAber);
+  // clang-format off
+  constexpr auto CT = CombineEnumFlags(
+    ViewType::CT_Rings,
+    ViewType::CT_Summary,
+    ViewType::CT_Keratometry,
+    ViewType::CT_3DElevation,
+    ViewType::CT_OsherIris
+  );
+  constexpr auto WF = CombineEnumFlags(
+    ViewType::WF_Point,
+    ViewType::WF_NearVision,
+    ViewType::WF_VisualAcuity,
+    ViewType::WF_DepthFocus,
+    ViewType::WF_RMS
+  );
+  constexpr auto WFCT = CombineEnumFlags(
+    ViewType::WFCT_Change,
+    ViewType::WFCT_Summary,
+    ViewType::WFCT_MTF,
+    ViewType::WFCT_Iol,
+    ViewType::WFCT_DysfunMD,
+    ViewType::WFCT_DysfunPT,
+    ViewType::WFCT_AstigmSrc,
+    ViewType::WFCT_ToricCheck,
+    ViewType::WFCT_Custom
+  );
+  // clang-format on
 
   switch (res) {
   case all_ct:

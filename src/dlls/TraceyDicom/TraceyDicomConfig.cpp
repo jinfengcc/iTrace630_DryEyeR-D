@@ -19,7 +19,7 @@ namespace {
       DicomLog::Instance()->SetLevel(m_cfg.loggingLevel);
 
       if (m_cfg.selectionFlags == 0)
-        m_cfg.selectionFlags = CombineEnumFlags(ViewType::CT_Summary, ViewType::WF_Custom);
+        m_cfg.selectionFlags = CombineEnumFlags(ViewType::CT_Summary, ViewType::WF_VisualAcuity);
     }
     void Save()
     {
@@ -30,7 +30,7 @@ namespace {
 
 
     // clang-format off
-    BEGIN_REGPROP_MAP(WorklistDialogSettings                             )
+    BEGIN_REGPROP_MAP(WorklistDialogSettings)
       REG_PROPERTY(L"MWLhost"           , m_cfg.mwl.host           )
       REG_PROPERTY(L"MWLport"           , m_cfg.mwl.port           )
       REG_PROPERTY(L"MWLcallAETitle"    , m_cfg.mwl.remoteAETitle  )
@@ -41,7 +41,7 @@ namespace {
       REG_PROPERTY(L"StorecallingTitle" , m_cfg.store.localAETitle )
       REG_PROPERTY(L"ViewSelection"     , m_cfg.selectionFlags     )
       REG_PROPERTY(L"LoggingLevel"      , m_cfg.loggingLevel       )
-    END_REGPROP_MAP(                                               )
+    END_REGPROP_MAP()
     // clang-format on
   };
 } // namespace

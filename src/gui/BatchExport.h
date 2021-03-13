@@ -20,6 +20,4 @@ private:
 
   CPatient *            patient{};
   std::vector<ExamPair> m_exams;
-
-  void HandleWFCTOU(ViewType);
 };
