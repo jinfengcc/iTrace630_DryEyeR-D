@@ -730,7 +730,7 @@ void CCalDlg::GetDlgData()
   m_pCalibration->WFVideo2Settings.WhiteLEDsPowerLevel = atoi(strA);
   // WF color video brightness
   m_WFVideo2BrightnessEdit.GetWindowText(s);
-  CStringA ansiStra2(s);
+  strA                                        = s;//fix exprom saving no alert bug
   m_pCalibration->WFVideo2Settings.Brightness = atoi(strA);
   // WF color video contrast
   m_WFVideo2ContrastEdit.GetWindowText(s);
