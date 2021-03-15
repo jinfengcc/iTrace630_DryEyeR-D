@@ -14,6 +14,7 @@
 
 #include "Data.h"
 #include "AppVersion.h"
+#include "AcquisitionParameters.h"
 
 //***************************************************************************************
 //***************************************************************************************
@@ -475,19 +476,19 @@ BOOL CDB::IsReadOnly()
 HMODULE CDB::LoadLibrary(const int Type)
 {
 	if (Type == DATABASE_TYPE_MSJET_OLD) {
-#ifdef _DEBUG	
+#ifdef _DEBUG
 		return ::LoadLibrary(_T("C:\\Tracey\\tdbmsjet31.dll"));
-#else	  
+#else
 		return ::LoadLibrary(_T("tdbmsjet31.dll"));
 #endif
 	}
 
 	if (Type == DATABASE_TYPE_MSJET) {
-#ifdef _DEBUG		 	 
+#ifdef _DEBUG
 		// return ::LoadLibrary("D:\\Tracey\\TDBMSJet61\\Release\\tdbmsjet5.dll");//
 		//return ::LoadLibrary("C:\\Tracey\\tdbmsjet61.dll");//
-		return ::LoadLibrary(_T("C:\\Tracey\\tdbmsjet62.dll"));//6.2.0 For Dicom 
-#else		
+		return ::LoadLibrary(_T("C:\\Tracey\\tdbmsjet62.dll"));//6.2.0 For Dicom
+#else
 		//return ::LoadLibrary("tdbmsjet61.dll");//
 		return ::LoadLibrary(_T("tdbmsjet62.dll"));//6.2.0 For Dicom
 #endif
@@ -764,14 +765,14 @@ CString CDB::SplitDatabaseProcess(CString FolderName, BOOL& NeedChangeLinker, BO
 
 
 	if (!::PathFileExists(LocalServerFolderName + "\\tdb_linker.mdb"))
-	{	
+	{
 		NeedChangeLinker = TRUE;
 	}
 	else
 	{
 		//Check the date, if it is less than installation then delete this file and generate a new one for 6.2.0 again
 		CString linkerFile = LocalServerFolderName + "\\tdb_linker.mdb";
-		
+
 		WIN32_FILE_ATTRIBUTE_DATA attr;
 		GetFileAttributesEx(linkerFile, GetFileExInfoStandard, &attr);
 
@@ -780,7 +781,7 @@ CString CDB::SplitDatabaseProcess(CString FolderName, BOOL& NeedChangeLinker, BO
 		SYSTEMTIME time;
 		FileTimeToSystemTime(&LastModTime, &time);
 
-		//Read the installation day and compare to file generated date		
+		//Read the installation day and compare to file generated date
 		BOOL ReGen = FALSE;
 
 		CINIParser IniPar;
@@ -822,7 +823,7 @@ CString CDB::SplitDatabaseProcess(CString FolderName, BOOL& NeedChangeLinker, BO
 		}
 		//Done
 	}
-	//If the linker database folder does not exist, create it 
+	//If the linker database folder does not exist, create it
 
 	return LocalServerFolderName;
 }
@@ -846,7 +847,7 @@ void CDB::LocalConnect(const BOOL ReadOnly)
 
 	BOOL FirstRun = FALSE;
 	BOOL NeedChangeLinker = FALSE;
-	CString LocalServerFolderName = "";//If the database is from server, here save the front-end database	
+	CString LocalServerFolderName = "";//If the database is from server, here save the front-end database
 
 	CStringA AstrLocal(LocalServerFolderName);
 
@@ -1068,7 +1069,7 @@ void CDB::LocalConnect(const BOOL ReadOnly)
 
 	else if (Type == DATABASE_TYPE_MSJET)
 	{
-		//		
+		//
 		if (FirstRun)
 		{
 			if (!DllConnect(AFolderName, "", "", FALSE))
@@ -1211,7 +1212,7 @@ void CDB::Connect(const BOOL ReadOnly)
 
 			::CreateDirectory(FolderName, NULL);
 		}
-		
+
 		CString DemoFileName = MAIN_DIR + "\\Data\\MSJetEx\\exc.zip";
 		CString DbFileName = MAIN_DIR + "\\Data\\MSJetEx\\tdb.mdb";
 		if (!::PathFileExists(DemoFileName) && ::PathFileExists(DbFileName))
@@ -1442,7 +1443,7 @@ void CDB::Connect(const BOOL ReadOnly)
 
 				DllDisconnect();
 			}
-			
+
 			if (!DllCreateLinker(AstrLocal + "\\tdb_linker.mdb", AstrFolder))
 			{
 				::Error("Failed to create linked Database.");
@@ -1724,7 +1725,7 @@ void CDB::LoadPhysicians()
 	{
 		m_Physicians.Create(NumPhysicians);
 
-		for (int i = 0; i < NumPhysicians; i++) 
+		for (int i = 0; i < NumPhysicians; i++)
 		{
 			m_Physicians[i].m_PhysicianID = pPhysicians[i].PhysicianID;
 			m_Physicians[i].m_LastName = pPhysicians[i].LastName;
@@ -1952,7 +1953,7 @@ void CDB::PatientClassToStruct(const CPatient& Patient, TDB_PATIENT* pPatient)
 	pPatient->RegHour = Patient.m_RegHour;
 	pPatient->RegMinute = Patient.m_RegMinute;
 
-	pPatient->IsDicom = Patient.m_IsDicom; //6.2.0 For Dicom 
+	pPatient->IsDicom = Patient.m_IsDicom; //6.2.0 For Dicom
 }
 
 //***************************************************************************************
@@ -1980,7 +1981,7 @@ void CDB::PatientStructToClass(const TDB_PATIENT* pPatient, CPatient& Patient)
 	Patient.m_EMail = pPatient->EMail;
 	Patient.m_Note = pPatient->Note;
 
-	//[cjf***04302012*003*]  
+	//[cjf***04302012*003*]
 	Patient.m_RegYear = pPatient->RegYear;
 	Patient.m_RegMonth = pPatient->RegMonth;
 	Patient.m_RegDay = pPatient->RegDay;
@@ -2141,44 +2142,44 @@ void CDB::LoadExamHeaders(const GUID& PatientID)
 
 //***************************************************************************************
 //
+
 BOOL CDB::SaveExamHeaders(CExamHeader& ExamHeader)
 {
 	if (m_hDLL == NULL) return FALSE;
 
-	TDB_EXAM_HEADER* pExamHeader = new TDB_EXAM_HEADER;
+	TDB_EXAM_HEADER *pExamHeader = new TDB_EXAM_HEADER;
 
-	pExamHeader->ExamID = ExamHeader.m_ExamID;
-	pExamHeader->PatientID = ExamHeader.m_PatientID;
-	pExamHeader->CalibrationID = ExamHeader.m_CalibrationID;
-	pExamHeader->ClinicID = ExamHeader.m_ClinicID;
-	pExamHeader->PhysicianID = ExamHeader.m_PhysicianID;
-	pExamHeader->OperatorID = ExamHeader.m_OperatorID;
-	pExamHeader->Type = ExamHeader.m_Type;
-	pExamHeader->Mode = ExamHeader.m_Mode;
-	pExamHeader->Year = ExamHeader.m_Year;
-	pExamHeader->Month = ExamHeader.m_Month;
-	pExamHeader->Day = ExamHeader.m_Day;
-	pExamHeader->Hour = ExamHeader.m_Hour;
-	pExamHeader->Minute = ExamHeader.m_Minute;
-	pExamHeader->Second = ExamHeader.m_Second;
-	pExamHeader->Eye = ExamHeader.m_Eye;
-	pExamHeader->Preop = ExamHeader.m_Preop;
-	pExamHeader->SeriesNumber = ExamHeader.m_SeriesNumber;
-	pExamHeader->SoftwareVersion = ExamHeader.m_SoftwareVersion;
-	pExamHeader->Reserved3 = -1;
-	pExamHeader->Reserved4 = -1;
+  pExamHeader->ExamID          = ExamHeader.m_ExamID;
+  pExamHeader->PatientID       = ExamHeader.m_PatientID;
+  pExamHeader->CalibrationID   = ExamHeader.m_CalibrationID;
+  pExamHeader->ClinicID        = ExamHeader.m_ClinicID;
+  pExamHeader->PhysicianID     = ExamHeader.m_PhysicianID;
+  pExamHeader->OperatorID      = ExamHeader.m_OperatorID;
+  pExamHeader->Type            = ExamHeader.m_Type;
+  pExamHeader->Mode            = ExamHeader.m_Mode;
+  pExamHeader->Year            = ExamHeader.m_Year;
+  pExamHeader->Month           = ExamHeader.m_Month;
+  pExamHeader->Day             = ExamHeader.m_Day;
+  pExamHeader->Hour            = ExamHeader.m_Hour;
+  pExamHeader->Minute          = ExamHeader.m_Minute;
+  pExamHeader->Second          = ExamHeader.m_Second;
+  pExamHeader->Eye             = ExamHeader.m_Eye;
+  pExamHeader->Preop           = ExamHeader.m_Preop;
+  pExamHeader->SeriesNumber    = ExamHeader.m_SeriesNumber;
+  pExamHeader->SoftwareVersion = ExamHeader.m_SoftwareVersion;
+  pExamHeader->legacy          = 0;
+  pExamHeader->Reserved4       = 0;
 
-	CString s = ExamHeader.m_Note;
-	if (s.GetLength() == 100)
-	{
-		s = s.Left(99);
-	}
-	CStringA Astr(s);
-	strncpy(pExamHeader->Note, Astr, 100);
+  CString s = ExamHeader.m_Note;
+  if (s.GetLength() == 100) {
+    s = s.Left(99);
+  }
+  CStringA Astr(s);
+  strncpy(pExamHeader->Note, Astr, 100);
 
-	BOOL Res = DllSaveExamHeader(pExamHeader);
+  BOOL Res = DllSaveExamHeader(pExamHeader);
 
-	return Res;
+  return Res;
 }
 
 //***************************************************************************************
@@ -2209,7 +2210,7 @@ CExamHeader* CDB::GetExamHeader(const GUID& ExamID)
 //	GetFolderName(FolderName);
 //
 //	CString FileName = FolderName + "\\ExamHeader\\" + PatientIDStr + ".csv";
-//	
+//
 //	if (!::PathFileExists(FileName))
 //	{
 //		m_NumExams = 0;
@@ -2403,7 +2404,7 @@ CExamHeader* CDB::GetExamHeader(const GUID& ExamID)
 //	GetFolderName(FolderName);
 //
 //	CStringA FileName = FolderName + "\\ExamHeader\\" + PatientIDStr + ".csv";
-//	
+//
 //	FILE* pFileW = fopen(FileName, "a");
 //
 //	fprintf(pFileW, "%s\n", ThisExamStr.ExamID_Str);
@@ -2435,7 +2436,7 @@ CExamHeader* CDB::GetExamHeader(const GUID& ExamID)
 //
 ////Big Database Research since 03062019
 //BOOL CDB::SaveTxTExamHeaders(CExamHeader* In_ExamHeader)
-//{	
+//{
 //	LoadTxtExamHeaders(In_ExamHeader->m_PatientID);
 //
 //	int ExamSize = ::DB.m_ExamHeaders.GetSize();
@@ -2456,7 +2457,7 @@ CExamHeader* CDB::GetExamHeader(const GUID& ExamID)
 //	BOOL Found = FALSE;
 //
 //	FILE* pFileW = fopen(FileName, "w");
-//	
+//
 //	for (int e = 0; e < ExamSize; e++)
 //	{
 //		CExamHeader* eExamHeader = &::DB.m_ExamHeaders[e];
@@ -2808,7 +2809,7 @@ GUID CDB::LoadFellowID(const GUID& ExamID, real_t& scanSize, int& NumImages, int
 
 		if (DecompressedSize <= 0)
 		{
-			//free(pDecompressedData); 
+			//free(pDecompressedData);
 			return FellowExamID;
 		}
 
@@ -2828,7 +2829,7 @@ GUID CDB::LoadFellowID(const GUID& ExamID, real_t& scanSize, int& NumImages, int
 
 		if (CompressedSize <= 0)
 		{
-			//free(pDecompressedData); 
+			//free(pDecompressedData);
 			return FellowExamID;
 		}
 
@@ -2997,7 +2998,7 @@ GUID CDB::LoadFellowID(const GUID& ExamID, real_t& scanSize, int& NumImages, int
 //{
 //	CString FolderName;
 //	CFileFind finder;
-//	
+//
 //	CStringA FileName = DataFolderName + "\\ExamHeader\\ExamIdNum.txt";
 //
 //	//Read the Exams Numum
@@ -3071,7 +3072,7 @@ GUID CDB::LoadFellowID(const GUID& ExamID, real_t& scanSize, int& NumImages, int
 //
 //		PatientIDs += PatientID + "*";
 //	}
-//	//Read Current PatientIDs from 
+//	//Read Current PatientIDs from
 //
 //	CFileFind finder;
 //
@@ -3119,7 +3120,7 @@ GUID CDB::LoadFellowID(const GUID& ExamID, real_t& scanSize, int& NumImages, int
 //		while (TRUE)
 //		{
 //			FoundID = PatientIDs.Find("*", 0);
-//			
+//
 //			pIDStr = PatientIDs.Left(FoundID );
 //
 //			StrToGUID(pIDStr, NewPatientID);
@@ -3181,7 +3182,7 @@ GUID CDB::LoadFellowID(const GUID& ExamID, real_t& scanSize, int& NumImages, int
 //
 //	//int Ut = (int)clock() - St;
 //
-//	//int a = 0;	
+//	//int a = 0;
 //}
 ////Big Database Research since 03062019
 
@@ -3212,7 +3213,7 @@ BOOL CDB::LoadWFExam(const GUID& ExamID, CWFExam* pWFExam)
 		}
 	}
 
-	else 
+	else
 	{
 		 //Get compressed size
 		int CompressedSize = DllGetExamSize(ExamID);
@@ -3220,7 +3221,7 @@ BOOL CDB::LoadWFExam(const GUID& ExamID, CWFExam* pWFExam)
 		// Allocate memory
 		void* pCompressedData = malloc(CompressedSize);
 		// Load compressed exam data
-		if (!DllLoadExam(ExamID, pCompressedData, CompressedSize)) 
+		if (!DllLoadExam(ExamID, pCompressedData, CompressedSize))
 		{
 			free(pCompressedData);
 			return FALSE;
@@ -3263,11 +3264,11 @@ BOOL CDB::LoadWFExam(const GUID& ExamID, CWFExam* pWFExam)
 	pWFExam->m_Header.m_SeriesNumber = pExamHeader->SeriesNumber;
 	pWFExam->m_Header.m_Mode = pExamHeader->Mode;
 
-	if (Type == DATABASE_TYPE_MSJET_OLD) 
+	if (Type == DATABASE_TYPE_MSJET_OLD)
 	{
 		pWFExam->m_Header.m_SoftwareVersion = SOFTWARE_VERSION_3;
 	}
-	else if (pExamHeader->SoftwareVersion == 0xffffffff) 
+	else if (pExamHeader->SoftwareVersion == 0xffffffff)
 	{
 		pWFExam->m_Header.m_SoftwareVersion = SOFTWARE_VERSION_4;
 	}
@@ -3355,7 +3356,7 @@ BOOL CDB::LoadWFExam(const GUID& ExamID, CWFExam* pWFExam)
 	else {
 		pWFExam->m_AlignmentMethod = ALIGNMENT_PUPIL_CENTER;
 	}
-	
+
 	//Fellow exam ID
 	if (pExamData->StructSize >= 6168)
 	{
@@ -3378,15 +3379,15 @@ BOOL CDB::LoadWFExam(const GUID& ExamID, CWFExam* pWFExam)
 
 	//520
 	//Radial Ruler and Inlay
-	//6.2.0 New Bug 
+	//6.2.0 New Bug
 	BOOL RaOk = (pExamData->RadialRulerR > 0);
 	OK = ( pExamData->StructSize >= 6209 && pExamData->RadialRulerOk == 1 && RaOk);
 	pImage->m_Ra_ok = OK;
 	pImage->m_Ra_x_um = OK ? pExamData->RadialRulerX0 : 0.0;
 	pImage->m_Ra_y_um = OK ? pExamData->RadialRulerY0 : 0.0;
 	pImage->m_Ra_r_um = OK ? pExamData->RadialRulerR : 0.0;
-	
-	BOOL InlayOk = (pExamData->InlayR0 > 0);//6.2.0 New Bug 
+
+	BOOL InlayOk = (pExamData->InlayR0 > 0);//6.2.0 New Bug
 	OK = (pExamData->StructSize >= 6242 && pExamData->InlayOk == 1 && InlayOk);
 	pImage->m_In_ok = OK;
 	pImage->m_In_x_um = OK ? pExamData->InlayX0 : 0.0;
@@ -3395,7 +3396,7 @@ BOOL CDB::LoadWFExam(const GUID& ExamID, CWFExam* pWFExam)
 	pImage->m_In_In_r_um = OK ? pExamData->InlayInR0 : 0.0;
 
 	real_t Dis = sqrt((pExamData->LinearRulerX1 - pExamData->LinearRulerX0)*(pExamData->LinearRulerX1 - pExamData->LinearRulerX0) + (pExamData->LinearRulerY1 - pExamData->LinearRulerY0)*(pExamData->LinearRulerY1 - pExamData->LinearRulerY0));
-	BOOL RulerOk = (Dis > 0 );//6.2.0 New Bug 
+	BOOL RulerOk = (Dis > 0 );//6.2.0 New Bug
 	OK = (pExamData->StructSize >= 6275 && pExamData->LinearRulerOk == 1 && RulerOk);
 	pImage->m_LRa_ok = OK;
 	pImage->m_LRa_x0_um = OK ? pExamData->LinearRulerX0 : 0.0;
@@ -3429,7 +3430,7 @@ BOOL CDB::LoadWFExam(const GUID& ExamID, CWFExam* pWFExam)
 			pScanPoint->m_Bad = pPoint->Bad;
 			pScanPoint->m_r_um = pPoint->Radius;
 			pScanPoint->m_a_rd = pPoint->Angle;
-			
+
 			ushort Signal[512];
 			memcpy(&Signal, pPoint->DataX, 1024);
 
@@ -3541,27 +3542,27 @@ BOOL CDB::SaveWFExam(CWFExam* pWFExam)
 	uchar* p = pData;
 
 	// Fill out exam header
-	TDB_EXAM_HEADER* pExamHeader = (TDB_EXAM_HEADER*)p;
-	pExamHeader->ExamID = pWFExam->m_Header.m_ExamID;
-	pExamHeader->PatientID = pWFExam->m_Header.m_PatientID;
-	pExamHeader->CalibrationID = pWFExam->m_Header.m_CalibrationID;
-	pExamHeader->ClinicID = pWFExam->m_Header.m_ClinicID;
-	pExamHeader->PhysicianID = pWFExam->m_Header.m_PhysicianID;
-	pExamHeader->OperatorID = pWFExam->m_Header.m_OperatorID;
-	pExamHeader->Type = pWFExam->m_Header.m_Type;
-	pExamHeader->Mode = pWFExam->m_Header.m_Mode;
-	pExamHeader->Year = pWFExam->m_Header.m_Year;
-	pExamHeader->Month = pWFExam->m_Header.m_Month;
-	pExamHeader->Day = pWFExam->m_Header.m_Day;
-	pExamHeader->Hour = pWFExam->m_Header.m_Hour;
-	pExamHeader->Minute = pWFExam->m_Header.m_Minute;
-	pExamHeader->Second = pWFExam->m_Header.m_Second;
-	pExamHeader->Eye = pWFExam->m_Header.m_Eye;
-	pExamHeader->Preop = pWFExam->m_Header.m_Preop;
-	pExamHeader->SeriesNumber = pWFExam->m_Header.m_SeriesNumber;
-	pExamHeader->SoftwareVersion = pWFExam->m_Header.m_SoftwareVersion;
-	pExamHeader->Reserved3 = -1;
-	pExamHeader->Reserved4 = -1;
+  auto pExamHeader = reinterpret_cast<TDB_EXAM_HEADER *>(p);
+
+  pExamHeader->ExamID          = pWFExam->m_Header.m_ExamID;
+  pExamHeader->PatientID       = pWFExam->m_Header.m_PatientID;
+  pExamHeader->CalibrationID   = pWFExam->m_Header.m_CalibrationID;
+  pExamHeader->ClinicID        = pWFExam->m_Header.m_ClinicID;
+  pExamHeader->PhysicianID     = pWFExam->m_Header.m_PhysicianID;
+  pExamHeader->OperatorID      = pWFExam->m_Header.m_OperatorID;
+  pExamHeader->Type            = pWFExam->m_Header.m_Type;
+  pExamHeader->Mode            = pWFExam->m_Header.m_Mode;
+  pExamHeader->Year            = pWFExam->m_Header.m_Year;
+  pExamHeader->Month           = pWFExam->m_Header.m_Month;
+  pExamHeader->Day             = pWFExam->m_Header.m_Day;
+  pExamHeader->Hour            = pWFExam->m_Header.m_Hour;
+  pExamHeader->Minute          = pWFExam->m_Header.m_Minute;
+  pExamHeader->Second          = pWFExam->m_Header.m_Second;
+  pExamHeader->Eye             = pWFExam->m_Header.m_Eye;
+  pExamHeader->Preop           = pWFExam->m_Header.m_Preop;
+  pExamHeader->SeriesNumber    = pWFExam->m_Header.m_SeriesNumber;
+  pExamHeader->SoftwareVersion = pWFExam->m_Header.m_SoftwareVersion;
+  pExamHeader->analogCamera    = AcquisitionParameters::AnalogCamera();
 
 	G_As = pWFExam->m_Header.m_Note;
 	strncpy(pExamHeader->Note, G_As, 100);
@@ -3958,7 +3959,7 @@ BOOL CDB::LoadCTExam(const GUID& ExamID, CCTExam* pCTExam)
 		pColorImage->m_ve_x_um = OK ? pExamData->ColorVertexX : 0.0;
 		pColorImage->m_ve_y_um = OK ? pExamData->ColorVertexY : 0.0;
 
-		//Radial Ruler	
+		//Radial Ruler
 		OK = pExamData->StructSize >= 86763 && pExamData->ColorRadialRulerOk == 1;
 		pColorImage->m_Ra_ok = OK;
 		pColorImage->m_Ra_x_um = OK ? pExamData->ColorRadialRulerX0 : 0.0;
@@ -3992,7 +3993,7 @@ BOOL CDB::LoadCTExam(const GUID& ExamID, CCTExam* pCTExam)
 	p += JPGSize;
 
 	////[520]
-	// Color image  
+	// Color image
 	if (numberImgs == 2)
 	{
 		JPGSize = *((int*)p);
@@ -4063,26 +4064,25 @@ BOOL CDB::SaveCTExam(CCTExam* pCTExam)
 
 	// Fill out exam header
 	TDB_EXAM_HEADER* pExamHeader = (TDB_EXAM_HEADER*)p;
-	pExamHeader->ExamID = pCTExam->m_Header.m_ExamID;
-	pExamHeader->PatientID = pCTExam->m_Header.m_PatientID;
-	pExamHeader->CalibrationID = pCTExam->m_Header.m_CalibrationID;
-	pExamHeader->ClinicID = pCTExam->m_Header.m_ClinicID;
-	pExamHeader->PhysicianID = pCTExam->m_Header.m_PhysicianID;
-	pExamHeader->OperatorID = pCTExam->m_Header.m_OperatorID;
-	pExamHeader->Type = pCTExam->m_Header.m_Type;
-	pExamHeader->Mode = pCTExam->m_Header.m_Mode;
-	pExamHeader->Year = pCTExam->m_Header.m_Year;
-	pExamHeader->Month = pCTExam->m_Header.m_Month;
-	pExamHeader->Day = pCTExam->m_Header.m_Day;
-	pExamHeader->Hour = pCTExam->m_Header.m_Hour;
-	pExamHeader->Minute = pCTExam->m_Header.m_Minute;
-	pExamHeader->Second = pCTExam->m_Header.m_Second;
-	pExamHeader->Eye = pCTExam->m_Header.m_Eye;
-	pExamHeader->Preop = pCTExam->m_Header.m_Preop;
-	pExamHeader->SeriesNumber = pCTExam->m_Header.m_SeriesNumber;
-	pExamHeader->SoftwareVersion = pCTExam->m_Header.m_SoftwareVersion;
-	pExamHeader->Reserved3 = -1;
-	pExamHeader->Reserved4 = -1;
+  pExamHeader->ExamID          = pCTExam->m_Header.m_ExamID;
+  pExamHeader->PatientID       = pCTExam->m_Header.m_PatientID;
+  pExamHeader->CalibrationID   = pCTExam->m_Header.m_CalibrationID;
+  pExamHeader->ClinicID        = pCTExam->m_Header.m_ClinicID;
+  pExamHeader->PhysicianID     = pCTExam->m_Header.m_PhysicianID;
+  pExamHeader->OperatorID      = pCTExam->m_Header.m_OperatorID;
+  pExamHeader->Type            = pCTExam->m_Header.m_Type;
+  pExamHeader->Mode            = pCTExam->m_Header.m_Mode;
+  pExamHeader->Year            = pCTExam->m_Header.m_Year;
+  pExamHeader->Month           = pCTExam->m_Header.m_Month;
+  pExamHeader->Day             = pCTExam->m_Header.m_Day;
+  pExamHeader->Hour            = pCTExam->m_Header.m_Hour;
+  pExamHeader->Minute          = pCTExam->m_Header.m_Minute;
+  pExamHeader->Second          = pCTExam->m_Header.m_Second;
+  pExamHeader->Eye             = pCTExam->m_Header.m_Eye;
+  pExamHeader->Preop           = pCTExam->m_Header.m_Preop;
+  pExamHeader->SeriesNumber    = pCTExam->m_Header.m_SeriesNumber;
+  pExamHeader->SoftwareVersion = pCTExam->m_Header.m_SoftwareVersion;
+  pExamHeader->analogCamera    = AcquisitionParameters::AnalogCamera();
 
 	G_As = pCTExam->m_Header.m_Note;
 	strncpy(pExamHeader->Note, G_As, 100);
@@ -4400,7 +4400,7 @@ BOOL CDB::Import(const CString& FileName)
 					}
 					free(pDecompressedData);
 				}
-				//601 06092015 for loading averaged exam 
+				//601 06092015 for loading averaged exam
 				else if (k == 8)
 				{
 					CAveExamInfo* AveExamInfo = (CAveExamInfo*)pData;

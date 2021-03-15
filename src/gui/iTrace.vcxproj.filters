@@ -881,6 +881,9 @@
     <ClCompile Include="PreBtn.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
+    <ClCompile Include="AcquisitionParameters.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PatientDlg.h">
@@ -1449,6 +1452,9 @@
     </ClInclude>
     <ClInclude Include="PreBtn.h">
       <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="AcquisitionParameters.h">
+      <Filter>Acquisition</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

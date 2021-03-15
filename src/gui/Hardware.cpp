@@ -6,6 +6,7 @@
 #include "WinUser.h"
 #include <libs\LoggingLib\TkTraceWin.h>
 #include <libs/CommonLib/Compression/Compression.h>
+#include "AcquisitionParameters.h"
 
 //***************************************************************************************
 //***************************************************************************************
@@ -128,6 +129,13 @@ void ResetCalibration(CALIBRATION* pCalibration)
 CHW::CHW()
 {
   m_hiresCamera = std::make_unique<HardwareHiresCamera>();
+  if (m_hiresCamera && m_hiresCamera->Connected()) {
+    AcquisitionParameters::CreateInstance(AcquisitionParameters::CameraType::ids);
+  }
+  else {
+    AcquisitionParameters::CreateInstance(AcquisitionParameters::CameraType::analog);
+  }
+  
   //if (m_hiresCamera->Connected())
   //{
   //  m_VideoWidth     = m_hiresCamera->GetWidth();

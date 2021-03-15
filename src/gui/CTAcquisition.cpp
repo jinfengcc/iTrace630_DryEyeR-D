@@ -8,6 +8,7 @@
 #include "CTAcquisition.h"
 #include "AppVersion.h"
 #include "libs/LoggingLib/TkTraceWin.h"
+#include "AcquisitionParameters.h"
 
 //***************************************************************************************
 //***************************************************************************************
@@ -30,12 +31,12 @@ CCTAcquisition::CCTAcquisition(CHW *pHW, BOOL ShowRedDot)
   // Get a test video folder name by time
   SYSTEMTIME Time;
   ::GetLocalTime(&Time);
-  m_TestVideoFolder.Format( _T("C:\\1\\TestCTVideo\\%i_%02i_%02i_%02i_%02i_%02i\\"),Time.wYear, Time.wMonth, Time.wDay,Time.wHour, Time.wMinute, Time.wSecond);
+  m_TestVideoFolder.Format(_T("C:\\1\\TestCTVideo\\%i_%02i_%02i_%02i_%02i_%02i\\"), Time.wYear, Time.wMonth, Time.wDay, Time.wHour, Time.wMinute, Time.wSecond);
 
   ::CreateDirectory(m_TestVideoFolder, NULL);
 
-   // load ct capture videos for laser spot detection
-   //m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_02_26_14_54_04\\";//Works fine
+  // load ct capture videos for laser spot detection
+  // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_02_26_14_54_04\\";//Works fine
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_02_26_14_54_52\\";//Works fine
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_01_15_24_10\\";//Works fine
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_01_15_24_57\\";//Works fine
@@ -47,7 +48,7 @@ CCTAcquisition::CCTAcquisition(CHW *pHW, BOOL ShowRedDot)
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_37_48\\";//works fine very fast
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_38_49\\";//Works fine
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_39_21\\";//Works fine
-  //m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_40_23\\"; // Works fine
+  // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_40_23\\"; // Works fine
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_03_02_14_40_55\\";//works ok
   //// test done
 }
@@ -56,47 +57,44 @@ CCTAcquisition::CCTAcquisition(CHW *pHW, BOOL ShowRedDot)
 
 void CCTAcquisition::CheckAlignment()
 {
-    ////test load ct capture video for laser spot detection check
-    //CString FileName;
-    //FileName.Format(_T("%s%i.jpg"), m_TestVideoFolder, m_t);
-    //m_CTExam.m_Image.LoadFromFile(FileName);
-    //m_t++;
-    ////test
+  ////test load ct capture video for laser spot detection check
+  // CString FileName;
+  // FileName.Format(_T("%s%i.jpg"), m_TestVideoFolder, m_t);
+  // m_CTExam.m_Image.LoadFromFile(FileName);
+  // m_t++;
+  ////test
 
+  // Version before 6.3 had this value at 5
+  // Changed to 10 for 6.3 to improve the performance of the new camera
+  TWEAKABLE const int LIMIT = AcquisitionParameters::Instance()->m_laserAlignmentLimit;
 
-    // Version before 6.3 had this value at 5
-    // Changed to 10 for 6.3 to improve the performance of the new camera
-    TWEAKABLE const int LIMIT = 10;
+  m_CTExam.m_Image.m_RGBData.Attach(m_CTExam.m_Image.m_h, LINE_SIZE(m_CTExam.m_Image.m_w), m_pHW->GetRGBData()); // Ori code
+  m_CTExam.m_Image.ClearVertex0();
+  m_CTExam.m_Image.FindVertex0(m_TriLaserOn, m_pHW->m_Calibration.LaserIntensityThreshold, ::HW.IsHRCameraConnected());
 
-	m_CTExam.m_Image.m_RGBData.Attach(m_CTExam.m_Image.m_h, LINE_SIZE(m_CTExam.m_Image.m_w), m_pHW->GetRGBData());//Ori code
-    m_CTExam.m_Image.ClearVertex0();
-	m_CTExam.m_Image.FindVertex0(m_TriLaserOn, m_pHW->m_Calibration.LaserIntensityThreshold, ::HW.IsHRCameraConnected());
+  m_ve0_ok = m_CTExam.m_Image.m_ve0_ok && (sqr(m_CTExam.m_Image.m_ve0_x) + sqr(m_CTExam.m_Image.m_ve0_y) <= sqr(LIMIT));
 
-	m_ve0_ok = m_CTExam.m_Image.m_ve0_ok && (sqr(m_CTExam.m_Image.m_ve0_x) + sqr(m_CTExam.m_Image.m_ve0_y) <= sqr(LIMIT));
+  if (m_pHW->m_Calibration.ZAlignmentMethod == 0) {
+    m_la_ok           = m_CTExam.m_Image.m_la_ok && abs(m_CTExam.m_Image.m_la_x) <= LIMIT && m_CTExam.m_Image.m_la_RtoC_OK;
+    m_AlignmentStatus = m_ve0_ok && m_la_ok ? 1 : 0;
+  }
+  else {
+    m_AlignmentStatus = m_ve0_ok && (m_TriangulationSensorReading > m_pHW->m_Calibration.SensorThreshold) ? 1 : 0;
+  }
 
-	if (m_pHW->m_Calibration.ZAlignmentMethod == 0)
-	{
-		m_la_ok = m_CTExam.m_Image.m_la_ok && abs(m_CTExam.m_Image.m_la_x) <= LIMIT && m_CTExam.m_Image.m_la_RtoC_OK;
-		m_AlignmentStatus = m_ve0_ok && m_la_ok ? 1 : 0;
-	}
-	else
-	{
-		m_AlignmentStatus = m_ve0_ok && (m_TriangulationSensorReading > m_pHW->m_Calibration.SensorThreshold) ? 1 : 0;
-	}
-
-	//Test for saving video for analysis
-   CString Filename;
-   Filename.Format(_T("%s%i.jpg"), m_TestVideoFolder, m_t);
-   m_CTExam.m_Image.SaveIntoFile(Filename);
-   m_t++;
-	//Done
+  // Test for saving video for analysis
+  CString Filename;
+  Filename.Format(_T("%s%i.jpg"), m_TestVideoFolder, m_t);
+  m_CTExam.m_Image.SaveIntoFile(Filename);
+  m_t++;
+  // Done
 }
 
 //***************************************************************************************
 
 void CCTAcquisition::Main()
 {
-  m_t               = 0; // test
+  m_t = 0; // test
 
   ::NewSettings.m_Adjusting_CT = FALSE;
 

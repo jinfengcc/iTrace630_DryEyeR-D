@@ -273,6 +273,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AcquisitionDlg.cpp" />
+    <ClCompile Include="AcquisitionParameters.cpp" />
     <ClCompile Include="ActivationDlg.cpp" />
     <ClCompile Include="AlignmentDlg.cpp" />
     <ClCompile Include="AODToolDlg.cpp" />
@@ -478,6 +479,7 @@
     <ClInclude Include="611.h" />
     <ClInclude Include="Acquisition.h" />
     <ClInclude Include="AcquisitionDlg.h" />
+    <ClInclude Include="AcquisitionParameters.h" />
     <ClInclude Include="ActivationDlg.h" />
     <ClInclude Include="AlignmentDlg.h" />
     <ClInclude Include="AODToolDlg.h" />
