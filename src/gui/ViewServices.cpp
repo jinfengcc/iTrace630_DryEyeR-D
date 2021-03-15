@@ -21,6 +21,11 @@
 //#include "WFCTAcqSumWnd.h"
 #include "WFNearVisionSumWnd.h"
 
+constexpr int VIEW_WIDTH  = 1464;
+constexpr int VIEW_HEIGHT = 858;
+
+static_assert((VIEW_WIDTH & ~3) == VIEW_WIDTH);
+
 ViewServices::ViewServices(CWFExam *wfExam, CWFExam *wfExam2, CCTExam *ctExam, CCTExam *ctExam2, const CPatient *patient)
   : m_wfExam{wfExam}
   , m_ctExam{ctExam}
@@ -52,7 +57,7 @@ ViewServices::ViewServices(CWFExam *wfExam, CWFExam *wfExam2, CCTExam *ctExam, C
 
 cv::Mat ViewServices::Save(ViewType type) const
 {
-  TWEAKABLE const RECT rc{0, 0, 1462, 858};
+  TWEAKABLE const RECT rc{0, 0, VIEW_WIDTH, VIEW_HEIGHT};
   if (auto w = CreateView(type, &rc))
     return SaveImpl(w.get());
 
@@ -63,7 +68,7 @@ cv::Mat ViewServices::Save(ViewType type) const
 
 cv::Mat ViewServices::SaveImpl(CMemWnd *w)
 {
-  const int W = 1462;
+  const int W = VIEW_WIDTH;
   const int H = w->m_MemDC.m_h * W / w->m_MemDC.m_w;
 
   auto img = cv::Mat(w->m_MemDC.m_h, w->m_MemDC.m_w, CV_8UC3, w->m_MemDC.m_RGBData).clone();
