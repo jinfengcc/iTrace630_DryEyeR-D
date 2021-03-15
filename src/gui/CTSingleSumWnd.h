@@ -24,7 +24,31 @@ private:
 
 	CCTExam* m_pCTExam;
 
-	virtual CString GetNameImpl() const override { return "CT Summary Display"; }
+	//virtual CString GetNameImpl() const override { return "CT Summary Display"; }
+	//6.3.0	 the clear display/dicom export titile
+	//virtual CString GetName() override { return "CT Summary Display"; }
+	// : CT_SUMMARY_GUI; : WF/RMS ; :Angle K/A ; : Custom; : Depth of focus;
+	virtual CString GetNameImpl() const override
+	{
+		if (m_i == 0)
+		{
+			return "CT Summary Display";
+		}
+		else if (m_i == 1)//Angle K/A
+		{
+			return "CT Keratomery Display";
+		}
+		else if (m_i == 2)//Angle K/A
+		{
+			return "CT 3D-Elevation Display";
+		}
+		else if (m_i == 3)
+		{
+			return "CT Custom Display";
+		}
+	}
+	//6.3.0
+
 	virtual CWndSettings* GetWndSettings() override { return m_pWndSettings + m_d; }
 
 	virtual void OnSizeLargeItemClicked() override;

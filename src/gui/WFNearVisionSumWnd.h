@@ -22,11 +22,15 @@ public:
                       int show = SW_SHOW);
 
 private:
+  BOOL m_IsShow;//6.3.0
+
+  HSliderParameters m_SliderPars;
+
   void PaintSlider(); // 6.2.1 20181218
 
   virtual CString GetNameImpl() const override
   {
-    return "Simulated Near Vision Display";
+    return "WF Simulated Near Vision Display";
   }
 
   virtual CWndSettings *GetWndSettings() override

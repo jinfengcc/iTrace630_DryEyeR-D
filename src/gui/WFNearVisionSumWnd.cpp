@@ -45,6 +45,8 @@ CWFNearVisionSumWnd::CWFNearVisionSumWnd(CWnd *pWnd, RECT &WndRect, CPatient *pP
 	m_ExamAmount = ExamAmount;
 	m_ExamOrder = ExamOrder;
 
+	m_IsShow = show;//6.3.0
+
 	//----------------------------------------------------
 	RECT Rect;
 	GetWindowRect(&Rect);
@@ -91,12 +93,10 @@ CWFNearVisionSumWnd::CWFNearVisionSumWnd(CWnd *pWnd, RECT &WndRect, CPatient *pP
 
 	//----------------------------------------------------
 	//Control Slider
-	HSliderParameters SliderPars;
-
-	SliderPars.Pos = 7.0 / 12.0;
-	SliderPars.WideRatio = 0.2;
-	SliderPars.scaleNum = 12;
-	SliderPars.ScaleType = 2;
+	m_SliderPars.Pos = 7.0 / 12.0;
+	m_SliderPars.WideRatio = 0.2;
+	m_SliderPars.scaleNum = 12;
+	m_SliderPars.ScaleType = 2;
 
 	int Lengths[13] = { { 1 },{ 0 },{ 1 },{ 0 },{ 1 },{ 0 },{ 1 },{ 0 },{ 1 },{ 0 },{ 1 },{ 0 },{ 1 } };
 
@@ -106,23 +106,24 @@ CWFNearVisionSumWnd::CWFNearVisionSumWnd(CWnd *pWnd, RECT &WndRect, CPatient *pP
 
 	for (int i = 0; i <= 12; i++)
 	{
-		SliderPars.ScaleLength[i] = Lengths[i];
-		SliderPars.UpLabels[i] = UpLabels[i];
-		SliderPars.DownLabels[i] = DownLabels[i];
+		m_SliderPars.ScaleLength[i] = Lengths[i];
+		m_SliderPars.UpLabels[i] = UpLabels[i];
+		m_SliderPars.DownLabels[i] = DownLabels[i];
 	}
 
-	SliderPars.Title = "NEAR POINT   1.25D";
+	m_SliderPars.Title = "NEAR POINT   1.25D";
 
-	SliderPars.OutlineHighlight[0] = 1;
-	SliderPars.OutlineHighlight[1] = 0;
-	SliderPars.OutlineHighlight[2] = 1;
-	SliderPars.OutlineHighlight[3] = 1;
+	m_SliderPars.OutlineHighlight[0] = 1;
+	m_SliderPars.OutlineHighlight[1] = 0;
+	m_SliderPars.OutlineHighlight[2] = 1;
+	m_SliderPars.OutlineHighlight[3] = 1;
 
-  if (show == SW_SHOW) {
+  if (show == SW_SHOW) 
+  {
     m_Slider = std::make_unique<CHorSliderCtrl>();
     m_Slider->Create(_T(""), _T(""), WS_CHILD | WS_VISIBLE, m_Rect[5], this, IDC_WFNEARVISION_SLIDER);
     m_Slider->m_Printing = m_Printing;
-    m_Slider->SetParameters(SliderPars);
+    m_Slider->SetParameters(m_SliderPars);
   }
 
 	//----------------------------------------------------
@@ -200,12 +201,10 @@ void CWFNearVisionSumWnd::RepaintMemDC()
 	m_MemDC.DrawRectangle(m_OutlineRect[0], white, NOCOLOR);
 	m_MemDC.DrawRectangle(m_OutlineRect[1], white, NOCOLOR);
 
-	//6.2.1
-	if (m_Printing)
+	if (m_Printing || !m_IsShow)
 	{
 		PaintSlider();
 	}
-	//6.2.1
 }
 
 //***************************************************************************************
@@ -234,25 +233,25 @@ void CWFNearVisionSumWnd::PaintSlider()
 	int m_w = m_Rect[5].right - m_Rect[5].left;
 	int m_h = m_Rect[5].bottom - m_Rect[5].top;
 
-	int h = (m_Rect[5].bottom - m_Rect[5].top) * m_Slider->m_Pars.WideRatio;
+	int h = (m_Rect[5].bottom - m_Rect[5].top) * m_SliderPars.WideRatio;
 	int y0 = m_Rect[5].bottom - (m_Rect[5].bottom - m_Rect[5].top) / 3;//The position of the splider center line
 
 	RECT UpRect, DownRect, TitleRect;
 
 		//Highlight the outline
-		if (m_Slider->m_Pars.OutlineHighlight[0] == 1)
+		if (m_SliderPars.OutlineHighlight[0] == 1)
 		{
 			m_MemDC.DrawLine(m_Rect[5].left, m_Rect[5].top, m_Rect[5].left, m_Rect[5].bottom, 1, white);
 		}
-		if (m_Slider->m_Pars.OutlineHighlight[1] == 1)
+		if (m_SliderPars.OutlineHighlight[1] == 1)
 		{
 			m_MemDC.DrawLine(m_Rect[5].left, m_Rect[5].top, m_Rect[5].right, m_Rect[5].top, 1, white);
 		}
-		if (m_Slider->m_Pars.OutlineHighlight[2] == 1)
+		if (m_SliderPars.OutlineHighlight[2] == 1)
 		{
 			m_MemDC.DrawLine(m_Rect[5].right - 1, m_Rect[5].top, m_Rect[5].right - 1, m_Rect[5].bottom, 1, white);
 		}
-		if (m_Slider->m_Pars.OutlineHighlight[3] == 1)
+		if (m_SliderPars.OutlineHighlight[3] == 1)
 		{
 			m_MemDC.DrawLine(m_Rect[5].left, m_Rect[5].bottom, m_Rect[5].right, m_Rect[5].bottom, 1, white);
 		}
@@ -269,7 +268,7 @@ void CWFNearVisionSumWnd::PaintSlider()
 
 		int w = m_Right - m_Left;
 
-		int x0 = m_Left + intRound((1 - m_Slider->m_Pars.Pos) * w);
+		int x0 = m_Left + intRound((1 - m_SliderPars.Pos) * w);
 
 		if (x0 > m_Right) x0 = m_Right;
 
@@ -277,54 +276,54 @@ void CWFNearVisionSumWnd::PaintSlider()
 		int xPos;
 		int yPos1, yPos2;
 		int ScaleFontSize = 1;
-		for (int i = 0; i <= m_Slider->m_Pars.scaleNum; i++)
+		for (int i = 0; i <= m_SliderPars.scaleNum; i++)
 		{
-			int  xPos = intRound(m_Left + real_t(i) * real_t(m_Right - m_Left) / m_Slider->m_Pars.scaleNum);
+			int  xPos = intRound(m_Left + real_t(i) * real_t(m_Right - m_Left) / m_SliderPars.scaleNum);
 
-			if (i == m_Slider->m_Pars.scaleNum)
+			if (i == m_SliderPars.scaleNum)
 			{
 				xPos = m_Right;
 			}
 
-			if (m_Slider->m_Pars.ScaleType == 0)
+			if (m_SliderPars.ScaleType == 0)
 			{
-				if (m_Slider->m_Pars.ScaleLength[i] == 0)
+				if (m_SliderPars.ScaleLength[i] == 0)
 				{
 					yPos1 = y0 - 0.7*h;
 					yPos2 = y0;
 					ScaleFontSize = 1;
 				}
-				else if (m_Slider->m_Pars.ScaleLength[i] == 1)
+				else if (m_SliderPars.ScaleLength[i] == 1)
 				{
 					yPos1 = y0 - h;
 					yPos2 = y0;
 					ScaleFontSize = 2;
 				}
 			}
-			else if (m_Slider->m_Pars.ScaleType == 1)
+			else if (m_SliderPars.ScaleType == 1)
 			{
-				if (m_Slider->m_Pars.ScaleLength[i] == 0)
+				if (m_SliderPars.ScaleLength[i] == 0)
 				{
 					yPos1 = y0;
 					yPos2 = y0 + 0.7*h;
 					ScaleFontSize = 1;
 				}
-				else if (m_Slider->m_Pars.ScaleLength[i] == 1)
+				else if (m_SliderPars.ScaleLength[i] == 1)
 				{
 					yPos1 = y0;
 					yPos2 = y0 + h;
 					ScaleFontSize = 2;
 				}
 			}
-			else if (m_Slider->m_Pars.ScaleType == 2)
+			else if (m_SliderPars.ScaleType == 2)
 			{
-				if (m_Slider->m_Pars.ScaleLength[i] == 0)
+				if (m_SliderPars.ScaleLength[i] == 0)
 				{
 					yPos1 = y0 - 0.35*h;
 					yPos2 = y0 + 0.35*h;
 					ScaleFontSize = 1;
 				}
-				else if (m_Slider->m_Pars.ScaleLength[i] == 1)
+				else if (m_SliderPars.ScaleLength[i] == 1)
 				{
 					yPos1 = y0 - 0.5 * h;
 					yPos2 = y0 + 0.5 * h;
@@ -340,16 +339,16 @@ void CWFNearVisionSumWnd::PaintSlider()
 			if (i == 0)
 			{
 				::SetRect(&UpRect, xPos - 40, yPos1 - 5 - SmallFontSize, xPos + 40, yPos1 - 5);
-				m_MemDC.WriteText(m_Slider->m_Pars.UpLabels[i], UpRect, MediumFont, white, 1, NOCOLOR);
+				m_MemDC.WriteText(m_SliderPars.UpLabels[i], UpRect, MediumFont, white, 1, NOCOLOR);
 			}
 			else
 			{
 				::SetRect(&UpRect, xPos - 40, yPos1 - 5 - SmallFontSize, xPos + 40, yPos1 - 5);
-				m_MemDC.WriteText(m_Slider->m_Pars.UpLabels[i], UpRect, SmallFont, white, 1, NOCOLOR);
+				m_MemDC.WriteText(m_SliderPars.UpLabels[i], UpRect, SmallFont, white, 1, NOCOLOR);
 			}
 
 			::SetRect(&DownRect, xPos - 40, yPos2 + 5, xPos + 40, yPos2 + 5 + SmallFontSize);
-			m_MemDC.WriteText(m_Slider->m_Pars.DownLabels[i], DownRect, SmallFont, white, 1, NOCOLOR);
+			m_MemDC.WriteText(m_SliderPars.DownLabels[i], DownRect, SmallFont, white, 1, NOCOLOR);
 		}
 
 
@@ -361,7 +360,7 @@ void CWFNearVisionSumWnd::PaintSlider()
 
 		CMFont BigFont(TitleY1 - TitleY0, 400, "Arial");
 
-		m_MemDC.WriteText(m_Slider->m_Pars.Title, TitleRect, BigFont, white, 1, NOCOLOR);
+		m_MemDC.WriteText(m_SliderPars.Title, TitleRect, BigFont, white, 1, NOCOLOR);
 		//----------------------------------------------------
 
 
@@ -372,11 +371,11 @@ void CWFNearVisionSumWnd::PaintSlider()
 
 		w = x2 - x1;
 
-		x0 = x1 + intRound((1 - m_Slider->m_Pars.Pos) * w);
+		x0 = x1 + intRound((1 - m_SliderPars.Pos) * w);
 
-		if (m_Slider->m_Pars.SliderRect.right < 0 || m_Slider->m_Pars.SliderRect.left  < 0 || m_Slider->m_Pars.SliderRect.right > 10000 || m_Slider->m_Pars.SliderRect.left > 10000)
+		if (m_SliderPars.SliderRect.right < 0 || m_SliderPars.SliderRect.left  < 0 || m_SliderPars.SliderRect.right > 10000 || m_SliderPars.SliderRect.left > 10000)
 		{
-			::SetRect(&m_Slider->m_Pars.SliderRect, x1, y0 - 0.5 * h, x2, y0 + 0.5 * h);
+			::SetRect(&m_SliderPars.SliderRect, x1, y0 - 0.5 * h, x2, y0 + 0.5 * h);
 		}
 
 		m_MemDC.DrawLine(x1, y0, x2, y0, 2, white);
