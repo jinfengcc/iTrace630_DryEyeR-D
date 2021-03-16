@@ -1,6 +1,7 @@
 #pragma once
 
-// All types that start with underscore (_) are not implemented
+// ***NOTE: All types that start with underscore (_) are not implemented
+
 enum class ViewType
 {
   WF_Point             = 0,
@@ -10,13 +11,13 @@ enum class ViewType
   WF_RMS               = 4,
   _MISSING5            = 5,
   _WF_Aberation        = 6,
-  _WF_Custom           = 7,
+  WF_Custom            = 7,
   CT_Rings             = 8,
   CT_Summary           = 9,
   CT_Keratometry       = 10,
   CT_3DElevation       = 11,
   CT_OsherIris         = 12,
-  _CT_Custom           = 13,
+  CT_Custom            = 13,
   WFCT_Change          = 14,
   WFCT_Summary         = 15,
   WFCT_MTF             = 16,

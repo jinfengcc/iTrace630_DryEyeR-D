@@ -92,6 +92,7 @@ auto ViewServices::CreateView(ViewType type, const RECT *rc1, int show) const ->
     WF_VisualAcuity = 0,
     WF_RMS          = 1,
     WF_DepthOfFocus = 4,
+    WF_Custom       = 5,
   };
 
   enum CT
@@ -99,8 +100,7 @@ auto ViewServices::CreateView(ViewType type, const RECT *rc1, int show) const ->
     CT_SUMMARY       = 0,
     CT_KERATOMETRY   = 1,
     CT_3D_ZELEVATION = 2,
-    CT_OSHER_IRIS    = 3,
-    CT_CUSTOM        = 4,
+    CT_CUSTOM        = 3,
   };
 
   enum WFCT
@@ -147,7 +147,9 @@ auto ViewServices::CreateView(ViewType type, const RECT *rc1, int show) const ->
   case ViewType::_WF_Aberation:
     break;
 
-  case ViewType::_WF_Custom:
+  case ViewType::WF_Custom:
+    if (m_wfExam)
+      vp = std::make_unique<CWFSingleSumWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, &Settings.m_TSsmSettings[3][0], WF_Custom, show);
     break;
 
   case ViewType::CT_Rings:
@@ -175,7 +177,9 @@ auto ViewServices::CreateView(ViewType type, const RECT *rc1, int show) const ->
       vp = std::make_unique<CCTOsherAliWnd>(AfxGetMainWnd(), rct, m_ctExam, TRUE, show);
     break;
 
-  case ViewType::_CT_Custom:
+  case ViewType::CT_Custom:
+    if (m_ctExam)
+      vp = std::make_unique<CCTSingleSumWnd>(AfxGetMainWnd(), rct, m_patient, m_ctExam, &Settings.m_CSsmSettings[1][0], CT_CUSTOM, show);
     break;
 
   case ViewType::WFCT_Change:

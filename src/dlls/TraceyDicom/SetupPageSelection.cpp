@@ -27,12 +27,14 @@ BOOL CSetupPageSelection::DoDataExchange(BOOL bSaveAndValidate, UINT nCtlID)
   CheckBit(IDC_WFVA_CHECK         , ViewType::WF_VisualAcuity    );   // WF Visual Acuity
   CheckBit(IDC_DEPTHFOCUS_CHECK   , ViewType::WF_DepthFocus      );   // WF Depth of Focus
   CheckBit(IDC_WFRMS_CHECK        , ViewType::WF_RMS             );   // WF/RMS
+  CheckBit(IDC_WCCUSTOM_CHECK     , ViewType::WF_Custom          );   // WF Custom
 
   CheckBit(IDC_CTRINGS_CHECK      , ViewType::CT_Rings           );   // CT Summary
   CheckBit(IDC_CTSU_CHECK         , ViewType::CT_Summary         );   // CT Summary
   CheckBit(IDC_CTKE_CHECK         , ViewType::CT_Keratometry     );   // Keratometry
   CheckBit(IDC_CT3D_CHECK         , ViewType::CT_3DElevation     );   // 3D Z-Elevation
   CheckBit(IDC_CTOSHER_CHECK      , ViewType::CT_OsherIris       );   // CT Osher
+  CheckBit(IDC_CTCUSTOM_CHECK     , ViewType::CT_Custom          );   // CT Custom
 
   CheckBit(IDC_WCCH_CHECK         , ViewType::WFCT_Change        );   // Chang Analysis
   CheckBit(IDC_WCSU_CHECK         , ViewType::WFCT_Summary       );   // WF/CT Summary
@@ -97,14 +99,16 @@ void CSetupPageSelection::OnContextMenu(CWindow wnd, CPoint point)
     ViewType::CT_Summary,
     ViewType::CT_Keratometry,
     ViewType::CT_3DElevation,
-    ViewType::CT_OsherIris
+    ViewType::CT_OsherIris,
+    ViewType::CT_Custom
   );
   constexpr auto WF = CombineEnumFlags(
     ViewType::WF_Point,
     ViewType::WF_NearVision,
     ViewType::WF_VisualAcuity,
     ViewType::WF_DepthFocus,
-    ViewType::WF_RMS
+    ViewType::WF_RMS,
+    ViewType::WF_Custom
   );
   constexpr auto WFCT = CombineEnumFlags(
     ViewType::WFCT_Change,

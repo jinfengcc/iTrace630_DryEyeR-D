@@ -49,6 +49,7 @@
 #define IDC_WFVA_CHECK                  8372
 #define IDC_WFRMS_CHECK                 8373
 #define IDC_WFKA_CHECK                  8374
+#define IDC_WFRMS_CHECK2                8374
 #define IDC_CTSU_CHECK                  8376
 #define IDC_CTKE_CHECK                  8377
 #define IDC_CT3D_CHECK                  8378
@@ -58,6 +59,7 @@
 #define IDC_WFCUSTOM_CHECK              8433
 #define IDC_CTRINGS_CHECK               8499
 #define IDC_CTOSHER_CHECK               8501
+#define IDC_CTOSHER_CHECK2              8502
 
 // Next default values for new objects
 // 
