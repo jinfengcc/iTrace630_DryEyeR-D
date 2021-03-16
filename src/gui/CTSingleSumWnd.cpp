@@ -74,6 +74,28 @@ CCTSingleSumWnd::CCTSingleSumWnd(CWnd *pWnd, RECT &WndRect, CPatient *pPatient, 
 
 //***************************************************************************************
 
+CString CCTSingleSumWnd::GetNameImpl() const
+{
+  if (m_i == 0) {
+    return "CT Summary Display";
+  }
+  else if (m_i == 1)
+  {
+    return "CT Keratomery Display";
+  }
+  else if (m_i == 2)
+  {
+    return "CT 3D-Elevation Display";
+  }
+  else if (m_i == 3) {
+    return "CT Custom Display";
+  }
+  else {
+    ASSERT(FALSE);
+    return "CCTSingleSumWnd::GetNameImpl()";
+  }
+}
+
 void CCTSingleSumWnd::OnSizeLargeItemClicked()
 {
 	CWndSettings* pWndSettings = GetWndSettings();
