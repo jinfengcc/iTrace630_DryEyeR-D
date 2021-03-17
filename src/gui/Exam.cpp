@@ -286,7 +286,7 @@ void COpData::InitIOLs()
 	m_NewIOLs[29].m_InternalPostopCyl = 8.05;
 
 	m_NewIOLs[30].m_Name = "T21";
-	m_NewIOLs[30].m_Cyl = 12.50;
+	m_NewIOLs[30].m_Cyl = 12.00;
 	m_NewIOLs[30].m_InternalPostopCyl = 8.40;
 
 	for (int i = 0; i < 31; i++)
