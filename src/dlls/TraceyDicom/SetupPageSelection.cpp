@@ -44,7 +44,7 @@ BOOL CSetupPageSelection::DoDataExchange(BOOL bSaveAndValidate, UINT nCtlID)
   CheckBit(IDC_DYSPTFUN_CHECK     , ViewType::WFCT_DysfunPT      );   // Dysfunctional Analysis PT
   CheckBit(IDC_ASTISOU_CHECK      , ViewType::WFCT_AstigmSrc     );   // Astigmatism Source
   CheckBit(IDC_TORLI_CHECK        , ViewType::WFCT_ToricCheck    );   // Toric Check
-  CheckBit(IDC_WCCUSTOM_CHECK     , ViewType::_WFCT_Custom       );   // WFCT_Custom
+  CheckBit(IDC_WCCUSTOM_CHECK     , ViewType::WFCT_Custom        );   // WFCT_Custom
   // clang-format on
 
   if (bSaveAndValidate && m_cfg.selectionFlags == 0) {
@@ -119,7 +119,7 @@ void CSetupPageSelection::OnContextMenu(CWindow wnd, CPoint point)
     ViewType::WFCT_DysfunPT,
     ViewType::WFCT_AstigmSrc,
     ViewType::WFCT_ToricCheck,
-    ViewType::_WFCT_Custom
+    ViewType::WFCT_Custom
   );
   // clang-format on
 

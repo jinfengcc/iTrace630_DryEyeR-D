@@ -29,7 +29,7 @@ enum class ViewType
   WFCT_DysfunPT        = 22,
   WFCT_AstigmSrc       = 23,
   WFCT_ToricCheck      = 24,
-  _WFCT_Custom         = 25,
+  WFCT_Custom          = 25,
   _MISSING26           = 26,
   _WFCT_ExamResult     = 27, // Not in 6.x
   _WFCT_CornealSphAber = 28,
