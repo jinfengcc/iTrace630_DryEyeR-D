@@ -18,7 +18,7 @@ void CExam::CalcAngles()
 		m_Header.m_AngleKappaRUm = hyp(m_Header.m_AngleKappaYUm, m_Header.m_AngleKappaXUm);
 		m_Header.m_AngleKappaADg = intRound(_180_Pi * angle(m_Header.m_AngleKappaYUm, m_Header.m_AngleKappaXUm)) % 360;
 		CString s;
-		s.Format(_T("\nAngle Kappa Distance:   %.3f mm @ %iÂ°"), m_Header.m_AngleKappaRUm * 0.001, m_Header.m_AngleKappaADg);
+		s.Format(_T("\nAngle Kappa Distance:   %.3f mm @ %i°"), m_Header.m_AngleKappaRUm * 0.001, m_Header.m_AngleKappaADg);
 		m_Header.m_AutoNote += s;
 	}
 	else
@@ -34,7 +34,7 @@ void CExam::CalcAngles()
 		m_Header.m_AngleAlphaRUm = hyp(m_Header.m_AngleAlphaYUm, m_Header.m_AngleAlphaXUm);
 		m_Header.m_AngleAlphaADg = intRound(_180_Pi * angle(m_Header.m_AngleAlphaYUm, m_Header.m_AngleAlphaXUm)) % 360;
 		CString s;
-		s.Format(_T("\nAngle Alpha Distance:    %.3f mm @ %iÂ°"), m_Header.m_AngleAlphaRUm * 0.001, m_Header.m_AngleAlphaADg);
+		s.Format(_T("\nAngle Alpha Distance:    %.3f mm @ %i°"), m_Header.m_AngleAlphaRUm * 0.001, m_Header.m_AngleAlphaADg);
 		m_Header.m_AutoNote += s;
 	}
 	else
@@ -146,7 +146,7 @@ COpData::COpData()
 
 	m_Pri_IOLSph = INVALID_VALUE;
 	m_Pri_IOLPlacementAxis = INVALID_VALUE;
-	
+
 	// ICL
 	m_Pri_ICL.m_Cyl = INVALID_VALUE;
 	m_Pri_ICL.m_Axis = INVALID_VALUE;
@@ -483,7 +483,7 @@ void COpData::CalNewCorneaPreop()
 		(m_CorneaPreopAxis >= 60 && m_CorneaPreopAxis <= 120)
 		)
 	{
-		 PostopCyl = 0.5;
+		PostopCyl = 0.5;
 	}
 
 	else if (
@@ -520,7 +520,7 @@ void COpData::CalNewCorneaPreop()
 
 void COpData::Recalculate()
 {
- 	ResetCalculatedStuff();
+	ResetCalculatedStuff();
 
 	BOOL CorneaPostopCalculated = FALSE;
 
@@ -690,7 +690,7 @@ void COpData::Pri_Recalculate()
 	m_Pri_EyePreopCyl = 0.0;
 	m_Pri_EyePreopAxis = 0;
 
-	
+
 	if (m_Pri_CorneaPreopCyl != INVALID_VALUE && m_Pri_CorneaPreopCyl >= 0.0 && m_Pri_CorneaPreopCyl <= 10.0 &&
 		m_Pri_CorneaPreopAxis != INVALID_VALUE && m_Pri_CorneaPreopAxis >= 0 && m_Pri_CorneaPreopAxis < 180 &&
 		m_Pri_CorneaIncisionAxis != INVALID_VALUE && m_Pri_CorneaIncisionAxis >= 0 && m_Pri_CorneaIncisionAxis < 360 &&
@@ -752,21 +752,21 @@ void COpData::Pri_Recalculate()
 				m_NewPri_BestIOL = i;
 			}
 
-		/*	if (i < 12)
-			{
-				m_Pri_IOLs[i].m_InternalPostopAxis = (m_Pri_IOLPlacementAxis + 90) % 180;
-
-				::CalculateCrossedAstigmatism(
-					m_Pri_CorneaPostopCyl, m_Pri_CorneaPostopAxis,
-					m_Pri_IOLs[i].m_InternalPostopCyl, m_Pri_IOLs[i].m_InternalPostopAxis,
-					m_Pri_IOLs[i].m_EyePostopCyl, m_Pri_IOLs[i].m_EyePostopAxis);
-
-				if (Pri_BestCyl > m_Pri_IOLs[i].m_EyePostopCyl)
+			/*	if (i < 12)
 				{
-					Pri_BestCyl = m_Pri_IOLs[i].m_EyePostopCyl;
-					m_Pri_BestIOL = i;
-				}
-			}*/
+					m_Pri_IOLs[i].m_InternalPostopAxis = (m_Pri_IOLPlacementAxis + 90) % 180;
+
+					::CalculateCrossedAstigmatism(
+						m_Pri_CorneaPostopCyl, m_Pri_CorneaPostopAxis,
+						m_Pri_IOLs[i].m_InternalPostopCyl, m_Pri_IOLs[i].m_InternalPostopAxis,
+						m_Pri_IOLs[i].m_EyePostopCyl, m_Pri_IOLs[i].m_EyePostopAxis);
+
+					if (Pri_BestCyl > m_Pri_IOLs[i].m_EyePostopCyl)
+					{
+						Pri_BestCyl = m_Pri_IOLs[i].m_EyePostopCyl;
+						m_Pri_BestIOL = i;
+					}
+				}*/
 		}
 
 		if (m_Pri_SelectedIOL >= 0 && m_Pri_SelectedIOL < 31)
@@ -804,7 +804,7 @@ void COpData::Pri_Recalculate()
 			m_Pri_ICL.m_PlacementAxis = (m_Pri_ICL.m_InducedAxis - m_Pri_ICL.m_Axis) % 180;
 			if (m_Pri_ICL.m_PlacementAxis < 0) m_Pri_ICL.m_PlacementAxis += 180;
 		}
-		else  
+		else
 		{
 			if (m_Pri_ICL.m_PlacementAxis < 0 || m_Pri_ICL.m_PlacementAxis >= 180) return;
 			m_Pri_ICL.m_InducedAxis = (m_Pri_ICL.m_Axis + m_Pri_ICL.m_PlacementAxis) % 180;
@@ -817,7 +817,7 @@ void COpData::Pri_Recalculate()
 //***************************************************************************************
 
 void CalculateCrossedAstigmatism(const real_t Cyl1, const int Axis1, const real_t Cyl2, const int Axis2, real_t& Cyl, int& Axis)
-{	
+{
 	real_t Cyl1X = Cyl1 * ::COS[2 * Axis1];
 	real_t Cyl1Y = Cyl1 * ::SIN[2 * Axis1];
 

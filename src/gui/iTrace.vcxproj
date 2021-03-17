@@ -316,11 +316,13 @@
     <ClCompile Include="DicomMWLRecDlg.cpp" />
     <ClCompile Include="DicomMWLResDlg.cpp" />
     <ClCompile Include="DicomSelTypeDlg.cpp" />
+    <ClCompile Include="Exam.cpp" />
     <ClCompile Include="FarLtrWnd.cpp" />
     <ClCompile Include="HardwareHiresCamera.cpp" />
     <ClCompile Include="HorSliderCtrl.cpp" />
     <ClCompile Include="INIParser.cpp" />
     <ClCompile Include="LinkLibs.cpp" />
+    <ClCompile Include="PlanWnd.cpp" />
     <ClCompile Include="PreBtn.cpp" />
     <ClCompile Include="SameDicomPatientDlg.cpp" />
     <ClCompile Include="SplashScreen.cpp" />
@@ -330,7 +332,6 @@
     <ClCompile Include="DOFCWnd.cpp" />
     <ClCompile Include="DOFWnd.cpp" />
     <ClCompile Include="EEFWnd.cpp" />
-    <ClCompile Include="Exam.cpp" />
     <ClCompile Include="ExamAveDlg.cpp" />
     <ClCompile Include="ExamCaptureWnd.cpp" />
     <ClCompile Include="ExamDlg.cpp" />
@@ -387,7 +388,6 @@
     <ClCompile Include="PhysicianDlg.cpp" />
     <ClCompile Include="PlanBigWnd.cpp" />
     <ClCompile Include="PlannerWnd.cpp" />
-    <ClCompile Include="PlanWnd.cpp" />
     <ClCompile Include="PreopComboDataDlg.cpp" />
     <ClCompile Include="PreopDataDlg.cpp" />
     <ClCompile Include="PSFWnd.cpp" />

@@ -530,9 +530,6 @@
     <ClCompile Include="CubicSpline.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="Exam.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
     <ClCompile Include="FT.cpp">
       <Filter>Math</Filter>
     </ClCompile>
@@ -755,9 +752,6 @@
     <ClCompile Include="PlannerWnd.cpp">
       <Filter>Windows\ToricPlanner</Filter>
     </ClCompile>
-    <ClCompile Include="PlanWnd.cpp">
-      <Filter>Windows\ToricPlanner</Filter>
-    </ClCompile>
     <ClCompile Include="Settings.cpp">
       <Filter>Others</Filter>
     </ClCompile>
@@ -883,6 +877,12 @@
     </ClCompile>
     <ClCompile Include="AcquisitionParameters.cpp">
       <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="PlanWnd.cpp">
+      <Filter>Windows\ToricPlanner</Filter>
+    </ClCompile>
+    <ClCompile Include="Exam.cpp">
+      <Filter>Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
