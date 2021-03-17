@@ -22,13 +22,10 @@ Description:   Create a Tracey Dicom class by using Merge Dicom toolkit
 //***************************************************************************************
 //***************************************************************************************
 
-// Rzdcx Dicom ToolKit .h
-#import "C:\RZDCX\rzdcx.tlb" rename_namespace ("rzdcxLib")
-//#import "C:\RZDCX\RZDCX_DEVPACK_2.0.5.9\Win64\rzdcx.tlb" rename_namespace ("rzdcxLib")
+#include "libs/DicomLib/rzdcx/rzdcxLib.h"
 
 using namespace rzdcxLib;
 using namespace std;
-// Dicom ToolKit .h Done
 
 
 //***************************************************************************************

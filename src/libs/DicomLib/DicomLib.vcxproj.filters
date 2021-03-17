@@ -24,9 +24,6 @@
     <ClInclude Include="rzdcx\rzdcxLib.h">
       <Filter>rzdcx</Filter>
     </ClInclude>
-    <ClInclude Include="rzdcx\ExampleQueryImpl.h">
-      <Filter>rzdcx</Filter>
-    </ClInclude>
     <ClInclude Include="rzdcx\rzdcx.h">
       <Filter>rzdcx</Filter>
     </ClInclude>
@@ -61,9 +58,6 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="rzdcx\ExampleQueryImpl.cpp">
-      <Filter>rzdcx</Filter>
     </ClCompile>
     <ClCompile Include="rzdcx\rzdcx.cpp">
       <Filter>rzdcx</Filter>

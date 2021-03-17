@@ -163,7 +163,6 @@
     <ClInclude Include="DicomSend.h" />
     <ClInclude Include="DicomSqlite.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="rzdcx\ExampleQueryImpl.h" />
     <ClInclude Include="rzdcx\rzdcx.h" />
     <ClInclude Include="rzdcx\rzdcxLib.h" />
     <ClInclude Include="DicomQuery.h" />
@@ -182,7 +181,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="rzdcx\ExampleQueryImpl.cpp" />
     <ClCompile Include="rzdcx\rzdcx.cpp" />
     <ClCompile Include="DicomQuery.cpp" />
   </ItemGroup>

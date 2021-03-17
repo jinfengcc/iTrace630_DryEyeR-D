@@ -5,7 +5,7 @@
 #include "Libs/CommonLib/Singleton.h"
 #include <ATLComTime.h>
 
-#import "rzdcx.dll" rename_namespace("rzdcxLib") exclude("IStream", "ISequentialStream", "_LARGE_INTEGER", "_ULARGE_INTEGER", "tagSTATSTG", "_FILETIME")
+#include "rzdcxLib.h"
 
 using rzdcxLib::DICOM_TAGS_ENUM;
 using rzdcxLib::IDCXOBJ;
