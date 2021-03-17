@@ -24,6 +24,7 @@ void CPasswordDlg::OnOK(UINT uNotifyCode, int nID, CWindow wndCtl)
 {
   if (IsCtrlKeyPressed() && IsShiftKeyPressed()) {
     EndDialog(IDOK);
+    return;
   }
 
   if (DoDataExchange(DDX_SAVE)) {
