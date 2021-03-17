@@ -63,13 +63,19 @@ BOOL CiTraceApp::InitInstance()
   CoInitialize(nullptr);
 
   DbgMiniDumpInit();
-  CSplashScreen::CreateInstance(IDB_SPLASH_SCREEN);
 
   INITCOMMONCONTROLSEX InitCtrls;
   InitCtrls.dwSize = sizeof(INITCOMMONCONTROLSEX);
   InitCtrls.dwICC  = ICC_LISTVIEW_CLASSES;
 
   Registration(); // 6.2.0 ini registration
+
+  // Software license
+  ::Licensing.GetHardwareID();
+  ::Licensing.LoadSoftwareAK();
+  ::Licensing.DetermineLicenseType("");
+
+  CSplashScreen::CreateInstance(IDB_SPLASH_SCREEN);
 
   ControlSettings();
 
@@ -98,11 +104,6 @@ BOOL CiTraceApp::InitInstance()
   // Database connection Done
 
   CalSinCos(); // Calculate cos and sin values
-
-  // Software license
-  ::Licensing.GetHardwareID();
-  ::Licensing.LoadSoftwareAK();
-  ::Licensing.DetermineLicenseType("");
 
   m_isCombo =
     (::Licensing.IsCombo() || ::Licensing.IsComboViewer() || ::Licensing.IsComboDICOM() || ::Licensing.IsPresbia() ? TRUE : FALSE);
