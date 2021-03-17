@@ -233,8 +233,8 @@ auto ViewServices::CreateView(ViewType type, const RECT *rc1, int show) const ->
     break;
 
   case ViewType::_WFCT_Custom:
-    //if (m_wfExam != nullptr && m_ctExam != nullptr)
-    //  vp = std::make_unique<CWFCTSumWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_ctExam, &Settings.m_IDsmSettings[3][0], 3, "", show);
+    if (m_wfExam != nullptr && m_ctExam != nullptr)
+      vp = std::make_unique<CWFCTSumWnd>(AfxGetMainWnd(), rct, m_patient, m_wfExam, m_ctExam, &Settings.m_IDsmSettings[3][0], 3, "", show);
     break;
 
   case ViewType::_MISSING26:

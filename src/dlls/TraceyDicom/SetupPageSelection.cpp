@@ -27,7 +27,7 @@ BOOL CSetupPageSelection::DoDataExchange(BOOL bSaveAndValidate, UINT nCtlID)
   CheckBit(IDC_WFVA_CHECK         , ViewType::WF_VisualAcuity    );   // WF Visual Acuity
   CheckBit(IDC_DEPTHFOCUS_CHECK   , ViewType::WF_DepthFocus      );   // WF Depth of Focus
   CheckBit(IDC_WFRMS_CHECK        , ViewType::WF_RMS             );   // WF/RMS
-  CheckBit(IDC_WCCUSTOM_CHECK     , ViewType::WF_Custom          );   // WF Custom
+  CheckBit(IDC_WFCUSTOM_CHECK     , ViewType::WF_Custom          );   // WF Custom
 
   CheckBit(IDC_CTRINGS_CHECK      , ViewType::CT_Rings           );   // CT Summary
   CheckBit(IDC_CTSU_CHECK         , ViewType::CT_Summary         );   // CT Summary
@@ -44,7 +44,7 @@ BOOL CSetupPageSelection::DoDataExchange(BOOL bSaveAndValidate, UINT nCtlID)
   CheckBit(IDC_DYSPTFUN_CHECK     , ViewType::WFCT_DysfunPT      );   // Dysfunctional Analysis PT
   CheckBit(IDC_ASTISOU_CHECK      , ViewType::WFCT_AstigmSrc     );   // Astigmatism Source
   CheckBit(IDC_TORLI_CHECK        , ViewType::WFCT_ToricCheck    );   // Toric Check
-  //CheckBit(IDC_WCCUSTOM_CHECK     , ViewType::WFCT_Custom        );
+  CheckBit(IDC_WCCUSTOM_CHECK     , ViewType::_WFCT_Custom       );   // WFCT_Custom
   // clang-format on
 
   if (bSaveAndValidate && m_cfg.selectionFlags == 0) {
@@ -77,15 +77,15 @@ void CSetupPageSelection::OnContextMenu(CWindow wnd, CPoint point)
     all,
     none
   };
-
-  menu.AppendMenu(MF_STRING, all_ct, L"CT (All)");
-  menu.AppendMenu(MF_STRING, no_ct, L"CT (None)");
-  menu.AppendMenu(MF_SEPARATOR);
+   
   menu.AppendMenu(MF_STRING, all_wf, L"WF (All)");
   menu.AppendMenu(MF_STRING, no_wf, L"WF (None)");
   menu.AppendMenu(MF_SEPARATOR);
-  menu.AppendMenu(MF_STRING, all_ctwf, L"CTWF (All)");
-  menu.AppendMenu(MF_STRING, no_ctwf, L"CTWF (None)");
+  menu.AppendMenu(MF_STRING, all_ct, L"CT (All)");
+  menu.AppendMenu(MF_STRING, no_ct, L"CT (None)");
+  menu.AppendMenu(MF_SEPARATOR);
+  menu.AppendMenu(MF_STRING, all_ctwf, L"WF/CT (All)");
+  menu.AppendMenu(MF_STRING, no_ctwf, L"WF/CT (None)");
   menu.AppendMenu(MF_SEPARATOR);
   menu.AppendMenu(MF_STRING, all, L"All");
   menu.AppendMenu(MF_STRING, none, L"None");
@@ -118,7 +118,8 @@ void CSetupPageSelection::OnContextMenu(CWindow wnd, CPoint point)
     ViewType::WFCT_DysfunMD,
     ViewType::WFCT_DysfunPT,
     ViewType::WFCT_AstigmSrc,
-    ViewType::WFCT_ToricCheck
+    ViewType::WFCT_ToricCheck,
+    ViewType::_WFCT_Custom
   );
   // clang-format on
 
