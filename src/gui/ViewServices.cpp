@@ -179,7 +179,7 @@ auto ViewServices::CreateView(ViewType type, const RECT *rc1, int show) const ->
 
   case ViewType::CT_Custom:
     if (m_ctExam)
-      vp = std::make_unique<CCTSingleSumWnd>(AfxGetMainWnd(), rct, m_patient, m_ctExam, &Settings.m_CSsmSettings[1][0], CT_CUSTOM, show);
+      vp = std::make_unique<CCTSingleSumWnd>(AfxGetMainWnd(), rct, m_patient, m_ctExam, &Settings.m_CSsmSettings[3][0], CT_CUSTOM, show);
     break;
 
   case ViewType::WFCT_Change:
