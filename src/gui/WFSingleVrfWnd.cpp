@@ -1015,6 +1015,7 @@ void CWFSingleVrfWnd::OnShowDefaultItemClicked()
 	{
 		m_pWndSettings[1].m_Type = TYPE_TRSD;
 		m_pWndSettings[1].m_SizeSmall = TRUE;
+		m_pWndSettings[1].m_MapShowEye = TRUE; // 6.3.0 Set show eye as default
 	}
 
 	for (m_d = 0; m_d < 4; m_d++)

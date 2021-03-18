@@ -2055,6 +2055,7 @@ void CSettings::SetSomeDefault()
 
 	m_TSvrSettings[1].m_Type = TYPE_TRSD;
 	m_TSvrSettings[1].m_Method3D = FALSE;
+	m_TSvrSettings[1].m_MapShowEye = TRUE;//6.3.0 Set show eye as default
 	m_TSvrSettings[1].m_SizeSmall = TRUE;
 
 	m_TSvrSettings[2].m_Type = TYPE_TSGN;

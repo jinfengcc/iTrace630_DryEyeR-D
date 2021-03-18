@@ -4606,6 +4606,8 @@ void  CSettingsComboDlg::SetSettingsDefault()
 		::Settings.m_TSvrSettings[0].m_MapShowPupil = 1;
 		::Settings.m_TSvrSettings[0].m_MapShowLimbus = 1;
 		::Settings.m_TSvrSettings[0].m_SizeSmall = TRUE;
+
+		::Settings.m_TSvrSettings[1].m_MapShowEye = TRUE;//6.3.0 Set show eye as default of opcity map
 		//Done
 
 
