@@ -96,7 +96,7 @@ CWFVrfTestWnd::CWFVrfTestWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFE
 
 	for (int i = 0; i < 4; i++)
 	{
-		if (m_pWndSettings[i].m_SizeSmall == FALSE) 
+		if (m_pWndSettings[i].m_SizeSmall == FALSE)
 		{
 			m_d = i;
 			CreateChildWnd();
@@ -165,7 +165,7 @@ CWFVrfTestWnd::CWFVrfTestWnd(CWnd* pWnd, RECT& WndRect, CPatient* pPatient, CWFE
 	Rgn.SetRectRgn(&Rect);
 	m_Rgn.CombineRgn(&m_Rgn, &Rgn, RGN_DIFF);
 
-	if (m_pWFExam->GetNumShots() > 1) 
+	if (m_pWFExam->GetNumShots() > 1)
 	{
 		Rect.left -= s; Rect.right -= s;
 		m_Shot2Button.Create(_T(""), _T(""), 0, Rect, this, IDC_SHOT_2);
@@ -224,7 +224,7 @@ void CWFVrfTestWnd::OnSizeLargeItemClicked()
 			CreateChildWnd();
 		}
 	}
-	else 
+	else
 	{
 		CreateChildWnd();
 	}
@@ -250,7 +250,7 @@ void CWFVrfTestWnd::PointInfo()
 	// bad points info
 	int NumBadPoints = m_pWFExam->m_Points.GetSize() - m_pWFExam->m_NumGoodPoints;
 
-	if (NumBadPoints > 0) 
+	if (NumBadPoints > 0)
 	{
 		COLORREF Color = (NumBadPoints < 10) ? (m_Printing ? ORANGE : YELLOW) : RED;
 
@@ -279,7 +279,7 @@ void CWFVrfTestWnd::CreateChildWnd()
 
 	CWndSettings* pWndSettings = GetWndSettings();
 
-	switch (m_d) 
+	switch (m_d)
 	{
 	case 0:
 		pWndSettings->m_Type = TYPE_TEYE;
@@ -300,9 +300,9 @@ void CWFVrfTestWnd::CreateChildWnd()
 		break;
 	}
 
-	if (!::Settings.m_ShowWavetouch) 
+	if (!::Settings.m_ShowWavetouch)
 	{
-		if (m_d == 0) 
+		if (m_d == 0)
 		{
 			pWndSettings->m_MapShowWavetouchLens = FALSE;
 		}
@@ -335,7 +335,7 @@ void CWFVrfTestWnd::CreateChildWnd()
 
 	int SignalZoom = 8;
 
-	for (; SignalZoom >= 2; SignalZoom--) 
+	for (; SignalZoom >= 2; SignalZoom--)
 	{
 		if ((1 << (16 - SignalZoom)) > m_pWFExam->m_SignalMax) break;
 	}
@@ -391,7 +391,7 @@ void CWFVrfTestWnd::CreateChildWnd()
 		pEyeWnd->m_MapShowCornealVertex = pWndSettings->m_MapShowCornealVertex;
 		pEyeWnd->m_MapShowLimbus = FALSE;
 		pEyeWnd->m_MapTranslucent = pWndSettings->m_MapTranslucent;
-		pEyeWnd->m_Unit = "";
+		pEyeWnd->m_Unit = Unit::none;
 		pEyeWnd->m_Inc = pWndSettings->GetIncrement();
 		CScale* pScale = pWndSettings->GetScale();
 		pEyeWnd->m_Cent = 0.5;
@@ -543,24 +543,24 @@ void CWFVrfTestWnd::ChangePoint(BOOL ChangeShot)
 
 	if (m_pDispWnd[0])
 	{
-		if (ChangeShot) 
+		if (ChangeShot)
 		{
 			m_pDispWnd[0]->Repaint();
 		}
-		else 
+		else
 		{
 			((CEyeWnd*)m_pDispWnd[0])->ChangePoint();
 		}
 	}
 	if (m_pDispWnd[1])
 	{
-		if (m_pWndSettings[1].m_Type == TYPE_TRSD) 
+		if (m_pWndSettings[1].m_Type == TYPE_TRSD)
 		{
 			m_pDispWnd[1]->Repaint();
 		}
 		else if (m_pWndSettings[1].m_Type == TYPE_TOPM)
 		{
-			if (ChangeShot) 
+			if (ChangeShot)
 			{
 				CEyeWnd* pEyeWnd = ((CEyeWnd*)m_pDispWnd[1]);
 				m_pWFExam->CreateOpm2D(pEyeWnd->m_Map2D, 1.0 / pEyeWnd->m_y_px_um, m_pWFExam->m_CurShot, 2);
@@ -593,7 +593,7 @@ void CWFVrfTestWnd::OnAccept(BOOL accept)
 
 	m_pWFExam->Process();
 
-	// for average exam 
+	// for average exam
 	CString ExamId, LoadFileName;
 	GUIDToStr(m_pWFExam->m_Header.m_ExamID, ExamId);
 	LoadFileName = MAIN_DIR + "\\Data\\" + ExamId;
@@ -616,11 +616,11 @@ void CWFVrfTestWnd::OnAccept(BOOL accept)
 	m_AcceptButton.Repaint();
 	m_RejectButton.Repaint();
 
-	if ((m_pWndSettings + 1)->m_Type == TYPE_TRSD) 
+	if ((m_pWndSettings + 1)->m_Type == TYPE_TRSD)
 	{
 		CRSDWnd* pWnd = (CRSDWnd*)m_pDispWnd[1];
 
-		if (pWnd) 
+		if (pWnd)
 		{
 			pWnd->m_Surface = m_pWFExam->m_WfSurface;
 		}
@@ -639,7 +639,7 @@ void CWFVrfTestWnd::AddDefocus(real_t SphEq)
 	{
 		CRSDWnd* pWnd = (CRSDWnd*)m_pDispWnd[1];
 
-		if (pWnd) 
+		if (pWnd)
 		{
 			pWnd->m_AddedSphEq += SphEq;
 			pWnd->m_Surface.AddSphEq(SphEq);
@@ -666,11 +666,11 @@ void CWFVrfTestWnd::OnF2()
 
 void CWFVrfTestWnd::OnF3()
 {
-	if ((m_pWndSettings + 1)->m_Type == TYPE_TRSD) 
+	if ((m_pWndSettings + 1)->m_Type == TYPE_TRSD)
 	{
 		CRSDWnd* pWnd = (CRSDWnd*)m_pDispWnd[1];
 
-		if (pWnd) 
+		if (pWnd)
 		{
 			pWnd->m_AddedSphEq = 0.0;
 			pWnd->m_Surface.m_c[4] = m_pWFExam->m_WfSurface.m_c[4];
@@ -685,9 +685,9 @@ void CWFVrfTestWnd::OnF3()
 
 void CWFVrfTestWnd::OnF4()
 {
-	if (m_TimerF4 == 0) 
+	if (m_TimerF4 == 0)
 	{
-		if (m_TimerF7 != 0) 
+		if (m_TimerF7 != 0)
 		{
 			KillTimer(m_TimerF7);
 			m_TimerF7 = 0;
@@ -707,7 +707,7 @@ void CWFVrfTestWnd::OnF7()
 {
 	if (m_TimerF7 == 0)
 	{
-		if (m_TimerF4 != 0) 
+		if (m_TimerF4 != 0)
 		{
 			KillTimer(m_TimerF4);
 			m_TimerF4 = 0;
@@ -717,7 +717,7 @@ void CWFVrfTestWnd::OnF7()
 		OnShot1ButtonClicked();
 		m_TimerF7 = SetTimer(1, 20, NULL);
 	}
-	else 
+	else
 	{
 		KillTimer(m_TimerF7);
 		m_TimerF7 = 0;
@@ -728,9 +728,9 @@ void CWFVrfTestWnd::OnF7()
 
 void CWFVrfTestWnd::OnTimer(UINT_PTR Event)
 {
-	if (Event == m_TimerF4) 
+	if (Event == m_TimerF4)
 	{
-		if (m_inc) 
+		if (m_inc)
 		{
 			if (m_cnt < 100)
 			{
@@ -744,7 +744,7 @@ void CWFVrfTestWnd::OnTimer(UINT_PTR Event)
 				OnF1();
 			}
 		}
-		else 
+		else
 		{
 			if (m_cnt > -100)
 			{
@@ -776,7 +776,7 @@ void CWFVrfTestWnd::OnTimer(UINT_PTR Event)
 				m_TimerF7 = 0;
 			}
 		}
-		else 
+		else
 		{
 			m_cur_shot_point++;
 			OnNextButtonClicked();
@@ -850,7 +850,7 @@ void CWFVrfTestWnd::CreateMenu()
 		}
 	}
 
-	
+
 	if (m_d == 0 && !SameVrf0())
 	{
 		m_pMenu->AppendSeparator();
@@ -862,7 +862,7 @@ void CWFVrfTestWnd::CreateMenu()
 		m_pMenu->AppendSeparator();
 		m_pMenu->AppendItem(IDC_DEFAULT_GUI_ITEM, FALSE, FALSE, "Return to default", "");
 	}
-	
+
 }
 
 //***************************************************************************************
@@ -881,7 +881,7 @@ void CWFVrfTestWnd::OnEditLimbusItemClicked()
 
 		m_pWFExam->Process();
 
-		// for average exam 
+		// for average exam
 		CString ExamId, LoadFileName;
 		GUIDToStr(m_pWFExam->m_Header.m_ExamID, ExamId);
 		LoadFileName = MAIN_DIR + "\\Data\\" + ExamId;
@@ -944,7 +944,7 @@ void CWFVrfTestWnd::OnSelEyeImgItemClicked()
 		m_pWFExam->m_Image = SelectWFExam->m_Image;
 		m_pWFExam->Process();
 
-		// for average exam 
+		// for average exam
 		CString ExamId, LoadFileName;
 		GUIDToStr(m_pWFExam->m_Header.m_ExamID, ExamId);
 		LoadFileName = MAIN_DIR + "\\Data\\" + ExamId;
@@ -986,9 +986,9 @@ void CWFVrfTestWnd::OnSelEyeImgItemClicked()
 
 		m_d = -1;
 
-		for (int i = 0; i < 4; i++) 
+		for (int i = 0; i < 4; i++)
 		{
-			if (m_pWndSettings[i].m_SizeSmall == FALSE) 
+			if (m_pWndSettings[i].m_SizeSmall == FALSE)
 			{
 				m_d = i;
 				CreateChildWnd();
@@ -996,9 +996,9 @@ void CWFVrfTestWnd::OnSelEyeImgItemClicked()
 			}
 		}
 
-		if (m_d == -1) 
+		if (m_d == -1)
 		{
-			for (m_d = 0; m_d < 4; m_d++) 
+			for (m_d = 0; m_d < 4; m_d++)
 			{
 				CreateChildWnd();
 			}

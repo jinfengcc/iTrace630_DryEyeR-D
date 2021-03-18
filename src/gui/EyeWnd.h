@@ -6,6 +6,8 @@
 
 #include "DispWnd.h"
 #include "Data.h"
+#include "Units.h"
+
 
 //***************************************************************************************
 
@@ -58,7 +60,7 @@ public:
 	real_t          m_Inc;
 	int             m_NumColors;
 	COLORREF        m_Colors[21];
-	CString         m_Unit;
+	Unit            m_Unit;
 
 	void CreateCentButtons();
 	void CreateZoomButtons();

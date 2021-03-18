@@ -263,7 +263,7 @@ void CWFMultiSumWnd::CreateChildWnd()
 		pEyeWnd->m_LTLabel[2].Format(_T("%.2f mm"), WfSurface.m_r_max_um * 0.002);
 		pEyeWnd->m_MapShowMap = TRUE;
 		pEyeWnd->m_MapShowNumbers = FALSE;
-		pEyeWnd->m_Unit = "D";
+		pEyeWnd->m_Unit = Unit::D;
 		pEyeWnd->m_Inc = pWndSettings->GetIncrement();
 		CScale* pScale = pWndSettings->GetScale();
 		pEyeWnd->m_NumColors = pScale->m_NumColors;

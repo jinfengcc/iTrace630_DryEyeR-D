@@ -1,4 +1,4 @@
-//521, Copy code from EyeWnd, but add the grid value for WFCTOUSumWnd to make the 
+//521, Copy code from EyeWnd, but add the grid value for WFCTOUSumWnd to make the
 //wafefront/refraction map to be bigger
 //a new variable 'scale' is added here
 //***************************************************************************************
@@ -60,7 +60,7 @@ CNewEyeWnd::CNewEyeWnd(RECT& Rect, CWnd* pWnd, int Scale) : CDispWnd(Rect, pWnd)
 		int c = i * 255 / 14;
 		m_Colors[i] = RGB(c, c, c);
 	}
-	m_Unit = "";
+	m_Unit = Unit::none;
 
 	m_l = intRound(0.100 * m_w);
 	m_h_um = 13000.0;
@@ -178,8 +178,8 @@ void CNewEyeWnd::RepaintMemDC()
 		Rings();
 		Numbers();
 		Points();
-		RadialRuler();//520	
-		LinearRuler();//520	
+		RadialRuler();//520
+		LinearRuler();//520
 		Inlay();//520
 		Limbus();
 		Grid();
@@ -302,7 +302,7 @@ void CNewEyeWnd::Legend()
 	Rect.top = intRound(m_NumColors * dH) + 2;
 	Rect.bottom = intRound((m_NumColors + 1) * dH) + 1;
 	Rect.right = m_l;
-	m_MemDC.WriteText(m_Unit, Rect, Font, m_Printing ? BLACK : WHITE, 1);
+	m_MemDC.WriteText(GetUnitText(m_Unit), Rect, Font, m_Printing ? BLACK : WHITE, 1);
 }
 
 //***************************************************************************************
@@ -488,7 +488,7 @@ void CNewEyeWnd::Eye()
 		//	pImage = &m_pCTExam->m_ColorImage;
 		//	pImage->SwapImageInfo(&m_pCTExam->m_Image);
 		//}
-		//else   pImage = &m_pCTExam->m_Image;	
+		//else   pImage = &m_pCTExam->m_Image;
 		////[520]
 
 		pImage = &m_pCTExam->m_Image;
@@ -601,9 +601,9 @@ void CNewEyeWnd::Pupil()
 		//if(m_pCTExam->m_ColorImage.m_RGBData.GetMem() != NULL)
 		//{
 		//	pImage = &m_pCTExam->m_ColorImage;
-		//	pImage->SwapImageInfo(&m_pCTExam->m_Image);		
+		//	pImage->SwapImageInfo(&m_pCTExam->m_Image);
 		//}
-		//else   
+		//else
 		pImage = &m_pCTExam->m_Image;
 		//[520]
 
@@ -1854,7 +1854,7 @@ void CNewEyeWnd::Cursor()
 				if (i < 0) i = 0;
 				else if (i > m_NumColors - 1) i = m_NumColors - 1;
 				::SetRect(&Rect, 0, T + h + h, R, T + h + h + h);
-				s.Format(_T("%.2f %s"), v, m_Unit);
+				s.Format(_T("%.2f %s"), v, GetUnitText(m_Unit));
 				m_MemDC.WriteText(s, Rect, Font, m_Colors[i], 2);
 			}
 		}

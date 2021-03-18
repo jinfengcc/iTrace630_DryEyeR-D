@@ -430,6 +430,7 @@
     <ClCompile Include="ToricSelDlg.cpp" />
     <ClCompile Include="ToricSelDlg2.cpp" />
     <ClCompile Include="TranExamDlg.cpp" />
+    <ClCompile Include="Units.cpp" />
     <ClCompile Include="unzip.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="VerSliderCtrl.cpp" />
@@ -623,6 +624,7 @@
     <ClInclude Include="ToricSelDlg.h" />
     <ClInclude Include="ToricSelDlg2.h" />
     <ClInclude Include="TranExamDlg.h" />
+    <ClInclude Include="Units.h" />
     <ClInclude Include="unzip.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="VerSliderCtrl.h" />

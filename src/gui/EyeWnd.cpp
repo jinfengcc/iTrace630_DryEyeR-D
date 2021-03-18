@@ -60,7 +60,7 @@ CEyeWnd::CEyeWnd(RECT& Rect, CWnd* pWnd) : CDispWnd(Rect, pWnd)
 		int c = i * 255 / 14;
 		m_Colors[i] = RGB(c, c, c);
 	}
-	m_Unit = "";
+	m_Unit = Unit::none;
 
 	m_l = intRound(0.100 * m_w);
 	m_h_um = 13000.0;
@@ -393,7 +393,7 @@ void CEyeWnd::Legend()
 		Rect.top = intRound(m_NumColors * dH) + 2;
 		Rect.bottom = intRound((m_NumColors + 1) * dH) + 1;
 		Rect.right = m_l;
-		m_MemDC.WriteText(m_Unit, Rect, Font, m_Printing ? BLACK : WHITE, 1);
+		m_MemDC.WriteText(GetUnitText(m_Unit), Rect, Font, m_Printing ? BLACK : WHITE, 1);
 	}
 }
 
@@ -2038,7 +2038,7 @@ void CEyeWnd::Cursor()
 				if (i < 0) i = 0;
 				else if (i > m_NumColors - 1) i = m_NumColors - 1;
 				::SetRect(&Rect, 0, T + h + h, R, T + h + h + h);
-				s.Format(_T("%.2f %s"), v, m_Unit);
+				s.Format(_T("%.2f %s"), v, GetUnitText(m_Unit));
 
 				//531
 				if (m_Type == TYPE_TOPM)

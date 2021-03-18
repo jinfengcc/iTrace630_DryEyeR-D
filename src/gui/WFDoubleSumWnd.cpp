@@ -585,7 +585,7 @@ void CWFDoubleSumWnd::CreateChildWnd()
 				pEyeWnd->m_MapShowLimbus = FALSE;
 				pEyeWnd->m_MapShowPoints = FALSE;
 				pEyeWnd->m_MapTranslucent = FALSE;
-				pEyeWnd->m_Unit = "µ";
+				pEyeWnd->m_Unit = Unit::micron;
 				pEyeWnd->m_Inc = pWndSettings->GetIncrement();
 				CScale* pScale = pWndSettings->GetScale();
 				pEyeWnd->m_NumColors = pScale->m_NumColors;
@@ -646,7 +646,7 @@ void CWFDoubleSumWnd::CreateChildWnd()
 				pEyeWnd->m_MapShowLimbus = FALSE;
 				pEyeWnd->m_MapShowPoints = FALSE;
 				pEyeWnd->m_MapTranslucent = FALSE;
-				pEyeWnd->m_Unit = "D";
+				pEyeWnd->m_Unit = Unit::D;
 				pEyeWnd->m_Inc = pWndSettings->GetIncrement();
 				CScale* pScale = pWndSettings->GetScale();
 				pEyeWnd->m_NumColors = pScale->m_NumColors;

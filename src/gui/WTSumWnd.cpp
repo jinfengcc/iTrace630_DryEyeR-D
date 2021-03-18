@@ -303,7 +303,7 @@ void CWTSumWnd::CreateChildWnd()
 		pEyeWnd->m_MapShowSolidSurface = FALSE;
 		pEyeWnd->m_MapShowWireMesh = FALSE;
 		pEyeWnd->m_MapTranslucent = FALSE;
-		pEyeWnd->m_Unit = "µ";
+		pEyeWnd->m_Unit = Unit::micron;
 		pEyeWnd->m_Inc = pWndSettings->GetIncrement();
 		CScale* pScale = pWndSettings->GetScale();
 		pEyeWnd->m_NumColors = pScale->m_NumColors;
@@ -362,7 +362,7 @@ void CWTSumWnd::CreateChildWnd()
 		pEyeWnd->m_MapTranslucent = FALSE;
 		pEyeWnd->m_MapShowKeratometry = FALSE;
 		pEyeWnd->m_MapTranslucent = FALSE;
-		pEyeWnd->m_Unit = pWndSettings->m_MapUnit == DIOPTERS ? "D" : "mm";
+		pEyeWnd->m_Unit = pWndSettings->m_MapUnit == DIOPTERS ? Unit::D : Unit::mm;
 		pEyeWnd->m_Inc = pWndSettings->GetIncrement();
 		CScale* pScale = pWndSettings->GetScale();
 		pEyeWnd->m_NumColors = pScale->m_NumColors;

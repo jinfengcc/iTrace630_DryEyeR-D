@@ -435,7 +435,7 @@ void CWFDoubleSoloWnd::CreateChildWnd()
 			pEyeWnd->m_MapShowSolidSurface = pWndSettings->m_MapShowSolidSurface;
 			pEyeWnd->m_MapShowWireMesh = pWndSettings->m_MapShowWireMesh;
 			pEyeWnd->m_MapTranslucent = pWndSettings->m_MapTranslucent;
-			pEyeWnd->m_Unit = "µ";
+			pEyeWnd->m_Unit = Unit::micron;
 			pEyeWnd->m_Inc = pWndSettings->GetIncrement();
 
 			if (!pWndSettings->AreDefaultColors(0) &&
@@ -485,7 +485,7 @@ void CWFDoubleSoloWnd::CreateChildWnd()
 			pEyeWnd->m_MapShowSolidSurface = pWndSettings->m_MapShowSolidSurface;
 			pEyeWnd->m_MapShowWireMesh = pWndSettings->m_MapShowWireMesh;
 			pEyeWnd->m_MapTranslucent = pWndSettings->m_MapTranslucent;
-			pEyeWnd->m_Unit = "D";
+			pEyeWnd->m_Unit = Unit::D;
 			pEyeWnd->m_Inc = pWndSettings->GetIncrement();
 
 			if (!pWndSettings->AreDefaultColors(0) &&

@@ -434,7 +434,7 @@ void CWFCTIolWnd::CreateChildWnd()
 			pEyeWnd->m_MapShowLimbus = FALSE;
 			pEyeWnd->m_MapShowPoints = FALSE;
 			pEyeWnd->m_MapTranslucent = FALSE;
-			pEyeWnd->m_Unit = "µ";
+			pEyeWnd->m_Unit = Unit::micron;
 			pEyeWnd->m_Inc = pWndSettings->GetIncrement();
 			CScale* pScale = pWndSettings->GetScale();
 			pEyeWnd->m_NumColors = pScale->m_NumColors;
@@ -474,7 +474,7 @@ void CWFCTIolWnd::CreateChildWnd()
 			pEyeWnd->m_MapShowLimbus = FALSE;
 			pEyeWnd->m_MapShowPoints = FALSE;
 			pEyeWnd->m_MapTranslucent = FALSE;
-			pEyeWnd->m_Unit = "D";
+			pEyeWnd->m_Unit = Unit::D;
 			pEyeWnd->m_Inc = pWndSettings->GetIncrement();
 			CScale* pScale = pWndSettings->GetScale();
 			pEyeWnd->m_NumColors = pScale->m_NumColors;
@@ -561,7 +561,7 @@ void CWFCTIolWnd::CreateChildWnd()
 		pEyeWnd->m_MapTranslucent = m_pWndSettings[0].m_MapTranslucent;
 		pEyeWnd->m_MapShowKeratometry = TRUE;// m_pWndSettings[0].m_MapShowKeratometry; // 6.3.0 bug fix
 		pEyeWnd->m_MapShowSimKAxes = m_pWndSettings[0].m_MapShowSimKAxes;
-		pEyeWnd->m_Unit = MapUnit == DIOPTERS ? "D" : "mm";
+		pEyeWnd->m_Unit = MapUnit == DIOPTERS ? Unit::D : Unit::mm;
 		pEyeWnd->m_Inc = m_pWndSettings[0].GetIncrement();
 		CScale* pScale = m_pWndSettings[0].GetScale();
 		pEyeWnd->m_NumColors = pScale->m_NumColors;

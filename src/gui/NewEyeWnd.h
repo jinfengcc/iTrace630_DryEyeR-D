@@ -6,6 +6,7 @@
 
 #include "DispWnd.h"
 #include "Data.h"
+#include "Units.h"
 
 //***************************************************************************************
 
@@ -39,12 +40,12 @@ public:
 	BOOL            m_ShowRadialRuler;//520
 	BOOL            m_ShowLinearRuler;//520
 	BOOL            m_ShowInlay;//520
-	real_t            m_Cent;
-	real_t            m_Step;
-	real_t            m_Inc;
+	real_t          m_Cent;
+	real_t          m_Step;
+	real_t          m_Inc;
 	int             m_NumColors;
 	COLORREF        m_Colors[21];
-	CString         m_Unit;
+	Unit            m_Unit;
 
 	void CreateCentButtons();
 	void CreateZoomButtons();

@@ -884,6 +884,9 @@
     <ClCompile Include="Exam.cpp">
       <Filter>Math</Filter>
     </ClCompile>
+    <ClCompile Include="Units.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PatientDlg.h">
@@ -1455,6 +1458,9 @@
     </ClInclude>
     <ClInclude Include="AcquisitionParameters.h">
       <Filter>Acquisition</Filter>
+    </ClInclude>
+    <ClInclude Include="Units.h">
+      <Filter>Windows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

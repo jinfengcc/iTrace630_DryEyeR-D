@@ -418,7 +418,7 @@ void CWFSingleVrfWnd::CreateChildWnd()
 		pEyeWnd->m_MapShowCornealVertex = pWndSettings->m_MapShowCornealVertex;
 		pEyeWnd->m_MapShowLimbus = FALSE;// pWndSettings->m_MapShowLimbus;//
 		pEyeWnd->m_MapTranslucent = pWndSettings->m_MapTranslucent;
-		pEyeWnd->m_Unit = "";
+		pEyeWnd->m_Unit = Unit::none;
 		pEyeWnd->m_Inc = pWndSettings->GetIncrement();
 		CScale* pScale = pWndSettings->GetScale();
 		pEyeWnd->m_Cent = 0.5;

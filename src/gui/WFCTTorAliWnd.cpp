@@ -236,7 +236,7 @@ void CWFCTTorAliWnd::CreateChildWnd()
 		pEyeWnd0->m_MapTranslucent = FALSE;
 		pEyeWnd0->m_DonotShow90Degree = TRUE;
 		pEyeWnd0->m_astigm_axis = Axes[0];
-		pEyeWnd0->m_Unit = "µ";
+		pEyeWnd0->m_Unit = Unit::micron;
 		pEyeWnd0->m_Inc = 0.10;
 		CScale* pScale0 = m_ThisWndSetting.GetScale();
 		pEyeWnd0->m_NumColors = pScale0->m_NumColors;
@@ -279,7 +279,7 @@ void CWFCTTorAliWnd::CreateChildWnd()
 		pEyeWnd1->m_MapTranslucent = FALSE;
 		pEyeWnd1->m_DonotShow90Degree = TRUE;
 		pEyeWnd1->m_astigm_axis = Axes[1];
-		pEyeWnd1->m_Unit = "µ";
+		pEyeWnd1->m_Unit = Unit::micron;
 		pEyeWnd1->m_Inc = 0.10;
 		CScale* pScale1 = m_ThisWndSetting.GetScale();
 		pEyeWnd1->m_NumColors = pScale1->m_NumColors;
@@ -319,7 +319,7 @@ void CWFCTTorAliWnd::CreateChildWnd()
 		pEyeWnd2->m_MapShowKeratometry = TRUE;
 		pEyeWnd2->m_MapTranslucent = FALSE;
 		pEyeWnd2->m_astigm_axis = Axes[0];
-		pEyeWnd2->m_Unit = "D";
+		pEyeWnd2->m_Unit = Unit::D;
 		pEyeWnd2->m_Inc = 0.25;
 		CScale* pScale2 = m_ThisWndSetting.GetScale();
 		pEyeWnd2->m_NumColors = pScale2->m_NumColors;

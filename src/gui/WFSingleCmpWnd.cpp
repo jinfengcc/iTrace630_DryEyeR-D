@@ -452,7 +452,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 			pEyeWnd->m_MapShowSolidSurface = pWndSettings->m_MapShowSolidSurface;
 			pEyeWnd->m_MapShowWireMesh = pWndSettings->m_MapShowWireMesh;
 			pEyeWnd->m_MapTranslucent = pWndSettings->m_MapTranslucent;
-			pEyeWnd->m_Unit = "µ";
+			pEyeWnd->m_Unit = Unit::micron;
 			pEyeWnd->m_Inc = pWndSettings->GetIncrement();
 			CScale* pScale = pWndSettings->GetScale();
 			pEyeWnd->m_NumColors = pScale->m_NumColors;
@@ -525,7 +525,7 @@ void CWFSingleCmpWnd::CreateChildWnd()
 			pEyeWnd->m_MapShowSolidSurface = pWndSettings->m_MapShowSolidSurface;
 			pEyeWnd->m_MapShowWireMesh = pWndSettings->m_MapShowWireMesh;
 			pEyeWnd->m_MapTranslucent = pWndSettings->m_MapTranslucent;
-			pEyeWnd->m_Unit = "D";
+			pEyeWnd->m_Unit = Unit::D;
 			pEyeWnd->m_Inc = pWndSettings->GetIncrement();
 			CScale* pScale = pWndSettings->GetScale();
 			pEyeWnd->m_NumColors = pScale->m_NumColors;
