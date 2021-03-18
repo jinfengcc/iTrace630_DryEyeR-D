@@ -347,7 +347,7 @@ void CWFCTAngleSumWnd::CreateChildWnd()
 			Sph = round8(Sph);
 			Cyl = round8(Cyl);
 		}
-		PresbisRBs.Format(_T(" %+.2f D %+.2f D x %iÂ° "), Sph, Cyl, Axis);
+		PresbisRBs.Format(_T(" %+.2f D %+.2f D x %i° "), Sph, Cyl, Axis);
 	}
 	//530
 

@@ -513,7 +513,7 @@ void CWFCTTorAliWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	CMFont Font(intRound(1.1 * h), 400, "Arial");
 
 	RECT Rect1;
-	m_MemDC.MeasureRect("000Â° ", Rect1, Font);
+	m_MemDC.MeasureRect("000° ", Rect1, Font);
 	int w1 = Rect1.right - Rect1.left;
 
 	m_MemDC.MeasureRect("   Post-Op Ent Eye Ast ", Rect1, Font);
@@ -545,7 +545,7 @@ void CWFCTTorAliWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	if (m_pCTExam->m_OpData.m_CorneaPreopAxis != INVALID_VALUE)
 	{
 		::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
-		s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_CorneaPreopAxis);
+		s.Format(_T("%i° "), m_pCTExam->m_OpData.m_CorneaPreopAxis);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 
@@ -563,7 +563,7 @@ void CWFCTTorAliWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	if (m_pCTExam->m_OpData.m_InternalPreopAxis != INVALID_VALUE)
 	{
 		::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
-		s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_InternalPreopAxis);
+		s.Format(_T("%i° "), m_pCTExam->m_OpData.m_InternalPreopAxis);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 
@@ -581,7 +581,7 @@ void CWFCTTorAliWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	if (m_pCTExam->m_OpData.m_EyePreopAxis != INVALID_VALUE)
 	{
 		::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
-		s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_EyePreopAxis);
+		s.Format(_T("%i° "), m_pCTExam->m_OpData.m_EyePreopAxis);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 
@@ -591,7 +591,7 @@ void CWFCTTorAliWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	{
 		::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
 		m_MemDC.WriteText(" Surgical Incision Location", Rect, Font, white, 0);
-		s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_CorneaIncisionAxis);
+		s.Format(_T("%i° "), m_pCTExam->m_OpData.m_CorneaIncisionAxis);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 
@@ -604,7 +604,7 @@ void CWFCTTorAliWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 		s.Format(_T("%.2f D x "), m_pCTExam->m_OpData.m_CorneaInducedCyl);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 		::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
-		s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_CorneaInducedAxis);
+		s.Format(_T("%i° "), m_pCTExam->m_OpData.m_CorneaInducedAxis);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 
@@ -622,14 +622,14 @@ void CWFCTTorAliWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	{
 		::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
 		m_MemDC.WriteText(" IOL's Placement Axis", Rect, Font, white, 0);
-		s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_IOLPlacementAxis);
+		s.Format(_T("%i° "), m_pCTExam->m_OpData.m_IOLPlacementAxis);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 	else if (m_pCTExam->m_OpData.m_OpType == 2)
 	{
 		::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
 		m_MemDC.WriteText(" ICL's Placement Axis", Rect, Font, white, 0);
-		s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_ICL.m_PlacementAxis);
+		s.Format(_T("%i° "), m_pCTExam->m_OpData.m_ICL.m_PlacementAxis);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 
@@ -652,7 +652,7 @@ void CWFCTTorAliWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	if (m_pCTExam->m_OpData.m_CorneaPostopAxis != INVALID_VALUE)
 	{
 		::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
-		s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_CorneaPostopAxis);
+		s.Format(_T("%i° "), m_pCTExam->m_OpData.m_CorneaPostopAxis);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 
@@ -670,7 +670,7 @@ void CWFCTTorAliWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	if (m_pCTExam->m_OpData.m_InternalPostopAxis != INVALID_VALUE)
 	{
 		::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
-		s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_InternalPostopAxis);
+		s.Format(_T("%i° "), m_pCTExam->m_OpData.m_InternalPostopAxis);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 
@@ -688,7 +688,7 @@ void CWFCTTorAliWnd::PreopData(RECT Rect, int NumRows, BOOL* Rows)
 	if (m_pCTExam->m_OpData.m_EyePostopAxis != INVALID_VALUE)
 	{
 		::SetRect(&Rect, L, intRound(t), R, intRound(t + h + 1));
-		s.Format(_T("%iÂ° "), m_pCTExam->m_OpData.m_EyePostopAxis);
+		s.Format(_T("%i° "), m_pCTExam->m_OpData.m_EyePostopAxis);
 		m_MemDC.WriteText(s, Rect, Font, white, 2);
 	}
 }

@@ -229,7 +229,7 @@ void CPreopComboDataDlg::SetDlgData()
 	}
 	else
 	{
-		s.Format(_T("%.2fD x %iÂ° [Effective Corneal Power]"), m_OpData.m_Pri_CorneaPreopCyl, m_OpData.m_Pri_CorneaPreopAxis);
+		s.Format(_T("%.2fD x %i° [Effective Corneal Power]"), m_OpData.m_Pri_CorneaPreopCyl, m_OpData.m_Pri_CorneaPreopAxis);
 		m_PreopAdjStatic.SetWindowText(s);
 	}
 	// Cyclinder adjustment Branch

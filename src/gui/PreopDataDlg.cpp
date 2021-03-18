@@ -18,7 +18,7 @@ int angular_distance_counterclockwise1(int a1, int a2)
 	return da;
 }
 
-// distance between a1 and a2 Â° [0, 180)
+// distance between a1 and a2 ° [0, 180)
 int angular_distance1(int a1, int a2)
 {
 	int da = angular_distance_counterclockwise1(a1, a2);
@@ -343,7 +343,7 @@ void CPreopDataDlg::SetDlgData()
 
 			s.Empty();
 			if (pIOL->m_EyePostopAxis != INVALID_VALUE) {
-				s.Format(_T("%iÂ°"), pIOL->m_EyePostopAxis);
+				s.Format(_T("%i°"), pIOL->m_EyePostopAxis);
 			}
 			m_IOLPostopEyeAxisEdit[i].SetWindowText(s);
 
@@ -437,7 +437,7 @@ void CPreopDataDlg::SetDlgData()
 
 			if (Angel == 180) Angel = 0;
 
-			angelStr.Format(_T("%iÂ°"), Angel);
+			angelStr.Format(_T("%i°"), Angel);
 
 			s1 = angelStr + " rotation clockwise = ";
 		}
