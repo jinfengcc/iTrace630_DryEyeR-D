@@ -137,6 +137,8 @@ private:
 	CButton m_RRulerCheck;
 	CButton m_LRulerCheck;
 	CButton m_InlayCheck;
+
+	CStatic m_LimbusNote;//6.3.0 Fix the wrong placement and content of limbus note
 	//Done
 
 	BOOL IsDigital(CString strItem);//520

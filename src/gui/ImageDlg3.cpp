@@ -167,6 +167,9 @@ void CImageDlg3::DoDataExchange(CDataExchange* pDX)
 
 	DDX_Control(pDX, IDC_DIS_TEXT6, m_DisText6);
 	//Done
+
+	DDX_Control(pDX, IDC_STATIC_NOTE, m_LimbusNote);// 6.3.0 Fix the wrong placement and content of limbus note
+	
 }
 
 //***************************************************************************************
@@ -294,6 +297,7 @@ void CImageDlg3::Resize()
 	m_Limbus2Radio.SetWindowPos(NULL, iw + d + d + d, t += dt1, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 	m_Limbus3Radio.SetWindowPos(NULL, iw + d + d + d, t += dt1, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 	m_Limbus4Radio.SetWindowPos(NULL, iw + d + d + d, t += dt1, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+	m_LimbusNote.SetWindowPos(NULL, iw + d + d + d, t - 2 * dt1, 0, 0, SWP_NOSIZE | SWP_NOZORDER); // 6.3.0 Fix the wrong placement and content of limbus note
 
 	m_VertexRadio.SetWindowPos(NULL, iw + d + d, t += dt2, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 	m_Vertex1Radio.SetWindowPos(NULL, iw + d + d + d, t += dt1, 0, 0, SWP_NOSIZE | SWP_NOZORDER);

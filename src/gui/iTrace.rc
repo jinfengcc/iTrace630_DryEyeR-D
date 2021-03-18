@@ -1968,7 +1968,7 @@ BEGIN
     LTEXT           "mm (0 - 8mm)",IDC_DIS_TEXT5,248,366,57,8
     EDITTEXT        IDC_EDIT_INALYD2,206,364,21,12,ES_RIGHT | ES_AUTOHSCROLL,WS_EX_RIGHT
     LTEXT           "Static",IDC_DIS_TEXT6,15,363,80,8
-    LTEXT           "Note: Use the Rings Display to manually edit the Limbus"" as in the attached LimbusEdit.png",IDC_STATIC_NOTE,317,159,58,38
+    LTEXT           "Note: Use the Rings Display to manually edit the Limbus"" ",IDC_STATIC_NOTE,434,137,68,25
 END
 
 IDD_VIDEO3_TOOL_DLG DIALOGEX 0, 0, 471, 440
