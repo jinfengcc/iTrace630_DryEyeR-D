@@ -9,8 +9,8 @@
 #define VERSION_YEAR     2021
 #define VERSION_YEAR_STR "2021"
 
-#define VERSION_DAY     318
-#define VERSION_DAY_STR "0318"
+#define VERSION_DAY     319
+#define VERSION_DAY_STR "0319"
 
 #ifndef RC_INVOKED
 extern const unsigned SOFTWARE_VERSION_3;
