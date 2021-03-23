@@ -183,6 +183,19 @@ BEGIN
     CONTROL         "Everything",IDC_RADIO6,"Button",BS_AUTORADIOBUTTON,156,120,49,10
 END
 
+IDD_LICENSE DIALOGEX 0, 0, 390, 134
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "RZDCX License"
+FONT 10, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    LTEXT           "License Request:",IDC_STATIC,7,7,53,8
+    EDITTEXT        IDC_REQUEST,7,20,376,14,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "License:",IDC_STATIC,7,52,53,8
+    EDITTEXT        IDC_LICENSE,7,65,376,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,137,113,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,203,113,50,14
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -238,6 +251,14 @@ BEGIN
         RIGHTMARGIN, 227
         TOPMARGIN, 7
         BOTTOMMARGIN, 158
+    END
+
+    IDD_LICENSE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 383
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 127
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -325,6 +346,11 @@ BEGIN
     50, 50, 0, 0,
     50, 50, 0, 0,
     50, 50, 0, 0
+END
+
+IDD_LICENSE AFX_DIALOG_LAYOUT
+BEGIN
+    0
 END
 
 #endif    // English (United States) resources

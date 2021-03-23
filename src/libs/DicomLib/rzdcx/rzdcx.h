@@ -24,6 +24,7 @@ public:
   };
 
   RZDCX();
+  RZDCX(const fs::path &dll);
 
   void SetLogging(LogLevel logLevel, const fs::path &logFile);
   bool TestActivation();
@@ -59,6 +60,7 @@ private:
   fs::path              m_logFile;
 };
 
+#ifdef DICOM_IMPL
 inline void InsertElement(IDCXOBJ *obj, DICOM_TAGS_ENUM tag)
 {
   obj->insertElement(obj->createElement(tag));
@@ -186,3 +188,4 @@ inline bool GetElementValue<COleDateTime>(IDCXOBJ *obj, DICOM_TAGS_ENUM tag, COl
   value = COleDateTime(y, m, d, 0, 0, 0);
   return true;
 }
+#endif // DICOM_IMPL

@@ -121,7 +121,7 @@ void CWorklistDialog::OnClear(UINT uNotifyCode, int nID, CWindow wndCtl)
 
 void CWorklistDialog::OnSettings(UINT uNotifyCode, int nID, CWindow wndCtl)
 {
-  if (m_cfg->Change(*this))
+  if (m_cfg->ChangeConfig(*this))
     LoadWorklist();
 }
 

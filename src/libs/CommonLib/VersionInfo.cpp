@@ -5,33 +5,31 @@
 
 VersionInfo::VersionInfo()
 {
-   (void)GetFileVersionInfo();
+  TCHAR filename[_MAX_PATH];
+  DWORD len = GetModuleFileName(nullptr, filename, _MAX_PATH);
+  if (len > 0)
+    GetFileVersionInfo(fs::path(filename));
 }
 
-bool VersionInfo::GetFileVersionInfo()
+VersionInfo::VersionInfo(const fs::path &path)
 {
-   TCHAR filename[_MAX_PATH];
-   DWORD len = GetModuleFileName(NULL, filename, _MAX_PATH);
-   if (len == 0)
-      return false;
+  GetFileVersionInfo(path);
+}
 
-   // read file version info
-   DWORD dwDummyHandle; // will always be set to zero
-   len = GetFileVersionInfoSize(filename, &dwDummyHandle);
-   if (len == 0)
-      return false;
+void VersionInfo::GetFileVersionInfo(const fs::path &path)
+{
+  // read file version info
+  DWORD dwDummyHandle;
+  auto  len = GetFileVersionInfoSizeA(path.string().c_str(), &dwDummyHandle);
+  if (len == 0)
+    return;
 
-   m_buf.resize(len);
-   if (!::GetFileVersionInfo(filename, 0, len, &m_buf[0]))
-      return false;
+  m_buf.resize(len);
+  if (!::GetFileVersionInfoA(path.string().c_str(), 0, len, &m_buf[0]))
+    return;
 
-   LPVOID lpvi;
-   UINT iLen;
-   if (!VerQueryValue(&m_buf[0], _T("\\"), &lpvi, &iLen))
-      return false;
-
-   // copy fixed info to myself, which am derived from VS_FIXEDFILEINFO
-   m_ffi = *reinterpret_cast<VS_FIXEDFILEINFO *>(lpvi);
-
-   return m_ffi.dwSignature == VS_FFI_SIGNATURE;
+  LPVOID lpvi;
+  UINT   iLen;
+  if (VerQueryValue(&m_buf[0], _T("\\"), &lpvi, &iLen))
+    m_ffi = *reinterpret_cast<VS_FIXEDFILEINFO *>(lpvi);
 }

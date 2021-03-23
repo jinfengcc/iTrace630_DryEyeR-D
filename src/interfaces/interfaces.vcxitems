@@ -28,6 +28,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)IServices.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ISettingsStorage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ITraceyConfig.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ITraceyDicom.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TraceyObj.h" />
   </ItemGroup>
 </Project>

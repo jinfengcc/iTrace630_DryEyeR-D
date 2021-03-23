@@ -26,7 +26,8 @@ int CDicomSetup::DoModal(HWND hWndParent /*= ::GetActiveWindow()*/)
       return IDCANCEL;
   }
 
-  hWndParent = ::GetActiveWindow();
+  if (!hWndParent)
+    hWndParent = ::GetActiveWindow();
 
   if (int res = CPropertySheetImpl<CDicomSetup>::DoModal(hWndParent); res != IDOK)
     return res;

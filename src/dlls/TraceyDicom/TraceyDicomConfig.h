@@ -12,11 +12,12 @@ public:
   Data Get() const override;
   void Set(const Data &d) override;
   bool IsValid(const Data *d) const override;
-  bool Change(HWND hWndParent) override;
+  bool ChangeConfig(HWND hWndParent) override;
 
   // ITraceyDicomConfigRZDCX
   bool IsActivated() const override;
-  bool Activate() override;
+  void Activate() override;
+  bool ChangeActivation(HWND hWndParent) override;
 
 private:
   static bool IsValidImpl(const Data &d)

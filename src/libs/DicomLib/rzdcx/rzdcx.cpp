@@ -1,16 +1,17 @@
 #include "pch.h"
 #include "rzdcx.h"
-#include <libs/CommonLib/AppFiles.h>
+#include "rzdcxActivate.h"
 
 using rzdcxLib::IDCXOBJ;
 
 RZDCX::RZDCX()
+  : RZDCX(rzdcxGetDllName())
 {
-  auto rzdcx = fs::path(R"(C:\RZDCX\rzdcx.dll)");
-  if (!fs::exists(rzdcx)) {
-    rzdcx = app::GetAppPath(app::Type::exeFolder) / "rzdcx.dll";
   }
-  m_rzdcxLib.Load(rzdcx.wstring().c_str());
+
+RZDCX::RZDCX(const fs::path &dll)
+{
+  m_rzdcxLib.Load(dll.wstring().c_str());
 }
 
 void RZDCX::SetLogging(LogLevel logLevel, const fs::path &logFile)

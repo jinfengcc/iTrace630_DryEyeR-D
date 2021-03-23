@@ -57,5 +57,10 @@ constexpr std::uint32_t CombineEnumFlags(Args... args)
   return (... | (1 << static_cast<std::uint32_t>(args)));
 }
 
+template<class DLG>
+int DoModal( DLG &dlg, HWND hParentWnd)
+{
+  return dlg.DoModal(hParentWnd ? hParentWnd : GetActiveWindow());
+}
 
 #endif //PCH_H

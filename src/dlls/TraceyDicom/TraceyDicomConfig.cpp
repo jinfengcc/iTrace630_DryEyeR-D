@@ -2,6 +2,8 @@
 #include "TraceyDicomConfig.h"
 #include "SetupSheet.h"
 #include "libs/DicomLib/DicomLog.h"
+#include "libs/DicomLib/rzdcx/rzdcxActivate.h"
+#include "RzdcxLicenseDlg.h"
 
 namespace {
   struct WorklistDialogSettings : public TraceyRegistryImpl<WorklistDialogSettings>
@@ -64,18 +66,24 @@ bool TraceyDicomConfig::IsValid(const Data *d) const
   return (d != nullptr) ? IsValidImpl(*d) : IsValidImpl(Get());
 }
 
-bool TraceyDicomConfig::Change(HWND hWndParent)
+bool TraceyDicomConfig::ChangeConfig(HWND hWndParent)
 {
   CDicomSetup     ds(this);
-  return ds.DoModal(hWndParent);
+  return DoModal(ds, hWndParent);
 }
 
 bool TraceyDicomConfig::IsActivated() const
 {
-  return true;
+  return rzdcxIsActivated();
 }
 
-bool TraceyDicomConfig::Activate()
+void TraceyDicomConfig::Activate()
 {
-  return true;
+  rzdcxActivate();    // It will throw on error
+}
+
+bool TraceyDicomConfig::ChangeActivation(HWND hWndParent)
+{
+  CRzdcxLicenseDlg dlg;
+  return DoModal(dlg, hWndParent) == IDOK;
 }

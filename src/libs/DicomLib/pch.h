@@ -10,6 +10,7 @@
 #include <atlbase.h>
 #include <atlstr.h>
 #include <ATLComTime.h>
+#include <shellapi.h>
 
 #include <string>
 #include <list>
@@ -20,6 +21,8 @@
 #include <filesystem>
 
 namespace fs = std::filesystem;
+
+#define DICOM_IMPL
 
 #include <wil/com.h>
 #include <fmt/format.h>

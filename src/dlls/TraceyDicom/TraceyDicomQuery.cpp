@@ -22,7 +22,7 @@ bool TraceyDicomQuery::Query(ITraceyDicomConfig *cfg, HWND hWndParent)
   m_work    = nullptr;
 
   if (!cfg->IsValid()) {
-    if (!cfg->Change(hWndParent))
+    if (!cfg->ChangeConfig(hWndParent))
       return false;
   }
 
@@ -30,7 +30,7 @@ bool TraceyDicomQuery::Query(ITraceyDicomConfig *cfg, HWND hWndParent)
   auto work    = std::make_unique<dicom::Work>();
 
   CWorklistDialog dlg(cfg, *patient, *work);
-  if (dlg.DoModal(hWndParent) != IDOK)
+  if (DoModal(dlg, hWndParent) != IDOK)
     return false;
 
   m_patient = std::move(patient);

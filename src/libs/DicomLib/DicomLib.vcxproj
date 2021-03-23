@@ -163,9 +163,12 @@
     <ClInclude Include="DicomSend.h" />
     <ClInclude Include="DicomSqlite.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="rzdcx\rzdcxCheckActivation.h" />
     <ClInclude Include="rzdcx\rzdcx.h" />
+    <ClInclude Include="rzdcx\rzdcxActivate.h" />
     <ClInclude Include="rzdcx\rzdcxLib.h" />
     <ClInclude Include="DicomQuery.h" />
+    <ClInclude Include="rzdcx\rzdcxSettings.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DicomBase.cpp" />
@@ -181,14 +184,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="rzdcx\rzdcxCheckActivation.cpp" />
     <ClCompile Include="rzdcx\rzdcx.cpp" />
     <ClCompile Include="DicomQuery.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="rzdcx\rzdcx.dll">
-      <FileType>Document</FileType>
-    </CopyFileToFolders>
-    <None Include="rzdcx\rzdcx.tlb" />
+    <ClCompile Include="rzdcx\rzdcxActivate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Readme.md" />
@@ -200,6 +199,11 @@
     <ProjectReference Include="..\LoggingLib\LoggingLib.vcxproj">
       <Project>{136cc8c9-d852-494e-8036-46b22062b2c4}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="rzdcx\rzdcx.dll">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

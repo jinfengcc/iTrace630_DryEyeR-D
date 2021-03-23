@@ -51,6 +51,15 @@
     <ClInclude Include="DicomBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="rzdcx\rzdcxActivate.h">
+      <Filter>rzdcx</Filter>
+    </ClInclude>
+    <ClInclude Include="rzdcx\rzdcxSettings.h">
+      <Filter>rzdcx</Filter>
+    </ClInclude>
+    <ClInclude Include="rzdcx\rzdcxCheckActivation.h">
+      <Filter>rzdcx</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DicomLib.cpp">
@@ -83,18 +92,19 @@
     <ClCompile Include="DicomBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="rzdcx\rzdcxActivate.cpp">
+      <Filter>rzdcx</Filter>
+    </ClCompile>
+    <ClCompile Include="rzdcx\rzdcxCheckActivation.cpp">
+      <Filter>rzdcx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="rzdcx\rzdcx.tlb">
-      <Filter>rzdcx</Filter>
-    </None>
+    <Text Include="Readme.md" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="rzdcx\rzdcx.dll">
       <Filter>rzdcx</Filter>
     </CopyFileToFolders>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Readme.md" />
   </ItemGroup>
 </Project>

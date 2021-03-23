@@ -14,14 +14,15 @@ TRACEYOBJ("eee9c50f-7306-42b2-8398-1c6258ef681e") ITraceyDicomConfig : public IU
   virtual Data Get() const                            = 0;
   virtual void Set(const Data &d)                     = 0;
   virtual bool IsValid(const Data *d = nullptr) const = 0;
-  virtual bool Change(HWND hWndParent)                = 0;
+  virtual bool ChangeConfig(HWND hWndParent)          = 0;
 };
 
 TRACEYOBJ("54ac4456-27ed-4366-b2de-afed429125a4")
 ITraceyDicomConfigRZDCX : public IUnknown
 {
-  virtual bool IsActivated() const = 0;
-  virtual bool Activate()          = 0;
+  virtual bool IsActivated() const               = 0;
+  virtual void Activate()                        = 0;
+  virtual bool ChangeActivation(HWND hWndParent) = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////

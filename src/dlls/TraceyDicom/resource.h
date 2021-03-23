@@ -9,6 +9,8 @@
 #define IDD_SETUP_SELECT                105
 #define IDD_ACCESSION                   106
 #define IDD_SETUP_OTHER                 107
+#define IDD_DIALOG1                     108
+#define IDD_LICENSE                     108
 #define IDC_PATIENTS                    1001
 #define IDC_ITEMS                       1002
 #define IDC_SEARCH                      1003
@@ -31,6 +33,8 @@
 #define IDC_PATIENT                     1018
 #define IDC_RADIO6                      1019
 #define IDC_RADIO7                      1020
+#define IDC_REQUEST                     1020
+#define IDC_LICENSE                     1021
 #define IDC_WCIOL_CHECK                 8052
 #define IDC_WCSU_CHECK                  8053
 #define IDC_WCVA_CHECK                  8054
@@ -49,7 +53,6 @@
 #define IDC_WFVA_CHECK                  8372
 #define IDC_WFRMS_CHECK                 8373
 #define IDC_WFKA_CHECK                  8374
-#define IDC_WFRMS_CHECK2                8374
 #define IDC_CTSU_CHECK                  8376
 #define IDC_CTKE_CHECK                  8377
 #define IDC_CT3D_CHECK                  8378
@@ -59,15 +62,14 @@
 #define IDC_WFCUSTOM_CHECK              8433
 #define IDC_CTRINGS_CHECK               8499
 #define IDC_CTOSHER_CHECK               8501
-#define IDC_CTOSHER_CHECK2              8502
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        108
+#define _APS_NEXT_RESOURCE_VALUE        110
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1020
+#define _APS_NEXT_CONTROL_VALUE         1021
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
