@@ -14,9 +14,14 @@ public:
   {
   }
 
+  std::string Password() const
+  {
+    return CStringA(m_password).GetString();
+  }
+
 private:
-  CString m_expected;
   CString m_password;
+  CString m_expected;
 
   BOOL OnInitDialog(CWindow wndFocus, LPARAM lInitParam);
   void OnOK(UINT uNotifyCode, int nID, CWindow wndCtl);

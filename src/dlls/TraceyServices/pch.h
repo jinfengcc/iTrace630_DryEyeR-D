@@ -23,4 +23,14 @@
 #include <interfaces/ICalibration.h>
 #include <interfaces/IDatabase.h>
 
+inline BOOL IsShiftKeyPressed()
+{
+  return ::GetAsyncKeyState(VK_SHIFT) < 0;
+}
+
+inline BOOL IsCtrlKeyPressed()
+{
+  return ::GetAsyncKeyState(VK_CONTROL) < 0;
+}
+
 #endif // PCH_H
