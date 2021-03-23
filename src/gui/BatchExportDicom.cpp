@@ -29,7 +29,7 @@ bool BatchExportDicom::ConfigDicom()
   auto dcc = CreateObj<ITraceyDicomConfig>();
 
   if (!dcc->IsValid()) {
-    if (!dcc->Change(AfxGetMainWnd()->GetSafeHwnd()))
+    if (!dcc->ChangeConfig(AfxGetMainWnd()->GetSafeHwnd()))
       return false;
   }
 

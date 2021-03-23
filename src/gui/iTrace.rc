@@ -3608,6 +3608,7 @@ BEGIN
     "O",            IDK_CTRL_O,             VIRTKEY, CONTROL, NOINVERT
     "P",            IDK_CTRL_P,             VIRTKEY, CONTROL, NOINVERT
     "Q",            IDK_CTRL_Q,             VIRTKEY, CONTROL, NOINVERT
+    "R",            IDK_CTRL_R,             VIRTKEY, SHIFT, CONTROL, NOINVERT
     "S",            IDK_CTRL_S,             VIRTKEY, CONTROL, NOINVERT
     "W",            IDK_CTRL_W,             VIRTKEY, CONTROL, NOINVERT
     "Y",            IDK_CTRL_Y,             VIRTKEY, CONTROL, NOINVERT
@@ -3639,12 +3640,12 @@ BEGIN
     VK_NUMPAD6,     IDK_N6,                 VIRTKEY, NOINVERT
     VK_NUMPAD7,     IDK_N7,                 VIRTKEY, NOINVERT
     VK_NUMPAD8,     IDK_N8,                 VIRTKEY, NOINVERT
+    VK_NUMPAD9,     IDK_N9,                 VIRTKEY, NOINVERT
     VK_RIGHT,       IDK_RIGHT,              VIRTKEY, NOINVERT
     VK_RETURN,      IDK_SHIFT_ENTER,        VIRTKEY, SHIFT, NOINVERT
     VK_SPACE,       IDK_SPACE,              VIRTKEY, NOINVERT
     VK_TAB,         IDK_TAB,                VIRTKEY, NOINVERT
     VK_UP,          IDK_UP,                 VIRTKEY, NOINVERT
-    VK_NUMPAD9,     IDK_N9,                 VIRTKEY, NOINVERT
 END
 
 
