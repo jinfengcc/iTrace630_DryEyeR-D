@@ -3,14 +3,14 @@
 #include "rzdcxSettings.h"
 #include "rzdcxCheckActivation.h"
 #include "libs/CommonLib/VersionInfo.h"
-#include "../CommonLib/RunConsoleApp.h"
+#include "libs/CommonLib/RunConsoleApp.h"
 #include "rzdcx.h"
 
 namespace {
-  const auto MIN_EXPECTED_VERSION = 3;
-  const auto MAX_SERVER_WAIT      = 10; // seconds
-  const auto EMAIL                = "agatz@traceytech.com";
-  const auto SERNO                = "TRACYTECH-TEST-20210630";
+  //const auto MIN_EXPECTED_VERSION = 3;
+  //const auto MAX_SERVER_WAIT      = 10; // seconds
+  //const auto EMAIL                = "agatz@traceytech.com";
+  //const auto SERNO                = "TRACYTECH-TEST-20210630";
   const auto TEST_REQUEST         = "   3         604bd33a             EDC6F84DD34B992AE291 t";
 
   void        Activate(const fs::path &dll);
@@ -38,14 +38,16 @@ fs::path rzdcxGetDllName()
 {
   auto dll = GetExeFileFolder() / "RZDCX.dll";
 
+  RzdcxSettings rs;
+
   VersionInfo vi(dll);
-  if (auto i = vi.get(); HIWORD(i->dwFileVersionMS) < MIN_EXPECTED_VERSION) {
+  if (auto i = vi.get(); HIWORD(i->dwFileVersionMS) < rs.m_minExpectedVersion) {
     auto v0 = HIWORD(i->dwFileVersionMS);
     auto v1 = LOWORD(i->dwFileVersionMS);
     auto v2 = HIWORD(i->dwFileVersionLS);
     auto v3 = LOWORD(i->dwFileVersionLS);
 
-    TRACEY_THROW("Wrong RZDCX.DLL Version {}.{}.{}.{} (Expected {}.0.0.0 or higher)", v0, v1, v2, v3, MIN_EXPECTED_VERSION);
+    TRACEY_THROW("Wrong RZDCX.DLL Version {}.{}.{}.{} (Expected {}.0.0.0 or higher)", v0, v1, v2, v3, rs.m_minExpectedVersion);
   }
 
   return dll;
@@ -134,6 +136,7 @@ namespace {
     }
     catch (const std::exception &e)
     {
+      LOG_Err("RZDCX License Error: {}", e.what());
       return "";
     }
   }
@@ -156,18 +159,27 @@ namespace {
 
   std::string RetrieveLicense(const fs::path &dll)
   {
+    RzdcxSettings rs;
+
     auto exe_path = GetRZDXActivationProgram();
     auto request  = GetLicenseRequestString(dll);
-    auto cmd      = fmt::format(R"("{}" {} {} "{}")", exe_path, EMAIL, SERNO, request);
+    auto cmd      = fmt::format(R"("{}" {} {} "{}")", exe_path, rs.m_email, rs.m_serialNo, request);
 
     LOG_Info("RZDCX (Request ): {}", request);
 
     auto runner  = RunConsoleApp();
-    auto license = runner.RunCmdAndGetOutput(cmd.c_str(), MAX_SERVER_WAIT * 1'000);
+    auto license = runner.RunCmdAndGetOutput(cmd.c_str(), rs.m_maxWaitSeconds * 1'000);
 
     LOG_Info("RZDCX (Response): {}", license);
 
-    TRACEY_THROW_IF(license.empty(), "Unable to obtain RZDCX license. Make sure you are connected to the internet and try again");
+    const char no_internet_msg_whole[] =
+      "Error: There was no endpoint listening at https://licenseroniza.azurewebsites.net/ActivationWS.asmx that could accept the message. This is often caused "
+      "by an incorrect address or SOAP action. See InnerException, if present, for more details.";
+
+    const char no_internet_msg[] = "https://licenseroniza.azurewebsites.net/ActivationWS.asmx";
+
+    if (license.empty() || license.find(no_internet_msg) != std::string::npos)
+      TRACEY_THROW("Unable to obtain RZDCX license. Make sure you are connected to the internet and try again. If the problem persists, please call Tracey Technologies");
 
     const char error[] = "Error:";
     if (license.starts_with(error))

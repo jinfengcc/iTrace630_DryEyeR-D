@@ -120,7 +120,7 @@ BOOL CiTraceApp::InitInstance()
 
   if (m_isComboDicom) // If It is combo dicom, ask the activation of RZDCX
   {
-    RzdcxActivation();
+    // RzdcxActivation();
   }
   // Software license Done
 
