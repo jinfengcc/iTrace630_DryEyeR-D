@@ -51,6 +51,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uEyeConvertImage", "tools\u
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TraceyRzdcxActivation", "tools\TraceyRzdcxActivation\TraceyRzdcxActivation.csproj", "{EAAD0625-C4BD-4D0A-B7A8-CB771964238F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{080C7564-326B-4CB7-A843-BBFAB30FDA66}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\build630.bat = scripts\build630.bat
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\interfaces\interfaces.vcxitems*{136cc8c9-d852-494e-8036-46b22062b2c4}*SharedItemsImports = 4
