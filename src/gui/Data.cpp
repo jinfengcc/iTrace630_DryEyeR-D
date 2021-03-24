@@ -476,22 +476,11 @@ BOOL CDB::IsReadOnly()
 HMODULE CDB::LoadLibrary(const int Type)
 {
 	if (Type == DATABASE_TYPE_MSJET_OLD) {
-#ifdef _DEBUG
-		return ::LoadLibrary(_T("C:\\Tracey\\tdbmsjet31.dll"));
-#else
 		return ::LoadLibrary(_T("tdbmsjet31.dll"));
-#endif
 	}
 
 	if (Type == DATABASE_TYPE_MSJET) {
-#ifdef _DEBUG
-		// return ::LoadLibrary("D:\\Tracey\\TDBMSJet61\\Release\\tdbmsjet5.dll");//
-		//return ::LoadLibrary("C:\\Tracey\\tdbmsjet61.dll");//
-		return ::LoadLibrary(_T("C:\\Tracey\\tdbmsjet62.dll"));//6.2.0 For Dicom
-#else
-		//return ::LoadLibrary("tdbmsjet61.dll");//
 		return ::LoadLibrary(_T("tdbmsjet62.dll"));//6.2.0 For Dicom
-#endif
 	}
 
 	if (Type == DATABASE_TYPE_MYSQL) {

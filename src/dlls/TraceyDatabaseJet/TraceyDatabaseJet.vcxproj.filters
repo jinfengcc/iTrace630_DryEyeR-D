@@ -74,5 +74,8 @@
     <CopyFileToFolders Include="Legacy\tdbmsjet62.dll">
       <Filter>Legacy</Filter>
     </CopyFileToFolders>
+    <CopyFileToFolders Include="Legacy\tdbmsjet31.dll">
+      <Filter>Legacy</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

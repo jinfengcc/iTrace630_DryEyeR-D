@@ -28,7 +28,7 @@
 
    <ItemDefinitionGroup Label="Preprocessor">
       <ClCompile>
-         <PreprocessorDefinitions>NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+         <PreprocessorDefinitions>TWEAKABLE=;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
          <PreprocessorDefinitions>FMT_HEADER_ONLY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
          <PreprocessorDefinitions>_HAS_AUTO_PTR_ETC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
          <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -70,6 +70,12 @@
          <AdditionalIncludeDirectories>$(RootFolder);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
          <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       </ClCompile>
+   </ItemDefinitionGroup>
+
+   <ItemDefinitionGroup>
+      <ResourceCompile>
+         <AdditionalIncludeDirectories>$(RootFolder);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      </ResourceCompile>
    </ItemDefinitionGroup>
 
    <ItemDefinitionGroup>
