@@ -9,7 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SolutionItems", "_Solution
 	ProjectSection(SolutionItems) = preProject
 		.clang-format = .clang-format
 		.gitignore = .gitignore
-		build630.bat = build630.bat
 		src\ProjProps.props = src\ProjProps.props
 		Readme.md = Readme.md
 		vs-chromium-project.txt = vs-chromium-project.txt
@@ -54,6 +53,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{080C7564-326B-4CB7-A843-BBFAB30FDA66}"
 	ProjectSection(SolutionItems) = preProject
 		scripts\build630.bat = scripts\build630.bat
+		scripts\iTrace.iss = scripts\iTrace.iss
 	EndProjectSection
 EndProject
 Global

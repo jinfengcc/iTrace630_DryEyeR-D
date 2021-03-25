@@ -1,0 +1,73 @@
+[Version]
+Signature=$CHICAGO$
+Class=USB
+ClassGUID={36FC9E60-C465-11CF-8056-444553540000}
+Provider=%INDUS%
+DriverVer=09/16/2009,1.7.8.0
+CatalogFile=Tracey_Lynx.cat
+
+[SourceDisksNames]
+1=%Disk_Description%,,,
+
+[SourceDisksFiles]
+Tracey_Lynx_b.sys = 1
+Tracey_Lynx_a.sys = 1
+
+[Manufacturer]
+%MfgName%=IndusInstruments, NTx86, NTia64, NTamd64
+
+[IndusInstruments.NTx86]
+%USB\VID_0730&PID_001C.DeviceDesc%=Tracey_Lynx_b.Dev, USB\VID_0730&PID_001C
+
+[IndusInstruments.NTia64]
+%USB\VID_0730&PID_001C.DeviceDesc%=Tracey_Lynx_b.Dev, USB\VID_0730&PID_001C
+
+[IndusInstruments.NTamd64]
+%USB\VID_0730&PID_001C.DeviceDesc%=Tracey_Lynx_b.Dev, USB\VID_0730&PID_001C
+
+[DestinationDirs]
+Tracey_Lynx_b.Files.Ext = 10,System32\Drivers
+
+[Tracey_Lynx_b.Dev.NT]
+CopyFiles=Tracey_Lynx_b.Files.Ext
+
+[Tracey_Lynx_b.Dev.NT.Services]
+Addservice = Tracey_Lynx_b, 0x00000002, Tracey_Lynx_b.AddService
+
+[Tracey_Lynx_b.AddService]
+DisplayName    = %Tracey_Lynx_b.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %10%\System32\Drivers\Tracey_Lynx_b.sys
+AddReg         = Tracey_Lynx_b.AddReg
+LoadOrderGroup = Base
+
+[Tracey_Lynx_b.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,Tracey_Lynx_b.sys
+HKR,"Parameters","MaximumTransferSize",0x10001,4096
+HKR,"Parameters","DebugLevel",0x10001,2
+HKR,"Parameters","BulkUsbEnable",0x10001,1
+
+[Tracey_Lynx_b.Files.Ext]
+Tracey_Lynx_b.sys
+Tracey_Lynx_a.sys
+
+[ClassInstall32]
+AddReg=IndusInstrAR
+
+[IndusInstrAR]
+HKR,,,,%CLASSNAME%
+HKR,,Icon,,-20
+HKR,,NoInstallClass,,1
+
+;---------------------------------------------------------------;
+
+[Strings]
+INDUS="Indus Instruments"
+MfgName="IndusInstruments"
+Disk_Description="Tracey Lynx Installation Disk"
+USB\VID_0730&PID_001C.DeviceDesc="Tracey Lynx Board"
+Tracey_Lynx_b.SvcDesc="Tracey Lynx Device Driver"
+CLASSNAME="USB"
