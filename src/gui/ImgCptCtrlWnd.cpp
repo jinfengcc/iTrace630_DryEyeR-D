@@ -7,9 +7,11 @@
 #include "StdAfx.h"
 #include "Resource.h"
 #include "ImgCptCtrlWnd.h"
+#include "libs/CommonLib/AppSettings.h"
 
 namespace {
-  enum EyeColor {
+  enum EyeColor
+  {
     VERYLIGHTEYE,
     LIGHTEYE,
     MEDIUMEYE,
@@ -21,17 +23,52 @@ namespace {
 
   using Settings = CImgCptCtrlWnd::Settings;
 
-  // clang-format off
-  static Settings stdSettings[] = {
-  // led, brightness, contrast, hue, saturation, red, green, blue
-    { 9,  65,         247,      22,  255,         80,  80,    80},  // VERYLIGHTEYE
-    {11,  80,         245,      22,  255,         90,  90,    90},  // LIGHTEYE
-    {10,  95,         255,      22,  255,        100, 100,   100},  // MEDIUMEYE
-    {10, 110,         255,      22,  255,        100, 100,   100},  // DARKEYE
-    { 9, 126,         255,      22,  255,        100, 100,   100},  // VERYDARKEYE
-  };
-  // clang-format on
+  Settings GetSettings(int eyeType, bool hrCamera)
+  {
+    struct NamedSettings
+    {
+      const char *name;
+      Settings    s;
+    };
+
+    // clang-format off
+    static std::array namedSettings = {
+      //                           led, brightness, contrast, hue, saturation, red, green, blue
+      NamedSettings{ "veryLight", { 9,   65,        247,      22,  255,         80,  80,    80}},
+      NamedSettings{ "light"    , {11,   80,        245,      22,  255,         90,  90,    90}},
+      NamedSettings{ "medium"   , {10,   95,        255,      22,  255,        100, 100,   100}},
+      NamedSettings{ "dark"     , {10,  110,        255,      22,  255,        100, 100,   100}},
+      NamedSettings{ "veryDark" , { 9,  126,        255,      22,  255,        100, 100,   100}},
+    };
+    // clang-format on
+
+    auto name     = namedSettings[eyeType].name;
+    auto settings = namedSettings[eyeType].s;
+    if (hrCamera) {
+      AppSettings appsEye(AppSettings(), fmt::format("hal.ids.eyeColor.{}", name));
+
+      // clang-format off
+      appsEye.Get<int>("led"       , &settings.whiteLEDsPower);
+      appsEye.Get<int>("brighness" , &settings.brightness    );
+      appsEye.Get<int>("contrast"  , &settings.contrast      );
+      appsEye.Get<int>("hue"       , &settings.hue           );
+      appsEye.Get<int>("saturation", &settings.saturation    );
+      appsEye.Get<int>("red"       , &settings.red           );
+      appsEye.Get<int>("green"     , &settings.green         );
+      appsEye.Get<int>("blue"      , &settings.blue          );
+      // clang-format on
+    }
+
+    return settings;
+  }
 } // namespace
+
+void XXXXX()
+{
+  for (int i = 0; i < 5; ++i) {
+    auto s = GetSettings(i, true);
+  }
+}
 
 //***************************************************************************************
 //***************************************************************************************
@@ -266,7 +303,7 @@ void CImgCptCtrlWnd::SetTitle(int EyeType, CMFont &font)
     InvalidateRect(&rc, FALSE);
   };
 
-  auto s = stdSettings[EyeType];
+  auto s = GetSettings(EyeType, m_IsHRCamera);
 
   int n = 0;
   draw(m_rRect[n++], s.whiteLEDsPower, 50);
@@ -295,7 +332,7 @@ void CImgCptCtrlWnd::RepaintMemDC()
 
 void CImgCptCtrlWnd::SetVideoAttributes(int EyeType)
 {
-  m_settings = stdSettings[EyeType];
+  m_settings = GetSettings(EyeType, m_IsHRCamera);
 
   m_WhiteLEDsPowerLevelSlider.m_Pos = real_t(m_settings.whiteLEDsPower) / 50.0;
   m_BrightnessSlider.m_Pos          = real_t(m_settings.brightness) / 255.0;

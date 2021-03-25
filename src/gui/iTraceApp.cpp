@@ -64,6 +64,11 @@ BOOL CiTraceApp::InitInstance()
 
   DbgMiniDumpInit();
 
+  {
+    extern void XXXXX();
+    XXXXX();
+  }
+
   INITCOMMONCONTROLSEX InitCtrls;
   InitCtrls.dwSize = sizeof(INITCOMMONCONTROLSEX);
   InitCtrls.dwICC  = ICC_LISTVIEW_CLASSES;

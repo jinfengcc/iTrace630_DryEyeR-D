@@ -9,7 +9,15 @@
    "hal": {
       "ids": {
          "pixelClock": 118,
-         "fps": 25.0
+         "fps": 25.0,
+
+         "eyeColor": {
+            "veryLight": {"led":  9, "brighness":  65, "contrast": 247, "red":  80, "green":  80, "blue":  80},
+            "light"    : {"led": 11, "brighness":  80, "contrast": 245, "red":  90, "green":  90, "blue":  90},
+            "medium"   : {"led": 10, "brighness":  95, "contrast": 255, "red": 100, "green": 100, "blue": 100},
+            "dark"     : {"led": 10, "brighness": 110, "contrast": 255, "red": 100, "green": 100, "blue": 100},
+            "veryDark" : {"led":  9, "brighness": 126, "contrast": 255, "red": 100, "green": 100, "blue": 100}
+         }
       }
    }
 }

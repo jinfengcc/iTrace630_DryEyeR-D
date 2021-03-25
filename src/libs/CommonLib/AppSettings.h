@@ -26,6 +26,10 @@ public:
   }
 
   /// 'addr' is in a.b.c format
+
+  using json = nlohmann::json;
+  const json *GetJsonData(std::string addr) const;
+
   template <class T>
   std::optional<T> Get(std::string_view addr)
   {
@@ -49,10 +53,16 @@ public:
     return v.has_value() ? v.value() : defaultValue;
   }
 
+  template <class T>
+  void Get(std::string_view addr, T *value)
+  {
+    if (auto v = Get<T>(addr); v.has_value())
+      *value = v.value();
+  }
+
   static fs::path GetStdSettingsFile();
 
 private:
-  using json = nlohmann::json;
 
   json m_json;
   int  m_sigId{};
@@ -61,6 +71,5 @@ private:
 
   void        ClearCallback();
   Data        GetData(std::string_view addr) const;
-  const json *GetJsonData(std::string addr) const;
   auto        SplitAddr(std::string &addr) const -> std::vector<std::string>;
 };
