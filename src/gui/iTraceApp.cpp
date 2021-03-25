@@ -64,10 +64,12 @@ BOOL CiTraceApp::InitInstance()
 
   DbgMiniDumpInit();
 
+#ifdef _DEBUG
   {
     extern void XXXXX();
     XXXXX();
   }
+#endif // _DEBUG
 
   INITCOMMONCONTROLSEX InitCtrls;
   InitCtrls.dwSize = sizeof(INITCOMMONCONTROLSEX);

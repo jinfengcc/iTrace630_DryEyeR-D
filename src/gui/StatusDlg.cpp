@@ -30,6 +30,17 @@ void CStatusDlg::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 
 	DDX_Control(pDX, IDC_LICENSE_TYPE_STATIC, m_LicenseTypeStatic);
+  DDX_Control(pDX, IDCANCEL, m_closeButton);
+
+}
+
+void CStatusDlg::OnCancel()
+{
+  if (!Licensing.IsValid()) {
+    AfxMessageBox(L"Invalid License. Program will terminate");
+    _exit(1);
+  }
+  CDialog::OnCancel();
 }
 
 //***************************************************************************************
@@ -40,8 +51,8 @@ BOOL CStatusDlg::OnInitDialog()
 
 	CString s;
 
-	     if (::Licensing.IsPresbia())     s = "Presbia"; 
-	else if (::Licensing.IsDemo())        s = "Demo"; 
+	     if (::Licensing.IsPresbia())     s = "Presbia";
+	else if (::Licensing.IsDemo())        s = "Demo";
 	else if (::Licensing.IsSolo())        s = "Solo";
 	else if (::Licensing.IsCombo())       s = "Combo";
 	else if (::Licensing.IsWorkstation()) s = "Workstation";
@@ -52,6 +63,7 @@ BOOL CStatusDlg::OnInitDialog()
 
 	m_LicenseTypeStatic.SetWindowText(s);
 
+  UpdateCloseButton();
 	GetDlgItem(IDCANCEL)->SetFocus();
 
 	return TRUE;
@@ -61,14 +73,14 @@ BOOL CStatusDlg::OnInitDialog()
 
 void CStatusDlg::OnActivateButtonClicked()
 {
-	CActivationDlg* pDlg = new CActivationDlg(this);
+	auto pDlg = std::make_unique<CActivationDlg>(this);
 
 	if (pDlg->DoModal() == IDOK) {
 
 		CString s;
 
-		if (::Licensing.IsPresbia())     s = "Presbia"; 
-		else if (::Licensing.IsDemo())        s = "Demo"; 
+		if (::Licensing.IsPresbia())     s = "Presbia";
+		else if (::Licensing.IsDemo())        s = "Demo";
 		else if (::Licensing.IsSolo())        s = "Solo";
 		else if (::Licensing.IsCombo())       s = "Combo";
 		else if (::Licensing.IsWorkstation()) s = "Workstation";
@@ -80,7 +92,12 @@ void CStatusDlg::OnActivateButtonClicked()
 		m_LicenseTypeStatic.SetWindowText(s);
 	}
 
-	delete pDlg;
+  UpdateCloseButton();
+}
+
+void CStatusDlg::UpdateCloseButton()
+{
+  m_closeButton.SetWindowText(Licensing.IsValid() ? L"Close" : L"Exit");
 }
 
 //***************************************************************************************

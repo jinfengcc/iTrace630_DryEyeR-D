@@ -13,13 +13,17 @@ public:
 	CStatic m_LicenseTypeStatic;
 
 private:
+  CButton m_closeButton;
 
-	virtual BOOL OnInitDialog() override;
-	virtual void DoDataExchange(CDataExchange* pDX) override;
+	BOOL OnInitDialog() override;
+	void DoDataExchange(CDataExchange* pDX) override;
+  void OnCancel() override;
 
 	afx_msg void OnActivateButtonClicked();
 
 	DECLARE_MESSAGE_MAP()
+
+  void UpdateCloseButton();
 };
 
 //***************************************************************************************
