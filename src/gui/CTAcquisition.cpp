@@ -29,11 +29,11 @@ CCTAcquisition::CCTAcquisition(CHW *pHW, BOOL ShowRedDot)
 
   // test
   // Get a test video folder name by time
-  SYSTEMTIME Time;
-  ::GetLocalTime(&Time);
-  m_TestVideoFolder.Format(_T("C:\\1\\TestCTVideo\\%i_%02i_%02i_%02i_%02i_%02i\\"), Time.wYear, Time.wMonth, Time.wDay, Time.wHour, Time.wMinute, Time.wSecond);
+  //SYSTEMTIME Time;
+  //::GetLocalTime(&Time);
+  //m_TestVideoFolder.Format(_T("C:\\1\\TestCTVideo\\%i_%02i_%02i_%02i_%02i_%02i\\"), Time.wYear, Time.wMonth, Time.wDay, Time.wHour, Time.wMinute, Time.wSecond);
 
-  ::CreateDirectory(m_TestVideoFolder, NULL);
+  //::CreateDirectory(m_TestVideoFolder, NULL);
 
   // load ct capture videos for laser spot detection
   // m_TestVideoFolder = "C:\\1\\TestCTVideo\\2021_02_26_14_54_04\\";//Works fine
@@ -82,19 +82,19 @@ void CCTAcquisition::CheckAlignment()
     m_AlignmentStatus = m_ve0_ok && (m_TriangulationSensorReading > m_pHW->m_Calibration.SensorThreshold) ? 1 : 0;
   }
 
-  // Test for saving video for analysis
-  CString Filename;
-  Filename.Format(_T("%s%i.jpg"), m_TestVideoFolder, m_t);
-  m_CTExam.m_Image.SaveIntoFile(Filename);
-  m_t++;
-  // Done
+  //// Test for saving video for analysis
+  //CString Filename;
+  //Filename.Format(_T("%s%i.jpg"), m_TestVideoFolder, m_t);
+  //m_CTExam.m_Image.SaveIntoFile(Filename);
+  //m_t++;
+  //// Done
 }
 
 //***************************************************************************************
 
 void CCTAcquisition::Main()
 {
-  m_t = 0; // test
+  //m_t = 0; // test
 
   ::NewSettings.m_Adjusting_CT = FALSE;
 

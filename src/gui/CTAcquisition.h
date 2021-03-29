@@ -45,8 +45,8 @@ public:
   int m_BlueGain;
 
 private:
-  int     m_t;               // test
-  CString m_TestVideoFolder; // test
+  //int     m_t;               // test
+  //CString m_TestVideoFolder; // test
 
   void Main() override;
 
