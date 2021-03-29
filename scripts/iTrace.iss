@@ -4,7 +4,7 @@
 
 #ifndef YEAR
 #define YEAR	  "2021"
-#define DATE	  "0325"
+#define DATE	  "0326"
 #endif
 
 #ifndef VCREDIST
@@ -27,13 +27,13 @@
 
 [Setup]
 AppName={#NAME}
-AppVerName={#NAME}{#VERSIONSTR}
+AppVerName={#NAME}
 DefaultDirName="{#MAINFOLDER}\Bin\Ver{#VERSION}"
 DefaultGroupName=iTrace
 AppPublisher=Tracey Technologies
 AppPublisherURL=http://www.traceytech.com
 AppVersion={#VERSIONSTR}
-LicenseFile=TraceyLegal.TXT
+LicenseFile=License.rtf
 OutputDir=../_setup
 OutputBaseFilename=iTrace_Setup_{#VERSION}_{#YEAR}_{#DATE}
 SetupIconFile=..\src\gui\\res\iTrace.ico
@@ -51,20 +51,22 @@ Name: "C:\Tracey\Drivers";
 
 [Files]
 Source: "{#OUTDIR}\iTrace.exe"; DestDir: "{#DEST}"; Flags: ignoreversion
+Source: "{#OUTDIR}\iTrace.json"; DestDir: "{#DEST}"
+Source: "{#OUTDIR}\opencv_core.dll"; DestDir: "{#DEST}"; Flags: ignoreversion
+Source: "{#OUTDIR}\opencv_imgproc.dll"; DestDir: "{#DEST}"; Flags: ignoreversion
+Source: "{#OUTDIR}\rzdcx.dll"; DestDir: "{#DEST}"; Flags: ignoreversion
+Source: "{#OUTDIR}\sqlite3.dll"; DestDir: "{#DEST}"; Flags: ignoreversion
+Source: "{#OUTDIR}\tdbmsjet31.dll"; DestDir: "{#DEST}"; Flags: ignoreversion
+Source: "{#OUTDIR}\tdbmsjet62.dll"; DestDir: "{#DEST}"; Flags: ignoreversion
+Source: "{#OUTDIR}\thw.dll"; DestDir: "{#DEST}"; Flags: ignoreversion
+Source: "{#OUTDIR}\TraceyDatabaseJet.dll"; DestDir: "{#DEST}"; Flags: ignoreversion
+Source: "{#OUTDIR}\TraceyDicom.dll"; DestDir: "{#DEST}"; Flags: ignoreversion
+Source: "{#OUTDIR}\TraceyHardware.dll"; DestDir: "{#DEST}"; Flags: ignoreversion
+Source: "{#OUTDIR}\TraceyServices.dll"; DestDir: "{#DEST}"; Flags: ignoreversion
+Source: "{#OUTDIR}\ueye_api.dll"; DestDir: "{#DEST}"; Flags: ignoreversion
+Source: "{#OUTDIR}\zlib1.dll"; DestDir: "{#DEST}"; Flags: ignoreversion
 Source: "{#OUTDIR}\TraceyRzdcxActivation.exe"; DestDir: "{#DEST}"; Flags: ignoreversion
-Source: "{#OUTDIR}\opencv_core.dll"; DestDir: "{#DEST}"; Flags: uninsneveruninstall
-Source: "{#OUTDIR}\opencv_imgproc.dll"; DestDir: "{#DEST}"; Flags: uninsneveruninstall
-Source: "{#OUTDIR}\rzdcx.dll"; DestDir: "{#DEST}"; Flags: uninsneveruninstall
-Source: "{#OUTDIR}\sqlite3.dll"; DestDir: "{#DEST}"; Flags: uninsneveruninstall
-Source: "{#OUTDIR}\tdbmsjet31.dll"; DestDir: "{#DEST}"; Flags: uninsneveruninstall
-Source: "{#OUTDIR}\tdbmsjet62.dll"; DestDir: "{#DEST}"; Flags: uninsneveruninstall
-Source: "{#OUTDIR}\thw.dll"; DestDir: "{#DEST}"; Flags: uninsneveruninstall
-Source: "{#OUTDIR}\TraceyDatabaseJet.dll"; DestDir: "{#DEST}"; Flags: uninsneveruninstall
-Source: "{#OUTDIR}\TraceyDicom.dll"; DestDir: "{#DEST}"; Flags: uninsneveruninstall
-Source: "{#OUTDIR}\TraceyHardware.dll"; DestDir: "{#DEST}"; Flags: uninsneveruninstall
-Source: "{#OUTDIR}\TraceyServices.dll"; DestDir: "{#DEST}"; Flags: uninsneveruninstall
-Source: "{#OUTDIR}\ueye_api.dll"; DestDir: "{#DEST}"; Flags: uninsneveruninstall
-Source: "{#OUTDIR}\zlib1.dll"; DestDir: "{#DEST}"; Flags: uninsneveruninstall
+Source: "{#OUTDIR}\TraceyRzdcxActivation.exe.config"; DestDir: "{#DEST}"
 Source: "redist\Tracey_Lynx.inf"; DestDir: "C:\Tracey\Drivers"; Flags: uninsneveruninstall
 Source: "redist\Tracey_Lynx.cat"; DestDir: "C:\Tracey\Drivers"; Flags: uninsneveruninstall
 Source: "redist\Tracey_Lynx_a.sys"; DestDir: "C:\Tracey\Drivers"; Flags: uninsneveruninstall

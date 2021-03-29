@@ -1,6 +1,7 @@
 #pragma once
 
 #include <libs/CommonLib/SignalUI.h>
+#include "libs/CommonLib/SingleInstance.h"
 
 class CSettings;
 class CWndSettings;
@@ -17,7 +18,8 @@ public:
   sig::Signal<CPatient *>                     m_siPatientAdded;
 
 private:
-  ULONG_PTR m_GdiplusToken;
+  SingleInstance m_singleInstance{_T("7db4bddd-4124-4e53-abfc-39d75da4bd1e")};
+  ULONG_PTR      m_GdiplusToken;
 
   void Registration(); // 6.2.0 ini registration
   void ControlSettings();

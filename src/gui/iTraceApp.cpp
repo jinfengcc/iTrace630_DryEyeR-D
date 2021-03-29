@@ -58,9 +58,14 @@ CBugTest   BugTest;
 //***************************************************************************************
 BOOL CiTraceApp::InitInstance()
 {
+  if (m_singleInstance.IsAnotherInstanceRunning())
+    return FALSE;
+
   CWinApp::InitInstance();
-  GdiplusInitializer gdipi;
   CoInitialize(nullptr);
+
+  Gdiplus::GdiplusStartupInput GdiplusStartupInput;
+  Gdiplus::GdiplusStartup(&m_GdiplusToken, &GdiplusStartupInput, NULL);
 
   DbgMiniDumpInit();
 
@@ -144,9 +149,6 @@ BOOL CiTraceApp::InitInstance()
 
   ::WndClassName = ::AfxRegisterWndClass(CS_DBLCLKS, ::LoadCursor(NULL, IDC_ARROW), NULL, NULL);
 
-  Gdiplus::GdiplusStartupInput GdiplusStartupInput;
-  Gdiplus::GdiplusStartup(&m_GdiplusToken, &GdiplusStartupInput, NULL);
-
   ::NewSettings.m_WFSumShow[5] = FALSE; // WFCT Angle k/a (do not allow the wf angle k/a)
 
   m_pMainWnd = new CMainWnd;
@@ -164,7 +166,6 @@ int CiTraceApp::ExitInstance()
 {
   HW.TurnVideoCameraOff();
 
-  Gdiplus::GdiplusShutdown(m_GdiplusToken);
 
   ::HW.ReleaseNotificationWindow();
 
@@ -174,6 +175,7 @@ int CiTraceApp::ExitInstance()
 
   ::NewSettings.SaveIntoFile(MAIN_DIR + "\\newsettings620");
 
+  Gdiplus::GdiplusShutdown(m_GdiplusToken);
   CoUninitialize();
   return CWinApp::ExitInstance();
 }

@@ -198,6 +198,7 @@
     <ClInclude Include="ShrinkFIle.h" />
     <ClInclude Include="Signal.h" />
     <ClInclude Include="SignalUI.h" />
+    <ClInclude Include="SingleInstance.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Slot.h" />
     <ClInclude Include="SplashScreenImpl.h" />
@@ -272,6 +273,7 @@
     <ClCompile Include="RunConsoleApp.cpp" />
     <ClCompile Include="ShrinkFIle.cpp" />
     <ClCompile Include="SignalUI.cpp" />
+    <ClCompile Include="SingleInstance.cpp" />
     <ClCompile Include="SplashScreenImpl.cpp" />
     <ClCompile Include="TempFile.cpp" />
     <ClCompile Include="TestSupport\TestDatabase.cpp" />

@@ -9,7 +9,6 @@
 #define IDD_SETUP_SELECT                105
 #define IDD_ACCESSION                   106
 #define IDD_SETUP_OTHER                 107
-#define IDD_DIALOG1                     108
 #define IDD_LICENSE                     108
 #define IDC_PATIENTS                    1001
 #define IDC_ITEMS                       1002
@@ -35,6 +34,7 @@
 #define IDC_RADIO7                      1020
 #define IDC_REQUEST                     1020
 #define IDC_LICENSE                     1021
+#define IDC_STATUS                      1022
 #define IDC_WCIOL_CHECK                 8052
 #define IDC_WCSU_CHECK                  8053
 #define IDC_WCVA_CHECK                  8054
@@ -69,7 +69,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        110
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1021
+#define _APS_NEXT_CONTROL_VALUE         1023
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

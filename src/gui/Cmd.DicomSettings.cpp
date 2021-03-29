@@ -40,11 +40,14 @@ void CmdDicomSettings::OnSettings()
 void CmdDicomSettings::OnLicense()
 {
   auto obj = CreateObj<ITraceyDicomConfigRZDCX>();
-  if (!IsShiftKeyPressed()) {
-    if (!m_isComboDicom || obj->IsActivated()) {
-      SetMsgHandled(FALSE);
-      return;
-    }
+  if (IsShiftKeyPressed()) {
+    obj->ChangeActivation(AfxGetMainWnd()->GetSafeHwnd());
+    return;
+  }
+
+  if (!m_isComboDicom || obj->IsActivated()) {
+    SetMsgHandled(FALSE);
+    return;
   }
 
   CCustomButtonMenu menu;
@@ -54,10 +57,13 @@ void CmdDicomSettings::OnLicense()
     SetMsgHandled(FALSE);
   }
   else if (res == 1) {
+    auto old = obj->IsActivated();
     obj->ChangeActivation(AfxGetMainWnd()->GetSafeHwnd());
-    if (obj->IsActivated())
-      Info("DICOM Library Successfully activated");
-    else
-      Error("Unable to activate the DICOM Library");
+    if (old != obj->IsActivated()) {
+      if (obj->IsActivated())
+        Info("DICOM Library Successfully activated");
+      else
+        Error("Unable to activate the DICOM Library");
+    }
   }
 }

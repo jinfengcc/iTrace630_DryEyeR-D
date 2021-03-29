@@ -4,6 +4,7 @@
 
 CRzdcxLicenseDlg::CRzdcxLicenseDlg()
   : m_request(rzdcxGetLicenseRequest().c_str())
+  , m_status(rzdcxIsActivated() ? L"Activated" : L"NOT Activated")
   , m_license(rzdcxGetLicense().c_str())
 {
 }

@@ -1,5 +1,47 @@
 #pragma once
 
+
+#define USE_JSON_SETTINGS   1
+
+#if USE_JSON_SETTINGS
+
+#include "libs/CommonLib/AppSettings.h"
+
+struct RzdcxSettings
+{
+  RzdcxSettings()
+  {
+    Load();
+  }
+
+  void Load()
+  {
+    AppSettings aps(AppSettings(), "dicom.rzdcx");
+
+    // clang-format off
+    aps.Get("email"             , &m_email             );
+    aps.Get("serialNo"          , &m_serialNo          );
+    aps.Get("maxWaitSeconds"    , &m_maxWaitSeconds    );
+    aps.Get("minExpectedVersion", &m_minExpectedVersion);
+    // clang-format on
+
+    if (m_minExpectedVersion < 3)
+      m_minExpectedVersion = 3;
+    if (m_maxWaitSeconds < 1)
+      m_maxWaitSeconds = 1;
+  }
+
+  std::string m_email             {"agatz@traceytech.com"};
+  std::string m_serialNo          {"TRACYTECH-TEST-20210630"};
+  int         m_maxWaitSeconds    {10};
+  int         m_minExpectedVersion{3};
+  std::string m_request;
+  std::string m_license;
+
+};
+
+#else
+
 #include "libs/CommonLib/TraceyRegistry.h"
 
 struct RzdcxSettings : public TraceyRegistryImpl<RzdcxSettings>
@@ -36,3 +78,5 @@ struct RzdcxSettings : public TraceyRegistryImpl<RzdcxSettings>
   END_REGPROP_MAP()
   // clang-format on
 };
+
+#endif

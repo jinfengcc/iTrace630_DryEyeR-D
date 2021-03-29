@@ -204,7 +204,7 @@
     <ClInclude Include="thread\jthread.h">
       <Filter>thread</Filter>
     </ClInclude>
-   <ClInclude Include="RunConsoleApp.h">
+    <ClInclude Include="RunConsoleApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="minhook\buffer.h">
@@ -233,6 +233,12 @@
     </ClInclude>
     <ClInclude Include="minhook\hde\table64.h">
       <Filter>MinHook</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowIterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleInstance.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -338,7 +344,7 @@
     <ClCompile Include="AppSettingsImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-   <ClInclude Include="RunConsoleApp.h">
+    <ClInclude Include="RunConsoleApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="minhook\buffer.h">
@@ -368,5 +374,26 @@
     <ClInclude Include="minhook\hde\table64.h">
       <Filter>MinHook</Filter>
     </ClInclude>
+    <ClCompile Include="minhook\buffer.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="minhook\hde\hde32.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="minhook\hde\hde64.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="minhook\hook.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="minhook\trampoline.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RunConsoleApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleInstance.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

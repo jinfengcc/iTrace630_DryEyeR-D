@@ -17,6 +17,7 @@ public:
 
 private:
   CString m_request;
+  CString m_status;
   CString m_license;
 
   BOOL    OnInitDialog(CWindow wndFocus, LPARAM lInitParam);
@@ -31,6 +32,7 @@ private:
 
   BEGIN_DDX_MAP(CRzdcxLicenseDlg)
     DDX_TEXT(IDC_REQUEST, m_request)
+    DDX_TEXT(IDC_STATUS, m_status)
     DDX_TEXT(IDC_LICENSE, m_license)
   END_DDX_MAP()
 };
